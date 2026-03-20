@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Nav } from '@/components/layout/nav'
+import { Footer } from '@/components/layout/footer'
 import { MockStoreProvider } from '@/lib/mock-store'
 
 export const metadata: Metadata = {
@@ -15,6 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <MockStoreProvider>
           <Nav />
           <main className="pt-14">{children}</main>
+          <Footer />
         </MockStoreProvider>
       </body>
     </html>
