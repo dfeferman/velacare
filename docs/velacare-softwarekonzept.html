@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velacare — Softwarekonzept v1.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --terra:#C96B3F;--terra-light:#E8A07A;--terra-pale:#FAF0E8;--terra-dark:#9E4E28;
+  --sage:#2D7A5F;--sage-light:#A8D5C2;--sage-pale:#EAF5F0;
+  --sky:#185FA5;--sky-pale:#E6F1FB;
+  --amber:#BA7517;--amber-pale:#FAEEDA;
+  --red:#A32D2D;--red-pale:#FCEBEB;
+  --warm-white:#FDFAF7;--mid-gray:#C8BFB5;--warm-gray:#8A8078;
+  --dark:#2C2420;--bg:#F5F0EB;
+  --fs:'DM Sans',sans-serif;--ff:'Cormorant Garamond',serif;--fm:'DM Mono',monospace;
+  --r-sm:6px;--r-md:10px;--r-lg:16px;--r-xl:24px;
+}
+body{font-family:var(--fs);background:var(--bg);color:var(--dark);font-size:14px;line-height:1.7}
+
+/* NAV */
+.doc-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(253,250,247,0.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--mid-gray);height:52px;display:flex;align-items:center;padding:0 2rem;gap:1.5rem}
+.nav-brand{display:flex;align-items:center;gap:8px;font-family:var(--ff);font-size:18px;font-weight:600;color:var(--dark);text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;flex:1}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{font-size:12px;color:var(--warm-gray);text-decoration:none;padding:0 12px;white-space:nowrap;transition:color .15s}
+.nav-link:hover{color:var(--terra)}
+.nav-pill{margin-left:auto;font-size:10px;font-weight:500;padding:3px 10px;background:var(--terra-pale);color:var(--terra);border-radius:20px;white-space:nowrap;flex-shrink:0}
+
+/* COVER */
+.cover{min-height:100vh;background:var(--dark);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(201,107,63,.1) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%)}
+.cover-eye{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--terra-light);margin-bottom:2rem}
+.cover-h{font-family:var(--ff);font-size:clamp(48px,7vw,88px);font-weight:600;color:var(--warm-white);line-height:1.05;letter-spacing:-.01em;margin-bottom:.75rem}
+.cover-sub{font-size:13px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--terra-light);margin-bottom:3rem}
+.cover-tags{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.cover-tag{font-size:11px;padding:5px 14px;border:1px solid rgba(255,255,255,.1);border-radius:20px;color:rgba(253,250,247,.5)}
+
+/* CHAPTER */
+.chapter{background:var(--terra);padding:2.5rem 2.5rem;display:flex;align-items:flex-end;gap:1.5rem}
+.ch-num{font-family:var(--ff);font-size:64px;font-weight:600;color:rgba(255,255,255,.18);line-height:1}
+.ch-info{padding-bottom:6px}
+.ch-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:3px}
+.ch-title{font-family:var(--ff);font-size:28px;font-weight:600;color:var(--warm-white);line-height:1.1}
+
+/* SECTION */
+.section{padding:4rem 2.5rem;max-width:1100px;margin:0 auto}
+.section-sm{padding:2.5rem 2.5rem;max-width:1100px;margin:0 auto}
+
+/* TYPE */
+h2{font-family:var(--ff);font-size:32px;font-weight:600;color:var(--dark);line-height:1.15;margin-bottom:.75rem}
+h3{font-family:var(--ff);font-size:22px;font-weight:500;color:var(--dark);margin-bottom:.6rem}
+h4{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:1rem}
+p{color:var(--warm-gray);line-height:1.75;margin-bottom:.75rem}
+p:last-child{margin-bottom:0}
+.lead{font-size:17px;font-weight:300;color:var(--dark);line-height:1.65}
+
+/* CARD */
+.card{background:var(--warm-white);border-radius:var(--r-lg);border:1px solid var(--mid-gray);overflow:hidden}
+.card-p{padding:1.25rem 1.5rem}
+.card-header{padding:.9rem 1.25rem;border-bottom:1px solid var(--mid-gray);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.card-footer{padding:.9rem 1.25rem;border-top:1px solid var(--mid-gray);font-size:12px;color:var(--warm-gray)}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1rem}
+
+/* TAGS/BADGES */
+.tag{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px;white-space:nowrap}
+.tag-terra{background:rgba(201,107,63,.14);color:var(--terra)}
+.tag-sage{background:rgba(45,122,95,.12);color:var(--sage)}
+.tag-sky{background:rgba(24,95,165,.1);color:var(--sky)}
+.tag-amber{background:rgba(186,117,23,.12);color:var(--amber)}
+.tag-red{background:rgba(163,45,45,.1);color:var(--red)}
+.tag-gray{background:var(--bg);color:var(--warm-gray)}
+
+/* FEATURE LIST */
+.feat-list{display:flex;flex-direction:column;gap:0}
+.feat-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid rgba(200,191,181,.3)}
+.feat-item:last-child{border:none}
+.feat-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.feat-text h5{font-size:13px;font-weight:500;color:var(--dark);margin-bottom:2px}
+.feat-text p{font-size:12px;color:var(--warm-gray);margin:0;line-height:1.5}
+
+/* FLOW */
+.flow{display:flex;flex-direction:column;gap:0}
+.flow-step{display:flex;gap:16px;padding-bottom:0;position:relative}
+.flow-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:36px}
+.flow-dot{width:36px;height:36px;border-radius:50%;background:var(--terra);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:white;flex-shrink:0}
+.flow-dot-sm{width:28px;height:28px;border-radius:50%;background:var(--bg);border:2px solid var(--mid-gray);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--warm-gray);flex-shrink:0}
+.flow-line{width:2px;flex:1;background:var(--mid-gray);margin:4px 0;min-height:20px}
+.flow-content{flex:1;padding-bottom:20px}
+.flow-title{font-size:14px;font-weight:500;color:var(--dark);margin-bottom:4px;padding-top:7px}
+.flow-desc{font-size:12px;color:var(--warm-gray);line-height:1.55}
+
+/* DATA MODEL TABLE */
+.db-table{width:100%;border-collapse:collapse;font-size:12px}
+.db-table th{background:var(--bg);padding:8px 12px;text-align:left;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--warm-gray);border-bottom:1px solid var(--mid-gray)}
+.db-table td{padding:9px 12px;border-bottom:1px solid rgba(200,191,181,.3);vertical-align:top}
+.db-table tr:last-child td{border:none}
+.db-table td:first-child{font-family:var(--fm);font-size:11px;color:var(--terra);font-weight:400}
+.db-table td:nth-child(2){font-family:var(--fm);font-size:11px;color:var(--sky)}
+.db-table td:nth-child(3){color:var(--warm-gray)}
+.db-pk{font-size:9px;background:var(--amber-pale);color:var(--amber);padding:1px 5px;border-radius:3px;margin-left:5px}
+.db-fk{font-size:9px;background:var(--sky-pale);color:var(--sky);padding:1px 5px;border-radius:3px;margin-left:5px}
+
+/* SCREEN MOCK */
+.screen{background:var(--warm-white);border-radius:var(--r-lg);border:1.5px solid var(--mid-gray);overflow:hidden}
+.screen-bar{height:36px;background:white;border-bottom:1px solid var(--mid-gray);display:flex;align-items:center;padding:0 14px;gap:10px}
+.screen-dot{width:8px;height:8px;border-radius:50%}
+.screen-url{flex:1;height:18px;background:var(--bg);border-radius:4px;margin:0 10px}
+
+/* MILESTONE */
+.milestone{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid rgba(200,191,181,.3)}
+.milestone:last-child{border:none}
+.ms-date{width:90px;flex-shrink:0;font-size:12px;font-weight:500;color:var(--terra);font-family:var(--fm)}
+.ms-content h5{font-size:13px;font-weight:500;color:var(--dark);margin-bottom:4px}
+.ms-content p{font-size:12px;margin:0}
+.ms-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--mid-gray);margin:3rem 0}
+.divider-sm{height:1px;background:rgba(200,191,181,.35);margin:1.5rem 0}
+
+/* ROLE CARD */
+.role-card{padding:1.5rem;border-radius:var(--r-lg);border:1px solid var(--mid-gray);background:var(--warm-white)}
+.role-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:20px}
+.role-title{font-family:var(--ff);font-size:20px;font-weight:500;color:var(--dark);margin-bottom:4px}
+
+/* SCOPE TABLE */
+.scope-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(200,191,181,.25)}
+.scope-row:last-child{border:none}
+.scope-name{flex:1;font-size:13px;color:var(--dark)}
+.scope-v1{width:60px;text-align:center}
+.scope-v2{width:60px;text-align:center;color:var(--warm-gray);font-size:12px}
+.check{color:var(--sage);font-size:14px}
+.dash{color:var(--mid-gray)}
+
+/* TECH STACK */
+.tech-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(200,191,181,.3)}
+.tech-row:last-child{border:none}
+.tech-layer{width:90px;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--warm-gray);flex-shrink:0}
+.tech-name{font-size:13px;font-weight:500;color:var(--dark);width:140px;flex-shrink:0}
+.tech-why{font-size:12px;color:var(--warm-gray)}
+
+/* SECURITY */
+.sec-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid rgba(200,191,181,.25)}
+.sec-item:last-child{border:none}
+.sec-dot{width:8px;height:8px;border-radius:50%;background:var(--sage);flex-shrink:0;margin-top:5px}
+
+/* NOTE BOX */
+.note{padding:1rem 1.25rem;border-radius:var(--r-md);font-size:13px;line-height:1.65}
+.note-terra{background:var(--terra-pale);border-left:3px solid var(--terra);color:var(--terra-dark)}
+.note-sage{background:var(--sage-pale);border-left:3px solid var(--sage);color:var(--sage)}
+.note-sky{background:var(--sky-pale);border-left:3px solid var(--sky);color:var(--sky)}
+.note-amber{background:var(--amber-pale);border-left:3px solid var(--amber);color:var(--amber)}
+
+/* FOOTER */
+.doc-footer{background:var(--dark);padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.doc-footer p{color:rgba(253,250,247,.3);font-size:11px;margin:0}
+
+@media(max-width:700px){
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .section,.section-sm{padding:3rem 1.25rem}
+  .chapter{padding:2rem 1.25rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="doc-nav">
+  <a href="#cover" class="nav-brand">
+    <svg width="20" height="20" viewBox="0 0 80 80" fill="none">
+      <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="9" stroke-linecap="round" fill="none"/>
+      <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="9" stroke-linecap="round" fill="none"/>
+      <circle cx="15" cy="70" r="6" fill="#C96B3F"/><circle cx="65" cy="70" r="6" fill="#C96B3F"/>
+      <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/>
+    </svg>
+    Velacare
+  </a>
+  <div class="nav-links">
+    <a href="#uebersicht" class="nav-link">Übersicht</a>
+    <a href="#rollen" class="nav-link">Rollen</a>
+    <a href="#kunde" class="nav-link">Kundenportal</a>
+    <a href="#box" class="nav-link">Box-Konfigurator</a>
+    <a href="#admin" class="nav-link">Adminbereich</a>
+    <a href="#daten" class="nav-link">Datenmodell</a>
+    <a href="#techstack" class="nav-link">Techstack</a>
+    <a href="#sicherheit" class="nav-link">Sicherheit</a>
+    <a href="#roadmap" class="nav-link">Roadmap</a>
+  </div>
+  <div class="nav-pill">Softwarekonzept v1.0</div>
+</nav>
+
+<!-- COVER -->
+<section id="cover" style="padding-top:52px">
+  <div class="cover">
+    <div class="cover-eye">Softwarekonzept · Version 1.0 · 2025</div>
+    <div style="margin-bottom:1.5rem">
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+        <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#E8A07A" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#E8A07A" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <circle cx="15" cy="70" r="5.5" fill="#E8A07A"/><circle cx="65" cy="70" r="5.5" fill="#E8A07A"/>
+        <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#A8D5C2"/>
+      </svg>
+    </div>
+    <div class="cover-h">Velacare App</div>
+    <div class="cover-sub">Softwarekonzept — Kunde & Admin</div>
+    <div class="cover-tags">
+      <div class="cover-tag">Version 1 — ohne Kassenkommunikation</div>
+      <div class="cover-tag">Kundenportal + Admin-Panel</div>
+      <div class="cover-tag">Box-Konfigurator</div>
+      <div class="cover-tag">DSGVO-konform</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ 01 ÜBERSICHT ════════════════════════ -->
+<div id="uebersicht" class="chapter">
+  <div class="ch-num">01</div>
+  <div class="ch-info"><div class="ch-label">Kapitel 1</div><div class="ch-title">Übersicht & Ziele</div></div>
+</div>
+
+<div class="section">
+  <h4>Was gebaut wird</h4>
+  <h2>Eine Web-App in zwei Bereichen</h2>
+  <p class="lead" style="max-width:700px;margin-bottom:2rem">Velacare benötigt eine vollständige Web-Applikation mit zwei klar getrennten Bereichen: ein <strong>Kundenportal</strong> für Pflegebedürftige und Angehörige, und ein <strong>Admin-Panel</strong> für den Betrieb. Version 1 funktioniert ohne direkte Kassenkommunikation — alle Anfragen werden manuell durch das Velacare-Team bearbeitet.</p>
+
+  <div class="g2" style="margin-bottom:2rem">
+    <div class="note note-terra">
+      <strong>Scope Version 1</strong><br>
+      Registrierung, Anmeldung, Box zusammenstellen, Bestellungen verwalten, Kundenverwaltung im Admin, Produktverwaltung. Keine automatisierte Pflegekassen-Kommunikation.
+    </div>
+    <div class="note note-sage">
+      <strong>Für Version 2 vorgemerkt</strong><br>
+      Automatische Antragstellung bei Pflegekassen, digitale Unterschrift, Kassenschnittstellen, Rechnungsstellung, Partnerportal für Pflegedienste.
+    </div>
+  </div>
+
+  <div class="g3">
+    <div class="card card-p">
+      <div style="font-size:24px;margin-bottom:10px">🌐</div>
+      <h3 style="font-size:18px">Öffentliche Website</h3>
+      <p style="font-size:13px">Marketing-Seiten (Startseite, Wie es funktioniert, Produkte, FAQ, Über uns, Kontakt). Kein Login erforderlich. Führt zum Registrierungsformular.</p>
+    </div>
+    <div class="card card-p">
+      <div style="font-size:24px;margin-bottom:10px">👤</div>
+      <h3 style="font-size:18px">Kundenportal</h3>
+      <p style="font-size:13px">Nach Registrierung/Login. Box verwalten, Lieferung steuern, Kontaktdaten ändern, Anfragen stellen, Account löschen.</p>
+    </div>
+    <div class="card card-p">
+      <div style="font-size:24px;margin-bottom:10px">⚙️</div>
+      <h3 style="font-size:18px">Admin-Panel</h3>
+      <p style="font-size:13px">Nur für Velacare-Mitarbeiter. Kundenverwaltung, Produktverwaltung, Bestellübersicht, Anfragen bearbeiten, Lieferungen steuern.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <h4>Scope-Übersicht V1 vs. V2</h4>
+  <div class="card">
+    <div class="card-header">
+      <span style="font-size:13px;font-weight:500;color:var(--dark)">Feature-Scope</span>
+      <div style="display:flex;gap:8px">
+        <span class="tag tag-sage">V1 ✓</span>
+        <span class="tag tag-gray">V2 später</span>
+      </div>
+    </div>
+    <div style="padding:0 1.25rem">
+      <div class="scope-row"><div class="scope-name">Registrierung & Login (E-Mail/Passwort)</div><div class="scope-v1"><span class="check">✓</span></div><div class="scope-v2"></div></div>
+      <div class="scope-row"><div class="scope-name">Box individuell zusammenstellen (Konfigurator)</div><div class="scope-v1"><span class="check">✓</span></div><div class="scope-v2"></div></div>
+      <div class="scope-row"><div class="scope-name">Kundenkonto — Daten einsehen & ändern</div><div class="scope-v1"><span class="check">✓</span></div><div class="scope-v2"></div></div>
+      <div class="scope-row"><div class="scope-name">Lieferung pausieren / Stichtag ändern</div><div class="scope-v1"><span class="check">✓</span></div><div class="scope-v2"></div></div>
+      <div class="scope-row"><div class="scope-name">Anfrage an Velacare stellen</div><div class="scope-v1"><span class="check">✓</span></div><div class="scope-v2"></div></div>
+      <div class="scope-row"><div class="scope-name">Account löschen (DSGVO)</div><div class="scope-v1"><span class="check">✓</span></div><div class="scope-v2"></div></div>
+      <div class="scope-row"><div class="scope-name">Admin: Kundenverwaltung (anlegen, bearbeiten, löschen)</div><div class="scope-v1"><span class="check">✓</span></div><div class="scope-v2"></div></div>
+      <div class="scope-row"><div class="scope-name">Admin: Produktverwaltung (CRUD)</div><div class="scope-v1"><span class="check">✓</span></div><div class="scope-v2"></div></div>
+      <div class="scope-row"><div class="scope-name">Admin: Bestellübersicht & Status-Management</div><div class="scope-v1"><span class="check">✓</span></div><div class="scope-v2"></div></div>
+      <div class="scope-row"><div class="scope-name">Admin: Anfragen bearbeiten</div><div class="scope-v1"><span class="check">✓</span></div><div class="scope-v2"></div></div>
+      <div class="scope-row"><div class="scope-name">E-Mail-Benachrichtigungen (transaktional)</div><div class="scope-v1"><span class="check">✓</span></div><div class="scope-v2"></div></div>
+      <div class="scope-row"><div class="scope-name">Automatische Pflegekassen-Kommunikation</div><div class="scope-v1"><span class="dash">–</span></div><div class="scope-v2">V2</div></div>
+      <div class="scope-row"><div class="scope-name">Digitale Unterschrift / eSignatur</div><div class="scope-v1"><span class="dash">–</span></div><div class="scope-v2">V2</div></div>
+      <div class="scope-row"><div class="scope-name">Automatische Rechnungsstellung</div><div class="scope-v1"><span class="dash">–</span></div><div class="scope-v2">V2</div></div>
+      <div class="scope-row"><div class="scope-name">Partnerportal (Pflegedienste)</div><div class="scope-v1"><span class="dash">–</span></div><div class="scope-v2">V2</div></div>
+      <div class="scope-row"><div class="scope-name">Mobile App (iOS/Android)</div><div class="scope-v1"><span class="dash">–</span></div><div class="scope-v2">V2</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ 02 ROLLEN ════════════════════════ -->
+<div id="rollen" class="chapter">
+  <div class="ch-num">02</div>
+  <div class="ch-info"><div class="ch-label">Kapitel 2</div><div class="ch-title">Rollen & Berechtigungen</div></div>
+</div>
+
+<div class="section">
+  <h4>Wer nutzt das System</h4>
+  <h2>3 Rollen, klar getrennt</h2>
+  <div class="g3" style="margin-bottom:2rem">
+
+    <div class="role-card">
+      <div class="role-icon" style="background:var(--terra-pale)">👤</div>
+      <div class="role-title">Kunde</div>
+      <div class="tag tag-terra" style="margin-bottom:12px">Öffentlich registrierbar</div>
+      <div class="feat-list">
+        <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale)">✓</div><div class="feat-text"><h5>Eigenes Konto einsehen</h5><p>Persönliche Daten, Pflegegrad, Bestellhistorie</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale)">✓</div><div class="feat-text"><h5>Box konfigurieren</h5><p>Produkte wählen, Budget überwachen, speichern</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale)">✓</div><div class="feat-text"><h5>Lieferung steuern</h5><p>Stichtag ändern, pausieren, reaktivieren</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale)">✓</div><div class="feat-text"><h5>Anfragen stellen</h5><p>Kontakt zu Velacare aufnehmen</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale)">✓</div><div class="feat-text"><h5>Account löschen</h5><p>Selbst initiierte DSGVO-Löschung</p></div></div>
+      </div>
+    </div>
+
+    <div class="role-card" style="border-color:var(--terra);border-width:1.5px">
+      <div class="role-icon" style="background:rgba(201,107,63,.12)">⚙️</div>
+      <div class="role-title">Admin</div>
+      <div class="tag tag-terra" style="margin-bottom:12px">Nur intern — manuell angelegt</div>
+      <div class="feat-list">
+        <div class="feat-item"><div class="feat-icon" style="background:rgba(201,107,63,.1)">✓</div><div class="feat-text"><h5>Alle Kunden verwalten</h5><p>Anlegen, bearbeiten, sperren, löschen</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:rgba(201,107,63,.1)">✓</div><div class="feat-text"><h5>Produkte verwalten</h5><p>Anlegen, bearbeiten, deaktivieren, Preise pflegen</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:rgba(201,107,63,.1)">✓</div><div class="feat-text"><h5>Bestellungen verwalten</h5><p>Status ändern, Lieferungen steuern, exportieren</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:rgba(201,107,63,.1)">✓</div><div class="feat-text"><h5>Anfragen bearbeiten</h5><p>Kundentickets einsehen und beantworten</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:rgba(201,107,63,.1)">✓</div><div class="feat-text"><h5>Superadmin: Admins anlegen</h5><p>Weitere Admin-Accounts erstellen</p></div></div>
+      </div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-icon" style="background:var(--sky-pale)">👑</div>
+      <div class="role-title">Superadmin</div>
+      <div class="tag tag-sky" style="margin-bottom:12px">Einmalig — Betreiber</div>
+      <div class="feat-list">
+        <div class="feat-item"><div class="feat-icon" style="background:var(--sky-pale)">✓</div><div class="feat-text"><h5>Alles was Admin kann</h5><p>Vollständiger Zugriff auf alle Bereiche</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:var(--sky-pale)">✓</div><div class="feat-text"><h5>Admin-Accounts verwalten</h5><p>Anlegen, Rechte vergeben, deaktivieren</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:var(--sky-pale)">✓</div><div class="feat-text"><h5>System-Einstellungen</h5><p>Budget-Limit, Lieferstichtage, E-Mail-Templates</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:var(--sky-pale)">✓</div><div class="feat-text"><h5>Datenschutz-Protokolle</h5><p>Löschanfragen bestätigen, Audit-Log einsehen</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note note-amber">
+    <strong>Wichtig:</strong> Admin-Accounts können sich <em>nicht</em> öffentlich registrieren. Sie werden ausschließlich vom Superadmin im Admin-Panel angelegt. Der erste Superadmin-Account wird bei der Erstinstallation per Seed-Script gesetzt.
+  </div>
+</div>
+
+<!-- ════════════════════════ 03 KUNDENPORTAL ════════════════════════ -->
+<div id="kunde" class="chapter">
+  <div class="ch-num">03</div>
+  <div class="ch-info"><div class="ch-label">Kapitel 3</div><div class="ch-title">Kundenportal</div></div>
+</div>
+
+<div class="section">
+  <h4>Registrierung & Onboarding</h4>
+  <h2>4-Schritt Antragsprozess</h2>
+  <p style="max-width:680px;margin-bottom:2rem">Orientiert an frontida.de und pflegetipp.de: Der Nutzer durchläuft einen geführten Funnel. Am Ende landet die Anfrage als neuer Kundensatz im Admin — kein automatischer Versand, keine Kassenkommunikation in V1.</p>
+
+  <div class="card" style="margin-bottom:2rem">
+    <div class="card-header"><span style="font-size:13px;font-weight:500;color:var(--dark)">Registrierungs-Flow (Öffentlich → Konto)</span><span class="tag tag-terra">4 Schritte</span></div>
+    <div style="padding:1.25rem 1.5rem">
+      <div class="flow">
+        <div class="flow-step">
+          <div class="flow-left"><div class="flow-dot">1</div><div class="flow-line"></div></div>
+          <div class="flow-content">
+            <div class="flow-title">Anspruch prüfen</div>
+            <div class="flow-desc">Pflegegrad (1–5) wählen · Pflegeort bestätigen (zuhause) · Versicherungsart (gesetzlich/privat). System zeigt sofort: „Sie haben Anspruch auf bis zu 42 €/Monat." Bei fehlendem Anspruch: freundliche Erklärung + Weiterleitung.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-left"><div class="flow-dot">2</div><div class="flow-line"></div></div>
+          <div class="flow-content">
+            <div class="flow-title">Persönliche Daten erfassen</div>
+            <div class="flow-desc">Pflegebedürftiger: Vorname, Nachname, Geburtsdatum, Adresse, PLZ/Ort · Antragsteller (optional, wenn Angehöriger): Vorname, Nachname, Verhältnis · Krankenkasse (Freitext oder Dropdown mit häufigen Kassen) · Telefonnummer · E-Mail-Adresse · Passwort (für Konto-Erstellung).</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-left"><div class="flow-dot">3</div><div class="flow-line"></div></div>
+          <div class="flow-content">
+            <div class="flow-title">Box zusammenstellen</div>
+            <div class="flow-desc">Interaktiver Konfigurator (siehe Kapitel 4) · Budget-Counter live (0–42€) · Produkte wählen per Checkbox/Toggle · Box kann jederzeit später im Konto geändert werden.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-left"><div class="flow-dot">4</div></div>
+          <div class="flow-content">
+            <div class="flow-title">Bestätigung & Konto-Aktivierung</div>
+            <div class="flow-desc">Zusammenfassung der Angaben · DSGVO-Einwilligung + AGB (Pflichtfelder) · Wunsch-Lieferstichtag wählen (1.–28. eines Monats) · Absenden → Bestätigungs-E-Mail mit Aktivierungslink · Admin wird benachrichtigt (neue Kundenanfrage).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-sm"></div>
+  <h4>Kundenkonto — Dashboard & Funktionen</h4>
+
+  <div class="g2" style="margin-bottom:1.25rem">
+    <div class="card">
+      <div class="card-header"><span style="font-size:13px;font-weight:500">Dashboard (Übersicht)</span><span class="tag tag-terra">Startseite nach Login</span></div>
+      <div style="padding:1rem 1.25rem">
+        <div class="feat-list">
+          <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale);font-size:12px">📦</div><div class="feat-text"><h5>Aktuelle Box</h5><p>Welche Produkte sind aktuell in der Box, Gesamtwert, Letzter Versand</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale);font-size:12px">📅</div><div class="feat-text"><h5>Nächste Lieferung</h5><p>Datum, Status (geplant / pausiert), Countdown</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale);font-size:12px">📋</div><div class="feat-text"><h5>Letzte Lieferungen</h5><p>Kurzübersicht der letzten 3 Lieferungen mit Status</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale);font-size:12px">🔔</div><div class="feat-text"><h5>Benachrichtigungen</h5><p>Ungelesene Antworten auf Anfragen, Lieferstatus-Updates</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span style="font-size:13px;font-weight:500">Meine Box</span><span class="tag tag-terra">Konfigurator</span></div>
+      <div style="padding:1rem 1.25rem">
+        <div class="feat-list">
+          <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale);font-size:12px">✏️</div><div class="feat-text"><h5>Box bearbeiten</h5><p>Produkte hinzufügen/entfernen, Budget live tracken (max. 42€)</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale);font-size:12px">💾</div><div class="feat-text"><h5>Änderungen speichern</h5><p>Gilt ab nächster Lieferung (mit Hinweis wenn Stichtag &lt; 3 Tage)</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale);font-size:12px">📜</div><div class="feat-text"><h5>Lieferverlauf</h5><p>Vollständige Liste aller Lieferungen mit Inhalt und Status</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-bottom:1.25rem">
+    <div class="card">
+      <div class="card-header"><span style="font-size:13px;font-weight:500">Lieferung steuern</span><span class="tag tag-amber">Selbstverwaltung</span></div>
+      <div style="padding:1rem 1.25rem">
+        <div class="feat-list">
+          <div class="feat-item"><div class="feat-icon" style="background:var(--amber-pale);font-size:12px">📆</div><div class="feat-text"><h5>Lieferstichtag ändern</h5><p>Beliebiger Tag 1–28 eines Monats wählbar, gilt ab übernächstem Monat</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--amber-pale);font-size:12px">⏸️</div><div class="feat-text"><h5>Lieferung pausieren</h5><p>Für 1–3 Monate, Pausierungsgrund optional angeben</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--amber-pale);font-size:12px">▶️</div><div class="feat-text"><h5>Lieferung reaktivieren</h5><p>Jederzeit, ab nächstem Lieferstichtag wieder aktiv</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--amber-pale);font-size:12px">📍</div><div class="feat-text"><h5>Lieferadresse ändern</h5><p>Neue Adresse eingeben — Admin wird informiert</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span style="font-size:13px;font-weight:500">Mein Konto</span><span class="tag tag-sky">Persönliche Daten</span></div>
+      <div style="padding:1rem 1.25rem">
+        <div class="feat-list">
+          <div class="feat-item"><div class="feat-icon" style="background:var(--sky-pale);font-size:12px">✏️</div><div class="feat-text"><h5>Kontaktdaten ändern</h5><p>Telefon, E-Mail · Adressänderung separat mit Admin-Info</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--sky-pale);font-size:12px">🔑</div><div class="feat-text"><h5>Passwort ändern</h5><p>Altes Passwort bestätigen + neues Passwort setzen</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--sky-pale);font-size:12px">💬</div><div class="feat-text"><h5>Anfrage stellen</h5><p>Freitext-Nachricht an Velacare, Antwort im Konto sichtbar</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--red-pale);font-size:12px">🗑️</div><div class="feat-text"><h5>Account löschen</h5><p>Zweistufige Bestätigung, DSGVO-Löschung innerhalb 30 Tage, Admin-Info</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note note-sky">
+    <strong>Anfragen-System (V1 einfach):</strong> Kunden können über ein Freitext-Formular Nachrichten senden (Kategorie wählbar: Box-Inhalt, Lieferung, Adresse, Sonstiges). Der Admin sieht alle offenen Anfragen und kann direkt antworten. Die Antwort erscheint im Kundenkonto unter „Meine Anfragen" und wird per E-Mail zugestellt.
+  </div>
+</div>
+
+<!-- ════════════════════════ 04 BOX-KONFIGURATOR ════════════════════════ -->
+<div id="box" class="chapter">
+  <div class="ch-num">04</div>
+  <div class="ch-info"><div class="ch-label">Kapitel 4</div><div class="ch-title">Box-Konfigurator</div></div>
+</div>
+
+<div class="section">
+  <h4>Herzstück der App</h4>
+  <h2>Individuell, live, intuitiv</h2>
+  <p style="max-width:680px;margin-bottom:2rem">Der Konfigurator ist das zentrale Differenzierungsmerkmal. Angelehnt an frontida.de und pflegetipp.de, aber intuitiver und visuell stärker. Der Nutzer sieht immer live wie viel Budget noch verbleibt.</p>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-header"><span style="font-size:13px;font-weight:500">Konfigurator — Aufbau & Logik</span></div>
+    <div style="padding:1.25rem 1.5rem">
+      <div class="g2">
+        <div>
+          <h4>Linke Spalte — Filter & Budget</h4>
+          <div class="feat-list">
+            <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale);font-size:12px">🏷️</div><div class="feat-text"><h5>Kategorie-Filter</h5><p>Alle · Handschuhe · Desinfektion · Mundschutz · Schutzkleidung · Hygiene · Sonstiges</p></div></div>
+            <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale);font-size:12px">💰</div><div class="feat-text"><h5>Budget-Anzeige (live)</h5><p>Fortschrittsbalken: „34,80 € von 42,00 € genutzt". Wird bei jeder Auswahl aktualisiert.</p></div></div>
+            <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale);font-size:12px">📋</div><div class="feat-text"><h5>Aktuelle Auswahl (Mini-Box)</h5><p>Liste der gewählten Produkte mit Einzelpreisen, Gesamtsumme</p></div></div>
+            <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale);font-size:12px">💾</div><div class="feat-text"><h5>CTA — Box speichern</h5><p>Nur aktiv wenn Budget nicht überschritten. Bestätigung per Toast.</p></div></div>
+          </div>
+        </div>
+        <div>
+          <h4>Rechte Spalte — Produktgrid</h4>
+          <div class="feat-list">
+            <div class="feat-item"><div class="feat-icon" style="background:var(--sage-pale);font-size:12px">🖼️</div><div class="feat-text"><h5>Produktkarte</h5><p>Foto · Name · Kurzbeschreibung · Preis · Menge-Auswahl (z.B. Handschuhe: S/M/L) · Checkbox zum Hinzufügen</p></div></div>
+            <div class="feat-item"><div class="feat-icon" style="background:var(--sage-pale);font-size:12px">⚠️</div><div class="feat-text"><h5>Budget-Überschreitung</h5><p>Produkt grau wenn nicht mehr ins Budget passt, mit Hinweis „Budget würde überschritten"</p></div></div>
+            <div class="feat-item"><div class="feat-icon" style="background:var(--sage-pale);font-size:12px">🔴</div><div class="feat-text"><h5>Nicht verfügbar</h5><p>Admin kann Produkte deaktivieren → erscheinen als „Momentan nicht verfügbar"</p></div></div>
+            <div class="feat-item"><div class="feat-icon" style="background:var(--sage-pale);font-size:12px">📱</div><div class="feat-text"><h5>Sticky Speichern-Button</h5><p>Mobil: Floating Button unten. Desktop: fixiert in der Sidebar-CTA.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h4>Produktkarte — Felder</h4>
+  <div class="card">
+    <div class="card-header"><span style="font-size:13px;font-weight:500">Produkt-Datenfelder (sichtbar im Konfigurator)</span></div>
+    <table class="db-table" style="margin:0">
+      <thead><tr><th>Feld</th><th>Typ</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>name</td><td>string</td><td>Produktname, z.B. „Einmalhandschuhe latexfrei"</td></tr>
+        <tr><td>kategorie</td><td>enum</td><td>Handschuhe / Desinfektion / Mundschutz / Schutzkleidung / Hygiene / Sonstiges</td></tr>
+        <tr><td>beschreibung</td><td>text</td><td>Kurze Produktbeschreibung (max. 120 Zeichen)</td></tr>
+        <tr><td>bild_url</td><td>string</td><td>Produktfoto (hochgeladen im Admin)</td></tr>
+        <tr><td>preis</td><td>decimal</td><td>Preis in Euro (z.B. 8,90) — wird gegen 42€ Budget gerechnet</td></tr>
+        <tr><td>varianten</td><td>JSON</td><td>Optional: Größen/Mengen (z.B. [{label:"M",id:"m"},{label:"L",id:"l"}])</td></tr>
+        <tr><td>hersteller</td><td>string</td><td>z.B. „Hartmann", „TENA" — für Vertrauenssignal</td></tr>
+        <tr><td>aktiv</td><td>boolean</td><td>false = im Konfigurator nicht wählbar (Admin-steuerbar)</td></tr>
+        <tr><td>pflichtkennzeichnung</td><td>text</td><td>Optional: Pflichtangaben (z.B. für Desinfektionsmittel nach DSGVO/BauA)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider-sm"></div>
+  <div class="note note-terra">
+    <strong>Budget-Logik:</strong> Das Budgetlimit (42€) ist im Admin konfigurierbar (System-Einstellungen). Wenn der Gesetzgeber das Limit erhöht, muss kein Code geändert werden — nur ein Wert im Admin. Die Summe aller gewählten Produkte darf diesen Wert nicht überschreiten. Eine Unterschreitung ist erlaubt (z.B. 38,50€ von 42€).
+  </div>
+</div>
+
+<!-- ════════════════════════ 05 ADMIN-PANEL ════════════════════════ -->
+<div id="admin" class="chapter">
+  <div class="ch-num">05</div>
+  <div class="ch-info"><div class="ch-label">Kapitel 5</div><div class="ch-title">Admin-Panel</div></div>
+</div>
+
+<div class="section">
+  <h4>Betriebszentrale</h4>
+  <h2>Alles auf einen Blick</h2>
+  <p style="max-width:680px;margin-bottom:2rem">Das Admin-Panel ist die operative Zentrale von Velacare. Jeder Kundeneintrag, jede Bestellung, jedes Produkt und jede Anfrage wird hier verwaltet. Die Navigation ist in 6 Hauptbereiche gegliedert.</p>
+
+  <!-- Dashboard -->
+  <h4>1 — Dashboard (Admin-Startseite)</h4>
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-p">
+      <div class="g4" style="margin-bottom:1rem">
+        <div style="background:var(--bg);border-radius:var(--r-md);padding:14px;text-align:center"><div style="font-family:var(--ff);font-size:28px;font-weight:600;color:var(--terra)">—</div><div style="font-size:11px;color:var(--warm-gray);margin-top:4px">Aktive Kunden</div></div>
+        <div style="background:var(--bg);border-radius:var(--r-md);padding:14px;text-align:center"><div style="font-family:var(--ff);font-size:28px;font-weight:600;color:var(--amber)">—</div><div style="font-size:11px;color:var(--warm-gray);margin-top:4px">Neue Anfragen</div></div>
+        <div style="background:var(--bg);border-radius:var(--r-md);padding:14px;text-align:center"><div style="font-family:var(--ff);font-size:28px;font-weight:600;color:var(--sage)">—</div><div style="font-size:11px;color:var(--warm-gray);margin-top:4px">Lieferungen diesen Monat</div></div>
+        <div style="background:var(--bg);border-radius:var(--r-md);padding:14px;text-align:center"><div style="font-family:var(--ff);font-size:28px;font-weight:600;color:var(--red)">—</div><div style="font-size:11px;color:var(--warm-gray);margin-top:4px">Pausierte Konten</div></div>
+      </div>
+      <p style="font-size:12px">Zusätzlich: Tabelle der letzten 10 Aktionen (neue Registrierungen, Änderungsanfragen, Löschanfragen) und ein Kalender der anstehenden Lieferungen.</p>
+    </div>
+  </div>
+
+  <!-- Kundenverwaltung -->
+  <h4>2 — Kundenverwaltung</h4>
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-header"><span style="font-size:13px;font-weight:500">Kundenübersicht — Tabelle</span><span class="tag tag-terra">Vollzugriff</span></div>
+    <div style="padding:1rem 1.5rem">
+      <div class="feat-list">
+        <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale);font-size:12px">🔍</div><div class="feat-text"><h5>Suche & Filter</h5><p>Suche nach Name, E-Mail, Kundennummer · Filter: Status (aktiv/pausiert/gesperrt/gelöscht) · Filter: Pflegegrad · Sortierung nach Datum, Name, Status</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale);font-size:12px">👁️</div><div class="feat-text"><h5>Detailansicht Kunde</h5><p>Alle persönlichen Daten · Aktuelle Box-Konfiguration · Lieferverlauf (alle Lieferungen mit Status) · Offene und beantwortete Anfragen · Änderungsprotokoll (wer hat wann was geändert)</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:var(--terra-pale);font-size:12px">✏️</div><div class="feat-text"><h5>Kunden bearbeiten</h5><p>Alle Felder editierbar: Name, Adresse, Pflegegrad, Krankenkasse, E-Mail, Telefon · Box-Inhalt im Namen des Kunden ändern (mit Protokolleintrag)</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:var(--amber-pale);font-size:12px">🔒</div><div class="feat-text"><h5>Kunden sperren / entsperren</h5><p>Temporäre Sperre (Login nicht möglich, Lieferung gestoppt) · Sperrgrund verpflichtend · E-Mail-Benachrichtigung an Kunden optional</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:var(--red-pale);font-size:12px">🗑️</div><div class="feat-text"><h5>Kunden löschen (DSGVO)</h5><p>Soft-Delete: Konto deaktiviert, Daten anonymisiert nach 30 Tagen · Hard-Delete: sofortige Löschung (nur Superadmin) · Löschprotokoll bleibt erhalten</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:var(--sage-pale);font-size:12px">📤</div><div class="feat-text"><h5>Export</h5><p>Kundenliste als CSV/XLSX exportieren (gefiltert oder gesamt)</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Produktverwaltung -->
+  <h4>3 — Produktverwaltung</h4>
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-header"><span style="font-size:13px;font-weight:500">Produkte — CRUD</span><span class="tag tag-sage">Vollständige Verwaltung</span></div>
+    <div style="padding:1rem 1.5rem">
+      <div class="g2">
+        <div class="feat-list">
+          <div class="feat-item"><div class="feat-icon" style="background:var(--sage-pale);font-size:12px">➕</div><div class="feat-text"><h5>Produkt anlegen</h5><p>Name, Kategorie, Beschreibung, Foto hochladen, Preis, Varianten (optional), Hersteller, Pflichtangaben</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--sage-pale);font-size:12px">✏️</div><div class="feat-text"><h5>Produkt bearbeiten</h5><p>Alle Felder editierbar · Preisänderung mit optionalem Gültigkeitsdatum</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--sage-pale);font-size:12px">🔴</div><div class="feat-text"><h5>Produkt deaktivieren</h5><p>Produkt verschwindet aus dem Konfigurator, bleibt aber in alten Bestellungen sichtbar</p></div></div>
+        </div>
+        <div class="feat-list">
+          <div class="feat-item"><div class="feat-icon" style="background:var(--sage-pale);font-size:12px">🗑️</div><div class="feat-text"><h5>Produkt löschen</h5><p>Nur wenn Produkt in keiner aktiven Box enthalten ist, sonst nur Deaktivierung möglich</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--sage-pale);font-size:12px">📊</div><div class="feat-text"><h5>Produktstatistik</h5><p>Wie viele Kunden haben dieses Produkt aktuell in der Box? Beliebtheit-Ranking</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--sage-pale);font-size:12px">🖼️</div><div class="feat-text"><h5>Bild-Upload</h5><p>Drag & Drop, max. 2MB, automatische Komprimierung, WebP-Konvertierung</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bestellverwaltung -->
+  <h4>4 — Bestellverwaltung & Lieferungen</h4>
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-header"><span style="font-size:13px;font-weight:500">Bestellübersicht</span><span class="tag tag-sky">Monatlicher Zyklus</span></div>
+    <div style="padding:1rem 1.5rem">
+      <div class="feat-list">
+        <div class="feat-item"><div class="feat-icon" style="background:var(--sky-pale);font-size:12px">📋</div><div class="feat-text"><h5>Lieferliste generieren</h5><p>Für jeden Monat: Welche Kunden erhalten wann was? Filterbar nach Datum, Status, PLZ. Exportierbar für Versanddienstleister.</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:var(--sky-pale);font-size:12px">🔄</div><div class="feat-text"><h5>Lieferstatus verwalten</h5><p>Status-Werte: Geplant → In Bearbeitung → Versendet → Zugestellt → Storniert. Manuelle Änderung möglich, Kunde wird per E-Mail benachrichtigt.</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:var(--sky-pale);font-size:12px">⏸️</div><div class="feat-text"><h5>Lieferung manuell pausieren/stoppen</h5><p>Admin kann Lieferungen für einzelne Kunden oder global (z.B. Betriebsferien) pausieren</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:var(--sky-pale);font-size:12px">📤</div><div class="feat-text"><h5>Export für Versand</h5><p>CSV mit allen Lieferadressen, Box-Inhalt, Kundennummern für den Monat</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Anfragen -->
+  <h4>5 — Anfragen & Support</h4>
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-header"><span style="font-size:13px;font-weight:500">Ticket-System (einfach)</span><span class="tag tag-amber">Posteingang</span></div>
+    <div style="padding:1rem 1.5rem">
+      <div class="feat-list">
+        <div class="feat-item"><div class="feat-icon" style="background:var(--amber-pale);font-size:12px">📩</div><div class="feat-text"><h5>Anfragen-Liste</h5><p>Alle offenen Kundenanfragen · sortiert nach Datum · filterbar nach Kategorie (Box, Lieferung, Adresse, Löschung, Sonstiges) und Status (offen/beantwortet/geschlossen)</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:var(--amber-pale);font-size:12px">💬</div><div class="feat-text"><h5>Anfrage beantworten</h5><p>Freitext-Antwort · erscheint im Kundenkonto unter „Meine Anfragen" · optionale E-Mail-Benachrichtigung</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:var(--amber-pale);font-size:12px">🏷️</div><div class="feat-text"><h5>Status setzen</h5><p>Offen → In Bearbeitung → Beantwortet → Geschlossen</p></div></div>
+        <div class="feat-item"><div class="feat-icon" style="background:var(--amber-pale);font-size:12px">🔔</div><div class="feat-text"><h5>Admin-Benachrichtigung</h5><p>E-Mail bei jeder neuen Anfrage an konfigurierbare Admin-E-Mail-Adresse</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- System-Einstellungen -->
+  <h4>6 — System-Einstellungen (Superadmin)</h4>
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-p">
+      <div class="g2">
+        <div class="feat-list">
+          <div class="feat-item"><div class="feat-icon" style="background:var(--sky-pale);font-size:12px">💰</div><div class="feat-text"><h5>Budget-Limit</h5><p>Aktuell: 42€/Monat · Änderbar ohne Code-Deployment</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--sky-pale);font-size:12px">📅</div><div class="feat-text"><h5>Standard-Lieferstichtag</h5><p>Voreingestellter Stichtag für neue Kunden (z.B. 15. des Monats)</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--sky-pale);font-size:12px">📧</div><div class="feat-text"><h5>E-Mail-Templates</h5><p>Begrüßungs-E-Mail, Lieferbestätigung, Pausierungs-Bestätigung anpassbar</p></div></div>
+        </div>
+        <div class="feat-list">
+          <div class="feat-item"><div class="feat-icon" style="background:var(--sky-pale);font-size:12px">👥</div><div class="feat-text"><h5>Admin-Accounts verwalten</h5><p>Anlegen, Passwort zurücksetzen, deaktivieren</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--sky-pale);font-size:12px">📋</div><div class="feat-text"><h5>Audit-Log</h5><p>Wer hat wann was im Admin geändert — unveränderlich gespeichert</p></div></div>
+          <div class="feat-item"><div class="feat-icon" style="background:var(--sky-pale);font-size:12px">📢</div><div class="feat-text"><h5>Admin-E-Mail konfigurieren</h5><p>Wohin gehen Benachrichtigungen bei neuen Anfragen/Registrierungen?</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ 06 DATENMODELL ════════════════════════ -->
+<div id="daten" class="chapter">
+  <div class="ch-num">06</div>
+  <div class="ch-info"><div class="ch-label">Kapitel 6</div><div class="ch-title">Datenmodell</div></div>
+</div>
+
+<div class="section">
+  <h4>Datenbankstruktur</h4>
+  <h2>7 Kern-Entitäten</h2>
+  <p style="max-width:680px;margin-bottom:2rem">Relationales Datenbankmodell. <span class="tag tag-amber" style="font-size:10px">PK</span> = Primary Key, <span class="tag tag-sky" style="font-size:10px">FK</span> = Foreign Key.</p>
+
+  <!-- Users -->
+  <h4 style="margin-bottom:8px">users — Alle Nutzer (Kunden + Admins)</h4>
+  <div class="card" style="margin-bottom:1.5rem">
+    <table class="db-table">
+      <thead><tr><th>Feld</th><th>Typ</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>id <span class="db-pk">PK</span></td><td>uuid</td><td>Eindeutige ID</td></tr>
+        <tr><td>email</td><td>varchar(255)</td><td>Login-E-Mail, einmalig, verschlüsselt gespeichert</td></tr>
+        <tr><td>password_hash</td><td>varchar</td><td>bcrypt-Hash, niemals Klartext</td></tr>
+        <tr><td>rolle</td><td>enum</td><td>kunde / admin / superadmin</td></tr>
+        <tr><td>status</td><td>enum</td><td>aktiv / gesperrt / gelöscht / ausstehend (E-Mail nicht bestätigt)</td></tr>
+        <tr><td>email_bestätigt</td><td>boolean</td><td>true nach Klick auf Bestätigungslink</td></tr>
+        <tr><td>erstellt_am</td><td>timestamp</td><td>Registrierungsdatum</td></tr>
+        <tr><td>letzter_login</td><td>timestamp</td><td>Für Audit-Zwecke</td></tr>
+        <tr><td>löschung_beantragt_am</td><td>timestamp nullable</td><td>Wenn Kunde Account-Löschung beantragt</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Kunden-Profile -->
+  <h4 style="margin-bottom:8px">kunden_profile — Persönliche Pflegedaten</h4>
+  <div class="card" style="margin-bottom:1.5rem">
+    <table class="db-table">
+      <thead><tr><th>Feld</th><th>Typ</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>id <span class="db-pk">PK</span></td><td>uuid</td><td></td></tr>
+        <tr><td>user_id <span class="db-fk">FK</span></td><td>uuid</td><td>Referenz auf users.id</td></tr>
+        <tr><td>vorname</td><td>varchar(100)</td><td>Vorname Pflegebedürftiger</td></tr>
+        <tr><td>nachname</td><td>varchar(100)</td><td>Nachname Pflegebedürftiger</td></tr>
+        <tr><td>geburtsdatum</td><td>date</td><td>Pflegebedürftiger</td></tr>
+        <tr><td>pflegegrad</td><td>integer</td><td>1–5</td></tr>
+        <tr><td>krankenkasse</td><td>varchar(200)</td><td>Name der Pflegekasse</td></tr>
+        <tr><td>telefon</td><td>varchar(30)</td><td>Kontaktnummer</td></tr>
+        <tr><td>strasse</td><td>varchar(200)</td><td>Lieferadresse</td></tr>
+        <tr><td>plz</td><td>varchar(10)</td><td></td></tr>
+        <tr><td>ort</td><td>varchar(100)</td><td></td></tr>
+        <tr><td>angehöriger_name</td><td>varchar(200) nullable</td><td>Falls Angehöriger den Antrag stellt</td></tr>
+        <tr><td>angehöriger_verhältnis</td><td>varchar(100) nullable</td><td>z.B. „Tochter", „Ehemann"</td></tr>
+        <tr><td>lieferstichtag</td><td>integer</td><td>Tag des Monats, 1–28</td></tr>
+        <tr><td>lieferung_status</td><td>enum</td><td>aktiv / pausiert / gesperrt</td></tr>
+        <tr><td>pausiert_bis</td><td>date nullable</td><td>Wenn pausiert: bis wann</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Produkte -->
+  <h4 style="margin-bottom:8px">produkte — Katalog</h4>
+  <div class="card" style="margin-bottom:1.5rem">
+    <table class="db-table">
+      <thead><tr><th>Feld</th><th>Typ</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>id <span class="db-pk">PK</span></td><td>uuid</td><td></td></tr>
+        <tr><td>name</td><td>varchar(200)</td><td>Produktname</td></tr>
+        <tr><td>kategorie</td><td>enum</td><td>handschuhe / desinfektion / mundschutz / schutzkleidung / hygiene / sonstiges</td></tr>
+        <tr><td>beschreibung</td><td>text</td><td>Max. 300 Zeichen</td></tr>
+        <tr><td>bild_url</td><td>varchar</td><td>Pfad zu gespeichertem Bild</td></tr>
+        <tr><td>preis</td><td>decimal(8,2)</td><td>In Euro</td></tr>
+        <tr><td>varianten</td><td>jsonb nullable</td><td>[{id, label, aufpreis}] — z.B. Größen</td></tr>
+        <tr><td>hersteller</td><td>varchar(100)</td><td></td></tr>
+        <tr><td>pflichtkennzeichnung</td><td>text nullable</td><td>Für Desinfektionsmittel etc.</td></tr>
+        <tr><td>aktiv</td><td>boolean</td><td>false = im Konfigurator nicht sichtbar</td></tr>
+        <tr><td>sortierung</td><td>integer</td><td>Reihenfolge im Konfigurator</td></tr>
+        <tr><td>erstellt_am</td><td>timestamp</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Box-Konfigurationen -->
+  <h4 style="margin-bottom:8px">box_konfigurationen — Aktuelle Box je Kunde</h4>
+  <div class="card" style="margin-bottom:1.5rem">
+    <table class="db-table">
+      <thead><tr><th>Feld</th><th>Typ</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>id <span class="db-pk">PK</span></td><td>uuid</td><td></td></tr>
+        <tr><td>kunde_id <span class="db-fk">FK</span></td><td>uuid</td><td>Referenz auf kunden_profile.id</td></tr>
+        <tr><td>produkte</td><td>jsonb</td><td>[{produkt_id, variante_id, menge}] — Snapshot der gewählten Produkte</td></tr>
+        <tr><td>gesamtpreis</td><td>decimal(8,2)</td><td>Summe aller Produkte zum Zeitpunkt der Speicherung</td></tr>
+        <tr><td>geändert_am</td><td>timestamp</td><td>Letzte Änderung</td></tr>
+        <tr><td>geändert_von</td><td>uuid nullable</td><td>user_id wenn Admin die Box geändert hat</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Lieferungen -->
+  <h4 style="margin-bottom:8px">lieferungen — Monatlicher Lieferverlauf</h4>
+  <div class="card" style="margin-bottom:1.5rem">
+    <table class="db-table">
+      <thead><tr><th>Feld</th><th>Typ</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>id <span class="db-pk">PK</span></td><td>uuid</td><td></td></tr>
+        <tr><td>kunde_id <span class="db-fk">FK</span></td><td>uuid</td><td></td></tr>
+        <tr><td>geplant_fuer</td><td>date</td><td>Datum der geplanten Lieferung</td></tr>
+        <tr><td>status</td><td>enum</td><td>geplant / in_bearbeitung / versendet / zugestellt / storniert</td></tr>
+        <tr><td>box_snapshot</td><td>jsonb</td><td>Kopie der Box-Konfiguration zum Zeitpunkt der Lieferung (unveränderlich)</td></tr>
+        <tr><td>tracking_nummer</td><td>varchar nullable</td><td>Sendungsnummer für Versanddienstleister</td></tr>
+        <tr><td>notizen</td><td>text nullable</td><td>Interne Admin-Notizen</td></tr>
+        <tr><td>erstellt_am</td><td>timestamp</td><td></td></tr>
+        <tr><td>aktualisiert_am</td><td>timestamp</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Anfragen -->
+  <h4 style="margin-bottom:8px">anfragen — Kundenanfragen</h4>
+  <div class="card" style="margin-bottom:1.5rem">
+    <table class="db-table">
+      <thead><tr><th>Feld</th><th>Typ</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>id <span class="db-pk">PK</span></td><td>uuid</td><td></td></tr>
+        <tr><td>kunde_id <span class="db-fk">FK</span></td><td>uuid</td><td></td></tr>
+        <tr><td>kategorie</td><td>enum</td><td>box / lieferung / adresse / löschung / sonstiges</td></tr>
+        <tr><td>betreff</td><td>varchar(200)</td><td>Kurzer Betreff</td></tr>
+        <tr><td>nachricht</td><td>text</td><td>Freitext des Kunden</td></tr>
+        <tr><td>antwort</td><td>text nullable</td><td>Admin-Antwort</td></tr>
+        <tr><td>beantwortet_von <span class="db-fk">FK</span></td><td>uuid nullable</td><td>user_id des antwortenden Admins</td></tr>
+        <tr><td>status</td><td>enum</td><td>offen / in_bearbeitung / beantwortet / geschlossen</td></tr>
+        <tr><td>erstellt_am</td><td>timestamp</td><td></td></tr>
+        <tr><td>beantwortet_am</td><td>timestamp nullable</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Audit Log -->
+  <h4 style="margin-bottom:8px">audit_log — Änderungsprotokoll</h4>
+  <div class="card" style="margin-bottom:1.5rem">
+    <table class="db-table">
+      <thead><tr><th>Feld</th><th>Typ</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>id <span class="db-pk">PK</span></td><td>uuid</td><td></td></tr>
+        <tr><td>user_id <span class="db-fk">FK</span></td><td>uuid</td><td>Wer hat die Aktion ausgeführt</td></tr>
+        <tr><td>aktion</td><td>varchar(100)</td><td>z.B. „kunde.bearbeitet", „produkt.erstellt", „lieferung.status_geändert"</td></tr>
+        <tr><td>entität</td><td>varchar(50)</td><td>Welche Tabelle betroffen</td></tr>
+        <tr><td>entität_id</td><td>uuid</td><td>ID des betroffenen Datensatzes</td></tr>
+        <tr><td>alt_wert</td><td>jsonb nullable</td><td>Zustand vor der Änderung</td></tr>
+        <tr><td>neu_wert</td><td>jsonb nullable</td><td>Zustand nach der Änderung</td></tr>
+        <tr><td>ip_adresse</td><td>varchar(45)</td><td>Für Sicherheits-Audit</td></tr>
+        <tr><td>erstellt_am</td><td>timestamp</td><td>Unveränderlich — kein UPDATE/DELETE erlaubt</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════ 07 TECHSTACK ════════════════════════ -->
+<div id="techstack" class="chapter">
+  <div class="ch-num">07</div>
+  <div class="ch-info"><div class="ch-label">Kapitel 7</div><div class="ch-title">Techstack & Architektur</div></div>
+</div>
+
+<div class="section">
+  <h4>Technologie-Entscheidungen</h4>
+  <h2>Modern, wartbar, skalierbar</h2>
+  <p style="max-width:680px;margin-bottom:2rem">Der Stack ist bewusst pragmatisch gewählt — keine Over-Engineering, aber zukunftssicher genug für V2 (Kassenkommunikation, höhere Last). Alle Entscheidungen sind begründet.</p>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <div style="padding:0 1.25rem">
+      <div class="tech-row"><div class="tech-layer">Frontend</div><div class="tech-name">Next.js 14 (React)</div><div class="tech-why">Server-Side Rendering für SEO der öffentlichen Seiten, App Router für Kundenportal. TypeScript für Typsicherheit. Gleicher Stack für Website + Portal.</div></div>
+      <div class="tech-row"><div class="tech-layer">Styling</div><div class="tech-name">Tailwind CSS</div><div class="tech-why">Schnelle Umsetzung des Velacare Design-Systems via CSS-Variablen. Kein separates CSS-Framework nötig. Cormorant + DM Sans via Google Fonts.</div></div>
+      <div class="tech-row"><div class="tech-layer">Backend</div><div class="tech-name">Next.js API Routes</div><div class="tech-why">Für V1 reichen API-Routes im gleichen Next.js-Projekt. Bei V2 (Kassenschnittstellen) einfache Migration zu eigenem Node.js/Express-Dienst möglich.</div></div>
+      <div class="tech-row"><div class="tech-layer">Datenbank</div><div class="tech-name">PostgreSQL</div><div class="tech-why">Relationale Datenbank mit JSON-Support (JSONB für Box-Snapshots). Robust, DSGVO-konform, gut unterstützt. ORM: Prisma für typsichere Queries.</div></div>
+      <div class="tech-row"><div class="tech-layer">Auth</div><div class="tech-name">NextAuth.js</div><div class="tech-why">E-Mail/Passwort-Login für V1. Session-Management, JWT, einfache Rollenunterscheidung (kunde/admin/superadmin). Für V2 erweiterbar um OAuth (Google/Apple).</div></div>
+      <div class="tech-row"><div class="tech-layer">Datei-Upload</div><div class="tech-name">Cloudinary / S3</div><div class="tech-why">Produktfotos extern gespeichert, automatische Komprimierung, CDN-Auslieferung. Cloudinary für einfachen Start, S3 wenn DSGVO-konformes deutsches Hosting nötig.</div></div>
+      <div class="tech-row"><div class="tech-layer">E-Mail</div><div class="tech-name">Resend / SendGrid</div><div class="tech-why">Transaktionale E-Mails (Bestätigung, Lieferstatus, Anfragen-Antworten). Templates in React-Email oder HTML. DSGVO: Anbieter mit EU-Servern wählen.</div></div>
+      <div class="tech-row"><div class="tech-layer">Hosting</div><div class="tech-name">Vercel + Supabase</div><div class="tech-why">Vercel für Next.js (Zero-Config-Deployment, automatische Preview-Deployments). Supabase als managed PostgreSQL mit EU-Region (Frankfurt). Günstig für V1, skalierbar.</div></div>
+      <div class="tech-row"><div class="tech-layer">Monitoring</div><div class="tech-name">Sentry</div><div class="tech-why">Error-Tracking Frontend + Backend. Kostenlos bis 5.000 Errors/Monat — ausreichend für V1.</div></div>
+      <div class="tech-row" style="border:none"><div class="tech-layer">Versionierung</div><div class="tech-name">Git + GitHub</div><div class="tech-why">Branches: main (Production), develop (Staging), feature/* (Features). GitHub Actions für CI/CD-Pipeline mit automatischen Tests vor Deployment.</div></div>
+    </div>
+  </div>
+
+  <h4>Architektur-Übersicht</h4>
+  <div class="card card-p" style="margin-bottom:1.5rem">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <!-- Layer 1 -->
+      <div style="background:var(--bg);border-radius:var(--r-md);padding:14px;text-align:center;font-size:13px;font-weight:500;color:var(--dark);border:1px solid var(--mid-gray)">
+        Browser / Client<br><span style="font-size:11px;font-weight:400;color:var(--warm-gray)">React-Komponenten · Tailwind · Konfigurator-State</span>
+      </div>
+      <div style="text-align:center;font-size:18px;color:var(--mid-gray)">↕</div>
+      <div style="background:var(--terra-pale);border-radius:var(--r-md);padding:14px;text-align:center;font-size:13px;font-weight:500;color:var(--terra);border:1px solid rgba(201,107,63,.3)">
+        Next.js App (Vercel)<br><span style="font-size:11px;font-weight:400;color:var(--terra-dark)">Pages + API Routes + Middleware (Auth-Guard) + NextAuth Sessions</span>
+      </div>
+      <div style="text-align:center;font-size:18px;color:var(--mid-gray)">↕</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+        <div style="background:var(--sage-pale);border-radius:var(--r-md);padding:12px;text-align:center;font-size:12px;font-weight:500;color:var(--sage);border:1px solid rgba(45,122,95,.2)">PostgreSQL<br><span style="font-weight:400;font-size:11px">Supabase (Frankfurt)</span></div>
+        <div style="background:var(--sky-pale);border-radius:var(--r-md);padding:12px;text-align:center;font-size:12px;font-weight:500;color:var(--sky);border:1px solid rgba(24,95,165,.2)">Datei-Storage<br><span style="font-weight:400;font-size:11px">Cloudinary / S3</span></div>
+        <div style="background:var(--amber-pale);border-radius:var(--r-md);padding:12px;text-align:center;font-size:12px;font-weight:500;color:var(--amber);border:1px solid rgba(186,117,23,.2)">E-Mail-Service<br><span style="font-weight:400;font-size:11px">Resend / SendGrid</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h4>URL-Struktur</h4>
+  <div class="card">
+    <div style="padding:0 1.25rem">
+      <div class="tech-row"><div class="tech-layer">Öffentlich</div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/</div><div class="tech-why">Startseite</div></div>
+      <div class="tech-row"><div class="tech-layer"></div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/wie-es-funktioniert</div><div class="tech-why">Erklärungsseite</div></div>
+      <div class="tech-row"><div class="tech-layer"></div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/produkte</div><div class="tech-why">Öffentliche Produkt-Übersicht</div></div>
+      <div class="tech-row"><div class="tech-layer"></div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/beantragen</div><div class="tech-why">Registrierungs-Funnel (4 Schritte)</div></div>
+      <div class="tech-row"><div class="tech-layer"></div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/danke</div><div class="tech-why">Bestätigungsseite nach Registrierung</div></div>
+      <div class="tech-row"><div class="tech-layer">Auth</div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/login</div><div class="tech-why">Login für Kunden und Admins</div></div>
+      <div class="tech-row"><div class="tech-layer"></div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/passwort-vergessen</div><div class="tech-why">Passwort-Reset per E-Mail</div></div>
+      <div class="tech-row"><div class="tech-layer">Kunde</div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/konto</div><div class="tech-why">Dashboard (Login erforderlich)</div></div>
+      <div class="tech-row"><div class="tech-layer"></div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/konto/meine-box</div><div class="tech-why">Box-Konfigurator</div></div>
+      <div class="tech-row"><div class="tech-layer"></div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/konto/lieferungen</div><div class="tech-why">Lieferverlauf</div></div>
+      <div class="tech-row"><div class="tech-layer"></div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/konto/einstellungen</div><div class="tech-why">Daten, Passwort, Account löschen</div></div>
+      <div class="tech-row"><div class="tech-layer"></div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/konto/anfragen</div><div class="tech-why">Support-Anfragen</div></div>
+      <div class="tech-row"><div class="tech-layer">Admin</div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/admin</div><div class="tech-why">Admin-Dashboard</div></div>
+      <div class="tech-row"><div class="tech-layer"></div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/admin/kunden</div><div class="tech-why">Kundenliste</div></div>
+      <div class="tech-row"><div class="tech-layer"></div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/admin/kunden/[id]</div><div class="tech-why">Kundendetail</div></div>
+      <div class="tech-row"><div class="tech-layer"></div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/admin/produkte</div><div class="tech-why">Produktverwaltung</div></div>
+      <div class="tech-row"><div class="tech-layer"></div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/admin/lieferungen</div><div class="tech-why">Lieferverwaltung</div></div>
+      <div class="tech-row"><div class="tech-layer"></div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/admin/anfragen</div><div class="tech-why">Support-Tickets</div></div>
+      <div class="tech-row" style="border:none"><div class="tech-layer"></div><div class="tech-name" style="font-family:var(--fm);font-size:12px">/admin/einstellungen</div><div class="tech-why">System-Einstellungen (nur Superadmin)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ 08 SICHERHEIT ════════════════════════ -->
+<div id="sicherheit" class="chapter">
+  <div class="ch-num">08</div>
+  <div class="ch-info"><div class="ch-label">Kapitel 8</div><div class="ch-title">Sicherheit & DSGVO</div></div>
+</div>
+
+<div class="section">
+  <h4>Pflichtanforderungen</h4>
+  <h2>Sensible Daten — hoher Schutz</h2>
+  <p style="max-width:680px;margin-bottom:2rem">Da Velacare Gesundheitsdaten (Pflegegrad) und personenbezogene Daten älterer Menschen verarbeitet, gelten erhöhte Sicherheitsanforderungen gemäß DSGVO.</p>
+
+  <div class="g2" style="margin-bottom:2rem">
+    <div class="card card-p">
+      <h3 style="font-size:18px;margin-bottom:1rem">Authentifizierung</h3>
+      <div class="feat-list">
+        <div class="feat-item"><div class="sec-dot" style="margin-top:2px"></div><div class="feat-text"><h5>bcrypt Passwort-Hashing</h5><p>Passwörter werden niemals im Klartext gespeichert. bcrypt mit Salt-Rounds ≥ 12.</p></div></div>
+        <div class="feat-item"><div class="sec-dot"></div><div class="feat-text"><h5>E-Mail-Verifikation</h5><p>Konto ist erst nach Klick auf Bestätigungslink vollständig aktiv. Token läuft nach 24h ab.</p></div></div>
+        <div class="feat-item"><div class="sec-dot"></div><div class="feat-text"><h5>Rate Limiting Login</h5><p>Max. 5 Fehlversuche, danach 15min Sperrung. Schutz vor Brute-Force.</p></div></div>
+        <div class="feat-item"><div class="sec-dot"></div><div class="feat-text"><h5>Session-Timeout</h5><p>Automatischer Logout nach 30min Inaktivität (Kundenkonto), 60min (Admin).</p></div></div>
+        <div class="feat-item"><div class="sec-dot"></div><div class="feat-text"><h5>Passwort-Reset</h5><p>Token per E-Mail, einmalig gültig, läuft nach 1h ab.</p></div></div>
+      </div>
+    </div>
+    <div class="card card-p">
+      <h3 style="font-size:18px;margin-bottom:1rem">Datenschutz (DSGVO)</h3>
+      <div class="feat-list">
+        <div class="feat-item"><div class="sec-dot"></div><div class="feat-text"><h5>Datenminimierung</h5><p>Nur notwendige Felder werden erhoben. Kein Tracking ohne Einwilligung.</p></div></div>
+        <div class="feat-item"><div class="sec-dot"></div><div class="feat-text"><h5>Recht auf Löschung</h5><p>Kunde kann Account selbst löschen → Soft-Delete, Anonymisierung nach 30 Tagen, Lieferprotokolle bleiben anonymisiert erhalten.</p></div></div>
+        <div class="feat-item"><div class="sec-dot"></div><div class="feat-text"><h5>Recht auf Auskunft</h5><p>Admin kann auf Anfrage alle gespeicherten Daten eines Kunden als PDF/JSON exportieren.</p></div></div>
+        <div class="feat-item"><div class="sec-dot"></div><div class="feat-text"><h5>Einwilligung dokumentiert</h5><p>DSGVO-Einwilligung + AGB-Zustimmung werden mit Timestamp gespeichert.</p></div></div>
+        <div class="feat-item"><div class="sec-dot"></div><div class="feat-text"><h5>Hosting in der EU</h5><p>Datenbank in Frankfurt (Supabase EU-Region). Kein Datentransfer in Drittländer.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card card-p">
+      <h3 style="font-size:18px;margin-bottom:1rem">Zugriffsschutz</h3>
+      <div class="feat-list">
+        <div class="feat-item"><div class="sec-dot"></div><div class="feat-text"><h5>Route-Guards (Middleware)</h5><p>/konto/* nur für eingeloggte Kunden. /admin/* nur für Admin/Superadmin. Redirect auf Login bei fehlendem Token.</p></div></div>
+        <div class="feat-item"><div class="sec-dot"></div><div class="feat-text"><h5>Kunden sehen nur ihre Daten</h5><p>API-Endpoints prüfen immer ob die angefragte Ressource dem eingeloggten User gehört.</p></div></div>
+        <div class="feat-item"><div class="sec-dot"></div><div class="feat-text"><h5>HTTPS erzwungen</h5><p>HTTP-Anfragen werden auf HTTPS umgeleitet. HSTS-Header gesetzt.</p></div></div>
+        <div class="feat-item"><div class="sec-dot"></div><div class="feat-text"><h5>CSRF-Schutz</h5><p>NextAuth setzt CSRF-Token bei allen Formularen automatisch.</p></div></div>
+      </div>
+    </div>
+    <div class="card card-p">
+      <h3 style="font-size:18px;margin-bottom:1rem">Daten-Integrität</h3>
+      <div class="feat-list">
+        <div class="feat-item"><div class="sec-dot"></div><div class="feat-text"><h5>Audit-Log unveränderlich</h5><p>INSERT-only Tabelle. Kein UPDATE/DELETE über API möglich. Nur via direktem DB-Zugriff (nur Superadmin).</p></div></div>
+        <div class="feat-item"><div class="sec-dot"></div><div class="feat-text"><h5>Box-Snapshots bei Lieferung</h5><p>Bei jeder Lieferung wird die Box-Konfiguration eingefroren (JSONB). Spätere Änderungen beeinflussen vergangene Lieferungen nicht.</p></div></div>
+        <div class="feat-item"><div class="sec-dot"></div><div class="feat-text"><h5>Input-Validierung</h5><p>Alle Formulareingaben serverseitig validiert (Zod). Kein blindes Vertrauen auf Client-Daten.</p></div></div>
+        <div class="feat-item"><div class="sec-dot"></div><div class="feat-text"><h5>Datenbank-Backups</h5><p>Tägliche automatische Backups (Supabase), 30 Tage Aufbewahrung.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ 09 ROADMAP ════════════════════════ -->
+<div id="roadmap" class="chapter">
+  <div class="ch-num">09</div>
+  <div class="ch-info"><div class="ch-label">Kapitel 9</div><div class="ch-title">Entwicklungs-Roadmap</div></div>
+</div>
+
+<div class="section">
+  <h4>Grober Zeitplan — Version 1</h4>
+  <h2>Ca. 12–16 Wochen bis Launch</h2>
+  <p style="max-width:680px;margin-bottom:2rem">Der Zeitplan setzt voraus, dass 1–2 Entwickler vollzeit arbeiten. Bei Teilzeit entsprechend verdoppeln.</p>
+
+  <div class="card" style="margin-bottom:2rem">
+    <div style="padding:0 1.5rem">
+      <div class="milestone">
+        <div class="ms-date">Woche 1–2</div>
+        <div class="ms-content">
+          <h5>Setup & Grundstruktur</h5>
+          <p>Next.js-Projekt aufsetzen, Datenbankschema anlegen (Prisma Migrations), Auth-System (NextAuth), Design-System in Tailwind umsetzen (Farben, Fonts, Basis-Komponenten), Deployment-Pipeline (Vercel + Supabase).</p>
+          <div class="ms-tags"><span class="tag tag-gray">Setup</span><span class="tag tag-gray">Auth</span><span class="tag tag-gray">Design-System</span></div>
+        </div>
+      </div>
+      <div class="milestone">
+        <div class="ms-date">Woche 3–4</div>
+        <div class="ms-content">
+          <h5>Öffentliche Website</h5>
+          <p>Alle Marketing-Seiten (Startseite, Wie es funktioniert, Produkte-Übersicht, Über uns, FAQ, Kontakt) nach Wireframe-Vorlage. Responsives Layout. Kein Login erforderlich.</p>
+          <div class="ms-tags"><span class="tag tag-terra">Frontend</span><span class="tag tag-gray">Marketing</span></div>
+        </div>
+      </div>
+      <div class="milestone">
+        <div class="ms-date">Woche 5–6</div>
+        <div class="ms-content">
+          <h5>Registrierungs-Funnel & E-Mail</h5>
+          <p>4-Schritt-Formular (/beantragen), Validierung (Zod), E-Mail-Bestätigung, Danke-Seite, E-Mail-Templates (Willkommen, Bestätigung). Admin-Benachrichtigung bei neuer Registrierung.</p>
+          <div class="ms-tags"><span class="tag tag-terra">Frontend</span><span class="tag tag-sage">Backend</span><span class="tag tag-amber">E-Mail</span></div>
+        </div>
+      </div>
+      <div class="milestone">
+        <div class="ms-date">Woche 7–8</div>
+        <div class="ms-content">
+          <h5>Box-Konfigurator</h5>
+          <p>Interaktiver Konfigurator mit Live-Budget, Kategorie-Filter, Produkt-Karten, Checkbox-Auswahl, Speichern-Logik. Verbindung zur Datenbank (box_konfigurationen). Responsiv für Desktop + Mobil.</p>
+          <div class="ms-tags"><span class="tag tag-terra">Frontend</span><span class="tag tag-sage">Backend</span><span class="tag tag-gray">Kern-Feature</span></div>
+        </div>
+      </div>
+      <div class="milestone">
+        <div class="ms-date">Woche 9–10</div>
+        <div class="ms-content">
+          <h5>Kundenportal komplett</h5>
+          <p>Dashboard, Lieferverlauf, Lieferung pausieren/steuern, Kontaktdaten ändern, Passwort ändern, Anfragen stellen, Account-Löschung. Alle /konto/* Seiten fertig.</p>
+          <div class="ms-tags"><span class="tag tag-terra">Frontend</span><span class="tag tag-sage">Backend</span><span class="tag tag-amber">E-Mail</span></div>
+        </div>
+      </div>
+      <div class="milestone">
+        <div class="ms-date">Woche 11–12</div>
+        <div class="ms-content">
+          <h5>Admin-Panel komplett</h5>
+          <p>Alle Admin-Bereiche: Dashboard, Kundenverwaltung (CRUD + Detail), Produktverwaltung (CRUD + Bildupload), Bestellverwaltung, Anfragen-System, System-Einstellungen. Export-Funktionen.</p>
+          <div class="ms-tags"><span class="tag tag-sky">Admin</span><span class="tag tag-sage">Backend</span></div>
+        </div>
+      </div>
+      <div class="milestone">
+        <div class="ms-date">Woche 13–14</div>
+        <div class="ms-content">
+          <h5>Testing & Bugfixing</h5>
+          <p>Manuelle QA aller User-Flows, Browser-Tests (Chrome, Firefox, Safari, Mobile), Performance-Check, DSGVO-Checkliste abarbeiten, Sicherheits-Review (Rate Limiting, Auth-Guards), Accessibility-Grundcheck.</p>
+          <div class="ms-tags"><span class="tag tag-amber">QA</span><span class="tag tag-red" style="background:var(--red-pale);color:var(--red)">Sicherheit</span></div>
+        </div>
+      </div>
+      <div class="milestone" style="border:none">
+        <div class="ms-date">Woche 15–16</div>
+        <div class="ms-content">
+          <h5>Soft Launch & Stabilisierung</h5>
+          <p>Produktivdaten einspielen (Produkte anlegen, ersten Admin-Account anlegen), Domain & SSL konfigurieren, Monitoring (Sentry) aktivieren, erste echte Kunden, Feedback sammeln, kritische Bugs fixen.</p>
+          <div class="ms-tags"><span class="tag tag-sage">Launch</span><span class="tag tag-gray">Monitoring</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-sm"></div>
+  <h4>Offene Fragen vor Entwicklungsstart</h4>
+  <div class="card card-p">
+    <div class="feat-list">
+      <div class="feat-item"><div class="feat-icon" style="background:var(--amber-pale);font-size:14px">❓</div><div class="feat-text"><h5>Wer entwickelt?</h5><p>Eigenes Team, Freelancer oder Agentur? Bestimmt ob Next.js-Stack sinnvoll oder einfacheres CMS-Hybrid besser wäre.</p></div></div>
+      <div class="feat-item"><div class="feat-icon" style="background:var(--amber-pale);font-size:14px">❓</div><div class="feat-text"><h5>Produktliste für V1</h5><p>Welche Produkte (Name, Beschreibung, Preis, Fotos) sollen von Anfang an im Konfigurator verfügbar sein? Benötigt für Entwicklung + Seeding.</p></div></div>
+      <div class="feat-item"><div class="feat-icon" style="background:var(--amber-pale);font-size:14px">❓</div><div class="feat-text"><h5>Lieferstichtag-Logik</h5><p>Kann ein Kunde frei wählen (1–28)? Oder gibt es feste Stichtage (z.B. 1., 15.)? Beeinflusst Admin-Export-Logik erheblich.</p></div></div>
+      <div class="feat-item"><div class="feat-icon" style="background:var(--amber-pale);font-size:14px">❓</div><div class="feat-text"><h5>Krankenkassen-Dropdown</h5><p>Fester Dropdown mit ~50 großen Kassen, oder Freitext? Frontida nutzt Freitext — einfacher für V1.</p></div></div>
+      <div class="feat-item"><div class="feat-icon" style="background:var(--amber-pale);font-size:14px">❓</div><div class="feat-text"><h5>E-Mail-Adresse für Admin-Benachrichtigungen</h5><p>Wohin gehen Infos über neue Registrierungen und offene Anfragen?</p></div></div>
+      <div class="feat-item" style="border:none"><div class="feat-icon" style="background:var(--amber-pale);font-size:14px">❓</div><div class="feat-text"><h5>Datenschutzbeauftragter / Impressum</h5><p>Rechtliche Texte (Datenschutz, AGB, Impressum) müssen von einem Anwalt geprüft werden — kein Teil der Softwareentwicklung, aber nötig vor Launch.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <p>Velacare Softwarekonzept v1.0 · Vertraulich · Nur für internen Gebrauch</p>
+  <p>Basiert auf Brand Guide v1.0 · Referenz: frontida.de · pflegetipp.de</p>
+</div>
+
+</body>
+</html>

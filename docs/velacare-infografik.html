@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velacare — Dein Recht auf kostenlose Pflegehilfsmittel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#E8E0D8;font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:32px 16px}
+.ig{width:100%;max-width:600px;background:#FAF0E8;overflow:hidden}
+
+.ig-header{background:#2C2420;padding:44px 44px 38px;text-align:center;position:relative;overflow:hidden}
+.halo{position:absolute;width:360px;height:360px;border-radius:50%;background:rgba(201,107,63,.1);top:-100px;left:50%;transform:translateX(-50%)}
+.ig-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#E8A07A;margin-bottom:16px;position:relative}
+.logo-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:20px;position:relative}
+.logo-mark{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#FAF0E8}
+.ig-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,6vw,46px);font-weight:600;color:#FAF0E8;line-height:1.08;margin-bottom:10px;position:relative}
+.ig-h1 em{font-style:italic;color:#C96B3F}
+.ig-sub{font-size:13px;font-weight:300;color:rgba(253,250,247,.45);position:relative;letter-spacing:.02em}
+
+.ig-fact{background:#C96B3F;padding:30px 44px;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center}
+.fact-num{font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:600;color:#FAF0E8;line-height:1;letter-spacing:-.02em}
+.fact-num-sub{font-size:11px;font-weight:300;color:rgba(253,250,247,.6);letter-spacing:.06em;margin-top:2px}
+.fact-title{font-size:17px;font-weight:500;color:#FAF0E8;line-height:1.35;margin-bottom:7px}
+.fact-desc{font-size:12px;color:rgba(253,250,247,.65);line-height:1.65}
+.fact-pill{display:inline-block;background:rgba(255,255,255,.15);color:#FAF0E8;font-size:10px;font-weight:500;padding:3px 10px;border-radius:20px;margin-top:8px;letter-spacing:.04em}
+
+.ig-alert{background:#9E4E28;padding:18px 44px;display:flex;align-items:center;gap:14px}
+.alert-icon{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.alert-text{font-size:13.5px;color:#FAF0E8;line-height:1.55}
+.alert-text strong{font-weight:500}
+
+.ig-section{padding:30px 44px}
+.sec-label{font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#8A8078;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.sec-label::after{content:'';flex:1;height:1px;background:#C8BFB5}
+
+.anspruch-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.a-card{background:#FDFAF7;border:1px solid #D4CBBF;border-radius:12px;padding:16px;display:flex;gap:12px;align-items:flex-start}
+.a-icon{width:34px;height:34px;border-radius:9px;background:#FAF0E8;border:1px solid rgba(201,107,63,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.a-title{font-size:13px;font-weight:500;color:#2C2420;margin-bottom:3px}
+.a-desc{font-size:11.5px;color:#8A8078;line-height:1.55}
+
+.ig-produkte{padding:0 44px 30px}
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.prod-item{background:#FDFAF7;border:1px solid #D4CBBF;border-radius:10px;padding:14px 10px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:7px}
+.prod-icon{width:38px;height:38px;border-radius:10px;background:#FAF0E8;border:1px solid rgba(201,107,63,.18);display:flex;align-items:center;justify-content:center}
+.prod-name{font-size:11px;font-weight:500;color:#2C2420;line-height:1.4}
+.prod-more{background:#EDE8E2;border:1px solid #C8BFB5;border-radius:10px;padding:14px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.prod-more-plus{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:#C96B3F;line-height:1}
+.prod-more-lbl{font-size:10px;color:#8A8078;text-align:center;line-height:1.4}
+
+.ig-budget{background:#EDE8E2;padding:24px 44px}
+.budget-title{font-size:13px;font-weight:500;color:#2C2420;margin-bottom:14px}
+.budget-track{background:#C8BFB5;border-radius:5px;height:10px;overflow:hidden;margin-bottom:8px}
+.budget-fill{background:#C96B3F;height:100%;width:100%;border-radius:5px}
+.budget-row{display:flex;align-items:flex-end;justify-content:space-between}
+.budget-val{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:#C96B3F;line-height:1}
+.budget-sub{font-size:11px;color:#8A8078;margin-top:3px}
+.budget-zero-val{font-size:15px;font-weight:500;color:#2D7A5F}
+.budget-zero-sub{font-size:11px;color:#8A8078;margin-top:3px;text-align:right}
+
+.ig-steps{background:#2C2420;padding:30px 44px}
+.steps-label{font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:rgba(253,250,247,.3);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.steps-label::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.07)}
+.step-row{display:flex;gap:16px;align-items:flex-start;margin-bottom:20px}
+.step-row:last-child{margin-bottom:0}
+.step-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.step-num{width:32px;height:32px;border-radius:50%;background:#C96B3F;color:white;font-size:14px;font-weight:500;display:flex;align-items:center;justify-content:center}
+.step-connector{width:1.5px;height:28px;background:rgba(201,107,63,.25);margin:4px 0}
+.step-body{padding-top:4px;flex:1}
+.step-title{font-size:14px;font-weight:500;color:#FAF0E8;margin-bottom:3px}
+.step-desc{font-size:12px;color:rgba(253,250,247,.4);line-height:1.6}
+.step-tag{display:inline-block;background:rgba(201,107,63,.14);color:#E8A07A;font-size:10px;font-weight:500;padding:2px 9px;border-radius:20px;margin-top:6px}
+
+.ig-quote{background:#FAF0E8;padding:28px 44px;border-top:1px solid #D4CBBF;border-bottom:1px solid #D4CBBF}
+.quote-bar{width:32px;height:3px;background:#C96B3F;border-radius:2px;margin-bottom:14px}
+.quote-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;font-weight:400;color:#2C2420;line-height:1.45;margin-bottom:12px}
+.quote-sub{font-size:12px;color:#8A8078;line-height:1.5}
+.quote-sub strong{font-weight:500;color:#2C2420}
+
+.ig-cta{background:#C96B3F;padding:26px 44px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.cta-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:#FAF0E8;line-height:1.3}
+.cta-btn{background:#FAF0E8;color:#9E4E28;font-size:13px;font-weight:500;padding:12px 24px;border-radius:8px;white-space:nowrap;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;flex-shrink:0}
+
+.ig-trust{background:#2C2420;padding:14px 44px;display:flex;align-items:center;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:8px;padding:5px 18px;border-right:1px solid rgba(255,255,255,.07);font-size:11px;color:rgba(253,250,247,.35)}
+.trust-item:first-child{padding-left:0}
+.trust-item:last-child{border-right:none}
+.trust-dot{width:4px;height:4px;border-radius:50%;background:#C96B3F;flex-shrink:0}
+
+.ig-footer{background:#1E1614;padding:16px 44px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.footer-logo{display:flex;align-items:center;gap:9px;font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:#FAF0E8}
+.footer-url{font-family:'DM Mono',monospace;font-size:11px;color:rgba(253,250,247,.22)}
+.footer-share{font-size:11px;color:rgba(253,250,247,.25)}
+
+@media print{body{background:white;padding:0}.ig{max-width:100%}.cta-btn{border:1px solid #9E4E28}}
+@media(max-width:480px){.ig-fact{grid-template-columns:1fr;text-align:center}.anspruch-grid{grid-template-columns:1fr}.ig-header,.ig-fact,.ig-alert,.ig-section,.ig-produkte,.ig-budget,.ig-steps,.ig-quote,.ig-cta,.ig-trust,.ig-footer{padding-left:24px;padding-right:24px}.ig-trust{gap:4px}.trust-item{padding:4px 10px}}
+</style>
+</head>
+<body>
+<div class="ig">
+
+  <div class="ig-header">
+    <div class="halo"></div>
+    <div class="ig-eyebrow">Wusstest du das?</div>
+    <div class="logo-row">
+      <svg width="22" height="22" viewBox="0 0 80 80" fill="none">
+        <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#E8A07A" stroke-width="8" stroke-linecap="round" fill="none"/>
+        <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#E8A07A" stroke-width="8" stroke-linecap="round" fill="none"/>
+        <circle cx="15" cy="70" r="5.5" fill="#E8A07A"/>
+        <circle cx="65" cy="70" r="5.5" fill="#E8A07A"/>
+        <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#A8D5C2"/>
+      </svg>
+      <span class="logo-mark">Velacare</span>
+    </div>
+    <h1 class="ig-h1">Dein Recht auf<br><em>kostenlose<br>Pflegehilfsmittel</em></h1>
+    <p class="ig-sub">Was Pflegebedürftige und Angehörige wissen müssen</p>
+  </div>
+
+  <div class="ig-fact">
+    <div>
+      <div class="fact-num">42&#8239;&#x20AC;</div>
+      <div class="fact-num-sub">pro Monat</div>
+    </div>
+    <div>
+      <div class="fact-title">Jeder mit Pflegegrad bekommt diesen Betrag — vollständig kostenlos.</div>
+      <div class="fact-desc">Bezahlt von der Pflegekasse. Kein Eigenanteil, keine Zuzahlung. Für Pflegegrad 1–5. Die meisten wissen das nicht.</div>
+      <div class="fact-pill">504 &#x20AC; pro Jahr &nbsp;·&nbsp; 1.512 &#x20AC; in 3 Jahren</div>
+    </div>
+  </div>
+
+  <div class="ig-alert">
+    <div class="alert-icon">
+      <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+        <circle cx="10" cy="10" r="8" stroke="white" stroke-width="1.5" fill="none"/>
+        <path d="M10 9v5M10 6v.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="alert-text">Dieses Geld wartet bereits auf Sie — es muss nur abgerufen werden. <strong>Die meisten Berechtigten wissen nichts davon.</strong></div>
+  </div>
+
+  <div class="ig-section">
+    <div class="sec-label">Wer hat Anspruch?</div>
+    <div class="anspruch-grid">
+      <div class="a-card">
+        <div class="a-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2a4 4 0 100 8 4 4 0 000-8z" stroke="#C96B3F" stroke-width="1.4" fill="none"/><path d="M3 18a7 7 0 0114 0" stroke="#C96B3F" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg></div>
+        <div><div class="a-title">Pflegegrad 1–5</div><div class="a-desc">Jeder anerkannte Pflegegrad berechtigt zum gleichen Betrag</div></div>
+      </div>
+      <div class="a-card">
+        <div class="a-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2L3 7v11h5v-5h4v5h5V7z" stroke="#C96B3F" stroke-width="1.4" stroke-linejoin="round" fill="none"/></svg></div>
+        <div><div class="a-title">Häusliche Pflege</div><div class="a-desc">Zuhause gepflegt oder in einer Pflege-WG lebend</div></div>
+      </div>
+      <div class="a-card">
+        <div class="a-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><rect x="2" y="5" width="16" height="11" rx="2" stroke="#C96B3F" stroke-width="1.4" fill="none"/><path d="M6 5V4a4 4 0 018 0v1" stroke="#C96B3F" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg></div>
+        <div><div class="a-title">Alle Kassen</div><div class="a-desc">Gesetzlich und privat versichert — beide gleichberechtigt</div></div>
+      </div>
+      <div class="a-card">
+        <div class="a-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2c-4 2-7 5-7 9a7 7 0 0014 0c0-4-3-7-7-9z" stroke="#C96B3F" stroke-width="1.4" fill="none"/><path d="M7 10l2 2 4-4" stroke="#C96B3F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+        <div><div class="a-title">Angehörige können</div><div class="a-desc">Den Antrag auch im Namen der pflegebedürftigen Person stellen</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ig-produkte">
+    <div class="sec-label">Was ist in der Box?</div>
+    <div class="prod-grid">
+      <div class="prod-item">
+        <div class="prod-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 4h10v16H7z" stroke="#C96B3F" stroke-width="1.4" stroke-linejoin="round" fill="none"/><path d="M9 4V2h6v2" stroke="#C96B3F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+        <div class="prod-name">Einmal&shy;handschuhe</div>
+      </div>
+      <div class="prod-item">
+        <div class="prod-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 2h6v5l-3 2-3-2V2z" stroke="#C96B3F" stroke-width="1.4" stroke-linejoin="round" fill="none"/><path d="M12 9v12M8 21h8" stroke="#C96B3F" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg></div>
+        <div class="prod-name">Desinfektions&shy;mittel</div>
+      </div>
+      <div class="prod-item">
+        <div class="prod-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 8h16v11a2 2 0 01-2 2H6a2 2 0 01-2-2V8z" stroke="#C96B3F" stroke-width="1.4" stroke-linejoin="round" fill="none"/><path d="M8 8V6a4 4 0 018 0v2" stroke="#C96B3F" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg></div>
+        <div class="prod-name">Mund&shy;schutz FFP2</div>
+      </div>
+      <div class="prod-item">
+        <div class="prod-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 6h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z" stroke="#C96B3F" stroke-width="1.4" stroke-linejoin="round" fill="none"/><path d="M4 6l4-4h8l4 4" stroke="#C96B3F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+        <div class="prod-name">Bett&shy;schutz&shy;einlagen</div>
+      </div>
+      <div class="prod-item">
+        <div class="prod-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3L4 8v13h16V8z" stroke="#C96B3F" stroke-width="1.4" stroke-linejoin="round" fill="none"/><path d="M9 21v-7h6v7" stroke="#C96B3F" stroke-width="1.4" stroke-linejoin="round" fill="none"/></svg></div>
+        <div class="prod-name">Schutz&shy;schürzen</div>
+      </div>
+      <div class="prod-more">
+        <div class="prod-more-plus">+</div>
+        <div class="prod-more-lbl">Individuell<br>wählbar</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ig-budget">
+    <div class="budget-title">Ihr monatliches Budget — vollständig von der Pflegekasse bezahlt</div>
+    <div class="budget-track"><div class="budget-fill"></div></div>
+    <div class="budget-row">
+      <div>
+        <div class="budget-val">42,00 &#x20AC;</div>
+        <div class="budget-sub">pro Monat &nbsp;·&nbsp; 504 &#x20AC; pro Jahr</div>
+      </div>
+      <div>
+        <div class="budget-zero-val">Ihr Anteil: 0,00 &#x20AC;</div>
+        <div class="budget-zero-sub">keine Zuzahlung</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ig-steps">
+    <div class="steps-label">So funktioniert's</div>
+    <div class="step-row">
+      <div class="step-left"><div class="step-num">1</div><div class="step-connector"></div></div>
+      <div class="step-body">
+        <div class="step-title">Angaben machen</div>
+        <div class="step-desc">Pflegegrad und Daten online eingeben — dauert 2 Minuten. Kein Papierkram, kein Briefversand, keine Wartezeit.</div>
+        <div class="step-tag">2 Minuten</div>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-left"><div class="step-num">2</div><div class="step-connector"></div></div>
+      <div class="step-body">
+        <div class="step-title">Box zusammenstellen</div>
+        <div class="step-desc">Wählen Sie die Produkte die Sie wirklich brauchen. Jederzeit änderbar — auch nach der ersten Lieferung.</div>
+        <div class="step-tag">Individuell</div>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-left"><div class="step-num">3</div></div>
+      <div class="step-body">
+        <div class="step-title">Fertig — wir liefern</div>
+        <div class="step-desc">Velacare regelt alles mit Ihrer Pflegekasse. Ihre Box kommt automatisch jeden Monat nach Hause.</div>
+        <div class="step-tag">Monatlich automatisch</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ig-quote">
+    <div class="quote-bar"></div>
+    <div class="quote-text">„Jeder mit Pflegegrad bekommt 42 € pro Monat von der Pflegekasse — als Pflegehilfsmittel. Die meisten wissen das nicht. Velacare holt das für dich."</div>
+    <div class="quote-sub">Teilen Sie diese Information weiter — <strong>fast alle Berechtigten kennen diesen Anspruch nicht.</strong></div>
+  </div>
+
+  <div class="ig-cta">
+    <div class="cta-text">Jetzt Anspruch prüfen —<br>kostenlos &amp; unverbindlich.</div>
+    <a href="https://velacare.de" class="cta-btn">velacare.de &#x2192;</a>
+  </div>
+
+  <div class="ig-trust">
+    <div class="trust-item"><div class="trust-dot"></div>Alle Pflegekassen</div>
+    <div class="trust-item"><div class="trust-dot"></div>Keine Bindung</div>
+    <div class="trust-item"><div class="trust-dot"></div>Kostenlos</div>
+    <div class="trust-item"><div class="trust-dot"></div>Deutschlandweit</div>
+  </div>
+
+  <div class="ig-footer">
+    <div class="footer-logo">
+      <svg width="20" height="20" viewBox="0 0 80 80" fill="none">
+        <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#E8A07A" stroke-width="8" stroke-linecap="round" fill="none"/>
+        <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#E8A07A" stroke-width="8" stroke-linecap="round" fill="none"/>
+        <circle cx="15" cy="70" r="5.5" fill="#E8A07A"/>
+        <circle cx="65" cy="70" r="5.5" fill="#E8A07A"/>
+        <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#A8D5C2"/>
+      </svg>
+      Velacare
+    </div>
+    <div class="footer-share">Weiterleiten an Angehörige &#x2192;</div>
+    <div class="footer-url">velacare.de</div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velacare — Gesamtkonzept & Brand Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --terra:       #C96B3F;
+  --terra-mid:   #D97E55;
+  --terra-light: #E8A07A;
+  --terra-pale:  #FAF0E8;
+  --terra-dark:  #9E4E28;
+  --sage:        #2D7A5F;
+  --sage-light:  #A8D5C2;
+  --sage-pale:   #EAF5F0;
+  --warm-white:  #FDFAF7;
+  --warm-gray:   #8A8078;
+  --mid-gray:    #C8BFB5;
+  --dark:        #2C2420;
+  --bg:          #F5F0EB;
+
+  --font-serif:  'Cormorant Garamond', Georgia, serif;
+  --font-sans:   'DM Sans', system-ui, sans-serif;
+  --font-mono:   'DM Mono', monospace;
+
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--dark);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ── Nav ── */
+.doc-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(253,250,247,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--mid-gray);
+  padding: 0 2.5rem;
+  display: flex;
+  align-items: center;
+  height: 54px;
+  gap: 2rem;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-serif);
+  font-size: 20px; font-weight: 600;
+  color: var(--dark); text-decoration: none;
+  flex-shrink: 0;
+}
+.nav-links {
+  display: flex; gap: 0; overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-links::-webkit-scrollbar { display: none; }
+.nav-link {
+  font-size: 12px; font-weight: 400;
+  color: var(--warm-gray);
+  text-decoration: none;
+  padding: 0 14px;
+  white-space: nowrap;
+  transition: color 0.15s;
+  letter-spacing: 0.02em;
+}
+.nav-link:hover { color: var(--terra); }
+.nav-badge {
+  margin-left: auto;
+  font-size: 10px; font-weight: 500;
+  padding: 4px 10px;
+  background: var(--terra-pale);
+  color: var(--terra);
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* ── Page wrapper ── */
+.page { padding-top: 54px; }
+
+/* ── Section ── */
+.section {
+  padding: 5rem 2.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.section-sm { padding: 3.5rem 2.5rem; max-width: 1100px; margin: 0 auto; }
+
+/* ── Cover ── */
+.cover {
+  min-height: 100vh;
+  background: var(--dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,107,63,0.12) 0%, transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.cover-eyebrow {
+  font-size: 11px; letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--terra-light);
+  margin-bottom: 2rem;
+}
+.cover-logo-wrap { margin-bottom: 2.5rem; }
+.cover-title {
+  font-family: var(--font-serif);
+  font-size: clamp(52px, 8vw, 96px);
+  font-weight: 600;
+  color: var(--warm-white);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+}
+.cover-subtitle {
+  font-size: 14px; font-weight: 300;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--terra-light);
+  margin-bottom: 3rem;
+}
+.cover-meta {
+  display: flex; gap: 2rem;
+  justify-content: center; flex-wrap: wrap;
+}
+.cover-meta-item {
+  font-size: 12px; color: rgba(253,250,247,0.4);
+  letter-spacing: 0.08em;
+}
+.cover-meta-item span { color: rgba(253,250,247,0.8); display: block; }
+
+/* ── Chapter divider ── */
+.chapter {
+  background: var(--terra);
+  padding: 3rem 2.5rem;
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5rem;
+}
+.chapter-num {
+  font-family: var(--font-serif);
+  font-size: 72px; font-weight: 600;
+  color: rgba(255,255,255,0.2);
+  line-height: 1;
+}
+.chapter-info { padding-bottom: 8px; }
+.chapter-label {
+  font-size: 10px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: rgba(255,255,255,0.6);
+  margin-bottom: 4px;
+}
+.chapter-title {
+  font-family: var(--font-serif);
+  font-size: 32px; font-weight: 600;
+  color: var(--warm-white); line-height: 1.1;
+}
+
+/* ── Typography ── */
+h2 {
+  font-family: var(--font-serif);
+  font-size: 36px; font-weight: 600;
+  color: var(--dark); line-height: 1.15;
+  margin-bottom: 1rem;
+}
+h3 {
+  font-family: var(--font-serif);
+  font-size: 24px; font-weight: 500;
+  color: var(--dark); line-height: 1.25;
+  margin-bottom: 0.75rem;
+}
+h4 {
+  font-size: 13px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--warm-gray); margin-bottom: 1rem;
+}
+p { color: var(--warm-gray); line-height: 1.75; }
+.lead {
+  font-size: 18px; font-weight: 300;
+  color: var(--dark); line-height: 1.65;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--warm-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--mid-gray);
+  overflow: hidden;
+}
+.card-pad { padding: 1.5rem; }
+
+/* ── Grids ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.25rem; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; }
+
+/* ── Divider ── */
+.divider { height: 1px; background: var(--mid-gray); margin: 3rem 0; }
+.divider-light { height: 1px; background: rgba(200,191,181,0.4); margin: 2rem 0; }
+
+/* ── Label ── */
+.label {
+  font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--warm-gray);
+  margin-bottom: 1.25rem;
+}
+
+/* ── Logo display ── */
+.logo-stage {
+  padding: 3rem 2rem;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 200px;
+}
+.logo-lockup { display: flex; align-items: center; gap: 20px; }
+.logo-lockup-vert { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.wm {
+  font-family: var(--font-serif);
+  font-size: 44px; font-weight: 600;
+  letter-spacing: 0.02em; line-height: 1;
+}
+.wm-sub {
+  font-family: var(--font-sans);
+  font-size: 11px; font-weight: 400;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--terra); margin-top: 6px;
+}
+.wm-light { color: #FAF0E8; }
+.wm-sub-light { color: var(--terra-light); }
+.wm-sub-white { color: rgba(253,250,247,0.7); }
+
+/* ── Color swatches ── */
+.color-swatch {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+.swatch-color {
+  height: 100px;
+}
+.swatch-info {
+  padding: 12px 14px;
+  background: var(--warm-white);
+}
+.swatch-name {
+  font-size: 13px; font-weight: 500;
+  color: var(--dark); margin-bottom: 2px;
+}
+.swatch-hex {
+  font-family: var(--font-mono);
+  font-size: 11px; color: var(--warm-gray);
+}
+.swatch-use {
+  font-size: 11px; color: var(--warm-gray);
+  margin-top: 4px; line-height: 1.4;
+}
+
+/* ── Type specimens ── */
+.type-specimen {
+  padding: 2rem;
+  background: var(--warm-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--mid-gray);
+  margin-bottom: 1rem;
+}
+.type-preview-serif {
+  font-family: var(--font-serif);
+  font-size: 48px; font-weight: 600;
+  color: var(--dark); line-height: 1.1;
+  margin-bottom: 8px;
+}
+.type-preview-serif-italic {
+  font-family: var(--font-serif);
+  font-size: 36px; font-weight: 400;
+  font-style: italic;
+  color: var(--terra); line-height: 1.2;
+  margin-bottom: 8px;
+}
+.type-preview-sans {
+  font-family: var(--font-sans);
+  font-size: 16px; font-weight: 300;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--warm-gray);
+}
+.type-meta {
+  font-size: 11px; color: var(--mid-gray);
+  font-family: var(--font-mono);
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--mid-gray);
+}
+
+/* ── Scale table ── */
+.scale-row {
+  display: flex; align-items: baseline;
+  gap: 1.5rem; padding: 14px 0;
+  border-bottom: 1px solid rgba(200,191,181,0.35);
+}
+.scale-label { width: 120px; font-size: 11px; font-family: var(--font-mono); color: var(--warm-gray); flex-shrink: 0; }
+.scale-sample { flex: 1; }
+
+/* ── Spacing scale ── */
+.space-row {
+  display: flex; align-items: center;
+  gap: 1rem; padding: 10px 0;
+  border-bottom: 1px solid rgba(200,191,181,0.3);
+}
+.space-bar { background: var(--terra); height: 10px; border-radius: 3px; flex-shrink: 0; opacity: 0.7; }
+.space-info { font-size: 12px; color: var(--warm-gray); font-family: var(--font-mono); }
+
+/* ── Component demos ── */
+.demo-btn {
+  display: inline-flex; align-items: center;
+  padding: 10px 22px; border-radius: var(--radius-md);
+  font-size: 14px; font-weight: 500;
+  font-family: var(--font-sans);
+  cursor: default; white-space: nowrap;
+}
+.btn-primary-demo { background: var(--terra); color: white; }
+.btn-secondary-demo { background: transparent; color: var(--dark); border: 1.5px solid var(--mid-gray); }
+.btn-ghost-demo { background: var(--terra-pale); color: var(--terra); }
+
+.demo-badge {
+  display: inline-block; font-size: 11px; font-weight: 500;
+  padding: 4px 10px; border-radius: 20px;
+}
+.badge-terra { background: rgba(201,107,63,0.15); color: var(--terra); }
+.badge-sage { background: rgba(45,122,95,0.12); color: var(--sage); }
+.badge-gray { background: var(--bg); color: var(--warm-gray); }
+
+.demo-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--mid-gray);
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  background: white;
+  color: var(--dark);
+  outline: none;
+}
+
+/* ── Voice & Tone ── */
+.tone-card {
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  margin-bottom: 1rem;
+}
+.tone-do { background: var(--sage-pale); border-left: 3px solid var(--sage); }
+.tone-dont { background: #FFF0ED; border-left: 3px solid #E05A3A; }
+.tone-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+.tone-label-do { color: var(--sage); }
+.tone-label-dont { color: #E05A3A; }
+.tone-example { font-size: 15px; line-height: 1.6; color: var(--dark); }
+
+/* ── Sitemap ── */
+.sitemap-tree {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.sitemap-row {
+  display: flex; align-items: stretch; gap: 0;
+}
+.sitemap-home {
+  background: var(--terra);
+  color: white;
+  padding: 14px 20px;
+  border-radius: var(--radius-md);
+  font-weight: 500; font-size: 14px;
+  display: flex; align-items: center;
+}
+.sitemap-children {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  padding: 0 0 0 1.5rem; align-items: center; flex: 1;
+}
+.sitemap-page {
+  background: var(--warm-white);
+  border: 1px solid var(--mid-gray);
+  padding: 10px 16px; border-radius: var(--radius-md);
+  font-size: 13px; color: var(--dark);
+  display: flex; flex-direction: column; gap: 3px;
+}
+.sitemap-url {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--warm-gray);
+}
+.sitemap-connector {
+  width: 24px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.sitemap-line { width: 100%; height: 1.5px; background: var(--mid-gray); }
+
+/* ── Wireframe mini previews ── */
+.wf-mini {
+  background: var(--warm-white);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--mid-gray);
+  overflow: hidden;
+  font-size: 0;
+}
+.wf-mini-nav {
+  height: 22px; background: white;
+  border-bottom: 1px solid var(--mid-gray);
+  display: flex; align-items: center; padding: 0 10px; gap: 6px;
+}
+.wf-mini-dot { width: 5px; height: 5px; border-radius: 50%; }
+.wf-mini-hero {
+  height: 60px; background: var(--bg);
+  display: flex; align-items: center; padding: 0 10px; gap: 8px;
+}
+.wf-mini-block { background: var(--mid-gray); border-radius: 2px; }
+.wf-mini-section { padding: 8px 10px; border-top: 1px solid var(--mid-gray); }
+.wf-mini-grid { display: grid; gap: 4px; }
+.wf-mini-card { background: white; border: 1px solid var(--mid-gray); border-radius: 4px; height: 30px; }
+.wf-mini-label { font-size: 9px; font-family: var(--font-sans); color: var(--warm-gray); margin-bottom: 5px; display: block; }
+
+/* ── Principle cards ── */
+.principle-card {
+  padding: 1.75rem;
+  background: var(--warm-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--mid-gray);
+}
+.principle-num {
+  font-family: var(--font-serif);
+  font-size: 48px; font-weight: 600;
+  color: var(--terra); opacity: 0.2;
+  line-height: 1; margin-bottom: 8px;
+}
+.principle-title {
+  font-family: var(--font-serif);
+  font-size: 22px; font-weight: 500;
+  color: var(--dark); margin-bottom: 8px;
+}
+.principle-desc { font-size: 14px; color: var(--warm-gray); line-height: 1.65; }
+
+/* ── Usage rules ── */
+.usage-card {
+  border-radius: var(--radius-lg); overflow: hidden;
+  border: 1px solid var(--mid-gray);
+}
+.usage-stage {
+  height: 120px;
+  display: flex; align-items: center; justify-content: center;
+}
+.usage-label {
+  padding: 10px 14px;
+  font-size: 12px; color: var(--warm-gray);
+  border-top: 1px solid var(--mid-gray);
+  background: var(--warm-white);
+}
+.usage-tag {
+  font-size: 10px; font-weight: 500;
+  padding: 2px 8px; border-radius: 10px;
+  display: inline-block; margin-bottom: 5px;
+}
+.tag-ok { background: #DCF0E4; color: #0F5240; }
+.tag-no { background: #FDDDD8; color: #9E2910; }
+
+/* ── Print / export hint ── */
+.print-hint {
+  background: var(--dark);
+  color: rgba(253,250,247,0.5);
+  font-size: 11px;
+  text-align: center;
+  padding: 12px;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 700px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .cover-title { font-size: 48px; }
+  .chapter-num { font-size: 48px; }
+  .section, .section-sm { padding: 3rem 1.25rem; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══ NAV ══ -->
+<nav class="doc-nav">
+  <a href="#cover" class="nav-logo">
+    <svg width="22" height="22" viewBox="0 0 80 80" fill="none">
+      <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="9" stroke-linecap="round" fill="none"/>
+      <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="9" stroke-linecap="round" fill="none"/>
+      <circle cx="15" cy="70" r="6" fill="#C96B3F"/>
+      <circle cx="65" cy="70" r="6" fill="#C96B3F"/>
+      <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/>
+    </svg>
+    Velacare
+  </a>
+  <div class="nav-links">
+    <a href="#marke" class="nav-link">Marke</a>
+    <a href="#logo" class="nav-link">Logo</a>
+    <a href="#farben" class="nav-link">Farben</a>
+    <a href="#typografie" class="nav-link">Typografie</a>
+    <a href="#komponenten" class="nav-link">Komponenten</a>
+    <a href="#stimme" class="nav-link">Stimme & Ton</a>
+    <a href="#website" class="nav-link">Website</a>
+    <a href="#wireframes" class="nav-link">Wireframes</a>
+  </div>
+  <div class="nav-badge">Brand Guide v1.0</div>
+</nav>
+
+<!-- ══ COVER ══ -->
+<section id="cover" class="cover">
+  <div class="cover-eyebrow">Brand Guide · Version 1.0</div>
+  <div class="cover-logo-wrap">
+    <svg width="100" height="100" viewBox="0 0 80 80" fill="none">
+      <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#E8A07A" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#E8A07A" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <circle cx="15" cy="70" r="5.5" fill="#E8A07A"/>
+      <circle cx="65" cy="70" r="5.5" fill="#E8A07A"/>
+      <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#A8D5C2"/>
+    </svg>
+  </div>
+  <h1 class="cover-title">Velacare</h1>
+  <p class="cover-subtitle">Pflegehilfsmittel · Gesamtkonzept</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item">Branche<span>Pflegehilfsmittel</span></div>
+    <div class="cover-meta-item">Zielgruppe<span>Ältere Menschen & Angehörige</span></div>
+    <div class="cover-meta-item">Tonalität<span>Warm · Vertrauensvoll · Klar</span></div>
+    <div class="cover-meta-item">Status<span>Entwurf 2025</span></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- KAPITEL 1: MARKE -->
+<!-- ══════════════════════════════════════ -->
+<div id="marke" class="chapter">
+  <div class="chapter-num">01</div>
+  <div class="chapter-info">
+    <div class="chapter-label">Kapitel 1</div>
+    <div class="chapter-title">Marke & Positionierung</div>
+  </div>
+</div>
+
+<div class="section">
+  <h4>Mission</h4>
+  <h2>Pflege, die jeden Monat ankommt.</h2>
+  <p class="lead" style="max-width:680px; margin-bottom:2.5rem">Velacare macht es pflegenden Menschen einfach, die Hilfsmittel zu bekommen, die ihnen gesetzlich zustehen — ohne Bürokratie, ohne Stress, mit Wärme und Verlässlichkeit.</p>
+
+  <div class="grid-3" style="margin-bottom:3rem">
+    <div class="principle-card">
+      <div class="principle-num">01</div>
+      <div class="principle-title">Vertrauen</div>
+      <p class="principle-desc">Pflegende Angehörige tragen große Verantwortung. Velacare ist der verlässliche Partner, der immer pünktlich da ist — und der die Bürokratie übernimmt.</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-num">02</div>
+      <div class="principle-title">Einfachheit</div>
+      <p class="principle-desc">Kein Papierkram, kein Hin und Her. Was komplex klingt, ist mit Velacare in wenigen Minuten erledigt. Einfach beantragen, monatlich geliefert.</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-num">03</div>
+      <div class="principle-title">Menschlichkeit</div>
+      <p class="principle-desc">Hinter jedem Auftrag steckt eine Familie. Velacare kommuniziert warm, persönlich und auf Augenhöhe — nie klinisch, nie unpersönlich.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <h4>Positionierung</h4>
+  <div class="grid-2">
+    <div>
+      <h3>Wettbewerber</h3>
+      <p style="margin-bottom:1rem">Frontida, pflegebox.de und pflegetipp.de dominieren den Markt mit einem stark funktionalen Ansatz: Kostenlos, Pflegekasse, 42€. Das Versprechen steht im Vordergrund — das Gefühl bleibt auf der Strecke.</p>
+      <p>Das schafft eine klare Lücke: Keine Marke im Markt kommuniziert <em>Wärme, Vertrauen und Menschlichkeit</em> als Kernidentität.</p>
+    </div>
+    <div>
+      <h3>Velacare</h3>
+      <p style="margin-bottom:1rem">Velacare füllt diese Lücke. Wir kommunizieren nicht nur das Versprechen (kostenlos, einfach) — wir kommunizieren das <em>Gefühl</em>: „Jemand kümmert sich. Jeden Monat. Verlässlich."</p>
+      <p>Das Produkt ist identisch mit dem Wettbewerb. Die Marke ist es nicht.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <h4>Zielgruppe</h4>
+  <div class="grid-2">
+    <div class="card card-pad">
+      <h3 style="margin-bottom:4px">Pflegende Angehörige</h3>
+      <p style="font-size:13px; color:var(--terra); margin-bottom:12px; font-weight:500">Primäre Zielgruppe · 40–65 Jahre</p>
+      <p style="font-size:14px">Töchter, Söhne, Partner die einen Elternteil oder Ehepartner zuhause pflegen. Sie suchen Entlastung und Verlässlichkeit. Zeit ist knapp, Energie auch. Sie wollen keine langen Formulare — sie wollen dass jemand das für sie erledigt.</p>
+    </div>
+    <div class="card card-pad">
+      <h3 style="margin-bottom:4px">Ältere Menschen</h3>
+      <p style="font-size:13px; color:var(--sage); margin-bottom:12px; font-weight:500">Sekundäre Zielgruppe · 65+ Jahre</p>
+      <p style="font-size:14px">Pflegebedürftige mit Pflegegrad 1–5, die zuhause leben. Sie beantragen oft gemeinsam mit Angehörigen. Die Website muss für sie lesbar, verständlich und nicht technisch sein. Große Schrift, klare Sprache, Telefon sichtbar.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- KAPITEL 2: LOGO -->
+<!-- ══════════════════════════════════════ -->
+<div id="logo" class="chapter">
+  <div class="chapter-num">02</div>
+  <div class="chapter-info">
+    <div class="chapter-label">Kapitel 2</div>
+    <div class="chapter-title">Logo & Icon</div>
+  </div>
+</div>
+
+<div class="section">
+  <h4>Logo-Konzept</h4>
+  <h2>Umhüllende Arme, verbunden durch ein Herz</h2>
+  <p class="lead" style="max-width:680px; margin-bottom:2.5rem">Das Icon zeigt zwei Arme, die sich schützend um einen Kern schließen — in der Mitte ein Herz als Symbol für Fürsorge. Klar, warm, auf jeder Größe erkennbar.</p>
+
+  <!-- Primär hell -->
+  <h4>Primäres Logo — Hell</h4>
+  <div class="card" style="margin-bottom:1rem">
+    <div class="logo-stage" style="background:var(--warm-white)">
+      <div class="logo-lockup">
+        <svg width="82" height="82" viewBox="0 0 80 80" fill="none">
+          <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <circle cx="15" cy="70" r="5.5" fill="#C96B3F"/>
+          <circle cx="65" cy="70" r="5.5" fill="#C96B3F"/>
+          <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/>
+        </svg>
+        <div><div class="wm" style="color:var(--dark)">Velacare</div><div class="wm-sub">Pflegehilfsmittel</div></div>
+      </div>
+    </div>
+    <div style="padding:12px 18px; border-top:1px solid var(--mid-gray); font-size:12px; color:var(--warm-gray)">Primäre Version · Für Website, Briefkopf, Visitenkarte, Rechnungen</div>
+  </div>
+
+  <!-- Dark + Terra -->
+  <div class="grid-2" style="margin-bottom:1rem">
+    <div class="card">
+      <div class="logo-stage" style="background:var(--dark)">
+        <div class="logo-lockup">
+          <svg width="68" height="68" viewBox="0 0 80 80" fill="none">
+            <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#E8A07A" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#E8A07A" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <circle cx="15" cy="70" r="5.5" fill="#E8A07A"/>
+            <circle cx="65" cy="70" r="5.5" fill="#E8A07A"/>
+            <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#A8D5C2"/>
+          </svg>
+          <div><div class="wm wm-light">Velacare</div><div class="wm-sub wm-sub-light">Pflegehilfsmittel</div></div>
+        </div>
+      </div>
+      <div style="padding:10px 14px; border-top:1px solid var(--mid-gray); font-size:12px; color:var(--warm-gray)">Dark · Header, E-Mail, Packaging</div>
+    </div>
+    <div class="card">
+      <div class="logo-stage" style="background:var(--terra)">
+        <div class="logo-lockup">
+          <svg width="68" height="68" viewBox="0 0 80 80" fill="none">
+            <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#FAF0E8" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#FAF0E8" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <circle cx="15" cy="70" r="5.5" fill="#FAF0E8"/>
+            <circle cx="65" cy="70" r="5.5" fill="#FAF0E8"/>
+            <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#FAF0E8" opacity="0.85"/>
+          </svg>
+          <div><div class="wm wm-light">Velacare</div><div class="wm-sub wm-sub-white">Pflegehilfsmittel</div></div>
+        </div>
+      </div>
+      <div style="padding:10px 14px; border-top:1px solid var(--mid-gray); font-size:12px; color:var(--warm-gray)">Auf Markenfarbe · Box-Aufdruck, Social, Werbung</div>
+    </div>
+  </div>
+
+  <!-- Vertikal + App Icons -->
+  <div class="grid-4" style="margin-bottom:2.5rem">
+    <div class="card">
+      <div class="logo-stage" style="min-height:140px">
+        <div class="logo-lockup-vert">
+          <svg width="56" height="56" viewBox="0 0 80 80" fill="none">
+            <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <circle cx="15" cy="70" r="5.5" fill="#C96B3F"/>
+            <circle cx="65" cy="70" r="5.5" fill="#C96B3F"/>
+            <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/>
+          </svg>
+          <div style="font-family:var(--font-serif); font-size:28px; font-weight:600; color:var(--dark); letter-spacing:0.05em">Velacare</div>
+          <div style="font-family:var(--font-sans); font-size:9px; font-weight:400; letter-spacing:0.28em; text-transform:uppercase; color:var(--terra)">Pflegehilfsmittel</div>
+        </div>
+      </div>
+      <div style="padding:8px 12px; border-top:1px solid var(--mid-gray); font-size:11px; color:var(--warm-gray)">Vertikal · Social Profil</div>
+    </div>
+    <div class="card">
+      <div class="logo-stage" style="min-height:140px">
+        <div style="width:72px; height:72px; background:var(--terra); border-radius:18px; display:flex; align-items:center; justify-content:center;">
+          <svg width="48" height="48" viewBox="0 0 80 80" fill="none">
+            <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#FAF0E8" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#FAF0E8" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <circle cx="15" cy="70" r="5.5" fill="#FAF0E8"/>
+            <circle cx="65" cy="70" r="5.5" fill="#FAF0E8"/>
+            <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#FAF0E8" opacity="0.9"/>
+          </svg>
+        </div>
+      </div>
+      <div style="padding:8px 12px; border-top:1px solid var(--mid-gray); font-size:11px; color:var(--warm-gray)">App Icon · Terrakotta</div>
+    </div>
+    <div class="card">
+      <div class="logo-stage" style="min-height:140px">
+        <div style="width:72px; height:72px; background:var(--warm-white); border:1px solid var(--mid-gray); border-radius:18px; display:flex; align-items:center; justify-content:center;">
+          <svg width="48" height="48" viewBox="0 0 80 80" fill="none">
+            <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <circle cx="15" cy="70" r="5.5" fill="#C96B3F"/>
+            <circle cx="65" cy="70" r="5.5" fill="#C96B3F"/>
+            <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/>
+          </svg>
+        </div>
+      </div>
+      <div style="padding:8px 12px; border-top:1px solid var(--mid-gray); font-size:11px; color:var(--warm-gray)">App Icon · Hell</div>
+    </div>
+    <div class="card">
+      <div class="logo-stage" style="min-height:140px">
+        <div style="width:36px; height:36px; background:var(--dark); border-radius:9px; display:flex; align-items:center; justify-content:center;">
+          <svg width="24" height="24" viewBox="0 0 80 80" fill="none">
+            <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#E8A07A" stroke-width="9" stroke-linecap="round" fill="none"/>
+            <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#E8A07A" stroke-width="9" stroke-linecap="round" fill="none"/>
+            <circle cx="15" cy="70" r="7" fill="#E8A07A"/>
+            <circle cx="65" cy="70" r="7" fill="#E8A07A"/>
+            <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#A8D5C2"/>
+          </svg>
+        </div>
+      </div>
+      <div style="padding:8px 12px; border-top:1px solid var(--mid-gray); font-size:11px; color:var(--warm-gray)">Favicon · 32px</div>
+    </div>
+  </div>
+
+  <!-- Logo Usage Rules -->
+  <div class="divider"></div>
+  <h4>Logo-Regeln</h4>
+  <div class="grid-4">
+    <div class="usage-card">
+      <div class="usage-stage" style="background:var(--warm-white)">
+        <svg width="56" height="56" viewBox="0 0 80 80" fill="none">
+          <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <circle cx="15" cy="70" r="5.5" fill="#C96B3F"/>
+          <circle cx="65" cy="70" r="5.5" fill="#C96B3F"/>
+          <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/>
+        </svg>
+      </div>
+      <div class="usage-label"><span class="usage-tag tag-ok">✓ Richtig</span><br>Auf hellem Hintergrund</div>
+    </div>
+    <div class="usage-card">
+      <div class="usage-stage" style="background:var(--dark)">
+        <svg width="56" height="56" viewBox="0 0 80 80" fill="none">
+          <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#E8A07A" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#E8A07A" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <circle cx="15" cy="70" r="5.5" fill="#E8A07A"/>
+          <circle cx="65" cy="70" r="5.5" fill="#E8A07A"/>
+          <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#A8D5C2"/>
+        </svg>
+      </div>
+      <div class="usage-label"><span class="usage-tag tag-ok">✓ Richtig</span><br>Auf dunklem Hintergrund</div>
+    </div>
+    <div class="usage-card">
+      <div class="usage-stage" style="background:var(--bg); position:relative">
+        <svg width="56" height="56" viewBox="0 0 80 80" fill="none" style="opacity:0.3; filter:grayscale(1)">
+          <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <circle cx="15" cy="70" r="5.5" fill="#C96B3F"/>
+          <circle cx="65" cy="70" r="5.5" fill="#C96B3F"/>
+          <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/>
+        </svg>
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:28px; color:#E05A3A">×</div>
+      </div>
+      <div class="usage-label"><span class="usage-tag tag-no">✗ Falsch</span><br>Nicht verblassen / vergrau.</div>
+    </div>
+    <div class="usage-card">
+      <div class="usage-stage" style="background:linear-gradient(135deg,#6B8FC9,#A06BC9); position:relative">
+        <svg width="56" height="56" viewBox="0 0 80 80" fill="none">
+          <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="white" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="white" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <circle cx="15" cy="70" r="5.5" fill="white"/>
+          <circle cx="65" cy="70" r="5.5" fill="white"/>
+          <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="white" opacity="0.7"/>
+        </svg>
+        <div style="position:absolute; top:8px; right:8px; font-size:18px; color:rgba(255,255,255,0.8)">×</div>
+      </div>
+      <div class="usage-label"><span class="usage-tag tag-no">✗ Falsch</span><br>Nicht auf fremden Farben</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- KAPITEL 3: FARBEN -->
+<!-- ══════════════════════════════════════ -->
+<div id="farben" class="chapter">
+  <div class="chapter-num">03</div>
+  <div class="chapter-info">
+    <div class="chapter-label">Kapitel 3</div>
+    <div class="chapter-title">Farben</div>
+  </div>
+</div>
+
+<div class="section">
+  <h4>Primärpalette</h4>
+  <h2>Warm, geerdet, vertrauensvoll</h2>
+  <p style="max-width:620px; margin-bottom:2.5rem">Die Palette stammt nicht aus dem klinischen Pflegebereich — sie ist bewusst warm und menschlich. Terrakotta als Primärfarbe, Salbeigrün als Akzent, warmes Weiß als Basis.</p>
+
+  <div class="grid-3" style="margin-bottom:2.5rem">
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:var(--terra)"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Terrakotta — Primär</div>
+        <div class="swatch-hex">#C96B3F</div>
+        <div class="swatch-use">Hauptfarbe. CTAs, Buttons, Logo-Arme, aktive Elemente. Die Farbe die man mit Velacare assoziiert.</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:var(--sage)"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Salbeigrün — Akzent</div>
+        <div class="swatch-hex">#2D7A5F</div>
+        <div class="swatch-use">Sekundäre Akzentfarbe. Logo-Herz, Erfolgs-Zustände, Badges, Highlights. Ergänzt Terrakotta ruhig.</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:var(--dark)"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Dunkelbraun — Text</div>
+        <div class="swatch-hex">#2C2420</div>
+        <div class="swatch-use">Haupttextfarbe. Überschriften, Body-Text, Footer-Hintergrund. Wärmer als reines Schwarz.</div>
+      </div>
+    </div>
+  </div>
+
+  <h4>Sekundärpalette</h4>
+  <div class="grid-4" style="margin-bottom:2.5rem">
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:var(--terra-light)"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Apricot</div>
+        <div class="swatch-hex">#E8A07A</div>
+        <div class="swatch-use">Hover-Zustände, Dark-Mode-Terrakotta, dezente Akzente</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:var(--terra-pale)"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Warm-Weiß</div>
+        <div class="swatch-hex">#FAF0E8</div>
+        <div class="swatch-use">Card-Hintergründe, Boxen, helle Flächen, Schrift auf Terrakotta</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:var(--sage-light)"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Mintgrün</div>
+        <div class="swatch-hex">#A8D5C2</div>
+        <div class="swatch-use">Helle Sage-Flächen, Dark-Mode-Herz, dezente Highlights</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:var(--warm-gray)"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Warmgrau</div>
+        <div class="swatch-hex">#8A8078</div>
+        <div class="swatch-use">Sekundärer Text, Labels, Untertitel, Descriptions</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <h4>Farbkombinationen — Anwendungsbeispiele</h4>
+  <div class="grid-3">
+    <div class="card" style="overflow:hidden">
+      <div style="background:var(--terra); padding:1.5rem; display:flex; flex-direction:column; gap:10px">
+        <div style="font-family:var(--font-serif); font-size:22px; font-weight:600; color:#FAF0E8">Jetzt beantragen</div>
+        <div style="font-size:12px; color:rgba(253,250,247,0.7); letter-spacing:0.05em">Kostenlos · Ohne Vertragsbindung</div>
+        <div style="display:inline-block; background:rgba(253,250,247,0.15); color:#FAF0E8; padding:8px 18px; border-radius:6px; font-size:13px; font-weight:500; align-self:flex-start">Anspruch prüfen →</div>
+      </div>
+      <div style="padding:10px 14px; font-size:11px; color:var(--warm-gray)">CTA-Banner auf Terrakotta</div>
+    </div>
+    <div class="card" style="overflow:hidden">
+      <div style="background:var(--sage-pale); padding:1.5rem; display:flex; flex-direction:column; gap:8px">
+        <div style="display:inline-block; background:rgba(45,122,95,0.15); color:var(--sage); padding:4px 10px; border-radius:20px; font-size:11px; font-weight:500; align-self:flex-start">✓ Anspruch bestätigt</div>
+        <div style="font-family:var(--font-serif); font-size:20px; font-weight:500; color:var(--dark)">Sie haben Anspruch auf 42 €/Monat</div>
+        <div style="font-size:13px; color:var(--warm-gray)">Pflegegrad 1 · Häusliche Pflege</div>
+      </div>
+      <div style="padding:10px 14px; font-size:11px; color:var(--warm-gray)">Erfolgs-Bestätigung auf Sage-Pale</div>
+    </div>
+    <div class="card" style="overflow:hidden">
+      <div style="background:var(--dark); padding:1.5rem; display:flex; flex-direction:column; gap:10px">
+        <svg width="40" height="40" viewBox="0 0 80 80" fill="none">
+          <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#E8A07A" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#E8A07A" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <circle cx="15" cy="70" r="5.5" fill="#E8A07A"/>
+          <circle cx="65" cy="70" r="5.5" fill="#E8A07A"/>
+          <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#A8D5C2"/>
+        </svg>
+        <div style="font-family:var(--font-serif); font-size:22px; font-weight:600; color:#FAF0E8">Velacare</div>
+        <div style="font-size:11px; color:rgba(232,160,122,0.8); letter-spacing:0.2em; text-transform:uppercase">Pflegehilfsmittel</div>
+      </div>
+      <div style="padding:10px 14px; font-size:11px; color:var(--warm-gray)">Logo auf dunklem Footer</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- KAPITEL 4: TYPOGRAFIE -->
+<!-- ══════════════════════════════════════ -->
+<div id="typografie" class="chapter">
+  <div class="chapter-num">04</div>
+  <div class="chapter-info">
+    <div class="chapter-label">Kapitel 4</div>
+    <div class="chapter-title">Typografie</div>
+  </div>
+</div>
+
+<div class="section">
+  <h4>Schriftenfamilien</h4>
+  <h2>Serif trifft Sans — elegant und lesbar</h2>
+  <p style="max-width:620px; margin-bottom:2.5rem">Cormorant Garamond für alles Emotionale und Markenprägende — DM Sans für alles Funktionale und Lesbare. Die Kombination erzeugt Wärme ohne Beliebigkeit.</p>
+
+  <div class="type-specimen">
+    <div class="type-preview-serif">Cormorant Garamond</div>
+    <div class="type-preview-serif-italic">„Jeden Monat ein Stück Fürsorge."</div>
+    <div class="type-meta">Display & Markenschrift · Gewichte: 400 regular, 500 medium, 600 semibold · Einsatz: Logo, H1, H2, Zitate, emotionale Headlines</div>
+  </div>
+
+  <div class="type-specimen">
+    <div style="font-family:var(--font-sans); font-size:32px; font-weight:500; color:var(--dark); margin-bottom:8px">DM Sans — klar & freundlich</div>
+    <div class="type-preview-sans">Pflegehilfsmittel · Kostenlos · Monatlich</div>
+    <div style="font-family:var(--font-sans); font-size:15px; font-weight:300; color:var(--warm-gray); line-height:1.7; margin-top:12px">Fließtext, Buttons, Navigation, Labels und alle funktionalen Texte verwenden DM Sans. Die Schrift ist klar, modern und sehr gut lesbar — auch für ältere Nutzer auf kleinen Bildschirmen.</div>
+    <div class="type-meta">Interface & Fließtext · Gewichte: 300 light, 400 regular, 500 medium · Einsatz: Body, Nav, Buttons, Formulare, Labels</div>
+  </div>
+
+  <div class="divider-light"></div>
+  <h4>Typografische Skala</h4>
+  <div class="card card-pad">
+    <div class="scale-row">
+      <div class="scale-label">Display / H1</div>
+      <div class="scale-sample" style="font-family:var(--font-serif); font-size:52px; font-weight:600; color:var(--dark); line-height:1.05">Velacare</div>
+    </div>
+    <div class="scale-row">
+      <div class="scale-label">H2 · 36px</div>
+      <div class="scale-sample" style="font-family:var(--font-serif); font-size:36px; font-weight:600; color:var(--dark)">Pflege mit Herz</div>
+    </div>
+    <div class="scale-row">
+      <div class="scale-label">H3 · 24px</div>
+      <div class="scale-sample" style="font-family:var(--font-serif); font-size:24px; font-weight:500; color:var(--dark)">Wie es funktioniert</div>
+    </div>
+    <div class="scale-row">
+      <div class="scale-label">Lead · 18px</div>
+      <div class="scale-sample" style="font-family:var(--font-sans); font-size:18px; font-weight:300; color:var(--dark)">Monatliche Lieferung direkt nach Hause</div>
+    </div>
+    <div class="scale-row">
+      <div class="scale-label">Body · 15px</div>
+      <div class="scale-sample" style="font-family:var(--font-sans); font-size:15px; color:var(--warm-gray)">Die Pflegekasse übernimmt die Kosten bis zu 42€ monatlich.</div>
+    </div>
+    <div class="scale-row">
+      <div class="scale-label">Small · 13px</div>
+      <div class="scale-sample" style="font-family:var(--font-sans); font-size:13px; color:var(--warm-gray)">Pflegegrad 1 oder höher · Häusliche Pflege · Gesetzlich versichert</div>
+    </div>
+    <div class="scale-row" style="border:none">
+      <div class="scale-label">Label · 11px</div>
+      <div class="scale-sample" style="font-family:var(--font-sans); font-size:11px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--warm-gray)">Pflegehilfsmittel · Kostenlos</div>
+    </div>
+  </div>
+
+  <div class="divider-light"></div>
+  <h4>Abstände & Rhythmus</h4>
+  <div class="card card-pad">
+    <div class="space-row"><div class="space-bar" style="width:4px"></div><div class="space-info">4px — Minimal: Icon-Text Abstand, Inline-Gaps</div></div>
+    <div class="space-row"><div class="space-bar" style="width:8px"></div><div class="space-info">8px — Klein: Label-Abstand, dichte Elemente</div></div>
+    <div class="space-row"><div class="space-bar" style="width:16px"></div><div class="space-info">16px — Standard: Card-Padding innen, Form-Gap</div></div>
+    <div class="space-row"><div class="space-bar" style="width:24px"></div><div class="space-info">24px — Medium: Section-interne Abstände</div></div>
+    <div class="space-row"><div class="space-bar" style="width:40px"></div><div class="space-info">40px — Groß: Zwischen Content-Blöcken</div></div>
+    <div class="space-row" style="border:none"><div class="space-bar" style="width:80px"></div><div class="space-info">80px — Section-Padding oben/unten</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- KAPITEL 5: KOMPONENTEN -->
+<!-- ══════════════════════════════════════ -->
+<div id="komponenten" class="chapter">
+  <div class="chapter-num">05</div>
+  <div class="chapter-info">
+    <div class="chapter-label">Kapitel 5</div>
+    <div class="chapter-title">UI-Komponenten</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="grid-2" style="margin-bottom:2.5rem">
+    <!-- Buttons -->
+    <div>
+      <h4>Buttons</h4>
+      <div class="card card-pad" style="display:flex; flex-direction:column; gap:12px">
+        <div style="display:flex; flex-direction:column; gap:6px">
+          <div style="font-size:11px; color:var(--warm-gray)">Primär — Hauptaktion</div>
+          <div class="demo-btn btn-primary-demo">Jetzt beantragen →</div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:6px">
+          <div style="font-size:11px; color:var(--warm-gray)">Sekundär — Nebenhandlung</div>
+          <div class="demo-btn btn-secondary-demo">Wie es funktioniert</div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:6px">
+          <div style="font-size:11px; color:var(--warm-gray)">Ghost — Tertiäre Aktion</div>
+          <div class="demo-btn btn-ghost-demo">Anspruch prüfen</div>
+        </div>
+      </div>
+    </div>
+    <!-- Badges -->
+    <div>
+      <h4>Badges & Tags</h4>
+      <div class="card card-pad" style="display:flex; flex-direction:column; gap:12px">
+        <div style="display:flex; flex-direction:column; gap:6px">
+          <div style="font-size:11px; color:var(--warm-gray)">Kostenlos / Positiv</div>
+          <div class="demo-badge badge-terra">Kostenlos</div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:6px">
+          <div style="font-size:11px; color:var(--warm-gray)">Anspruch bestätigt</div>
+          <div class="demo-badge badge-sage">✓ Anspruch bestätigt</div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:6px">
+          <div style="font-size:11px; color:var(--warm-gray)">Neutral</div>
+          <div class="demo-badge badge-gray">Pflegegrad 1–5</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:2.5rem">
+    <!-- Formular -->
+    <div>
+      <h4>Formularfelder</h4>
+      <div class="card card-pad" style="display:flex; flex-direction:column; gap:14px">
+        <div>
+          <div style="font-size:12px; color:var(--dark); margin-bottom:6px; font-weight:500">Vorname</div>
+          <input class="demo-input" placeholder="z.B. Maria" readonly>
+        </div>
+        <div>
+          <div style="font-size:12px; color:var(--dark); margin-bottom:6px; font-weight:500">Pflegegrad</div>
+          <select class="demo-input" style="appearance:none; cursor:default">
+            <option>Pflegegrad 1</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <!-- Card Demo -->
+    <div>
+      <h4>Produkt-Karte</h4>
+      <div class="card" style="overflow:hidden">
+        <div style="height:80px; background:var(--bg); display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--warm-gray)">Produktfoto</div>
+        <div style="padding:14px">
+          <div class="demo-badge badge-terra" style="margin-bottom:8px">Kostenlos</div>
+          <div style="font-size:15px; font-weight:500; color:var(--dark); margin-bottom:4px">Einmalhandschuhe</div>
+          <div style="font-size:13px; color:var(--warm-gray); margin-bottom:12px">Latexfrei, Größe M/L, 100 Stück</div>
+          <div class="demo-btn btn-primary-demo" style="padding:8px 16px; font-size:12px; cursor:default">Zur Box hinzufügen</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Icons Prinzipien -->
+  <div class="divider-light"></div>
+  <h4>Icons & Illustration</h4>
+  <div class="card card-pad">
+    <p style="margin-bottom:1rem">Velacare verwendet <strong style="color:var(--dark)">Linie-Icons</strong> mit 1.5px Strichstärke und abgerundeten Enden. Kein Filled-Style, kein Outline-only. Die Icons sind freundlich, nie technisch.</p>
+    <p>Illustrationen zeigen <strong style="color:var(--dark)">echte Menschen in Pflegesituationen</strong> — kein Stock-Photo-Feeling, kein Krankenhaus. Warme Farben, natürliches Licht. Menschen lächeln, aber nicht übertrieben. Das Bild soll Vertrautheit, nicht Werbung ausstrahlen.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- KAPITEL 6: STIMME & TON -->
+<!-- ══════════════════════════════════════ -->
+<div id="stimme" class="chapter">
+  <div class="chapter-num">06</div>
+  <div class="chapter-info">
+    <div class="chapter-label">Kapitel 6</div>
+    <div class="chapter-title">Stimme & Ton</div>
+  </div>
+</div>
+
+<div class="section">
+  <h4>Markenstimme</h4>
+  <h2>Wie ein vertrauensvoller Mensch spricht</h2>
+  <p class="lead" style="max-width:680px; margin-bottom:2.5rem">Velacare spricht wie ein erfahrener Freund — nicht wie eine Behörde, nicht wie eine Werbeanzeige. Warm, klar, verständlich. Immer auf Augenhöhe.</p>
+
+  <div class="grid-2" style="margin-bottom:2.5rem">
+    <div>
+      <div class="tone-card tone-do">
+        <div class="tone-label tone-label-do">✓ So klingt Velacare</div>
+        <p class="tone-example">„Haben Sie einen Pflegegrad? Dann steht Ihnen die Box einfach zu — wir erledigen alles mit Ihrer Pflegekasse."</p>
+      </div>
+      <div class="tone-card tone-dont">
+        <div class="tone-label tone-label-dont">✗ So klingt Velacare nicht</div>
+        <p class="tone-example">„Gemäß § 40 SGB XI haben Anspruchsberechtigte mit anerkanntem Pflegegrad Anrecht auf Pflegehilfsmittel zum Verbrauch."</p>
+      </div>
+    </div>
+    <div>
+      <div class="tone-card tone-do">
+        <div class="tone-label tone-label-do">✓ So klingt Velacare</div>
+        <p class="tone-example">„Ihre erste Box ist schon unterwegs. Wir haben alles mit Ihrer Kasse geregelt — Sie müssen nichts weiter tun."</p>
+      </div>
+      <div class="tone-card tone-dont">
+        <div class="tone-label tone-label-dont">✗ So klingt Velacare nicht</div>
+        <p class="tone-example">„Ihre Bestellung wurde erfolgreich im System erfasst. Die Bearbeitungszeit beträgt 5–10 Werktage."</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-light"></div>
+  <h4>Tonalitäts-Eigenschaften</h4>
+  <div class="grid-4">
+    <div class="principle-card">
+      <div class="principle-title" style="font-size:18px">Warm</div>
+      <p class="principle-desc">Wir reden mit Menschen, nicht zu ihnen. Echte Empathie, kein Marketing-Gerede.</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-title" style="font-size:18px">Klar</div>
+      <p class="principle-desc">Kurze Sätze. Einfache Worte. Keine Behördensprache, kein Fachjargon.</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-title" style="font-size:18px">Verlässlich</div>
+      <p class="principle-desc">Konkrete Versprechen statt Weichspüler. „Wir melden uns innerhalb 24h" — nicht „baldmöglichst".</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-title" style="font-size:18px">Respektvoll</div>
+      <p class="principle-desc">Kein Herunterlassen, kein Übertreiben. Die Zielgruppe ist nicht hilflos — sie sucht nur Unterstützung.</p>
+    </div>
+  </div>
+
+  <div class="divider-light"></div>
+  <h4>Slogans & Taglines</h4>
+  <div style="display:flex; flex-direction:column; gap:12px">
+    <div class="card card-pad" style="display:flex; align-items:flex-start; gap:16px">
+      <div style="width:4px; min-height:60px; background:var(--terra); border-radius:2px; flex-shrink:0"></div>
+      <div>
+        <div style="font-family:var(--font-serif); font-size:22px; font-weight:500; font-style:italic; color:var(--dark); margin-bottom:4px">„Jeden Monat ein Stück Fürsorge."</div>
+        <p style="font-size:13px">Fokus auf Rhythmus und Verlässlichkeit. Ideal für Hero-Bereich und E-Mail-Header.</p>
+      </div>
+    </div>
+    <div class="card card-pad" style="display:flex; align-items:flex-start; gap:16px">
+      <div style="width:4px; min-height:60px; background:var(--sage); border-radius:2px; flex-shrink:0"></div>
+      <div>
+        <div style="font-family:var(--font-serif); font-size:22px; font-weight:500; font-style:italic; color:var(--dark); margin-bottom:4px">„Weil die wichtigsten Menschen die beste Pflege verdienen."</div>
+        <p style="font-size:13px">Emotionaler Appell an Angehörige. Stark für Ads und Social Media.</p>
+      </div>
+    </div>
+    <div class="card card-pad" style="display:flex; align-items:flex-start; gap:16px">
+      <div style="width:4px; min-height:60px; background:var(--terra-dark); border-radius:2px; flex-shrink:0"></div>
+      <div>
+        <div style="font-family:var(--font-serif); font-size:22px; font-weight:500; font-style:italic; color:var(--dark); margin-bottom:4px">„Einfach bestellt. Warm empfangen."</div>
+        <p style="font-size:13px">Verbindet Einfachheit mit Wärme — doppeldeutig, kurz, einprägsam.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- KAPITEL 7: WEBSITE STRUKTUR -->
+<!-- ══════════════════════════════════════ -->
+<div id="website" class="chapter">
+  <div class="chapter-num">07</div>
+  <div class="chapter-info">
+    <div class="chapter-label">Kapitel 7</div>
+    <div class="chapter-title">Website-Struktur</div>
+  </div>
+</div>
+
+<div class="section">
+  <h4>Sitemap</h4>
+  <h2>7 Seiten, ein klarer Weg</h2>
+  <p style="max-width:600px; margin-bottom:2.5rem">Die Navigation führt den Besucher auf dem kürzesten Weg von der Erkenntnis zur Beantragung. Jede Seite hat eine klare Aufgabe.</p>
+
+  <div class="sitemap-tree" style="margin-bottom:2.5rem">
+    <div class="sitemap-row">
+      <div class="sitemap-home">velacare.de · Startseite</div>
+      <div class="sitemap-connector"><div class="sitemap-line"></div></div>
+      <div class="sitemap-children">
+        <div class="sitemap-page">Wie es funktioniert<div class="sitemap-url">/wie-es-funktioniert</div></div>
+        <div class="sitemap-page">Produkte & Box<div class="sitemap-url">/produkte</div></div>
+        <div class="sitemap-page">Pflegebox beantragen<div class="sitemap-url">/beantragen</div></div>
+        <div class="sitemap-page">Über uns<div class="sitemap-url">/ueber-uns</div></div>
+        <div class="sitemap-page">Kontakt<div class="sitemap-url">/kontakt</div></div>
+        <div class="sitemap-page">FAQ<div class="sitemap-url">/faq</div></div>
+        <div class="sitemap-page" style="border-color:var(--terra)">✓ Danke<div class="sitemap-url">/danke</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-light"></div>
+  <h4>Conversion-Pfad</h4>
+  <div class="card card-pad" style="margin-bottom:2rem">
+    <div style="display:flex; align-items:center; gap:0; flex-wrap:wrap; row-gap:12px">
+      <div style="background:var(--terra-pale); border:1px solid var(--terra); border-radius:8px; padding:10px 16px; font-size:13px; font-weight:500; color:var(--terra)">Startseite</div>
+      <div style="padding:0 8px; color:var(--mid-gray)">→</div>
+      <div style="background:var(--warm-white); border:1px solid var(--mid-gray); border-radius:8px; padding:10px 16px; font-size:13px; color:var(--dark)">Wie es funktioniert</div>
+      <div style="padding:0 8px; color:var(--mid-gray)">→</div>
+      <div style="background:var(--warm-white); border:1px solid var(--mid-gray); border-radius:8px; padding:10px 16px; font-size:13px; color:var(--dark)">Produkte ansehen</div>
+      <div style="padding:0 8px; color:var(--mid-gray)">→</div>
+      <div style="background:var(--terra); border-radius:8px; padding:10px 16px; font-size:13px; font-weight:500; color:white">Box beantragen</div>
+      <div style="padding:0 8px; color:var(--mid-gray)">→</div>
+      <div style="background:var(--sage-pale); border:1px solid var(--sage-light); border-radius:8px; padding:10px 16px; font-size:13px; font-weight:500; color:var(--sage)">✓ Danke-Seite</div>
+    </div>
+    <p style="font-size:13px; margin-top:1rem">Der Hauptpfad führt in 4 Klicks zur Beantragung. CTA „Jetzt beantragen" ist auf jeder Seite in der Navigation sichtbar.</p>
+  </div>
+
+  <h4>Seitenstruktur Startseite</h4>
+  <div style="display:flex; flex-direction:column; gap:8px">
+    <div style="background:var(--dark); color:white; padding:12px 18px; border-radius:8px; font-size:13px; display:flex; justify-content:space-between; align-items:center"><span>Navigation (sticky)</span><span style="font-size:11px; color:rgba(255,255,255,0.4)">Logo · Links · CTA Button</span></div>
+    <div style="background:var(--terra); color:white; padding:16px 18px; border-radius:8px; font-size:13px; display:flex; justify-content:space-between; align-items:center"><span>Hero · Above the fold</span><span style="font-size:11px; color:rgba(255,255,255,0.6)">Headline · Subtext · CTA · Bild · Trust-Bar</span></div>
+    <div style="background:var(--warm-white); border:1px solid var(--mid-gray); padding:12px 18px; border-radius:8px; font-size:13px; display:flex; justify-content:space-between; align-items:center"><span>Wie es funktioniert</span><span style="font-size:11px; color:var(--warm-gray)">3 Schritte</span></div>
+    <div style="background:var(--warm-white); border:1px solid var(--mid-gray); padding:12px 18px; border-radius:8px; font-size:13px; display:flex; justify-content:space-between; align-items:center"><span>Produkte & Box-Inhalt</span><span style="font-size:11px; color:var(--warm-gray)">Produktgrid · individuell wählbar</span></div>
+    <div style="background:var(--terra-pale); border:1px solid var(--terra-light); padding:12px 18px; border-radius:8px; font-size:13px; display:flex; justify-content:space-between; align-items:center"><span>CTA-Banner</span><span style="font-size:11px; color:var(--terra)">„Jetzt Anspruch prüfen"</span></div>
+    <div style="background:var(--warm-white); border:1px solid var(--mid-gray); padding:12px 18px; border-radius:8px; font-size:13px; display:flex; justify-content:space-between; align-items:center"><span>Bewertungen & Testimonials</span><span style="font-size:11px; color:var(--warm-gray)">3 Kundenstimmen</span></div>
+    <div style="background:var(--warm-white); border:1px solid var(--mid-gray); padding:12px 18px; border-radius:8px; font-size:13px; display:flex; justify-content:space-between; align-items:center"><span>FAQ · Häufige Fragen</span><span style="font-size:11px; color:var(--warm-gray)">Akkordeon · 5 Fragen</span></div>
+    <div style="background:var(--dark); color:white; padding:12px 18px; border-radius:8px; font-size:13px; display:flex; justify-content:space-between; align-items:center"><span>Footer</span><span style="font-size:11px; color:rgba(255,255,255,0.4)">4 Spalten · Links · Impressum</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- KAPITEL 8: WIREFRAMES -->
+<!-- ══════════════════════════════════════ -->
+<div id="wireframes" class="chapter">
+  <div class="chapter-num">08</div>
+  <div class="chapter-info">
+    <div class="chapter-label">Kapitel 8</div>
+    <div class="chapter-title">Wireframes (Übersicht)</div>
+  </div>
+</div>
+
+<div class="section">
+  <h4>Alle Seiten auf einen Blick</h4>
+  <p style="margin-bottom:2rem">Miniaturansichten aller 7 Seiten mit ihrer jeweiligen Struktur.</p>
+  <div class="grid-4" style="gap:1rem">
+
+    <!-- Startseite -->
+    <div>
+      <div class="label" style="margin-bottom:6px">Startseite</div>
+      <div class="wf-mini">
+        <div class="wf-mini-nav"><div class="wf-mini-dot" style="background:var(--terra)"></div><div style="flex:1; height:5px; background:var(--mid-gray); border-radius:2px; margin:0 6px"></div><div style="width:28px; height:8px; background:var(--terra); border-radius:3px; opacity:0.6"></div></div>
+        <div class="wf-mini-hero"><div style="flex:1"><div class="wf-mini-block" style="width:80%; height:8px; margin-bottom:5px"></div><div class="wf-mini-block" style="width:60%; height:6px; margin-bottom:8px"></div><div class="wf-mini-block" style="width:40%; height:12px; background:var(--terra); opacity:0.6; border-radius:3px"></div></div><div style="width:40%; height:50px; background:var(--mid-gray); border-radius:4px; flex-shrink:0"></div></div>
+        <div class="wf-mini-section"><span class="wf-mini-label">3 Schritte</span><div class="wf-mini-grid" style="grid-template-columns:1fr 1fr 1fr"><div class="wf-mini-card"></div><div class="wf-mini-card"></div><div class="wf-mini-card"></div></div></div>
+        <div class="wf-mini-section" style="background:rgba(201,107,63,0.1)"><div class="wf-mini-block" style="width:60%; height:7px; background:var(--terra); opacity:0.4; margin:0 auto"></div></div>
+        <div class="wf-mini-section"><span class="wf-mini-label">Testimonials</span><div class="wf-mini-grid" style="grid-template-columns:1fr 1fr 1fr"><div class="wf-mini-card"></div><div class="wf-mini-card"></div><div class="wf-mini-card"></div></div></div>
+        <div style="height:20px; background:var(--dark)"></div>
+      </div>
+    </div>
+
+    <!-- Beantragen -->
+    <div>
+      <div class="label" style="margin-bottom:6px">Box beantragen</div>
+      <div class="wf-mini">
+        <div class="wf-mini-nav"><div class="wf-mini-dot" style="background:var(--terra)"></div><div style="flex:1; height:5px; background:var(--mid-gray); border-radius:2px; margin:0 6px"></div></div>
+        <div style="height:18px; background:white; border-bottom:1px solid var(--mid-gray); display:flex; align-items:center; padding:0 8px; gap:4px">
+          <div style="width:10px; height:10px; border-radius:50%; background:var(--terra); display:flex; align-items:center; justify-content:center; font-size:7px; color:white; flex-shrink:0">✓</div>
+          <div style="height:2px; flex:1; background:var(--terra); opacity:0.3"></div>
+          <div style="width:10px; height:10px; border-radius:50%; border:1.5px solid var(--terra); flex-shrink:0"></div>
+          <div style="height:2px; flex:1; background:var(--mid-gray)"></div>
+          <div style="width:10px; height:10px; border-radius:50%; border:1.5px solid var(--mid-gray); flex-shrink:0"></div>
+          <div style="height:2px; flex:1; background:var(--mid-gray)"></div>
+          <div style="width:10px; height:10px; border-radius:50%; border:1.5px solid var(--mid-gray); flex-shrink:0"></div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 2fr; height:120px">
+          <div style="background:var(--bg); padding:8px; border-right:1px solid var(--mid-gray)">
+            <div class="wf-mini-block" style="width:90%; height:5px; margin-bottom:6px"></div>
+            <div class="wf-mini-block" style="width:70%; height:5px; margin-bottom:4px; opacity:0.5"></div>
+            <div class="wf-mini-block" style="width:80%; height:5px; opacity:0.4"></div>
+          </div>
+          <div style="padding:8px">
+            <div class="wf-mini-block" style="width:60%; height:6px; margin-bottom:8px"></div>
+            <div style="height:12px; background:white; border:1px solid var(--mid-gray); border-radius:3px; margin-bottom:5px"></div>
+            <div style="height:12px; background:white; border:1px solid var(--mid-gray); border-radius:3px; margin-bottom:8px"></div>
+            <div style="width:40%; height:10px; background:var(--terra); border-radius:3px; opacity:0.6"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Produkte -->
+    <div>
+      <div class="label" style="margin-bottom:6px">Produkte</div>
+      <div class="wf-mini">
+        <div class="wf-mini-nav"><div class="wf-mini-dot" style="background:var(--terra)"></div><div style="flex:1; height:5px; background:var(--mid-gray); border-radius:2px; margin:0 6px"></div></div>
+        <div style="height:28px; background:rgba(201,107,63,0.1); border-bottom:1px solid var(--mid-gray); padding:6px 8px"><div class="wf-mini-block" style="width:55%; height:6px; margin-bottom:3px"></div><div class="wf-mini-block" style="width:40%; height:5px; opacity:0.5"></div></div>
+        <div style="display:grid; grid-template-columns:1fr 2.5fr; height:100px">
+          <div style="background:var(--bg); padding:6px; border-right:1px solid var(--mid-gray)">
+            <div style="height:8px; background:rgba(201,107,63,0.3); border-radius:3px; margin-bottom:4px"></div>
+            <div class="wf-mini-block" style="width:80%; height:6px; margin-bottom:3px; opacity:0.4"></div>
+            <div class="wf-mini-block" style="width:70%; height:6px; opacity:0.3"></div>
+            <div style="margin-top:10px; background:rgba(201,107,63,0.1); border:1px solid rgba(201,107,63,0.3); border-radius:5px; padding:6px"><div class="wf-mini-block" style="width:80%; height:5px; margin-bottom:3px; background:var(--mid-gray)"></div><div class="wf-mini-block" style="width:60%; height:5px; background:var(--mid-gray)"></div></div>
+          </div>
+          <div style="padding:6px"><div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px"><div class="wf-mini-card"></div><div class="wf-mini-card"></div><div class="wf-mini-card"></div><div class="wf-mini-card"></div><div class="wf-mini-card"></div><div class="wf-mini-card"></div></div></div>
+        </div>
+        <div style="height:18px; background:white; border-top:1.5px solid var(--mid-gray); display:flex; align-items:center; justify-content:flex-end; padding:0 8px"><div style="width:35%; height:8px; background:var(--terra); border-radius:3px; opacity:0.6"></div></div>
+      </div>
+    </div>
+
+    <!-- Wie es funktioniert -->
+    <div>
+      <div class="label" style="margin-bottom:6px">Wie es funktioniert</div>
+      <div class="wf-mini">
+        <div class="wf-mini-nav"><div class="wf-mini-dot" style="background:var(--terra)"></div><div style="flex:1; height:5px; background:var(--mid-gray); border-radius:2px; margin:0 6px"></div></div>
+        <div style="height:28px; background:rgba(201,107,63,0.1); border-bottom:1px solid var(--mid-gray); padding:6px 8px"><div class="wf-mini-block" style="width:55%; height:6px; margin-bottom:3px"></div></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; height:100px">
+          <div style="padding:8px; border-right:1px solid var(--mid-gray)">
+            <div style="display:flex; flex-direction:column; gap:10px">
+              <div style="display:flex; gap:5px; align-items:flex-start"><div style="width:10px; height:10px; border-radius:50%; background:var(--terra); flex-shrink:0"></div><div><div class="wf-mini-block" style="width:60%; height:5px; margin-bottom:3px"></div><div class="wf-mini-block" style="width:80%; height:4px; opacity:0.4"></div></div></div>
+              <div style="display:flex; gap:5px; align-items:flex-start"><div style="width:10px; height:10px; border-radius:50%; background:var(--terra); flex-shrink:0"></div><div><div class="wf-mini-block" style="width:60%; height:5px; margin-bottom:3px"></div><div class="wf-mini-block" style="width:80%; height:4px; opacity:0.4"></div></div></div>
+              <div style="display:flex; gap:5px; align-items:flex-start"><div style="width:10px; height:10px; border-radius:50%; background:var(--terra); flex-shrink:0"></div><div><div class="wf-mini-block" style="width:60%; height:5px; margin-bottom:3px"></div><div class="wf-mini-block" style="width:80%; height:4px; opacity:0.4"></div></div></div>
+            </div>
+          </div>
+          <div style="background:var(--bg); display:flex; align-items:center; justify-content:center"><div style="width:60%; height:60%; background:var(--mid-gray); border-radius:4px"></div></div>
+        </div>
+        <div style="height:20px; background:var(--terra); opacity:0.15; border-top:1px solid var(--mid-gray)"></div>
+        <div style="height:20px; background:var(--dark)"></div>
+      </div>
+    </div>
+
+    <!-- Über uns -->
+    <div>
+      <div class="label" style="margin-bottom:6px">Über uns</div>
+      <div class="wf-mini">
+        <div class="wf-mini-nav"><div class="wf-mini-dot" style="background:var(--terra)"></div><div style="flex:1; height:5px; background:var(--mid-gray); border-radius:2px; margin:0 6px"></div></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; height:60px; border-bottom:1px solid var(--mid-gray)">
+          <div style="padding:8px"><div class="wf-mini-block" style="width:80%; height:7px; margin-bottom:5px"></div><div class="wf-mini-block" style="width:60%; height:5px; margin-bottom:4px; opacity:0.5"></div><div class="wf-mini-block" style="width:70%; height:5px; opacity:0.4"></div></div>
+          <div style="background:var(--bg); display:flex; align-items:center; justify-content:center"><div style="width:80%; height:70%; background:var(--mid-gray); border-radius:4px"></div></div>
+        </div>
+        <div style="padding:6px 8px; border-bottom:1px solid var(--mid-gray)"><span class="wf-mini-label">Kennzahlen</span><div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:4px"><div style="height:18px; background:white; border:1px solid var(--mid-gray); border-radius:3px"></div><div style="height:18px; background:white; border:1px solid var(--mid-gray); border-radius:3px"></div><div style="height:18px; background:white; border:1px solid var(--mid-gray); border-radius:3px"></div><div style="height:18px; background:white; border:1px solid var(--mid-gray); border-radius:3px"></div></div></div>
+        <div style="padding:6px 8px"><span class="wf-mini-label">Team</span><div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:4px"><div class="wf-mini-card"></div><div class="wf-mini-card"></div><div class="wf-mini-card"></div><div class="wf-mini-card"></div></div></div>
+        <div style="height:18px; background:var(--dark)"></div>
+      </div>
+    </div>
+
+    <!-- Kontakt -->
+    <div>
+      <div class="label" style="margin-bottom:6px">Kontakt</div>
+      <div class="wf-mini">
+        <div class="wf-mini-nav"><div class="wf-mini-dot" style="background:var(--terra)"></div><div style="flex:1; height:5px; background:var(--mid-gray); border-radius:2px; margin:0 6px"></div></div>
+        <div style="height:22px; background:rgba(201,107,63,0.1); border-bottom:1px solid var(--mid-gray); padding:6px 8px"><div class="wf-mini-block" style="width:30%; height:5px"></div></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; height:110px">
+          <div style="padding:8px; border-right:1px solid var(--mid-gray)">
+            <div style="display:flex; flex-direction:column; gap:8px">
+              <div style="display:flex; gap:5px"><div style="width:12px; height:12px; background:rgba(201,107,63,0.2); border-radius:3px; flex-shrink:0"></div><div><div class="wf-mini-block" style="width:60%; height:5px; margin-bottom:3px"></div><div class="wf-mini-block" style="width:80%; height:4px; opacity:0.4"></div></div></div>
+              <div style="display:flex; gap:5px"><div style="width:12px; height:12px; background:rgba(201,107,63,0.2); border-radius:3px; flex-shrink:0"></div><div><div class="wf-mini-block" style="width:60%; height:5px; margin-bottom:3px"></div><div class="wf-mini-block" style="width:80%; height:4px; opacity:0.4"></div></div></div>
+              <div style="display:flex; gap:5px"><div style="width:12px; height:12px; background:rgba(201,107,63,0.2); border-radius:3px; flex-shrink:0"></div><div><div class="wf-mini-block" style="width:60%; height:5px; margin-bottom:3px"></div><div class="wf-mini-block" style="width:80%; height:4px; opacity:0.4"></div></div></div>
+            </div>
+          </div>
+          <div style="padding:8px">
+            <div class="wf-mini-block" style="width:70%; height:5px; margin-bottom:5px"></div>
+            <div style="height:10px; background:white; border:1px solid var(--mid-gray); border-radius:2px; margin-bottom:4px"></div>
+            <div style="height:10px; background:white; border:1px solid var(--mid-gray); border-radius:2px; margin-bottom:4px"></div>
+            <div style="height:20px; background:white; border:1px solid var(--mid-gray); border-radius:2px; margin-bottom:6px"></div>
+            <div style="width:50%; height:9px; background:var(--terra); border-radius:3px; opacity:0.6"></div>
+          </div>
+        </div>
+        <div style="height:18px; background:var(--dark)"></div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div>
+      <div class="label" style="margin-bottom:6px">FAQ</div>
+      <div class="wf-mini">
+        <div class="wf-mini-nav"><div class="wf-mini-dot" style="background:var(--terra)"></div><div style="flex:1; height:5px; background:var(--mid-gray); border-radius:2px; margin:0 6px"></div></div>
+        <div style="height:22px; background:rgba(201,107,63,0.1); border-bottom:1px solid var(--mid-gray); padding:6px 8px"><div class="wf-mini-block" style="width:35%; height:5px"></div></div>
+        <div style="display:grid; grid-template-columns:1fr 2fr; height:110px">
+          <div style="background:var(--bg); padding:6px; border-right:1px solid var(--mid-gray)">
+            <div style="height:8px; background:rgba(201,107,63,0.3); border-radius:3px; margin-bottom:4px"></div>
+            <div class="wf-mini-block" style="width:80%; height:6px; margin-bottom:3px; opacity:0.4"></div>
+            <div class="wf-mini-block" style="width:70%; height:6px; margin-bottom:3px; opacity:0.3"></div>
+            <div class="wf-mini-block" style="width:60%; height:6px; opacity:0.3"></div>
+          </div>
+          <div style="padding:6px">
+            <div style="background:rgba(201,107,63,0.08); border:1px solid rgba(201,107,63,0.3); border-radius:4px; padding:6px; margin-bottom:4px"><div class="wf-mini-block" style="width:70%; height:5px; margin-bottom:4px"></div><div class="wf-mini-block" style="width:90%; height:4px; opacity:0.4; margin-bottom:2px"></div><div class="wf-mini-block" style="width:75%; height:4px; opacity:0.3"></div></div>
+            <div style="background:white; border:1px solid var(--mid-gray); border-radius:4px; padding:5px; margin-bottom:3px"><div class="wf-mini-block" style="width:60%; height:5px"></div></div>
+            <div style="background:white; border:1px solid var(--mid-gray); border-radius:4px; padding:5px; margin-bottom:3px"><div class="wf-mini-block" style="width:75%; height:5px"></div></div>
+            <div style="background:white; border:1px solid var(--mid-gray); border-radius:4px; padding:5px"><div class="wf-mini-block" style="width:55%; height:5px"></div></div>
+          </div>
+        </div>
+        <div style="height:18px; background:var(--dark)"></div>
+      </div>
+    </div>
+
+    <!-- Danke -->
+    <div>
+      <div class="label" style="margin-bottom:6px">Danke-Seite</div>
+      <div class="wf-mini">
+        <div class="wf-mini-nav"><div class="wf-mini-dot" style="background:var(--terra)"></div></div>
+        <div style="padding:20px 10px; display:flex; flex-direction:column; align-items:center; gap:8px; border-bottom:1px solid var(--mid-gray)">
+          <div style="width:28px; height:28px; border-radius:50%; background:rgba(201,107,63,0.2); display:flex; align-items:center; justify-content:center"><div style="width:14px; height:14px; border-radius:50%; background:var(--terra); opacity:0.7"></div></div>
+          <div class="wf-mini-block" style="width:60%; height:7px"></div>
+          <div class="wf-mini-block" style="width:75%; height:5px; opacity:0.5"></div>
+        </div>
+        <div style="padding:8px; border-bottom:1px solid var(--mid-gray)"><span class="wf-mini-label">Was passiert als nächstes?</span><div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px"><div class="wf-mini-card"></div><div class="wf-mini-card"></div><div class="wf-mini-card"></div></div></div>
+        <div style="height:20px; background:rgba(201,107,63,0.08); border-top:1px solid var(--mid-gray); display:flex; align-items:center; justify-content:center; gap:6px"><div style="width:30%; height:8px; background:var(--terra); border-radius:3px; opacity:0.5"></div><div style="width:25%; height:8px; background:var(--mid-gray); border-radius:3px"></div></div>
+        <div style="height:18px; background:var(--dark)"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PRINT HINT ══ -->
+<div class="print-hint">
+  Velacare Brand Guide v1.0 · Alle Rechte vorbehalten · Dieses Dokument ist vertraulich und nur für den internen Gebrauch bestimmt
+</div>
+
+</div><!-- /page -->
+</body>
+</html>

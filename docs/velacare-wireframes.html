@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velacare — Wireframes v1.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Base ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:#EDEBE7;color:#2C2420;font-size:14px;line-height:1.5}
+
+/* ── Design Tokens ── */
+:root{
+  --terra:#C96B3F;
+  --terra-pale:#FAF0E8;
+  --sage:#2D7A5F;
+  --dark:#2C2420;
+  --bg:#EDEBE7;
+  --off-white:#FDFAF7;
+  --line:#C8BFB5;
+  --line-s:#9E9187;
+  --fill-light:#EDE8E2;
+  --fill-mid:#D8D0C6;
+  --fill-dark:#B8AFA5;
+  --fill-accent:rgba(201,107,63,.12);
+  --fill-accent-mid:rgba(201,107,63,.28);
+  --fill-accent-strong:rgba(201,107,63,.55);
+  --fill-sage:rgba(45,122,95,.12);
+  --r:4px;--r-lg:10px;--r-xl:16px;
+  --fm:'DM Mono',monospace;
+}
+
+/* ── Outer Shell ── */
+.shell{
+  max-width:1200px;margin:0 auto;padding:0;
+  display:grid;grid-template-columns:220px 1fr;min-height:100vh;
+}
+
+/* ── Sidebar ── */
+.sidebar{
+  background:var(--dark);
+  padding:0;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+  display:flex;flex-direction:column;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,.1) transparent;
+}
+.sidebar-header{
+  padding:20px 18px 16px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  flex-shrink:0;
+}
+.sidebar-logo{
+  display:flex;align-items:center;gap:8px;
+  font-size:15px;font-weight:500;color:#FAF0E8;margin-bottom:4px;
+}
+.sidebar-sub{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.08em}
+.sidebar-nav{padding:12px 0 20px;flex:1}
+.nav-section-label{
+  font-size:9px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.3);padding:8px 18px 4px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 18px;font-size:12px;font-weight:400;
+  color:rgba(255,255,255,.5);text-decoration:none;
+  cursor:pointer;transition:all .12s;border-left:2px solid transparent;
+}
+.nav-item:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.04)}
+.nav-item.active{color:#FAF0E8;border-left-color:var(--terra);background:rgba(201,107,63,.1)}
+.nav-dot{
+  width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);flex-shrink:0;
+}
+.nav-item.active .nav-dot{background:var(--terra)}
+
+/* ── Main area ── */
+.main{
+  background:var(--bg);
+  display:flex;flex-direction:column;
+}
+
+/* ── Top bar ── */
+.topbar{
+  background:var(--off-white);border-bottom:1px solid var(--line);
+  padding:0 28px;height:50px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:50;flex-shrink:0;
+}
+.topbar-title{font-size:13px;font-weight:500;color:var(--dark)}
+.topbar-url{font-family:var(--fm);font-size:11px;color:rgba(201,107,63,.8);background:var(--terra-pale);padding:3px 10px;border-radius:20px}
+.topbar-actions{display:flex;gap:8px;align-items:center}
+.topbar-badge{
+  font-size:10px;padding:3px 9px;border-radius:20px;
+  background:var(--fill-light);color:var(--fill-dark);border:1px solid var(--line);
+}
+.topbar-badge.primary{background:var(--terra-pale);color:var(--terra);border-color:rgba(201,107,63,.3)}
+
+/* ── Page panels ── */
+.page-panel{display:none;padding:28px}
+.page-panel.active{display:block}
+
+/* ── Wireframe wrapper ── */
+.wf-device{
+  background:var(--off-white);
+  border:1.5px solid var(--line);
+  border-radius:var(--r-xl);
+  overflow:hidden;
+  box-shadow:0 4px 24px rgba(0,0,0,.06);
+  margin-bottom:24px;
+}
+.wf-device-label{
+  font-size:11px;color:var(--fill-dark);margin-bottom:8px;
+  display:flex;align-items:center;gap:6px;
+}
+.wf-device-label span{background:var(--fill-light);padding:2px 8px;border-radius:10px;font-size:10px}
+
+/* ── Wireframe nav ── */
+.wf-nav{
+  background:white;border-bottom:1px solid var(--line);
+  padding:0 20px;height:44px;
+  display:flex;align-items:center;gap:16px;
+}
+.wf-nav-logo{
+  display:flex;align-items:center;gap:7px;
+}
+.wf-nav-logo-icon{
+  width:22px;height:22px;border:2px solid var(--terra);
+  border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.wf-nav-brand{font-size:13px;font-weight:500;color:var(--dark)}
+.wf-nav-links{display:flex;gap:0;flex:1;margin-left:8px}
+.wf-nav-link{
+  height:44px;padding:0 12px;display:flex;align-items:center;
+  font-size:11px;color:var(--fill-dark);border-bottom:2px solid transparent;
+}
+.wf-nav-link.active{color:var(--terra);border-bottom-color:var(--terra)}
+.wf-nav-cta{
+  margin-left:auto;background:var(--terra);color:white;
+  font-size:11px;font-weight:500;padding:6px 14px;border-radius:5px;
+}
+
+/* ── Wireframe breadcrumb ── */
+.wf-breadcrumb{
+  padding:8px 20px;background:var(--fill-light);
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:6px;font-size:10px;color:var(--fill-dark);
+}
+
+/* ── Section wrapper ── */
+.wf-section{padding:22px 20px;border-top:1px solid var(--line)}
+.wf-section:first-child{border-top:none}
+
+/* ── Placeholder blocks ── */
+.ph{background:var(--fill-mid);border-radius:3px}
+.ph-dark{background:var(--dark);opacity:.55;border-radius:3px}
+.ph-terra{background:var(--terra);border-radius:3px;opacity:.5}
+.ph-sage{background:var(--sage);border-radius:3px;opacity:.45}
+
+/* ── Grid helpers ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+
+/* ── Hero ── */
+.wf-hero{
+  display:grid;grid-template-columns:1fr 1fr;min-height:200px;
+}
+.wf-hero-left{
+  padding:28px 22px;display:flex;flex-direction:column;justify-content:center;gap:10px;
+  border-right:1px solid var(--line);
+}
+.wf-hero-right{
+  background:var(--fill-light);display:flex;align-items:center;justify-content:center;
+  padding:20px;
+}
+.wf-img-ph{
+  width:100%;height:140px;background:var(--fill-mid);border-radius:var(--r-lg);
+  display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--fill-dark);
+}
+
+/* ── Trust bar ── */
+.wf-trust{
+  background:var(--fill-light);border-top:1px solid var(--line);
+  padding:12px 20px;display:flex;align-items:center;justify-content:space-around;gap:8px;
+}
+.wf-trust-item{display:flex;align-items:center;gap:7px}
+.wf-trust-icon{
+  width:18px;height:18px;border-radius:50%;
+  background:var(--fill-accent-strong);flex-shrink:0;
+}
+.wf-trust-lines{display:flex;flex-direction:column;gap:3px}
+
+/* ── Step cards ── */
+.wf-step-card{
+  background:white;border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:14px;display:flex;flex-direction:column;gap:7px;
+}
+.wf-step-num{
+  width:26px;height:26px;border-radius:50%;
+  background:var(--fill-accent-mid);display:flex;align-items:center;
+  justify-content:center;font-size:11px;font-weight:500;color:var(--terra);
+}
+
+/* ── Product cards ── */
+.wf-product-card{
+  background:white;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;
+}
+.wf-product-img{height:72px;background:var(--fill-light);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--fill-dark)}
+.wf-product-body{padding:10px;display:flex;flex-direction:column;gap:4px}
+.wf-badge-ph{
+  display:inline-block;background:var(--fill-accent-mid);
+  padding:2px 7px;border-radius:3px;font-size:9px;color:var(--terra);font-weight:500;
+  align-self:flex-start;
+}
+.wf-checkbox{
+  width:14px;height:14px;border:1.5px solid var(--line);border-radius:3px;margin-top:4px;
+}
+.wf-checkbox.checked{background:var(--terra);border-color:var(--terra)}
+
+/* ── CTA Banner ── */
+.wf-cta-banner{
+  background:var(--fill-accent);border-top:1px solid var(--line);
+  padding:24px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+
+/* ── Testimonials ── */
+.wf-testi-card{
+  background:white;border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:14px;display:flex;flex-direction:column;gap:7px;
+}
+.wf-stars{display:flex;gap:2px}
+.wf-star{width:9px;height:9px;background:var(--terra);border-radius:2px;opacity:.7}
+.wf-author{display:flex;align-items:center;gap:6px;margin-top:4px}
+.wf-avatar{width:20px;height:20px;border-radius:50%;background:var(--fill-mid)}
+
+/* ── FAQ ── */
+.wf-faq-item{
+  background:white;border:1px solid var(--line);border-radius:var(--r);
+  padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;
+}
+.wf-faq-arrow{width:13px;height:13px;border:1.5px solid var(--line-s);border-radius:50%}
+
+/* ── Footer ── */
+.wf-footer{
+  background:var(--dark);padding:20px;
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:18px;
+}
+
+/* ── Form elements ── */
+.wf-form-label{height:7px;background:var(--fill-dark);border-radius:3px;margin-bottom:6px;width:60px}
+.wf-input{width:100%;height:32px;background:white;border:1px solid var(--line);border-radius:var(--r-lg)}
+.wf-input.focused{border-color:var(--terra)}
+.wf-input-half{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.wf-select{
+  width:100%;height:32px;background:white;border:1px solid var(--line);
+  border-radius:var(--r-lg);display:flex;align-items:center;padding:0 10px;justify-content:space-between;
+}
+.wf-textarea{width:100%;height:70px;background:white;border:1px solid var(--line);border-radius:var(--r-lg)}
+
+/* ── Progress bar ── */
+.wf-progress{
+  background:white;border-bottom:1px solid var(--line);
+  padding:12px 20px;
+}
+.wf-progress-steps{display:flex;align-items:center}
+.wf-progress-step{display:flex;align-items:center;gap:6px;flex:1}
+.wf-step-circle{
+  width:22px;height:22px;border-radius:50%;border:2px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:500;
+  color:var(--fill-dark);flex-shrink:0;
+}
+.wf-step-circle.done{background:var(--terra);border-color:var(--terra);color:white}
+.wf-step-circle.current{border-color:var(--terra);color:var(--terra)}
+.wf-step-label{width:50px;height:6px;background:var(--fill-mid);border-radius:3px}
+.wf-step-label.current{background:var(--terra);opacity:.45}
+.wf-connector{flex:1;height:1.5px;background:var(--line)}
+.wf-connector.done{background:var(--terra);opacity:.4}
+
+/* ── Sidebar layout ── */
+.wf-sidebar-layout{display:grid;grid-template-columns:1fr 2fr}
+.wf-sidebar-inner{
+  padding:18px 14px;border-right:1px solid var(--line);
+  background:var(--fill-light);display:flex;flex-direction:column;gap:7px;
+}
+.wf-main-content{padding:18px}
+
+/* ── Radio buttons ── */
+.wf-radio-group{display:flex;gap:8px;flex-wrap:wrap;margin-top:5px}
+.wf-radio{display:flex;align-items:center;gap:5px}
+.wf-radio-circle{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--line);flex-shrink:0}
+.wf-radio-circle.checked{border-color:var(--terra);background:var(--terra)}
+
+/* ── Summary box ── */
+.wf-summary{
+  background:var(--fill-accent);border:1px solid var(--fill-accent-strong);
+  border-radius:var(--r-lg);padding:12px;
+}
+.wf-summary-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:5px 0;border-bottom:1px solid rgba(201,107,63,.15);
+}
+.wf-summary-row:last-child{border:none}
+
+/* ── Highlight card ── */
+.wf-highlight{
+  background:rgba(201,107,63,.08);border:1.5px solid var(--terra);
+  border-radius:var(--r-lg);padding:12px;margin-bottom:12px;
+}
+
+/* ── Timeline ── */
+.wf-timeline{display:flex;flex-direction:column;gap:0}
+.wf-tl-item{display:flex;gap:12px;padding-bottom:16px}
+.wf-tl-left{display:flex;flex-direction:column;align-items:center}
+.wf-tl-dot{
+  width:22px;height:22px;border-radius:50%;background:var(--terra);
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:500;color:white;
+}
+.wf-tl-line{width:2px;flex:1;background:var(--fill-mid);margin:3px 0;min-height:16px}
+.wf-tl-content{flex:1;padding-top:2px}
+
+/* ── Team card ── */
+.wf-team-card{
+  background:white;border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:14px;display:flex;flex-direction:column;align-items:center;gap:7px;
+}
+.wf-team-avatar{width:48px;height:48px;border-radius:50%;background:var(--fill-mid)}
+
+/* ── Contact ── */
+.wf-contact-item{display:flex;align-items:flex-start;gap:9px;margin-bottom:10px}
+.wf-contact-icon{
+  width:30px;height:30px;border-radius:7px;background:var(--fill-accent-mid);
+  flex-shrink:0;
+}
+
+/* ── Sticky footer ── */
+.wf-sticky{
+  background:white;border-top:1.5px solid var(--line);
+  padding:10px 20px;display:flex;align-items:center;justify-content:space-between;
+}
+
+/* ── Success screen ── */
+.wf-success{
+  padding:40px 24px;display:flex;flex-direction:column;
+  align-items:center;gap:12px;
+}
+.wf-success-icon{
+  width:56px;height:56px;border-radius:50%;
+  background:var(--fill-accent-mid);display:flex;align-items:center;justify-content:center;
+}
+
+/* ── Button placeholders ── */
+.wf-btn{
+  display:inline-flex;align-items:center;padding:8px 16px;border-radius:var(--r-lg);
+  font-size:11px;font-weight:500;white-space:nowrap;
+}
+.wf-btn-primary{background:var(--terra);color:white}
+.wf-btn-secondary{border:1.5px solid var(--line-s);color:var(--fill-dark)}
+.wf-btn-row{display:flex;gap:8px;margin-top:10px}
+
+/* ── Annotation system ── */
+.wf-annos{
+  background:var(--fill-light);border-top:1px dashed var(--line-s);
+  padding:10px 14px;display:flex;flex-direction:column;gap:5px;
+}
+.wf-anno{display:flex;align-items:flex-start;gap:7px;font-size:10.5px;color:var(--fill-dark);line-height:1.5}
+.wf-anno-num{
+  width:15px;height:15px;min-width:15px;border-radius:50%;
+  background:var(--terra);color:white;display:flex;align-items:center;
+  justify-content:center;font-size:8px;font-weight:500;
+}
+
+/* ── Section header (within page) ── */
+.wf-page-section-title{
+  font-size:11px;font-weight:500;color:var(--dark);margin-bottom:12px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+
+/* ── Spec panel ── */
+.spec-panel{
+  background:var(--off-white);border:1px solid var(--line);border-radius:var(--r-xl);
+  padding:20px;margin-bottom:16px;
+}
+.spec-title{font-size:13px;font-weight:500;color:var(--dark);margin-bottom:4px}
+.spec-desc{font-size:12px;color:var(--fill-dark);line-height:1.6;margin-bottom:12px}
+.spec-list{display:flex;flex-direction:column;gap:4px}
+.spec-item{display:flex;align-items:flex-start;gap:7px;font-size:11.5px;color:var(--fill-dark);line-height:1.5}
+.spec-dot{width:4px;height:4px;border-radius:50%;background:var(--terra);flex-shrink:0;margin-top:5px}
+
+/* ── Page title area ── */
+.page-title-area{padding:0 0 20px}
+.page-title-area h1{font-size:22px;font-weight:500;color:var(--dark);margin-bottom:4px}
+.page-title-area p{font-size:13px;color:var(--fill-dark)}
+
+/* ── Line placeholders ── */
+.ln{height:8px;background:var(--fill-mid);border-radius:3px;margin-bottom:6px}
+.ln-dark{height:10px;background:var(--dark);border-radius:3px;opacity:.55;margin-bottom:8px}
+.ln-s{height:7px;background:var(--fill-light);border-radius:3px;margin-bottom:5px}
+.ln-terra{height:9px;background:var(--terra);border-radius:3px;opacity:.45}
+
+/* ── Footer lines ── */
+.wf-footer-col{display:flex;flex-direction:column;gap:7px}
+.footer-ln{height:7px;background:rgba(255,255,255,.12);border-radius:3px}
+.footer-ln-logo{height:10px;width:70px;background:rgba(255,255,255,.28);border-radius:3px}
+
+/* ── Viewport label ── */
+.viewport-label{
+  font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--fill-dark);display:flex;align-items:center;gap:6px;margin-bottom:6px;
+}
+
+/* ── Scrollable main ── */
+@media(max-width:900px){
+  .shell{grid-template-columns:1fr}
+  .sidebar{display:none}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- ══════════════ SIDEBAR ══════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">
+      <svg width="18" height="18" viewBox="0 0 80 80" fill="none">
+        <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="9" stroke-linecap="round" fill="none"/>
+        <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="9" stroke-linecap="round" fill="none"/>
+        <circle cx="15" cy="70" r="6" fill="#C96B3F"/><circle cx="65" cy="70" r="6" fill="#C96B3F"/>
+        <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/>
+      </svg>
+      Velacare
+    </div>
+    <div class="sidebar-sub">Wireframes v1.0 · Alle Seiten</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Öffentlich</div>
+    <div class="nav-item active" onclick="showPage('startseite',this)"><span class="nav-dot"></span>Startseite</div>
+    <div class="nav-item" onclick="showPage('rechner',this)"><span class="nav-dot"></span>Verpasstes-Geld-Rechner</div>
+    <div class="nav-item" onclick="showPage('wie',this)"><span class="nav-dot"></span>Wie es funktioniert</div>
+    <div class="nav-item" onclick="showPage('produkte',this)"><span class="nav-dot"></span>Produkte & Box</div>
+    <div class="nav-item" onclick="showPage('ueber',this)"><span class="nav-dot"></span>Über uns</div>
+    <div class="nav-item" onclick="showPage('kontakt',this)"><span class="nav-dot"></span>Kontakt</div>
+    <div class="nav-item" onclick="showPage('faq',this)"><span class="nav-dot"></span>FAQ</div>
+
+    <div class="nav-section-label" style="margin-top:8px">Funnel</div>
+    <div class="nav-item" onclick="showPage('beantragen',this)"><span class="nav-dot"></span>Box beantragen</div>
+    <div class="nav-item" onclick="showPage('danke',this)"><span class="nav-dot"></span>Danke-Seite</div>
+
+    <div class="nav-section-label" style="margin-top:8px">Kundenportal</div>
+    <div class="nav-item" onclick="showPage('konto',this)"><span class="nav-dot"></span>Dashboard</div>
+    <div class="nav-item" onclick="showPage('meine-box',this)"><span class="nav-dot"></span>Meine Box</div>
+    <div class="nav-item" onclick="showPage('lieferungen',this)"><span class="nav-dot"></span>Lieferungen</div>
+    <div class="nav-item" onclick="showPage('einstellungen',this)"><span class="nav-dot"></span>Einstellungen</div>
+    <div class="nav-item" onclick="showPage('anfragen',this)"><span class="nav-dot"></span>Anfragen</div>
+
+    <div class="nav-section-label" style="margin-top:8px">Admin-Panel</div>
+    <div class="nav-item" onclick="showPage('admin-dash',this)"><span class="nav-dot"></span>Dashboard</div>
+    <div class="nav-item" onclick="showPage('admin-kunden',this)"><span class="nav-dot"></span>Kundenverwaltung</div>
+    <div class="nav-item" onclick="showPage('admin-produkte',this)"><span class="nav-dot"></span>Produktverwaltung</div>
+    <div class="nav-item" onclick="showPage('admin-lieferungen',this)"><span class="nav-dot"></span>Lieferverwaltung</div>
+    <div class="nav-item" onclick="showPage('admin-anfragen',this)"><span class="nav-dot"></span>Anfragen</div>
+    <div class="nav-item" onclick="showPage('admin-einstellungen',this)"><span class="nav-dot"></span>Einstellungen</div>
+  </nav>
+</aside>
+
+<!-- ══════════════ MAIN ══════════════ -->
+<main class="main">
+
+<!-- ── TOPBAR ── -->
+<div class="topbar" id="topbar">
+  <div class="topbar-title" id="topbar-title">Startseite</div>
+  <div id="topbar-url" class="topbar-url">velacare.de/</div>
+  <div class="topbar-actions">
+    <span class="topbar-badge">Desktop · 1280px</span>
+    <span class="topbar-badge primary" id="topbar-badge">Öffentlich</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: STARTSEITE
+════════════════════════════════════════ -->
+<div class="page-panel active" id="page-startseite">
+  <div class="page-title-area">
+    <h1>Startseite</h1>
+    <p>Die Haupt-Landing-Page. Ziel: Besucher zur Beantragung führen. Alle wichtigen Infos above the fold.</p>
+  </div>
+
+  <div class="wf-device">
+    <!-- Nav -->
+    <div class="wf-nav">
+      <div class="wf-nav-logo"><div class="wf-nav-logo-icon"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#C96B3F"/><circle cx="65" cy="70" r="7" fill="#C96B3F"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/></svg></div><div class="wf-nav-brand">Velacare</div></div>
+      <div class="wf-nav-links">
+        <div class="wf-nav-link">Wie es funktioniert</div>
+        <div class="wf-nav-link">Produkte</div>
+        <div class="wf-nav-link">Über uns</div>
+        <div class="wf-nav-link">FAQ</div>
+      </div>
+      <div class="wf-nav-cta">Jetzt beantragen</div>
+    </div>
+    <!-- Hero — MIT ECHTEM INHALT -->
+    <div class="wf-hero">
+      <div class="wf-hero-left">
+        <!-- Eyebrow -->
+        <div style="display:inline-flex;align-items:center;gap:6px;background:var(--fill-accent-mid);padding:4px 10px;border-radius:20px;font-size:10px;font-weight:500;color:var(--terra);margin-bottom:2px">
+          ✓ Gesetzlicher Anspruch ab Pflegegrad 1
+        </div>
+        <!-- H1 -->
+        <div style="font-size:22px;font-weight:700;color:var(--dark);line-height:1.2;margin-bottom:2px">
+          Pflegehilfsmittel kostenlos —
+        </div>
+        <div style="font-size:22px;font-weight:700;color:var(--terra);line-height:1.2;margin-bottom:10px">
+          jeden Monat nach Hause.
+        </div>
+        <!-- Subtext -->
+        <div style="font-size:11px;color:var(--fill-dark);line-height:1.6;margin-bottom:14px;max-width:340px">
+          Haben Sie oder ein Angehöriger einen Pflegegrad? Dann übernimmt Ihre Pflegekasse die Kosten — bis zu 42 € monatlich. <strong style="color:var(--dark)">Wir kümmern uns um den Rest.</strong>
+        </div>
+        <!-- Mini-Steps -->
+        <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:14px">
+          <div style="display:flex;align-items:center;gap:8px;font-size:10px;color:var(--dark)">
+            <div style="width:18px;height:18px;border-radius:50%;background:var(--terra);color:white;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0">1</div>
+            <strong>Angaben machen</strong> — 2 Minuten online
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:10px;color:var(--dark)">
+            <div style="width:18px;height:18px;border-radius:50%;background:var(--terra);color:white;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0">2</div>
+            <strong>Box zusammenstellen</strong> — wählen was Sie brauchen
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:10px;color:var(--dark)">
+            <div style="width:18px;height:18px;border-radius:50%;background:var(--terra);color:white;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0">3</div>
+            <strong>Fertig</strong> — wir liefern monatlich, gratis
+          </div>
+        </div>
+        <!-- CTAs -->
+        <div class="wf-btn-row">
+          <div class="wf-btn wf-btn-primary" style="font-size:11px">Anspruch prüfen — kostenlos & unverbindlich</div>
+          <div class="wf-btn wf-btn-secondary" style="font-size:11px">Wie es funktioniert</div>
+        </div>
+      </div>
+      <!-- Hero Right: Box-Vorschau -->
+      <div class="wf-hero-right">
+        <div style="background:var(--off-white);border:1px solid var(--line);border-radius:12px;padding:16px;width:100%;max-width:240px">
+          <div style="display:inline-block;background:var(--fill-sage);padding:3px 9px;border-radius:20px;font-size:9px;font-weight:500;color:var(--sage);margin-bottom:10px">Ihre monatliche Box</div>
+          <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:12px">Pflegehilfsmittel</div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:white;border:1px solid var(--line);border-radius:7px">
+              <div style="width:24px;height:24px;border-radius:5px;background:var(--fill-accent-mid);flex-shrink:0"></div>
+              <span style="font-size:10px;font-weight:500;color:var(--dark);flex:1">Einmalhandschuhe</span>
+              <div style="width:13px;height:13px;border-radius:50%;background:var(--sage);opacity:.7;flex-shrink:0"></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:white;border:1px solid var(--line);border-radius:7px">
+              <div style="width:24px;height:24px;border-radius:5px;background:var(--fill-accent-mid);flex-shrink:0"></div>
+              <span style="font-size:10px;font-weight:500;color:var(--dark);flex:1">Desinfektionsmittel</span>
+              <div style="width:13px;height:13px;border-radius:50%;background:var(--sage);opacity:.7;flex-shrink:0"></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:white;border:1px solid var(--line);border-radius:7px">
+              <div style="width:24px;height:24px;border-radius:5px;background:var(--fill-accent-mid);flex-shrink:0"></div>
+              <span style="font-size:10px;font-weight:500;color:var(--dark);flex:1">Schutzmasken FFP2</span>
+              <div style="width:13px;height:13px;border-radius:50%;background:var(--sage);opacity:.7;flex-shrink:0"></div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid var(--fill-light)">
+            <div>
+              <div style="font-size:9px;color:var(--fill-dark)">Ihr Anteil</div>
+              <div style="font-size:16px;font-weight:700;color:var(--terra)">0,00 &#x20AC;</div>
+              <div style="font-size:8px;color:var(--fill-dark)">Kasse übernimmt alles</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:9px;color:var(--fill-dark)">Boxwert</div>
+              <div style="font-size:13px;font-weight:600;color:var(--dark)">bis 42 &#x20AC;</div>
+              <div style="font-size:8px;color:var(--fill-dark)">/ Monat</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Trust bar -->
+    <div class="wf-trust">
+      <div class="wf-trust-item">
+        <div class="wf-trust-icon" style="background:var(--fill-accent-strong)"></div>
+        <div class="wf-trust-lines">
+          <div style="font-size:11px;font-weight:600;color:var(--dark)">42 &#x20AC; / Monat</div>
+          <div style="font-size:9px;color:var(--fill-dark)">von Pflegekasse bezahlt</div>
+        </div>
+      </div>
+      <div class="wf-trust-item">
+        <div class="wf-trust-icon" style="background:var(--fill-accent-strong)"></div>
+        <div class="wf-trust-lines">
+          <div style="font-size:11px;font-weight:600;color:var(--dark)">Keine Bindung</div>
+          <div style="font-size:9px;color:var(--fill-dark)">jederzeit anpassbar</div>
+        </div>
+      </div>
+      <div class="wf-trust-item">
+        <div class="wf-trust-icon" style="background:var(--fill-accent-strong)"></div>
+        <div class="wf-trust-lines">
+          <div style="font-size:11px;font-weight:600;color:var(--dark)">2 Minuten</div>
+          <div style="font-size:9px;color:var(--fill-dark)">Antrag stellen</div>
+        </div>
+      </div>
+      <div class="wf-trust-item">
+        <div class="wf-trust-icon" style="background:var(--fill-accent-strong)"></div>
+        <div class="wf-trust-lines">
+          <div style="font-size:11px;font-weight:600;color:var(--dark)">Deutschlandweit</div>
+          <div style="font-size:9px;color:var(--fill-dark)">versandkostenfrei</div>
+        </div>
+      </div>
+    </div>
+    <!-- Wie es funktioniert — MIT ECHTEM INHALT -->
+    <div class="wf-section">
+      <div class="wf-page-section-title">So funktioniert's <span style="font-size:10px;color:var(--fill-dark);font-weight:400">3 Schritte</span></div>
+      <div class="g3">
+        <div class="wf-step-card">
+          <div class="wf-step-num">1</div>
+          <div style="font-size:12px;font-weight:600;color:var(--dark);margin-bottom:4px">Angaben machen</div>
+          <div style="font-size:10px;color:var(--fill-dark);line-height:1.5">Pflegegrad und Adresse eingeben — dauert 2 Minuten. Kein Papierkram.</div>
+        </div>
+        <div class="wf-step-card">
+          <div class="wf-step-num">2</div>
+          <div style="font-size:12px;font-weight:600;color:var(--dark);margin-bottom:4px">Box zusammenstellen</div>
+          <div style="font-size:10px;color:var(--fill-dark);line-height:1.5">Wählen Sie aus, was Sie wirklich brauchen. Handschuhe, Desinfektion, Mundschutz & mehr.</div>
+        </div>
+        <div class="wf-step-card">
+          <div class="wf-step-num">3</div>
+          <div style="font-size:12px;font-weight:600;color:var(--dark);margin-bottom:4px">Monatlich geliefert</div>
+          <div style="font-size:10px;color:var(--fill-dark);line-height:1.5">Wir regeln alles mit Ihrer Pflegekasse. Ihre Box kommt automatisch jeden Monat.</div>
+        </div>
+      </div>
+    </div>
+    <!-- Produkte -->
+    <div class="wf-section">
+      <div class="wf-page-section-title">Produkte & Box-Inhalt <span style="font-size:10px;color:var(--fill-dark);font-weight:400">Individuell wählbar</span></div>
+      <div class="g4">
+        <div class="wf-product-card"><div class="wf-product-img">Produkt</div><div class="wf-product-body"><div class="wf-badge-ph">Kostenlos</div><div class="ln-dark" style="width:80%"></div><div class="ln" style="width:60%"></div></div></div>
+        <div class="wf-product-card"><div class="wf-product-img">Produkt</div><div class="wf-product-body"><div class="wf-badge-ph">Kostenlos</div><div class="ln-dark" style="width:80%"></div><div class="ln" style="width:60%"></div></div></div>
+        <div class="wf-product-card"><div class="wf-product-img">Produkt</div><div class="wf-product-body"><div class="wf-badge-ph">Kostenlos</div><div class="ln-dark" style="width:80%"></div><div class="ln" style="width:60%"></div></div></div>
+        <div class="wf-product-card"><div class="wf-product-img">Produkt</div><div class="wf-product-body"><div class="wf-badge-ph">Kostenlos</div><div class="ln-dark" style="width:80%"></div><div class="ln" style="width:60%"></div></div></div>
+      </div>
+    </div>
+    <!-- CTA Banner -->
+    <div class="wf-cta-banner">
+      <div class="ln-terra" style="width:50%;margin:0 auto"></div>
+      <div class="ln" style="width:60%;margin:0 auto"></div>
+      <div class="ln-s" style="width:40%;margin:0 auto"></div>
+      <div class="wf-btn wf-btn-primary">Jetzt Anspruch prüfen →</div>
+    </div>
+    <!-- Testimonials -->
+    <div class="wf-section">
+      <div class="wf-page-section-title">Kundenstimmen</div>
+      <div class="g3">
+        <div class="wf-testi-card"><div class="wf-stars"><div class="wf-star"></div><div class="wf-star"></div><div class="wf-star"></div><div class="wf-star"></div><div class="wf-star"></div></div><div class="ln"></div><div class="ln"></div><div class="ln" style="width:70%"></div><div class="wf-author"><div class="wf-avatar"></div><div class="ln" style="width:60px;margin:0"></div></div></div>
+        <div class="wf-testi-card"><div class="wf-stars"><div class="wf-star"></div><div class="wf-star"></div><div class="wf-star"></div><div class="wf-star"></div><div class="wf-star"></div></div><div class="ln"></div><div class="ln"></div><div class="ln" style="width:70%"></div><div class="wf-author"><div class="wf-avatar"></div><div class="ln" style="width:60px;margin:0"></div></div></div>
+        <div class="wf-testi-card"><div class="wf-stars"><div class="wf-star"></div><div class="wf-star"></div><div class="wf-star"></div><div class="wf-star"></div><div class="wf-star"></div></div><div class="ln"></div><div class="ln"></div><div class="ln" style="width:70%"></div><div class="wf-author"><div class="wf-avatar"></div><div class="ln" style="width:60px;margin:0"></div></div></div>
+      </div>
+    </div>
+    <!-- FAQ -->
+    <div class="wf-section">
+      <div class="wf-page-section-title">Häufige Fragen <span style="font-size:10px;color:var(--fill-dark);font-weight:400">Akkordeon</span></div>
+      <div class="wf-faq-item"><div class="ln-dark" style="width:60%;margin:0"></div><div class="wf-faq-arrow"></div></div>
+      <div class="wf-faq-item"><div class="ln-dark" style="width:50%;margin:0"></div><div class="wf-faq-arrow"></div></div>
+      <div class="wf-faq-item"><div class="ln-dark" style="width:65%;margin:0"></div><div class="wf-faq-arrow"></div></div>
+      <div class="wf-faq-item"><div class="ln-dark" style="width:45%;margin:0"></div><div class="wf-faq-arrow"></div></div>
+      <div class="wf-faq-item"><div class="ln-dark" style="width:55%;margin:0"></div><div class="wf-faq-arrow"></div></div>
+    </div>
+    <!-- Footer -->
+    <div class="wf-footer">
+      <div class="wf-footer-col"><div class="footer-ln-logo"></div><div class="footer-ln" style="width:90%"></div><div class="footer-ln" style="width:75%"></div><div class="footer-ln" style="width:60%"></div></div>
+      <div class="wf-footer-col"><div class="footer-ln"></div><div class="footer-ln" style="width:60%"></div><div class="footer-ln" style="width:80%"></div><div class="footer-ln" style="width:50%"></div></div>
+      <div class="wf-footer-col"><div class="footer-ln"></div><div class="footer-ln" style="width:75%"></div><div class="footer-ln" style="width:55%"></div></div>
+      <div class="wf-footer-col"><div class="footer-ln"></div><div class="footer-ln" style="width:65%"></div><div class="footer-ln" style="width:80%"></div></div>
+    </div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div><strong>Eyebrow:</strong> "Gesetzlicher Anspruch ab Pflegegrad 1" — sofort Zielgruppe ansprechen</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div><strong>Headline:</strong> "Pflegehilfsmittel kostenlos — jeden Monat nach Hause." — 1 Zeile, kein Fachjargon</div>
+      <div class="wf-anno"><div class="wf-anno-num">3</div><strong>Subtext:</strong> Räumt sofort die 2 Kernfragen aus dem Weg: Wer hat Anspruch? Wer zahlt? → Pflegekasse, bis 42€/Monat</div>
+      <div class="wf-anno"><div class="wf-anno-num">4</div><strong>3 Mini-Schritte</strong> direkt im Hero — Nutzer sieht ohne Scrollen wie einfach es geht</div>
+      <div class="wf-anno"><div class="wf-anno-num">5</div><strong>Primärer CTA:</strong> "Anspruch prüfen — kostenlos &amp; unverbindlich" — Zusatz nimmt Hemmschwelle</div>
+      <div class="wf-anno"><div class="wf-anno-num">6</div><strong>Rechts:</strong> Box-Vorschau-Karte mit echten Produkten + "0,00 € Ihr Anteil" — das stärkte Conversion-Element</div>
+      <div class="wf-anno"><div class="wf-anno-num">7</div><strong>Trust-Bar:</strong> 4 konkrete Fakten — 42€/Monat · Keine Bindung · 2 Minuten · Deutschlandweit</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: WIE ES FUNKTIONIERT
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-wie">
+  <div class="page-title-area"><h1>Wie es funktioniert</h1><p>Erklärt den Prozess in 4 Schritten mit Timeline und Voraussetzungen.</p></div>
+  <div class="wf-device">
+    <div class="wf-nav"><div class="wf-nav-logo"><div class="wf-nav-logo-icon"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#C96B3F"/><circle cx="65" cy="70" r="7" fill="#C96B3F"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/></svg></div><div class="wf-nav-brand">Velacare</div></div><div class="wf-nav-links"><div class="wf-nav-link active">Wie es funktioniert</div><div class="wf-nav-link">Produkte</div><div class="wf-nav-link">Über uns</div><div class="wf-nav-link">FAQ</div></div><div class="wf-nav-cta">Jetzt beantragen</div></div>
+    <div class="wf-breadcrumb">Startseite / <strong style="color:var(--dark)">Wie es funktioniert</strong></div>
+    <!-- Inner hero -->
+    <div style="padding:28px 20px;background:var(--fill-accent);border-bottom:1px solid var(--line)">
+      <div class="ln-dark" style="width:45%"></div>
+      <div class="ln" style="width:65%"></div>
+      <div class="ln-s" style="width:50%"></div>
+    </div>
+    <!-- Timeline + Bild -->
+    <div class="wf-section">
+      <div class="g2">
+        <div>
+          <div class="wf-page-section-title">In 4 einfachen Schritten</div>
+          <div class="wf-timeline">
+            <div class="wf-tl-item"><div class="wf-tl-left"><div class="wf-tl-dot">1</div><div class="wf-tl-line"></div></div><div class="wf-tl-content"><div class="ln-dark" style="width:60%"></div><div class="ln"></div><div class="ln" style="width:70%"></div></div></div>
+            <div class="wf-tl-item"><div class="wf-tl-left"><div class="wf-tl-dot">2</div><div class="wf-tl-line"></div></div><div class="wf-tl-content"><div class="ln-dark" style="width:60%"></div><div class="ln"></div><div class="ln" style="width:70%"></div></div></div>
+            <div class="wf-tl-item"><div class="wf-tl-left"><div class="wf-tl-dot">3</div><div class="wf-tl-line"></div></div><div class="wf-tl-content"><div class="ln-dark" style="width:60%"></div><div class="ln"></div><div class="ln" style="width:70%"></div></div></div>
+            <div class="wf-tl-item" style="padding:0"><div class="wf-tl-left"><div class="wf-tl-dot">4</div></div><div class="wf-tl-content"><div class="ln-dark" style="width:60%"></div><div class="ln" style="width:70%"></div></div></div>
+          </div>
+        </div>
+        <div style="background:var(--fill-light);border-radius:var(--r-lg);display:flex;align-items:center;justify-content:center;min-height:200px;font-size:10px;color:var(--fill-dark)">Grafik: Prozessablauf / Unboxing-Foto</div>
+      </div>
+    </div>
+    <!-- Voraussetzungen -->
+    <div class="wf-section">
+      <div class="wf-page-section-title">Wer hat Anspruch?</div>
+      <div class="g3">
+        <div class="wf-step-card"><div style="width:32px;height:32px;border-radius:8px;background:var(--fill-accent-mid);margin-bottom:6px"></div><div class="ln-dark" style="width:80%"></div><div class="ln"></div><div class="ln-s"></div></div>
+        <div class="wf-step-card"><div style="width:32px;height:32px;border-radius:8px;background:var(--fill-accent-mid);margin-bottom:6px"></div><div class="ln-dark" style="width:80%"></div><div class="ln"></div><div class="ln-s"></div></div>
+        <div class="wf-step-card"><div style="width:32px;height:32px;border-radius:8px;background:var(--fill-accent-mid);margin-bottom:6px"></div><div class="ln-dark" style="width:80%"></div><div class="ln"></div><div class="ln-s"></div></div>
+      </div>
+    </div>
+    <div class="wf-cta-banner"><div class="ln-terra" style="width:40%;margin:0 auto"></div><div class="wf-btn wf-btn-primary" style="margin-top:8px">Jetzt Anspruch prüfen →</div></div>
+    <div class="wf-footer"><div class="wf-footer-col"><div class="footer-ln-logo"></div><div class="footer-ln" style="width:90%"></div></div><div class="wf-footer-col"><div class="footer-ln"></div><div class="footer-ln" style="width:60%"></div></div><div class="wf-footer-col"><div class="footer-ln"></div><div class="footer-ln" style="width:75%"></div></div><div class="wf-footer-col"><div class="footer-ln"></div><div class="footer-ln" style="width:55%"></div></div></div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div>Schritt 1: Online-Formular ausfüllen (2 Min.) · Schritt 2: Velacare regelt alles mit der Pflegekasse</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div>Schritt 3: Box individuell zusammenstellen · Schritt 4: Monatliche Lieferung frei Haus</div>
+      <div class="wf-anno"><div class="wf-anno-num">3</div>Voraussetzungen: Pflegegrad 1+ · Häusliche Pflege · Gesetzlich oder privat versichert</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: PRODUKTE
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-produkte">
+  <div class="page-title-area"><h1>Produkte & Box zusammenstellen</h1><p>Filterbarer Produktkatalog mit Budget-Counter und Live-Auswahl.</p></div>
+  <div class="wf-device">
+    <div class="wf-nav"><div class="wf-nav-logo"><div class="wf-nav-logo-icon"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#C96B3F"/><circle cx="65" cy="70" r="7" fill="#C96B3F"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/></svg></div><div class="wf-nav-brand">Velacare</div></div><div class="wf-nav-links"><div class="wf-nav-link">Wie es funktioniert</div><div class="wf-nav-link active">Produkte</div><div class="wf-nav-link">Über uns</div><div class="wf-nav-link">FAQ</div></div><div class="wf-nav-cta">Jetzt beantragen</div></div>
+    <div class="wf-breadcrumb">Startseite / <strong style="color:var(--dark)">Produkte</strong></div>
+    <div style="padding:22px 20px;background:var(--fill-accent);border-bottom:1px solid var(--line)"><div class="ln-dark" style="width:50%"></div><div class="ln" style="width:70%"></div></div>
+    <div class="wf-sidebar-layout">
+      <!-- Filter sidebar -->
+      <div class="wf-sidebar-inner">
+        <div class="ln-dark" style="width:70%;margin-bottom:8px"></div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div style="display:flex;align-items:center;gap:6px;padding:7px 8px;background:var(--fill-accent-mid);border-radius:var(--r)"><div class="wf-checkbox checked"></div><div class="ln" style="flex:1;margin:0"></div><div class="wf-badge-ph">Alle</div></div>
+          <div style="display:flex;align-items:center;gap:6px;padding:7px 8px"><div class="wf-checkbox checked"></div><div class="ln" style="flex:1;margin:0"></div></div>
+          <div style="display:flex;align-items:center;gap:6px;padding:7px 8px"><div class="wf-checkbox"></div><div class="ln" style="flex:1;margin:0"></div></div>
+          <div style="display:flex;align-items:center;gap:6px;padding:7px 8px"><div class="wf-checkbox"></div><div class="ln" style="flex:1;margin:0"></div></div>
+          <div style="display:flex;align-items:center;gap:6px;padding:7px 8px"><div class="wf-checkbox"></div><div class="ln" style="flex:1;margin:0"></div></div>
+        </div>
+        <div style="height:12px"></div>
+        <div class="ln-dark" style="width:60%;margin-bottom:8px"></div>
+        <div class="wf-summary">
+          <div class="wf-summary-row"><div class="ln" style="width:55%;margin:0"></div><div class="ln-terra" style="width:25%;margin:0"></div></div>
+          <div class="wf-summary-row"><div class="ln" style="width:35%;margin:0"></div><div class="ph-sage" style="width:25%;height:7px;border-radius:3px"></div></div>
+          <div class="wf-summary-row" style="border:none;padding-top:8px"><div class="wf-btn wf-btn-primary" style="width:100%;justify-content:center;font-size:10px">Box beantragen →</div></div>
+        </div>
+      </div>
+      <!-- Product grid -->
+      <div class="wf-main-content">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+          <div class="wf-product-card"><div class="wf-product-img">Handschuhe</div><div class="wf-product-body"><div class="wf-badge-ph">Kostenlos</div><div class="ln-dark" style="width:80%"></div><div class="ln" style="width:60%"></div><div class="wf-checkbox checked"></div></div></div>
+          <div class="wf-product-card"><div class="wf-product-img">Desinfektion</div><div class="wf-product-body"><div class="wf-badge-ph">Kostenlos</div><div class="ln-dark" style="width:80%"></div><div class="ln" style="width:60%"></div><div class="wf-checkbox checked"></div></div></div>
+          <div class="wf-product-card"><div class="wf-product-img">Mundschutz</div><div class="wf-product-body"><div class="wf-badge-ph">Kostenlos</div><div class="ln-dark" style="width:80%"></div><div class="ln" style="width:60%"></div><div class="wf-checkbox"></div></div></div>
+          <div class="wf-product-card"><div class="wf-product-img">Schutzschürze</div><div class="wf-product-body"><div class="wf-badge-ph">Kostenlos</div><div class="ln-dark" style="width:80%"></div><div class="ln" style="width:60%"></div><div class="wf-checkbox"></div></div></div>
+          <div class="wf-product-card"><div class="wf-product-img">Bettschutz</div><div class="wf-product-body"><div class="wf-badge-ph">Kostenlos</div><div class="ln-dark" style="width:80%"></div><div class="ln" style="width:60%"></div><div class="wf-checkbox"></div></div></div>
+          <div class="wf-product-card"><div class="wf-product-img">Fingerlinge</div><div class="wf-product-body"><div class="wf-badge-ph">Kostenlos</div><div class="ln-dark" style="width:80%"></div><div class="ln" style="width:60%"></div><div class="wf-checkbox"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <!-- Sticky footer -->
+    <div class="wf-sticky">
+      <div><div class="ln-dark" style="width:160px;margin-bottom:4px"></div><div class="ln" style="width:120px;margin:0"></div></div>
+      <div class="wf-btn wf-btn-primary">Box beantragen →</div>
+    </div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div>Kategoriefilter links: Alle · Handschuhe · Desinfektion · Mundschutz · Schutzkleidung · Hygiene · Sonstiges</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div>Budget-Counter: zeigt live wie viel von 42€ genutzt — Produkt wird grau wenn Budget überschritten würde</div>
+      <div class="wf-anno"><div class="wf-anno-num">3</div>Sticky Footer: bleibt beim Scrollen sichtbar — zeigt gewählte Produkte + Restwert + CTA</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: ÜBER UNS
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-ueber">
+  <div class="page-title-area"><h1>Über uns</h1><p>Mission, Team, Kennzahlen und Unternehmenswerte.</p></div>
+  <div class="wf-device">
+    <div class="wf-nav"><div class="wf-nav-logo"><div class="wf-nav-logo-icon"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#C96B3F"/><circle cx="65" cy="70" r="7" fill="#C96B3F"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/></svg></div><div class="wf-nav-brand">Velacare</div></div><div class="wf-nav-links"><div class="wf-nav-link">Wie es funktioniert</div><div class="wf-nav-link">Produkte</div><div class="wf-nav-link active">Über uns</div><div class="wf-nav-link">FAQ</div></div><div class="wf-nav-cta">Jetzt beantragen</div></div>
+    <!-- Mission -->
+    <div class="wf-section">
+      <div class="g2">
+        <div>
+          <div class="ph" style="width:80px;height:7px;background:var(--fill-accent-strong);margin-bottom:10px"></div>
+          <div class="ln-dark" style="width:85%"></div>
+          <div class="ln-dark" style="width:65%"></div>
+          <div style="height:8px"></div>
+          <div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln" style="width:80%"></div><div class="ln" style="width:70%"></div>
+        </div>
+        <div style="background:var(--fill-light);border-radius:var(--r-lg);min-height:180px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--fill-dark)">Team- / Gründungsfoto</div>
+      </div>
+    </div>
+    <!-- Stats -->
+    <div class="wf-section" style="background:var(--fill-light)">
+      <div class="g4">
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-lg);padding:14px;text-align:center"><div style="height:20px;width:60px;background:var(--fill-accent-strong);border-radius:4px;margin:0 auto 8px"></div><div class="ln-s" style="width:80%;margin:0 auto"></div></div>
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-lg);padding:14px;text-align:center"><div style="height:20px;width:60px;background:var(--fill-accent-strong);border-radius:4px;margin:0 auto 8px"></div><div class="ln-s" style="width:80%;margin:0 auto"></div></div>
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-lg);padding:14px;text-align:center"><div style="height:20px;width:60px;background:var(--fill-accent-strong);border-radius:4px;margin:0 auto 8px"></div><div class="ln-s" style="width:80%;margin:0 auto"></div></div>
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-lg);padding:14px;text-align:center"><div style="height:20px;width:60px;background:var(--fill-accent-strong);border-radius:4px;margin:0 auto 8px"></div><div class="ln-s" style="width:80%;margin:0 auto"></div></div>
+      </div>
+    </div>
+    <!-- Team -->
+    <div class="wf-section">
+      <div class="wf-page-section-title">Unser Team</div>
+      <div class="g4">
+        <div class="wf-team-card"><div class="wf-team-avatar"></div><div class="ln-dark" style="width:80%;margin:0 auto"></div><div class="ln" style="width:60%;margin:0 auto"></div><div class="ln-s" style="width:90%;margin:0 auto"></div></div>
+        <div class="wf-team-card"><div class="wf-team-avatar"></div><div class="ln-dark" style="width:80%;margin:0 auto"></div><div class="ln" style="width:60%;margin:0 auto"></div><div class="ln-s" style="width:90%;margin:0 auto"></div></div>
+        <div class="wf-team-card"><div class="wf-team-avatar"></div><div class="ln-dark" style="width:80%;margin:0 auto"></div><div class="ln" style="width:60%;margin:0 auto"></div><div class="ln-s" style="width:90%;margin:0 auto"></div></div>
+        <div class="wf-team-card"><div class="wf-team-avatar"></div><div class="ln-dark" style="width:80%;margin:0 auto"></div><div class="ln" style="width:60%;margin:0 auto"></div><div class="ln-s" style="width:90%;margin:0 auto"></div></div>
+      </div>
+    </div>
+    <!-- Werte -->
+    <div class="wf-section">
+      <div class="wf-page-section-title">Unsere Werte</div>
+      <div class="g3">
+        <div class="wf-step-card"><div style="width:36px;height:36px;border-radius:9px;background:var(--fill-sage);margin-bottom:6px"></div><div class="ln-dark" style="width:60%"></div><div class="ln"></div><div class="ln-s"></div></div>
+        <div class="wf-step-card"><div style="width:36px;height:36px;border-radius:9px;background:var(--fill-accent-mid);margin-bottom:6px"></div><div class="ln-dark" style="width:60%"></div><div class="ln"></div><div class="ln-s"></div></div>
+        <div class="wf-step-card"><div style="width:36px;height:36px;border-radius:9px;background:var(--fill-accent-mid);margin-bottom:6px"></div><div class="ln-dark" style="width:60%"></div><div class="ln"></div><div class="ln-s"></div></div>
+      </div>
+    </div>
+    <div class="wf-footer"><div class="wf-footer-col"><div class="footer-ln-logo"></div><div class="footer-ln" style="width:90%"></div></div><div class="wf-footer-col"><div class="footer-ln"></div><div class="footer-ln" style="width:60%"></div></div><div class="wf-footer-col"><div class="footer-ln"></div><div class="footer-ln" style="width:75%"></div></div><div class="wf-footer-col"><div class="footer-ln"></div><div class="footer-ln" style="width:55%"></div></div></div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div>Mission Statement: „Wir glauben, dass gute Pflege einfach sein sollte." + kurze Gründungsgeschichte</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div>Kennzahlen: X.000 Kunden · Gegründet Jahr · Bundesländer · Ø Zufriedenheit</div>
+      <div class="wf-anno"><div class="wf-anno-num">3</div>Werte: Vertrauen · Einfachheit · Menschlichkeit</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: KONTAKT
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-kontakt">
+  <div class="page-title-area"><h1>Kontakt</h1><p>Kontaktdaten links, Formular rechts. Reaktionszeit-Versprechen prominent.</p></div>
+  <div class="wf-device">
+    <div class="wf-nav"><div class="wf-nav-logo"><div class="wf-nav-logo-icon"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#C96B3F"/><circle cx="65" cy="70" r="7" fill="#C96B3F"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/></svg></div><div class="wf-nav-brand">Velacare</div></div><div class="wf-nav-links"><div class="wf-nav-link">Wie es funktioniert</div><div class="wf-nav-link">Produkte</div><div class="wf-nav-link">Über uns</div><div class="wf-nav-link">FAQ</div></div><div class="wf-nav-cta">Jetzt beantragen</div></div>
+    <div style="padding:22px 20px;background:var(--fill-accent);border-bottom:1px solid var(--line)"><div class="ln-dark" style="width:30%"></div><div class="ln" style="width:55%"></div></div>
+    <div class="g2" style="gap:0;border-top:1px solid var(--line)">
+      <div style="padding:22px 20px;border-right:1px solid var(--line)">
+        <div class="ln-dark" style="width:55%;margin-bottom:12px"></div>
+        <div class="wf-contact-item"><div class="wf-contact-icon"></div><div><div class="ln-dark" style="width:80px;margin-bottom:5px"></div><div class="ln" style="width:130px;margin:0"></div></div></div>
+        <div class="wf-contact-item"><div class="wf-contact-icon"></div><div><div class="ln-dark" style="width:80px;margin-bottom:5px"></div><div class="ln" style="width:130px;margin:0"></div></div></div>
+        <div class="wf-contact-item"><div class="wf-contact-icon"></div><div><div class="ln-dark" style="width:80px;margin-bottom:5px"></div><div class="ln" style="width:130px;margin:0"></div></div></div>
+        <div style="margin-top:14px;padding:12px;background:var(--fill-accent);border-radius:var(--r-lg);border-left:2px solid var(--terra)">
+          <div class="ln-dark" style="width:50%;margin-bottom:6px"></div>
+          <div class="ln"></div><div class="ln" style="width:80%"></div><div class="ln-s" style="width:60%"></div>
+        </div>
+      </div>
+      <div style="padding:22px 20px">
+        <div class="ln-dark" style="width:55%;margin-bottom:14px"></div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div><div class="wf-form-label"></div><div class="wf-input-half"><div class="wf-input"></div><div class="wf-input"></div></div></div>
+          <div><div class="wf-form-label"></div><div class="wf-input"></div></div>
+          <div><div class="wf-form-label"></div><div class="wf-select"><div class="ln" style="width:120px;margin:0"></div><div style="font-size:10px;color:var(--fill-dark)">▾</div></div></div>
+          <div><div class="wf-form-label"></div><div class="wf-textarea"></div></div>
+          <div class="wf-btn wf-btn-primary" style="align-self:flex-start">Nachricht senden</div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-footer"><div class="wf-footer-col"><div class="footer-ln-logo"></div><div class="footer-ln" style="width:90%"></div></div><div class="wf-footer-col"><div class="footer-ln"></div></div><div class="wf-footer-col"><div class="footer-ln"></div></div><div class="wf-footer-col"><div class="footer-ln"></div></div></div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div>Kontaktdaten: Telefon · E-Mail · Öffnungszeiten · Reaktionszeit-Versprechen: „Wir antworten innerhalb 24h"</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div>Formular: Name · E-Mail · Anliegen (Dropdown) · Nachricht — DSGVO-Hinweis unter dem Button</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: FAQ
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-faq">
+  <div class="page-title-area"><h1>FAQ</h1><p>Kategorie-Sidebar links, Akkordeon rechts. Erste Frage immer ausgeklappt.</p></div>
+  <div class="wf-device">
+    <div class="wf-nav"><div class="wf-nav-logo"><div class="wf-nav-logo-icon"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#C96B3F"/><circle cx="65" cy="70" r="7" fill="#C96B3F"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/></svg></div><div class="wf-nav-brand">Velacare</div></div><div class="wf-nav-links"><div class="wf-nav-link">Wie es funktioniert</div><div class="wf-nav-link">Produkte</div><div class="wf-nav-link">Über uns</div><div class="wf-nav-link active">FAQ</div></div><div class="wf-nav-cta">Jetzt beantragen</div></div>
+    <div style="padding:20px;background:var(--fill-accent);border-bottom:1px solid var(--line)"><div class="ln-dark" style="width:25%"></div><div class="ln" style="width:50%"></div></div>
+    <div class="wf-sidebar-layout">
+      <div class="wf-sidebar-inner">
+        <div class="ln-dark" style="width:80%;margin-bottom:8px"></div>
+        <div style="padding:7px 8px;background:var(--fill-accent-mid);border-radius:var(--r);"><div class="ln-terra" style="width:80%;margin:0"></div></div>
+        <div style="padding:7px 8px"><div class="ln" style="width:80%;margin:0"></div></div>
+        <div style="padding:7px 8px"><div class="ln" style="width:80%;margin:0"></div></div>
+        <div style="padding:7px 8px"><div class="ln" style="width:80%;margin:0"></div></div>
+        <div style="padding:7px 8px"><div class="ln" style="width:80%;margin:0"></div></div>
+        <div style="padding:7px 8px"><div class="ln" style="width:80%;margin:0"></div></div>
+      </div>
+      <div class="wf-main-content">
+        <div class="ln-dark" style="width:60%;margin-bottom:14px"></div>
+        <!-- Offene Frage -->
+        <div class="wf-highlight">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <div class="ln-dark" style="width:65%;margin:0"></div>
+            <div style="width:15px;height:15px;border:1.5px solid var(--terra);border-radius:50%"></div>
+          </div>
+          <div class="ln"></div><div class="ln" style="width:80%"></div><div class="ln-s" style="width:65%"></div>
+        </div>
+        <!-- Geschlossene Fragen -->
+        <div class="wf-faq-item"><div class="ln-dark" style="width:60%;margin:0"></div><div class="wf-faq-arrow"></div></div>
+        <div class="wf-faq-item"><div class="ln-dark" style="width:50%;margin:0"></div><div class="wf-faq-arrow"></div></div>
+        <div class="wf-faq-item"><div class="ln-dark" style="width:70%;margin:0"></div><div class="wf-faq-arrow"></div></div>
+        <div class="wf-faq-item"><div class="ln-dark" style="width:45%;margin:0"></div><div class="wf-faq-arrow"></div></div>
+        <div class="wf-faq-item"><div class="ln-dark" style="width:55%;margin:0"></div><div class="wf-faq-arrow"></div></div>
+        <div style="margin-top:14px;padding:12px;background:var(--fill-light);border-radius:var(--r-lg);display:flex;align-items:center;justify-content:space-between">
+          <div class="ln" style="width:50%;margin:0"></div>
+          <div class="wf-btn wf-btn-secondary" style="font-size:10px">Zum Kontaktformular →</div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-footer"><div class="wf-footer-col"><div class="footer-ln-logo"></div><div class="footer-ln" style="width:90%"></div></div><div class="wf-footer-col"><div class="footer-ln"></div></div><div class="wf-footer-col"><div class="footer-ln"></div></div><div class="wf-footer-col"><div class="footer-ln"></div></div></div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div>Kategorien: Anspruch · Antrag · Produkte · Lieferung · Kasse · Kündigung</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div>Erste Frage immer ausgeklappt — Rest als Akkordeon mit +-Toggle</div>
+      <div class="wf-anno"><div class="wf-anno-num">3</div>Am Ende: „Ihre Frage nicht dabei?" → Link zum Kontaktformular</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: BOX BEANTRAGEN (Funnel)
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-beantragen">
+  <div class="page-title-area"><h1>Box beantragen</h1><p>4-Schritt-Funnel. Schritt 1: Anspruch · Schritt 2: Daten · Schritt 3: Box · Schritt 4: Bestätigung</p></div>
+  <div class="wf-device">
+    <div class="wf-nav"><div class="wf-nav-logo"><div class="wf-nav-logo-icon"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#C96B3F"/><circle cx="65" cy="70" r="7" fill="#C96B3F"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/></svg></div><div class="wf-nav-brand">Velacare</div></div><div style="flex:1"></div><div class="wf-nav-cta">Jetzt beantragen</div></div>
+    <!-- Progress -->
+    <div class="wf-progress">
+      <div class="wf-progress-steps">
+        <div class="wf-progress-step"><div class="wf-step-circle done">✓</div><div class="wf-step-label"></div><div class="wf-connector done"></div></div>
+        <div class="wf-progress-step"><div class="wf-step-circle current">2</div><div class="wf-step-label current"></div><div class="wf-connector"></div></div>
+        <div class="wf-progress-step"><div class="wf-step-circle">3</div><div class="wf-step-label"></div><div class="wf-connector"></div></div>
+        <div class="wf-progress-step"><div class="wf-step-circle">4</div><div class="wf-step-label"></div></div>
+      </div>
+    </div>
+    <!-- Step content -->
+    <div class="wf-sidebar-layout">
+      <div class="wf-sidebar-inner">
+        <div class="ln-dark" style="width:90%"></div>
+        <div style="height:6px"></div>
+        <div class="ln"></div><div class="ln-s" style="width:65%"></div><div class="ln-s" style="width:70%"></div>
+        <div style="margin-top:12px">
+          <div class="wf-summary">
+            <div class="wf-summary-row"><div class="ln" style="width:55%;margin:0"></div><div class="ln-terra" style="width:25%;margin:0"></div></div>
+            <div class="wf-summary-row"><div class="ln" style="width:35%;margin:0"></div><div class="ph-sage" style="width:25%;height:7px;border-radius:3px"></div></div>
+            <div class="wf-summary-row" style="border:none"><div class="ln" style="width:45%;margin:0"></div><div class="ln-terra" style="width:20%;margin:0"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="wf-main-content">
+        <div class="ln-dark" style="width:55%;margin-bottom:14px"></div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div><div class="wf-form-label"></div><div class="wf-input-half"><div class="wf-input"></div><div class="wf-input"></div></div></div>
+          <div><div class="wf-form-label"></div><div class="wf-input focused"></div></div>
+          <div><div class="wf-form-label"></div><div class="wf-input-half"><div class="wf-input"></div><div class="wf-input"></div></div></div>
+          <div><div class="wf-form-label"></div><div class="wf-input"></div></div>
+          <div><div class="wf-form-label"></div><div class="wf-input"></div></div>
+          <div><div class="wf-form-label"></div><div class="wf-select"><div class="ln" style="width:120px;margin:0"></div><div style="font-size:10px;color:var(--fill-dark)">▾</div></div></div>
+        </div>
+        <div class="wf-btn-row" style="margin-top:14px">
+          <div class="wf-btn wf-btn-secondary">← Zurück</div>
+          <div class="wf-btn wf-btn-primary">Weiter →</div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div>Schritt 1: Pflegegrad (1–5 Radio) + Pflegeort bestätigen → Sofort-Feedback „Sie haben Anspruch"</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div>Schritt 2 (aktiv): Vorname · Nachname · Geburtsdatum · Adresse · PLZ · Krankenkasse (Freitext) · Tel · E-Mail · Passwort</div>
+      <div class="wf-anno"><div class="wf-anno-num">3</div>Schritt 3: Box-Konfigurator · Schritt 4: Zusammenfassung + DSGVO + AGB → E-Mail-Bestätigung</div>
+      <div class="wf-anno"><div class="wf-anno-num">4</div>Sidebar zeigt live: was steht dem Kunden zu / Vorteile der Box</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: DANKE
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-danke">
+  <div class="page-title-area"><h1>Danke-Seite</h1><p>Nach erfolgreicher Beantragung. Bestätigung + Next Steps + Empfehlungs-CTA.</p></div>
+  <div class="wf-device">
+    <div class="wf-nav"><div class="wf-nav-logo"><div class="wf-nav-logo-icon"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#C96B3F"/><circle cx="65" cy="70" r="7" fill="#C96B3F"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/></svg></div><div class="wf-nav-brand">Velacare</div></div></div>
+    <div class="wf-success">
+      <div class="wf-success-icon"><div style="width:28px;height:28px;border-radius:50%;background:var(--terra);opacity:.8"></div></div>
+      <div class="ln-dark" style="width:50%;margin:0 auto"></div>
+      <div class="ln" style="width:65%;margin:0 auto"></div>
+      <div class="ln-s" style="width:50%;margin:0 auto"></div>
+    </div>
+    <div class="wf-section">
+      <div class="wf-page-section-title" style="justify-content:center;margin-bottom:16px">Was passiert als nächstes?</div>
+      <div class="g3">
+        <div class="wf-step-card"><div class="wf-step-num">1</div><div class="ln-dark" style="width:80%"></div><div class="ln"></div><div class="ln-s"></div></div>
+        <div class="wf-step-card"><div class="wf-step-num">2</div><div class="ln-dark" style="width:80%"></div><div class="ln"></div><div class="ln-s"></div></div>
+        <div class="wf-step-card"><div class="wf-step-num">3</div><div class="ln-dark" style="width:80%"></div><div class="ln"></div><div class="ln-s"></div></div>
+      </div>
+    </div>
+    <div class="wf-cta-banner">
+      <div class="ln-terra" style="width:45%;margin:0 auto"></div>
+      <div class="ln" style="width:55%;margin:0 auto"></div>
+      <div class="wf-btn-row" style="justify-content:center">
+        <div class="wf-btn wf-btn-primary">Jetzt teilen</div>
+        <div class="wf-btn wf-btn-secondary">Zur Startseite</div>
+      </div>
+    </div>
+    <div class="wf-footer"><div class="wf-footer-col"><div class="footer-ln-logo"></div><div class="footer-ln" style="width:90%"></div></div><div class="wf-footer-col"><div class="footer-ln"></div></div><div class="wf-footer-col"><div class="footer-ln"></div></div><div class="wf-footer-col"><div class="footer-ln"></div></div></div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div>Schritt 1: Wir kontaktieren Ihre Pflegekasse (3–5 Werktage) · 2: Bestätigungs-E-Mail · 3: Erste Box wird versendet</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div>Empfehlungs-CTA: „Kennen Sie jemanden, dem Velacare helfen könnte?" → Share-Buttons</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: KONTO DASHBOARD
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-konto">
+  <div class="page-title-area"><h1>Kunden-Dashboard</h1><p>Übersicht nach Login. Aktuelle Box, nächste Lieferung, Schnellzugriff.</p></div>
+  <div class="wf-device">
+    <div class="wf-nav"><div class="wf-nav-logo"><div class="wf-nav-logo-icon"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#C96B3F"/><circle cx="65" cy="70" r="7" fill="#C96B3F"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/></svg></div><div class="wf-nav-brand">Velacare</div></div><div class="wf-nav-links"><div class="wf-nav-link active">Dashboard</div><div class="wf-nav-link">Meine Box</div><div class="wf-nav-link">Lieferungen</div><div class="wf-nav-link">Anfragen</div><div class="wf-nav-link">Einstellungen</div></div><div style="margin-left:auto;display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:var(--fill-accent-mid)"></div></div></div>
+    <div class="wf-section">
+      <div class="g2">
+        <!-- Aktuelle Box -->
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-xl);padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <div class="ln-dark" style="width:50%;margin:0"></div>
+            <div class="wf-btn wf-btn-secondary" style="font-size:10px;padding:5px 10px">Bearbeiten</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:32px;height:32px;border-radius:6px;background:var(--fill-light);flex-shrink:0"></div><div class="ln" style="flex:1;margin:0"></div></div>
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:32px;height:32px;border-radius:6px;background:var(--fill-light);flex-shrink:0"></div><div class="ln" style="flex:1;margin:0"></div></div>
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:32px;height:32px;border-radius:6px;background:var(--fill-light);flex-shrink:0"></div><div class="ln" style="flex:1;margin:0"></div></div>
+          </div>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--fill-light);display:flex;justify-content:space-between">
+            <div class="ln-s" style="width:80px;margin:0"></div>
+            <div class="ln-terra" style="width:50px;margin:0"></div>
+          </div>
+        </div>
+        <!-- Nächste Lieferung -->
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="background:var(--fill-accent);border:1px solid rgba(201,107,63,.3);border-radius:var(--r-xl);padding:16px">
+            <div class="ln-dark" style="width:60%;margin-bottom:8px"></div>
+            <div style="font-size:10px;color:var(--fill-dark);margin-bottom:6px">Datum</div>
+            <div class="ln-terra" style="width:50%;margin-bottom:8px"></div>
+            <div style="background:var(--fill-mid);border-radius:3px;height:6px;overflow:hidden"><div style="background:var(--terra);height:100%;width:65%;border-radius:3px"></div></div>
+            <div class="ln-s" style="width:60%;margin-top:4px"></div>
+            <div class="wf-btn-row"><div class="wf-btn wf-btn-secondary" style="font-size:10px">Pausieren</div></div>
+          </div>
+          <div style="background:white;border:1px solid var(--line);border-radius:var(--r-xl);padding:14px">
+            <div class="ln-dark" style="width:55%;margin-bottom:8px"></div>
+            <div style="display:flex;flex-direction:column;gap:5px">
+              <div style="display:flex;justify-content:space-between"><div class="ln-s" style="width:60%;margin:0"></div><div class="ph" style="width:40px;height:6px;border-radius:10px;background:var(--fill-sage)"></div></div>
+              <div style="display:flex;justify-content:space-between"><div class="ln-s" style="width:60%;margin:0"></div><div class="ph" style="width:40px;height:6px;border-radius:10px;background:var(--fill-sage)"></div></div>
+              <div style="display:flex;justify-content:space-between"><div class="ln-s" style="width:60%;margin:0"></div><div class="ph" style="width:40px;height:6px;border-radius:10px;background:var(--fill-mid)"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div>Aktuelle Box: Produktliste + Gesamtwert · Button „Bearbeiten" → /konto/meine-box</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div>Nächste Lieferung: Datum + Countdown-Balken + Status + Pausieren-CTA</div>
+      <div class="wf-anno"><div class="wf-anno-num">3</div>Letzte Lieferungen: 3 Einträge mit Status (Zugestellt = grün / Versendet = orange)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: MEINE BOX (Konfigurator)
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-meine-box">
+  <div class="page-title-area"><h1>Meine Box</h1><p>Gleicher Konfigurator wie auf /produkte — aber im eingeloggten Kunden-Kontext.</p></div>
+  <div class="wf-device">
+    <div class="wf-nav"><div class="wf-nav-logo"><div class="wf-nav-logo-icon"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#C96B3F"/><circle cx="65" cy="70" r="7" fill="#C96B3F"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/></svg></div><div class="wf-nav-brand">Velacare</div></div><div class="wf-nav-links"><div class="wf-nav-link">Dashboard</div><div class="wf-nav-link active">Meine Box</div><div class="wf-nav-link">Lieferungen</div><div class="wf-nav-link">Anfragen</div><div class="wf-nav-link">Einstellungen</div></div></div>
+    <div class="wf-section" style="background:rgba(201,107,63,.06);border-bottom:1px solid var(--line)">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div><div class="ln-dark" style="width:180px;margin-bottom:5px"></div><div class="ln-s" style="width:220px"></div></div>
+        <div style="background:var(--fill-accent-mid);border-radius:var(--r-lg);padding:8px 14px;font-size:10px;color:var(--terra);font-weight:500">Änderungen gelten ab nächster Lieferung</div>
+      </div>
+    </div>
+    <div class="wf-sidebar-layout">
+      <div class="wf-sidebar-inner">
+        <div class="ln-dark" style="width:70%;margin-bottom:8px"></div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <div style="padding:6px 8px;background:var(--fill-accent-mid);border-radius:var(--r)"><div class="ln-terra" style="width:80%;margin:0"></div></div>
+          <div style="padding:6px 8px"><div class="ln" style="width:80%;margin:0"></div></div>
+          <div style="padding:6px 8px"><div class="ln" style="width:80%;margin:0"></div></div>
+          <div style="padding:6px 8px"><div class="ln" style="width:80%;margin:0"></div></div>
+        </div>
+        <div style="height:10px"></div>
+        <div class="ln-dark" style="width:60%;margin-bottom:8px"></div>
+        <div class="wf-summary">
+          <div class="wf-summary-row"><div class="ln" style="width:55%;margin:0"></div><div class="ln-terra" style="width:30%;margin:0"></div></div>
+          <div style="background:var(--fill-mid);border-radius:3px;height:5px;margin:6px 0;overflow:hidden"><div style="background:var(--terra);height:100%;width:83%;border-radius:3px"></div></div>
+          <div class="wf-summary-row" style="border:none"><div class="ln-s" style="width:60%;margin:0"></div><div class="ln-s" style="width:25%;margin:0"></div></div>
+          <div class="wf-btn wf-btn-primary" style="width:100%;justify-content:center;margin-top:8px;font-size:10px">Box speichern</div>
+        </div>
+      </div>
+      <div class="wf-main-content">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+          <div class="wf-product-card"><div class="wf-product-img">Handschuhe</div><div class="wf-product-body"><div class="wf-badge-ph">Kostenlos</div><div class="ln-dark" style="width:80%"></div><div class="ln" style="width:60%"></div><div class="wf-checkbox checked"></div></div></div>
+          <div class="wf-product-card"><div class="wf-product-img">Desinfektion</div><div class="wf-product-body"><div class="wf-badge-ph">Kostenlos</div><div class="ln-dark" style="width:80%"></div><div class="ln" style="width:60%"></div><div class="wf-checkbox checked"></div></div></div>
+          <div class="wf-product-card"><div class="wf-product-img">Mundschutz</div><div class="wf-product-body"><div class="wf-badge-ph">Kostenlos</div><div class="ln-dark" style="width:80%"></div><div class="ln" style="width:60%"></div><div class="wf-checkbox"></div></div></div>
+          <div class="wf-product-card"><div class="wf-product-img">Schutzschürze</div><div class="wf-product-body"><div class="wf-badge-ph">Kostenlos</div><div class="ln-dark" style="width:80%"></div><div class="ln" style="width:60%"></div><div class="wf-checkbox"></div></div></div>
+          <div class="wf-product-card" style="opacity:.45"><div class="wf-product-img">Bettschutz</div><div class="wf-product-body"><div class="wf-badge-ph" style="background:var(--fill-mid);color:var(--fill-dark)">Budget voll</div><div class="ln-dark" style="width:80%"></div><div class="ln" style="width:60%"></div></div></div>
+          <div class="wf-product-card" style="opacity:.45"><div class="wf-product-img">Fingerlinge</div><div class="wf-product-body"><div class="wf-badge-ph" style="background:var(--fill-mid);color:var(--fill-dark)">Budget voll</div><div class="ln-dark" style="width:80%"></div><div class="ln" style="width:60%"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div>Hinweis-Banner: „Änderungen gelten ab nächster Lieferung am [Datum]"</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div>Ausgegraut wenn Budget voll — mit Hinweis „Budget würde überschritten"</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: LIEFERUNGEN
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-lieferungen">
+  <div class="page-title-area"><h1>Lieferungen</h1><p>Vollständige Liste aller Lieferungen mit Status. Lieferung pausieren / Stichtag.</p></div>
+  <div class="wf-device">
+    <div class="wf-nav"><div class="wf-nav-logo"><div class="wf-nav-logo-icon"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#C96B3F"/><circle cx="65" cy="70" r="7" fill="#C96B3F"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/></svg></div><div class="wf-nav-brand">Velacare</div></div><div class="wf-nav-links"><div class="wf-nav-link">Dashboard</div><div class="wf-nav-link">Meine Box</div><div class="wf-nav-link active">Lieferungen</div><div class="wf-nav-link">Anfragen</div><div class="wf-nav-link">Einstellungen</div></div></div>
+    <div class="wf-section">
+      <div class="g2">
+        <!-- Controls -->
+        <div style="background:var(--fill-accent);border:1px solid rgba(201,107,63,.3);border-radius:var(--r-xl);padding:16px">
+          <div class="ln-dark" style="width:60%;margin-bottom:12px"></div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div><div class="wf-form-label"></div><div style="display:flex;gap:8px"><div class="wf-btn wf-btn-secondary" style="font-size:10px;flex:1;justify-content:center">1 Monat</div><div class="wf-btn wf-btn-secondary" style="font-size:10px;flex:1;justify-content:center">2 Monate</div><div class="wf-btn wf-btn-secondary" style="font-size:10px;flex:1;justify-content:center">3 Monate</div></div></div>
+            <div class="wf-btn wf-btn-primary" style="width:100%;justify-content:center;font-size:11px">Lieferung pausieren</div>
+          </div>
+        </div>
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-xl);padding:16px">
+          <div class="ln-dark" style="width:55%;margin-bottom:10px"></div>
+          <div class="ln-s" style="width:90%"></div>
+          <div class="ln-s" style="width:70%"></div>
+          <div style="margin-top:10px">
+            <div class="wf-form-label"></div>
+            <div class="wf-select"><div class="ln" style="width:100px;margin:0"></div><div style="font-size:10px;color:var(--fill-dark)">▾</div></div>
+          </div>
+          <div class="wf-btn wf-btn-secondary" style="margin-top:10px;font-size:10px">Lieferadresse ändern</div>
+        </div>
+      </div>
+    </div>
+    <!-- Lieferliste -->
+    <div class="wf-section">
+      <div class="wf-page-section-title">Lieferverlauf</div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="background:var(--fill-sage);border:1px solid rgba(45,122,95,.25);border-radius:var(--r-lg);padding:12px 16px;display:flex;align-items:center;gap:12px">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--sage);flex-shrink:0"></div>
+          <div style="flex:1"><div class="ln-dark" style="width:60%;margin-bottom:4px"></div><div class="ln-s" style="width:40%"></div></div>
+          <div class="ph" style="width:60px;height:6px;border-radius:10px;background:var(--sage);opacity:.5"></div>
+        </div>
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-lg);padding:12px 16px;display:flex;align-items:center;gap:12px">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--fill-dark);flex-shrink:0"></div>
+          <div style="flex:1"><div class="ln-dark" style="width:60%;margin-bottom:4px"></div><div class="ln-s" style="width:40%"></div></div>
+          <div class="ph" style="width:60px;height:6px;border-radius:10px;background:var(--fill-accent-strong)"></div>
+        </div>
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-lg);padding:12px 16px;display:flex;align-items:center;gap:12px">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--fill-dark);flex-shrink:0"></div>
+          <div style="flex:1"><div class="ln-dark" style="width:60%;margin-bottom:4px"></div><div class="ln-s" style="width:40%"></div></div>
+          <div class="ph" style="width:60px;height:6px;border-radius:10px;background:var(--fill-mid)"></div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div>Pausieren: 1 / 2 / 3 Monate wählbar — Hinweis ab wann Lieferung wieder startet</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div>Lieferadresse ändern: Formular-Overlay, Admin wird automatisch informiert</div>
+      <div class="wf-anno"><div class="wf-anno-num">3</div>Status-Farben: Grün = Zugestellt · Orange = Versendet · Grau = Geplant</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: EINSTELLUNGEN
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-einstellungen">
+  <div class="page-title-area"><h1>Einstellungen</h1><p>Persönliche Daten, Passwort, Account-Löschung.</p></div>
+  <div class="wf-device">
+    <div class="wf-nav"><div class="wf-nav-logo"><div class="wf-nav-logo-icon"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#C96B3F"/><circle cx="65" cy="70" r="7" fill="#C96B3F"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/></svg></div><div class="wf-nav-brand">Velacare</div></div><div class="wf-nav-links"><div class="wf-nav-link">Dashboard</div><div class="wf-nav-link">Meine Box</div><div class="wf-nav-link">Lieferungen</div><div class="wf-nav-link">Anfragen</div><div class="wf-nav-link active">Einstellungen</div></div></div>
+    <div class="wf-section">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <!-- Kontaktdaten -->
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-xl);padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div class="ln-dark" style="width:45%;margin:0"></div><div class="wf-btn wf-btn-secondary" style="font-size:10px;padding:5px 10px">Bearbeiten</div></div>
+          <div class="g2" style="gap:10px">
+            <div><div class="wf-form-label"></div><div class="wf-input"></div></div>
+            <div><div class="wf-form-label"></div><div class="wf-input"></div></div>
+            <div><div class="wf-form-label"></div><div class="wf-input"></div></div>
+            <div><div class="wf-form-label"></div><div class="wf-input"></div></div>
+          </div>
+        </div>
+        <!-- Passwort -->
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-xl);padding:16px">
+          <div class="ln-dark" style="width:40%;margin-bottom:12px"></div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div><div class="wf-form-label"></div><div class="wf-input"></div></div>
+            <div><div class="wf-form-label"></div><div class="wf-input"></div></div>
+            <div><div class="wf-form-label"></div><div class="wf-input"></div></div>
+            <div class="wf-btn wf-btn-primary" style="align-self:flex-start;font-size:11px">Passwort speichern</div>
+          </div>
+        </div>
+        <!-- Account löschen -->
+        <div style="background:#FFF5F3;border:1.5px solid #E05A3A;border-radius:var(--r-xl);padding:16px">
+          <div style="display:flex;align-items:flex-start;gap:12px;justify-content:space-between">
+            <div><div class="ln-dark" style="width:50%;margin-bottom:6px"></div><div class="ln" style="width:80%"></div><div class="ln-s" style="width:70%"></div></div>
+            <div style="background:#E05A3A;color:white;padding:7px 14px;border-radius:7px;font-size:11px;font-weight:500;white-space:nowrap;flex-shrink:0">Account löschen</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div>Kontaktdaten: Vorname · Nachname · E-Mail · Telefon — mit E-Mail-Bestätigung bei Änderung</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div>Account löschen: zweistufige Bestätigung (Passwort eingeben + Checkbox) — DSGVO Soft-Delete</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: ANFRAGEN (Kunde)
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-anfragen">
+  <div class="page-title-area"><h1>Anfragen</h1><p>Kundenanfragen stellen und beantwortete Nachrichten einsehen.</p></div>
+  <div class="wf-device">
+    <div class="wf-nav"><div class="wf-nav-logo"><div class="wf-nav-logo-icon"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#C96B3F"/><circle cx="65" cy="70" r="7" fill="#C96B3F"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/></svg></div><div class="wf-nav-brand">Velacare</div></div><div class="wf-nav-links"><div class="wf-nav-link">Dashboard</div><div class="wf-nav-link">Meine Box</div><div class="wf-nav-link">Lieferungen</div><div class="wf-nav-link active">Anfragen</div><div class="wf-nav-link">Einstellungen</div></div></div>
+    <div class="wf-section">
+      <div class="g2">
+        <div>
+          <div class="wf-page-section-title">Neue Anfrage</div>
+          <div style="background:white;border:1px solid var(--line);border-radius:var(--r-xl);padding:16px;display:flex;flex-direction:column;gap:10px">
+            <div><div class="wf-form-label"></div><div class="wf-select"><div class="ln" style="width:120px;margin:0"></div><div style="font-size:10px;color:var(--fill-dark)">▾</div></div></div>
+            <div><div class="wf-form-label"></div><div class="wf-input"></div></div>
+            <div><div class="wf-form-label"></div><div class="wf-textarea"></div></div>
+            <div class="wf-btn wf-btn-primary" style="align-self:flex-start;font-size:11px">Anfrage senden</div>
+          </div>
+        </div>
+        <div>
+          <div class="wf-page-section-title">Meine Anfragen</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="background:white;border:1px solid var(--line);border-radius:var(--r-lg);padding:12px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <div class="ln-dark" style="width:55%;margin:0"></div>
+                <div class="ph" style="width:55px;height:6px;border-radius:10px;background:var(--fill-sage)"></div>
+              </div>
+              <div class="ln-s" style="width:90%"></div>
+              <div class="ln-s" style="width:70%"></div>
+              <div style="margin-top:8px;padding:8px;background:var(--fill-sage);border-radius:var(--r);border-left:2px solid var(--sage)">
+                <div class="ln-s" style="width:80%;margin:0 0 4px"></div>
+                <div class="ln-s" style="width:65%;margin:0"></div>
+              </div>
+            </div>
+            <div style="background:white;border:1px solid var(--line);border-radius:var(--r-lg);padding:12px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <div class="ln-dark" style="width:50%;margin:0"></div>
+                <div class="ph" style="width:40px;height:6px;border-radius:10px;background:var(--fill-accent-strong)"></div>
+              </div>
+              <div class="ln-s"></div><div class="ln-s" style="width:75%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div>Kategorie: Box-Inhalt · Lieferung · Adresse · Sonstiges</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div>Admin-Antwort erscheint als grüner Block unter der Anfrage — E-Mail-Benachrichtigung bei neuer Antwort</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: ADMIN DASHBOARD
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-admin-dash">
+  <div class="page-title-area"><h1>Admin — Dashboard</h1><p>Operative Übersicht. Kennzahlen, neue Registrierungen, offene Anfragen.</p></div>
+  <div class="wf-device">
+    <div class="wf-nav" style="background:var(--dark)">
+      <div class="wf-nav-logo"><div class="wf-nav-logo-icon" style="border-color:#E8A07A"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#E8A07A" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#E8A07A" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#E8A07A"/><circle cx="65" cy="70" r="7" fill="#E8A07A"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#A8D5C2"/></svg></div><div class="wf-nav-brand" style="color:#FAF0E8">Admin</div></div>
+      <div class="wf-nav-links"><div class="wf-nav-link" style="color:rgba(255,255,255,.4);border-bottom-color:var(--terra)">Dashboard</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Kunden</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Produkte</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Lieferungen</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Anfragen</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Einstellungen</div></div>
+    </div>
+    <div class="wf-section">
+      <div class="g4" style="margin-bottom:16px">
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-xl);padding:14px;text-align:center"><div style="height:22px;width:60px;background:var(--fill-accent-strong);border-radius:4px;margin:0 auto 8px"></div><div class="ln-s" style="width:80%;margin:0 auto"></div></div>
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-xl);padding:14px;text-align:center"><div style="height:22px;width:60px;background:rgba(186,117,23,.4);border-radius:4px;margin:0 auto 8px"></div><div class="ln-s" style="width:80%;margin:0 auto"></div></div>
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-xl);padding:14px;text-align:center"><div style="height:22px;width:60px;background:var(--fill-sage);border-radius:4px;margin:0 auto 8px"></div><div class="ln-s" style="width:80%;margin:0 auto"></div></div>
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-xl);padding:14px;text-align:center"><div style="height:22px;width:60px;background:var(--fill-mid);border-radius:4px;margin:0 auto 8px"></div><div class="ln-s" style="width:80%;margin:0 auto"></div></div>
+      </div>
+      <div class="g2">
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-xl);padding:14px">
+          <div class="ln-dark" style="width:60%;margin-bottom:10px"></div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <div style="display:flex;align-items:center;gap:10px;padding:8px;background:var(--fill-light);border-radius:var(--r)"><div style="width:6px;height:6px;border-radius:50%;background:var(--terra);flex-shrink:0"></div><div class="ln" style="flex:1;margin:0"></div><div class="ln-s" style="width:50px;margin:0"></div></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px;background:var(--fill-light);border-radius:var(--r)"><div style="width:6px;height:6px;border-radius:50%;background:var(--terra);flex-shrink:0"></div><div class="ln" style="flex:1;margin:0"></div><div class="ln-s" style="width:50px;margin:0"></div></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px;background:var(--fill-light);border-radius:var(--r)"><div style="width:6px;height:6px;border-radius:50%;background:var(--terra);flex-shrink:0"></div><div class="ln" style="flex:1;margin:0"></div><div class="ln-s" style="width:50px;margin:0"></div></div>
+          </div>
+        </div>
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-xl);padding:14px">
+          <div class="ln-dark" style="width:55%;margin-bottom:10px"></div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <div style="display:flex;align-items:center;gap:10px;padding:8px;border:1px solid rgba(186,117,23,.3);background:rgba(186,117,23,.06);border-radius:var(--r)"><div style="width:6px;height:6px;border-radius:50%;background:#BA7517;flex-shrink:0"></div><div class="ln" style="flex:1;margin:0"></div><div class="wf-btn wf-btn-secondary" style="font-size:9px;padding:3px 8px">Ansehen</div></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px;border:1px solid rgba(186,117,23,.3);background:rgba(186,117,23,.06);border-radius:var(--r)"><div style="width:6px;height:6px;border-radius:50%;background:#BA7517;flex-shrink:0"></div><div class="ln" style="flex:1;margin:0"></div><div class="wf-btn wf-btn-secondary" style="font-size:9px;padding:3px 8px">Ansehen</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div>Kennzahlen: Aktive Kunden · Neue Anfragen · Lieferungen diesen Monat · Pausierte Konten</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div>Letzte Aktionen: neue Registrierungen · Links zu Detailansichten</div>
+      <div class="wf-anno"><div class="wf-anno-num">3</div>Offene Anfragen: direkt mit „Ansehen"-Button in der Übersicht</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: ADMIN KUNDEN
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-admin-kunden">
+  <div class="page-title-area"><h1>Admin — Kundenverwaltung</h1><p>Kundenliste mit Suche, Filter, Export. Detailansicht mit vollständiger Bearbeitungsmöglichkeit.</p></div>
+  <div class="wf-device">
+    <div class="wf-nav" style="background:var(--dark)"><div class="wf-nav-logo"><div class="wf-nav-logo-icon" style="border-color:#E8A07A"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#E8A07A" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#E8A07A" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#E8A07A"/><circle cx="65" cy="70" r="7" fill="#E8A07A"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#A8D5C2"/></svg></div><div class="wf-nav-brand" style="color:#FAF0E8">Admin</div></div><div class="wf-nav-links"><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Dashboard</div><div class="wf-nav-link" style="color:white;border-bottom-color:var(--terra)">Kunden</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Produkte</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Lieferungen</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Anfragen</div></div></div>
+    <!-- Toolbar -->
+    <div style="padding:14px 20px;background:var(--fill-light);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <div class="wf-input" style="flex:1;min-width:200px;max-width:300px"></div>
+      <div class="wf-select" style="width:130px"><div class="ln" style="width:80px;margin:0"></div><div style="font-size:10px;color:var(--fill-dark)">▾</div></div>
+      <div class="wf-select" style="width:120px"><div class="ln" style="width:70px;margin:0"></div><div style="font-size:10px;color:var(--fill-dark)">▾</div></div>
+      <div style="margin-left:auto"><div class="wf-btn wf-btn-secondary" style="font-size:10px">CSV Export</div></div>
+    </div>
+    <!-- Table header -->
+    <div style="background:var(--fill-light);padding:8px 20px;display:grid;grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 100px;gap:8px;border-bottom:1px solid var(--line)">
+      <div class="ln-dark" style="width:60%;margin:0"></div>
+      <div class="ln-dark" style="width:70%;margin:0"></div>
+      <div class="ln-dark" style="width:80%;margin:0"></div>
+      <div class="ln-dark" style="width:70%;margin:0"></div>
+      <div class="ln-dark" style="width:80%;margin:0"></div>
+      <div class="ln-dark" style="width:60%;margin:0"></div>
+    </div>
+    <!-- Table rows -->
+    <div style="display:flex;flex-direction:column;gap:0">
+      <div style="padding:10px 20px;display:grid;grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 100px;gap:8px;align-items:center;border-bottom:1px solid var(--fill-light)">
+        <div style="display:flex;align-items:center;gap:8px"><div class="wf-avatar" style="width:26px;height:26px"></div><div class="ln" style="flex:1;max-width:120px;margin:0"></div></div>
+        <div class="ln" style="width:80%;margin:0"></div>
+        <div class="ph" style="width:50px;height:6px;border-radius:10px;background:var(--fill-sage)"></div>
+        <div class="ln-s" style="width:30px;margin:0"></div>
+        <div class="ln-s" style="width:70%;margin:0"></div>
+        <div style="display:flex;gap:4px"><div class="wf-btn wf-btn-secondary" style="font-size:9px;padding:4px 8px">Edit</div><div style="padding:4px 8px;font-size:9px;color:#E05A3A;border:1px solid rgba(224,90,58,.3);border-radius:var(--r)">Del</div></div>
+      </div>
+      <div style="padding:10px 20px;display:grid;grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 100px;gap:8px;align-items:center;border-bottom:1px solid var(--fill-light);background:var(--fill-light)">
+        <div style="display:flex;align-items:center;gap:8px"><div class="wf-avatar" style="width:26px;height:26px"></div><div class="ln" style="flex:1;max-width:120px;margin:0"></div></div>
+        <div class="ln" style="width:80%;margin:0"></div>
+        <div class="ph" style="width:50px;height:6px;border-radius:10px;background:rgba(186,117,23,.4)"></div>
+        <div class="ln-s" style="width:30px;margin:0"></div>
+        <div class="ln-s" style="width:70%;margin:0"></div>
+        <div style="display:flex;gap:4px"><div class="wf-btn wf-btn-secondary" style="font-size:9px;padding:4px 8px">Edit</div><div style="padding:4px 8px;font-size:9px;color:#E05A3A;border:1px solid rgba(224,90,58,.3);border-radius:var(--r)">Del</div></div>
+      </div>
+      <div style="padding:10px 20px;display:grid;grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 100px;gap:8px;align-items:center;border-bottom:1px solid var(--fill-light)">
+        <div style="display:flex;align-items:center;gap:8px"><div class="wf-avatar" style="width:26px;height:26px"></div><div class="ln" style="flex:1;max-width:120px;margin:0"></div></div>
+        <div class="ln" style="width:80%;margin:0"></div>
+        <div class="ph" style="width:50px;height:6px;border-radius:10px;background:var(--fill-sage)"></div>
+        <div class="ln-s" style="width:30px;margin:0"></div>
+        <div class="ln-s" style="width:70%;margin:0"></div>
+        <div style="display:flex;gap:4px"><div class="wf-btn wf-btn-secondary" style="font-size:9px;padding:4px 8px">Edit</div><div style="padding:4px 8px;font-size:9px;color:#E05A3A;border:1px solid rgba(224,90,58,.3);border-radius:var(--r)">Del</div></div>
+      </div>
+    </div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div>Spalten: Name · E-Mail · Status · Pflegegrad · Letzte Lieferung · Aktionen</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div>Filter: Status (aktiv/pausiert/gesperrt) · Pflegegrad · Sortierung nach Datum/Name</div>
+      <div class="wf-anno"><div class="wf-anno-num">3</div>Klick auf Zeile → Detailansicht mit vollständigen Daten, Box, Lieferverlauf, Anfragen, Audit-Log</div>
+      <div class="wf-anno"><div class="wf-anno-num">4</div>Status-Farben: Grün = aktiv · Orange = pausiert · Rot = gesperrt</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: ADMIN PRODUKTE
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-admin-produkte">
+  <div class="page-title-area"><h1>Admin — Produktverwaltung</h1><p>CRUD für alle Produkte. CSV-Import, Foto-Upload, Sortierung, Aktivierung.</p></div>
+  <div class="wf-device">
+    <div class="wf-nav" style="background:var(--dark)"><div class="wf-nav-logo"><div class="wf-nav-logo-icon" style="border-color:#E8A07A"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#E8A07A" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#E8A07A" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#E8A07A"/><circle cx="65" cy="70" r="7" fill="#E8A07A"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#A8D5C2"/></svg></div><div class="wf-nav-brand" style="color:#FAF0E8">Admin</div></div><div class="wf-nav-links"><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Dashboard</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Kunden</div><div class="wf-nav-link" style="color:white;border-bottom-color:var(--terra)">Produkte</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Lieferungen</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Anfragen</div></div></div>
+    <div style="padding:12px 20px;background:var(--fill-light);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <div style="display:flex;gap:8px"><div class="wf-input" style="width:200px"></div><div class="wf-select" style="width:130px"><div class="ln" style="margin:0"></div><div style="font-size:10px;color:var(--fill-dark)">▾</div></div></div>
+      <div style="display:flex;gap:8px"><div class="wf-btn wf-btn-secondary" style="font-size:10px">CSV Import</div><div class="wf-btn wf-btn-primary" style="font-size:10px">+ Produkt anlegen</div></div>
+    </div>
+    <div style="padding:18px 20px">
+      <div class="g4">
+        <div class="wf-product-card" style="position:relative">
+          <div class="wf-product-img">Foto</div>
+          <div style="position:absolute;top:8px;right:8px;background:var(--fill-sage);padding:2px 7px;border-radius:10px;font-size:8px;color:var(--sage);font-weight:500">Aktiv</div>
+          <div class="wf-product-body">
+            <div class="ln-dark" style="width:80%"></div>
+            <div class="ln" style="width:55%"></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
+              <div class="ln-terra" style="width:40%;margin:0"></div>
+              <div style="display:flex;gap:4px"><div class="wf-btn wf-btn-secondary" style="font-size:8px;padding:3px 7px">Edit</div><div style="font-size:8px;color:#E05A3A;padding:3px 7px;border:1px solid rgba(224,90,58,.3);border-radius:var(--r)">Del</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="wf-product-card" style="position:relative;opacity:.6">
+          <div class="wf-product-img">Foto</div>
+          <div style="position:absolute;top:8px;right:8px;background:var(--fill-mid);padding:2px 7px;border-radius:10px;font-size:8px;color:var(--fill-dark);font-weight:500">Inaktiv</div>
+          <div class="wf-product-body">
+            <div class="ln-dark" style="width:80%"></div>
+            <div class="ln" style="width:55%"></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
+              <div class="ln-terra" style="width:40%;margin:0"></div>
+              <div style="display:flex;gap:4px"><div class="wf-btn wf-btn-secondary" style="font-size:8px;padding:3px 7px">Edit</div><div class="wf-btn wf-btn-secondary" style="font-size:8px;padding:3px 7px">Aktivieren</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="wf-product-card" style="position:relative">
+          <div class="wf-product-img">Foto</div>
+          <div style="position:absolute;top:8px;right:8px;background:var(--fill-sage);padding:2px 7px;border-radius:10px;font-size:8px;color:var(--sage);font-weight:500">Aktiv</div>
+          <div class="wf-product-body"><div class="ln-dark" style="width:80%"></div><div class="ln" style="width:55%"></div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px"><div class="ln-terra" style="width:40%;margin:0"></div><div style="display:flex;gap:4px"><div class="wf-btn wf-btn-secondary" style="font-size:8px;padding:3px 7px">Edit</div></div></div></div>
+        </div>
+        <div style="background:var(--fill-light);border:1.5px dashed var(--line-s);border-radius:var(--r-lg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;min-height:160px;cursor:pointer">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--fill-mid);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--fill-dark)">+</div>
+          <div class="ln-s" style="width:70%;margin:0 auto"></div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div>Aktiv/Inaktiv-Badge: grün = im Konfigurator sichtbar · grau = ausgeblendet (bleibt in alten Bestellungen)</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div>CSV-Import: validiert Pflichtfelder, zeigt Fehler vor Import, importiert dann bulk</div>
+      <div class="wf-anno"><div class="wf-anno-num">3</div>Produkt kann nur gelöscht werden wenn in keiner aktiven Box — sonst nur Deaktivierung möglich</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: ADMIN LIEFERUNGEN
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-admin-lieferungen">
+  <div class="page-title-area"><h1>Admin — Lieferverwaltung</h1><p>Monatliche Lieferliste. Status setzen, CSV-Export für Versanddienstleister.</p></div>
+  <div class="wf-device">
+    <div class="wf-nav" style="background:var(--dark)"><div class="wf-nav-logo"><div class="wf-nav-logo-icon" style="border-color:#E8A07A"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#E8A07A" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#E8A07A" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#E8A07A"/><circle cx="65" cy="70" r="7" fill="#E8A07A"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#A8D5C2"/></svg></div><div class="wf-nav-brand" style="color:#FAF0E8">Admin</div></div><div class="wf-nav-links"><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Dashboard</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Kunden</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Produkte</div><div class="wf-nav-link" style="color:white;border-bottom-color:var(--terra)">Lieferungen</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Anfragen</div></div></div>
+    <div style="padding:12px 20px;background:var(--fill-light);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <div class="wf-select" style="width:160px"><div class="ln" style="margin:0"></div><div style="font-size:10px;color:var(--fill-dark)">▾</div></div>
+      <div class="wf-select" style="width:130px"><div class="ln" style="margin:0"></div><div style="font-size:10px;color:var(--fill-dark)">▾</div></div>
+      <div class="wf-input" style="width:120px"></div>
+      <div style="margin-left:auto;display:flex;gap:8px"><div class="wf-btn wf-btn-secondary" style="font-size:10px">CSV Export</div></div>
+    </div>
+    <div style="background:var(--fill-light);padding:8px 20px;display:grid;grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 120px;gap:8px;border-bottom:1px solid var(--line)">
+      <div class="ln-dark" style="width:55%;margin:0"></div><div class="ln-dark" style="width:70%;margin:0"></div><div class="ln-dark" style="width:80%;margin:0"></div><div class="ln-dark" style="width:70%;margin:0"></div><div class="ln-dark" style="width:80%;margin:0"></div><div class="ln-dark" style="width:60%;margin:0"></div>
+    </div>
+    <div style="display:flex;flex-direction:column">
+      <div style="padding:10px 20px;display:grid;grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 120px;gap:8px;align-items:center;border-bottom:1px solid var(--fill-light)">
+        <div class="ln" style="width:70%;margin:0"></div>
+        <div class="ln-s" style="width:80%;margin:0"></div>
+        <div class="ln-s" style="width:60%;margin:0"></div>
+        <div class="ph" style="width:55px;height:6px;border-radius:10px;background:var(--fill-sage)"></div>
+        <div class="ln-s" style="width:70%;margin:0"></div>
+        <div class="wf-select" style="width:110px;height:26px"><div class="ln-s" style="margin:0"></div><div style="font-size:9px">▾</div></div>
+      </div>
+      <div style="padding:10px 20px;display:grid;grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 120px;gap:8px;align-items:center;border-bottom:1px solid var(--fill-light);background:var(--fill-light)">
+        <div class="ln" style="width:70%;margin:0"></div>
+        <div class="ln-s" style="width:80%;margin:0"></div>
+        <div class="ln-s" style="width:60%;margin:0"></div>
+        <div class="ph" style="width:55px;height:6px;border-radius:10px;background:var(--fill-accent-strong)"></div>
+        <div class="ln-s" style="width:70%;margin:0"></div>
+        <div class="wf-select" style="width:110px;height:26px"><div class="ln-s" style="margin:0"></div><div style="font-size:9px">▾</div></div>
+      </div>
+      <div style="padding:10px 20px;display:grid;grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 120px;gap:8px;align-items:center;border-bottom:1px solid var(--fill-light)">
+        <div class="ln" style="width:70%;margin:0"></div>
+        <div class="ln-s" style="width:80%;margin:0"></div>
+        <div class="ln-s" style="width:60%;margin:0"></div>
+        <div class="ph" style="width:55px;height:6px;border-radius:10px;background:var(--fill-mid)"></div>
+        <div class="ln-s" style="width:70%;margin:0"></div>
+        <div class="wf-select" style="width:110px;height:26px"><div class="ln-s" style="margin:0"></div><div style="font-size:9px">▾</div></div>
+      </div>
+    </div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div>Spalten: Kunde · Adresse · Stichtag · Status · Box-Wert · Status ändern (Dropdown direkt in Zeile)</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div>Filter: Monat/Jahr · Status · PLZ-Bereich — CSV-Export enthält alle für den Versanddienstleister nötigen Felder</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: ADMIN ANFRAGEN
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-admin-anfragen">
+  <div class="page-title-area"><h1>Admin — Anfragen</h1><p>Eingehende Kundentickets. Antworten, Status setzen, filtern.</p></div>
+  <div class="wf-device">
+    <div class="wf-nav" style="background:var(--dark)"><div class="wf-nav-logo"><div class="wf-nav-logo-icon" style="border-color:#E8A07A"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#E8A07A" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#E8A07A" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#E8A07A"/><circle cx="65" cy="70" r="7" fill="#E8A07A"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#A8D5C2"/></svg></div><div class="wf-nav-brand" style="color:#FAF0E8">Admin</div></div><div class="wf-nav-links"><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Dashboard</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Kunden</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Produkte</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Lieferungen</div><div class="wf-nav-link" style="color:white;border-bottom-color:var(--terra)">Anfragen</div></div></div>
+    <div style="padding:12px 20px;background:var(--fill-light);border-bottom:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap">
+      <div class="wf-select" style="width:130px"><div class="ln" style="margin:0"></div><div style="font-size:10px">▾</div></div>
+      <div class="wf-select" style="width:130px"><div class="ln" style="margin:0"></div><div style="font-size:10px">▾</div></div>
+    </div>
+    <div class="wf-sidebar-layout">
+      <!-- List -->
+      <div style="padding:12px;background:var(--fill-light);border-right:1px solid var(--line);display:flex;flex-direction:column;gap:6px">
+        <div style="background:white;border:1.5px solid var(--terra);border-radius:var(--r-lg);padding:10px;cursor:pointer">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><div class="ln-dark" style="width:60%;margin:0"></div><div class="ph" style="width:40px;height:5px;border-radius:10px;background:var(--fill-accent-strong)"></div></div>
+          <div class="ln-s" style="width:80%"></div><div class="ln-s" style="width:50%"></div>
+        </div>
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-lg);padding:10px;cursor:pointer">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><div class="ln-dark" style="width:60%;margin:0"></div><div class="ph" style="width:40px;height:5px;border-radius:10px;background:rgba(186,117,23,.4)"></div></div>
+          <div class="ln-s" style="width:80%"></div><div class="ln-s" style="width:50%"></div>
+        </div>
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-lg);padding:10px;cursor:pointer;opacity:.6">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><div class="ln-dark" style="width:60%;margin:0"></div><div class="ph" style="width:40px;height:5px;border-radius:10px;background:var(--fill-sage)"></div></div>
+          <div class="ln-s" style="width:80%"></div><div class="ln-s" style="width:50%"></div>
+        </div>
+      </div>
+      <!-- Detail -->
+      <div class="wf-main-content">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div class="ln-dark" style="width:55%;margin:0"></div>
+          <div class="wf-select" style="width:120px;height:28px"><div class="ln-s" style="margin:0"></div><div style="font-size:9px">▾</div></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:10px">
+          <div class="ph" style="width:60px;height:6px;border-radius:10px;background:var(--fill-accent-strong)"></div>
+          <div class="ln-s" style="width:80px;margin:0"></div>
+        </div>
+        <div style="background:var(--fill-light);border-radius:var(--r-lg);padding:12px;margin-bottom:12px">
+          <div class="ln"></div><div class="ln" style="width:90%"></div><div class="ln" style="width:75%"></div><div class="ln-s" style="width:50%"></div>
+        </div>
+        <div class="ln-dark" style="width:30%;margin-bottom:8px"></div>
+        <div class="wf-textarea" style="margin-bottom:10px"></div>
+        <div class="wf-btn-row">
+          <div class="wf-btn wf-btn-primary">Antwort senden</div>
+          <div class="wf-btn wf-btn-secondary">Schließen</div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div>Liste: offen (orange) · in Bearbeitung (terra) · beantwortet · geschlossen — Klick öffnet Detailansicht rechts</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div>Antwort erscheint im Kundenkonto + E-Mail-Benachrichtigung an Kunden</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: ADMIN EINSTELLUNGEN
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-admin-einstellungen">
+  <div class="page-title-area"><h1>Admin — Einstellungen</h1><p>Nur Superadmin. Budget, Stichtag, E-Mail-Adresse, Admin-Accounts, Audit-Log.</p></div>
+  <div class="wf-device">
+    <div class="wf-nav" style="background:var(--dark)"><div class="wf-nav-logo"><div class="wf-nav-logo-icon" style="border-color:#E8A07A"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#E8A07A" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#E8A07A" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#E8A07A"/><circle cx="65" cy="70" r="7" fill="#E8A07A"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#A8D5C2"/></svg></div><div class="wf-nav-brand" style="color:#FAF0E8">Admin</div></div><div class="wf-nav-links"><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Dashboard</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Kunden</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Produkte</div><div class="wf-nav-link" style="color:rgba(255,255,255,.4)">Lieferungen</div><div class="wf-nav-link" style="color:white;border-bottom-color:var(--terra)">Einstellungen</div></div></div>
+    <div class="wf-section">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <!-- System -->
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-xl);padding:16px">
+          <div class="ln-dark" style="width:40%;margin-bottom:14px"></div>
+          <div class="g2" style="gap:12px">
+            <div><div class="wf-form-label" style="margin-bottom:5px"></div><div class="wf-input" style="display:flex;align-items:center;padding:0 10px;"><div class="ln-terra" style="width:50px;margin:0"></div></div><div class="ln-s" style="width:70%;margin-top:4px"></div></div>
+            <div><div class="wf-form-label" style="margin-bottom:5px"></div><div class="wf-select"><div class="ln" style="width:80px;margin:0"></div><div style="font-size:10px">▾</div></div><div class="ln-s" style="width:80%;margin-top:4px"></div></div>
+            <div style="grid-column:1/-1"><div class="wf-form-label" style="margin-bottom:5px"></div><div class="wf-input"></div><div class="ln-s" style="width:60%;margin-top:4px"></div></div>
+          </div>
+          <div class="wf-btn wf-btn-primary" style="margin-top:12px;font-size:11px">Einstellungen speichern</div>
+        </div>
+        <!-- Admin-Accounts -->
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-xl);padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div class="ln-dark" style="width:45%;margin:0"></div><div class="wf-btn wf-btn-primary" style="font-size:10px">+ Admin anlegen</div></div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <div style="display:flex;align-items:center;gap:10px;padding:8px;background:var(--fill-light);border-radius:var(--r)"><div class="wf-avatar" style="width:26px;height:26px"></div><div class="ln" style="flex:1;margin:0"></div><div class="ph" style="width:40px;height:6px;border-radius:10px;background:var(--fill-sage)"></div><div class="wf-btn wf-btn-secondary" style="font-size:9px;padding:3px 8px">PW Reset</div></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px;background:var(--fill-light);border-radius:var(--r)"><div class="wf-avatar" style="width:26px;height:26px"></div><div class="ln" style="flex:1;margin:0"></div><div class="ph" style="width:40px;height:6px;border-radius:10px;background:var(--fill-sage)"></div><div class="wf-btn wf-btn-secondary" style="font-size:9px;padding:3px 8px">PW Reset</div></div>
+          </div>
+        </div>
+        <!-- Audit Log -->
+        <div style="background:white;border:1px solid var(--line);border-radius:var(--r-xl);padding:16px">
+          <div class="ln-dark" style="width:35%;margin-bottom:12px"></div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="display:grid;grid-template-columns:80px 1fr 1fr 80px;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--fill-light)"><div class="ln-s" style="margin:0"></div><div class="ln" style="margin:0"></div><div class="ln-s" style="margin:0"></div><div class="ln-s" style="width:60px;margin:0"></div></div>
+            <div style="display:grid;grid-template-columns:80px 1fr 1fr 80px;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--fill-light)"><div class="ln-s" style="margin:0"></div><div class="ln" style="margin:0"></div><div class="ln-s" style="margin:0"></div><div class="ln-s" style="width:60px;margin:0"></div></div>
+            <div style="display:grid;grid-template-columns:80px 1fr 1fr 80px;gap:8px;align-items:center;padding:7px 0"><div class="ln-s" style="margin:0"></div><div class="ln" style="margin:0"></div><div class="ln-s" style="margin:0"></div><div class="ln-s" style="width:60px;margin:0"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div>Budget-Limit: aktuell 42€ — ändert sich ohne Code-Deployment wenn Gesetzgeber Limit anpasst</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div>Standard-Lieferstichtag: fester Tag für alle Kunden (z.B. 15. des Monats)</div>
+      <div class="wf-anno"><div class="wf-anno-num">3</div>Admin-Benachrichtigungs-E-Mail: Adresse aus velacare.de-Domain — wohin gehen neue Registrierungen/Anfragen</div>
+      <div class="wf-anno"><div class="wf-anno-num">4</div>Audit-Log: unveränderlich — Spalten: Datum · Aktion · Bearbeiter · Betroffener Datensatz</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     PAGE: VERPASSTES-GELD-RECHNER
+════════════════════════════════════════ -->
+<div class="page-panel" id="page-rechner">
+  <div class="page-title-area">
+    <h1>Verpasstes-Geld-Rechner</h1>
+    <p>Hero-Element auf der Startseite — noch vor der Headline. Höchster Conversion-Hebel der gesamten Seite.</p>
+  </div>
+
+  <!-- Kontext-Hinweis -->
+  <div style="background:rgba(201,107,63,.1);border:1px solid rgba(201,107,63,.25);border-radius:12px;padding:14px 18px;margin-bottom:20px;display:flex;gap:12px;align-items:flex-start">
+    <div style="width:20px;height:20px;border-radius:50%;background:var(--terra);color:white;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px">!</div>
+    <div>
+      <div style="font-size:12px;font-weight:600;color:var(--dark);margin-bottom:3px">Positionierung auf der Startseite</div>
+      <div style="font-size:11px;color:var(--fill-dark);line-height:1.6">Dieser Rechner sitzt <strong style="color:var(--dark)">oberhalb des Heroes</strong> — als allererste Interaktion. Wer sieht, dass er bereits 840€ verpasst hat, braucht keine weiteren Erklärungen mehr. Conversion-Logik: verpasstes Geld bewegt stärker als zukünftiger Gewinn.</div>
+    </div>
+  </div>
+
+  <div class="wf-device">
+    <div class="wf-nav">
+      <div class="wf-nav-logo"><div class="wf-nav-logo-icon"><svg width="12" height="12" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#C96B3F" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="7" fill="#C96B3F"/><circle cx="65" cy="70" r="7" fill="#C96B3F"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#2D7A5F"/></svg></div><div class="wf-nav-brand">Velacare</div></div>
+      <div class="wf-nav-links"><div class="wf-nav-link">Wie es funktioniert</div><div class="wf-nav-link">Produkte</div><div class="wf-nav-link">Über uns</div><div class="wf-nav-link">FAQ</div></div>
+      <div class="wf-nav-cta">Jetzt beantragen</div>
+    </div>
+
+    <!-- Rechner-Block: dunkler Hintergrund -->
+    <div style="background:var(--dark);padding:28px 24px;border-bottom:1px solid rgba(200,191,181,.1)">
+
+      <!-- Headline -->
+      <div style="margin-bottom:22px">
+        <div style="display:inline-block;background:rgba(201,107,63,.2);padding:3px 10px;border-radius:20px;font-size:9px;font-weight:600;color:#E8A07A;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px">Pflegekasse-Rechner</div>
+        <div style="font-size:18px;font-weight:700;color:#FAF0E8;line-height:1.2;margin-bottom:6px">Wie viel Geld haben Sie<br>bereits verpasst?</div>
+        <div style="font-size:10px;color:rgba(253,250,247,.45);line-height:1.6;max-width:400px">Jeder mit Pflegegrad hat Anspruch auf bis zu 42 € pro Monat von der Pflegekasse — kostenlos. Prüfen Sie in 10 Sekunden, wie viel Ihnen bereits zugestanden hätte.</div>
+      </div>
+
+      <!-- 2-Spalten: Inputs + Ergebnis -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
+
+        <!-- Inputs -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+
+          <!-- Pflegegrad -->
+          <div>
+            <div style="font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(253,250,247,.4);margin-bottom:8px">Pflegegrad</div>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:5px">
+              <div style="background:var(--terra);border:1px solid var(--terra);border-radius:7px;padding:8px 4px;text-align:center">
+                <div style="font-size:14px;font-weight:600;color:white">1</div>
+                <div style="font-size:8px;color:rgba(255,255,255,.6);margin-top:1px">Gering</div>
+              </div>
+              <div style="background:rgba(255,255,255,.06);border:1px solid rgba(200,191,181,.12);border-radius:7px;padding:8px 4px;text-align:center">
+                <div style="font-size:14px;font-weight:600;color:#FAF0E8">2</div>
+                <div style="font-size:8px;color:rgba(253,250,247,.3);margin-top:1px">Erheblich</div>
+              </div>
+              <div style="background:rgba(255,255,255,.06);border:1px solid rgba(200,191,181,.12);border-radius:7px;padding:8px 4px;text-align:center">
+                <div style="font-size:14px;font-weight:600;color:#FAF0E8">3</div>
+                <div style="font-size:8px;color:rgba(253,250,247,.3);margin-top:1px">Schwer</div>
+              </div>
+              <div style="background:rgba(255,255,255,.06);border:1px solid rgba(200,191,181,.12);border-radius:7px;padding:8px 4px;text-align:center">
+                <div style="font-size:14px;font-weight:600;color:#FAF0E8">4</div>
+                <div style="font-size:8px;color:rgba(253,250,247,.3);margin-top:1px">Schwerst</div>
+              </div>
+              <div style="background:rgba(255,255,255,.06);border:1px solid rgba(200,191,181,.12);border-radius:7px;padding:8px 4px;text-align:center">
+                <div style="font-size:14px;font-weight:600;color:#FAF0E8">5</div>
+                <div style="font-size:8px;color:rgba(253,250,247,.3);margin-top:1px">Besonders</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Zeitraum -->
+          <div>
+            <div style="font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(253,250,247,.4);margin-bottom:8px">Pflegegrad anerkannt seit</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <div style="background:rgba(255,255,255,.06);border:1px solid rgba(200,191,181,.15);border-radius:8px;height:36px;display:flex;align-items:center;padding:0 12px;justify-content:space-between">
+                <div class="ln" style="width:60px;margin:0;background:rgba(253,250,247,.2)"></div>
+                <div style="font-size:10px;color:rgba(253,250,247,.3)">▾</div>
+              </div>
+              <div style="background:rgba(255,255,255,.06);border:1px solid rgba(200,191,181,.15);border-radius:8px;height:36px;display:flex;align-items:center;padding:0 12px;justify-content:space-between">
+                <div class="ln" style="width:40px;margin:0;background:rgba(253,250,247,.2)"></div>
+                <div style="font-size:10px;color:rgba(253,250,247,.3)">▾</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Info-Box -->
+          <div style="background:rgba(45,122,95,.1);border:1px solid rgba(45,122,95,.2);border-radius:8px;padding:12px">
+            <div style="font-size:10px;font-weight:600;color:rgba(168,213,194,.85);margin-bottom:4px">Gut zu wissen</div>
+            <div style="font-size:9px;color:rgba(168,213,194,.6);line-height:1.6">Alle Pflegegrade berechtigen zum <strong style="color:rgba(168,213,194,.9)">gleichen Betrag</strong> — 42 &#x20AC; pro Monat. Gilt für gesetzlich und privat Versicherte.</div>
+          </div>
+        </div>
+
+        <!-- Ergebnis-Panel -->
+        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(200,191,181,.1);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px">
+          <!-- Label -->
+          <div style="font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#E8A07A">Das gehört Ihnen — ungenutzt</div>
+          <!-- Laufzeit-Text -->
+          <div style="font-size:10px;color:rgba(253,250,247,.4)">20 Monate mit Pflegegrad (1 Jahr und 8 Monate)</div>
+          <!-- Große Zahl -->
+          <div style="font-family:'DM Sans',sans-serif">
+            <div style="font-size:48px;font-weight:700;color:var(--terra);line-height:1">840,00 &#x20AC;</div>
+            <div style="font-size:10px;color:rgba(253,250,247,.3);margin-top:4px">hätten Ihnen seit 01/2024 zugestanden</div>
+          </div>
+          <!-- Progress-Bar -->
+          <div>
+            <div style="background:rgba(255,255,255,.08);border-radius:3px;height:4px;overflow:hidden;margin-bottom:4px">
+              <div style="background:var(--terra);height:100%;width:55%;border-radius:3px"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:8px;color:rgba(253,250,247,.25)">
+              <span>0 &#x20AC;</span><span>504 &#x20AC;/Jahr</span>
+            </div>
+          </div>
+          <!-- Aufschlüsselung -->
+          <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:10px">
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:10px">
+              <span style="color:rgba(253,250,247,.4)">Monatlicher Anspruch</span>
+              <span style="color:#FAF0E8;font-weight:500">42,00 &#x20AC;</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:10px">
+              <span style="color:rgba(253,250,247,.4)">Monate mit Anspruch</span>
+              <span style="color:#FAF0E8;font-weight:500">20</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:10px">
+              <span style="color:rgba(253,250,247,.4)">Davon bereits erhalten</span>
+              <span style="color:#FAF0E8;font-weight:500">0,00 &#x20AC;</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:10px">
+              <span style="color:rgba(253,250,247,.4)">Ab heute pro Jahr</span>
+              <span style="color:#E8A07A;font-weight:600">504,00 &#x20AC;</span>
+            </div>
+          </div>
+          <!-- CTA -->
+          <div style="background:var(--terra);border-radius:8px;padding:11px 16px;text-align:center;font-size:11px;font-weight:600;color:white">Jetzt kostenlos beantragen &#x2192;</div>
+          <div style="font-size:9px;color:rgba(253,250,247,.2);text-align:center">Kostenlos &#xB7; Unverbindlich &#xB7; 2 Minuten</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trust-Strip -->
+    <div style="background:rgba(201,107,63,.07);border-bottom:1px solid var(--line);padding:11px 24px;display:flex;gap:20px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:7px;font-size:10px;color:var(--fill-dark)"><div style="width:5px;height:5px;border-radius:50%;background:var(--terra)"></div>Gilt für alle gesetzlichen &amp; privaten Pflegekassen</div>
+      <div style="display:flex;align-items:center;gap:7px;font-size:10px;color:var(--fill-dark)"><div style="width:5px;height:5px;border-radius:50%;background:var(--terra)"></div>Anspruch beginnt ab Pflegegradanerkennung</div>
+      <div style="display:flex;align-items:center;gap:7px;font-size:10px;color:var(--fill-dark)"><div style="width:5px;height:5px;border-radius:50%;background:var(--terra)"></div>Ab sofort: 42 &#x20AC; monatlich — ohne Zuzahlung</div>
+    </div>
+
+    <!-- Dann kommt der normale Hero darunter (Andeutung) -->
+    <div style="padding:20px 24px;background:var(--dark);opacity:.35">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;min-height:80px">
+        <div>
+          <div class="ln-dark" style="width:80%;margin-bottom:8px;background:rgba(253,250,247,.25)"></div>
+          <div class="ln-dark" style="width:60%;margin-bottom:6px;background:rgba(253,250,247,.25)"></div>
+          <div class="ln" style="width:90%;background:rgba(253,250,247,.1)"></div>
+          <div class="ln" style="width:70%;background:rgba(253,250,247,.1)"></div>
+        </div>
+        <div style="background:rgba(255,255,255,.05);border-radius:8px;display:flex;align-items:center;justify-content:center">
+          <div style="font-size:9px;color:rgba(253,250,247,.2)">↓ Hero-Section folgt</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wf-annos">
+      <div class="wf-anno"><div class="wf-anno-num">1</div><strong>Position:</strong> Allererste Interaktion auf der Startseite — noch VOR dem Hero. Kein Scrollen nötig.</div>
+      <div class="wf-anno"><div class="wf-anno-num">2</div><strong>Pflegegrad-Picker:</strong> 5 große Buttons (1–5) — kein Dropdown, kein Tippen. Ein Klick genügt.</div>
+      <div class="wf-anno"><div class="wf-anno-num">3</div><strong>Zeitraum:</strong> Monat + Jahr als Dropdown. Standardwert: Januar letzten Jahres (realistischer Durchschnitt).</div>
+      <div class="wf-anno"><div class="wf-anno-num">4</div><strong>Ergebnis live:</strong> Große Zahl in Terrakotta, Label "Das gehört Ihnen — ungenutzt" ab 1.000 € — emotionaler Spiegel.</div>
+      <div class="wf-anno"><div class="wf-anno-num">5</div><strong>Aufschlüsselung:</strong> "Davon bereits erhalten: 0,00 €" — der Kontrast zur großen Zahl ist das stärkste Element.</div>
+      <div class="wf-anno"><div class="wf-anno-num">6</div><strong>CTA direkt im Rechner:</strong> "Jetzt kostenlos beantragen →" — kein weiteres Scrollen nötig.</div>
+      <div class="wf-anno"><div class="wf-anno-num">7</div><strong>Darunter:</strong> Hero-Section mit Produktvorschau, Trust-Bar und 3-Schritt-Erklärung folgt normal.</div>
+    </div>
+  </div>
+
+  <!-- Spec-Hinweise -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px">
+    <div class="spec-panel">
+      <div class="spec-title">Berechnung</div>
+      <div class="spec-desc">Alle Pflegegrade erhalten denselben Betrag (42 €/Monat). Die Formel ist simpel und transparent.</div>
+      <div class="spec-list">
+        <div class="spec-item"><div class="spec-dot"></div>Monate = Differenz zwischen Startdatum und heute (abgerundet)</div>
+        <div class="spec-item"><div class="spec-dot"></div>Verpasst = Monate × 42 €</div>
+        <div class="spec-item"><div class="spec-dot"></div>Zukünftig = 12 × 42 € = 504 € / Jahr</div>
+        <div class="spec-item"><div class="spec-dot"></div>Fortschrittsbalken: 0–504 € (1 Jahres-Anspruch als Referenz)</div>
+      </div>
+    </div>
+    <div class="spec-panel">
+      <div class="spec-title">Verhalten &amp; Edge Cases</div>
+      <div class="spec-desc">Was passiert in Grenzfällen?</div>
+      <div class="spec-list">
+        <div class="spec-item"><div class="spec-dot"></div>Startdatum in der Zukunft → Rechner zeigt Leerstand, kein Ergebnis</div>
+        <div class="spec-item"><div class="spec-dot"></div>Weniger als 1 Monat → Ergebnis erst ab 1 vollständigem Monat</div>
+        <div class="spec-item"><div class="spec-dot"></div>Kein Pflegegrad gewählt → Ergebnis-Panel zeigt Aufforderungs-State</div>
+        <div class="spec-item"><div class="spec-dot"></div>Großer Betrag (&gt;1.000 €) → Label wechselt auf "Das gehört Ihnen — ungenutzt"</div>
+        <div class="spec-item"><div class="spec-dot"></div>CTA führt direkt zu /beantragen (Schritt 1 vorausgefüllt mit gewähltem PG)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+</div><!-- /shell -->
+
+<script>
+const pages = {
+  startseite: {title:'Startseite', url:'velacare.de/', badge:'Öffentlich'},
+  rechner: {title:'Verpasstes-Geld-Rechner', url:'velacare.de/#rechner', badge:'Hero-Element'},
+  wie: {title:'Wie es funktioniert', url:'velacare.de/wie-es-funktioniert', badge:'Öffentlich'},
+  produkte: {title:'Produkte & Box', url:'velacare.de/produkte', badge:'Öffentlich'},
+  ueber: {title:'Über uns', url:'velacare.de/ueber-uns', badge:'Öffentlich'},
+  kontakt: {title:'Kontakt', url:'velacare.de/kontakt', badge:'Öffentlich'},
+  faq: {title:'FAQ', url:'velacare.de/faq', badge:'Öffentlich'},
+  beantragen: {title:'Box beantragen', url:'velacare.de/beantragen', badge:'Funnel'},
+  danke: {title:'Danke-Seite', url:'velacare.de/danke', badge:'Funnel'},
+  konto: {title:'Kunden-Dashboard', url:'velacare.de/konto', badge:'Kundenportal'},
+  'meine-box': {title:'Meine Box', url:'velacare.de/konto/meine-box', badge:'Kundenportal'},
+  lieferungen: {title:'Lieferungen', url:'velacare.de/konto/lieferungen', badge:'Kundenportal'},
+  einstellungen: {title:'Einstellungen', url:'velacare.de/konto/einstellungen', badge:'Kundenportal'},
+  anfragen: {title:'Anfragen', url:'velacare.de/konto/anfragen', badge:'Kundenportal'},
+  'admin-dash': {title:'Admin — Dashboard', url:'velacare.de/admin', badge:'Admin'},
+  'admin-kunden': {title:'Admin — Kunden', url:'velacare.de/admin/kunden', badge:'Admin'},
+  'admin-produkte': {title:'Admin — Produkte', url:'velacare.de/admin/produkte', badge:'Admin'},
+  'admin-lieferungen': {title:'Admin — Lieferungen', url:'velacare.de/admin/lieferungen', badge:'Admin'},
+  'admin-anfragen': {title:'Admin — Anfragen', url:'velacare.de/admin/anfragen', badge:'Admin'},
+  'admin-einstellungen': {title:'Admin — Einstellungen', url:'velacare.de/admin/einstellungen', badge:'Admin'},
+};
+
+function showPage(id, el) {
+  document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const panel = document.getElementById('page-' + id);
+  if (panel) panel.classList.add('active');
+  if (el) el.classList.add('active');
+  const info = pages[id];
+  if (info) {
+    document.getElementById('topbar-title').textContent = info.title;
+    document.getElementById('topbar-url').textContent = info.url;
+    document.getElementById('topbar-badge').textContent = info.badge;
+    const badgeEl = document.getElementById('topbar-badge');
+    badgeEl.style.background = info.badge === 'Admin' ? 'rgba(45,122,95,.15)' :
+      info.badge === 'Kundenportal' ? 'rgba(24,95,165,.1)' :
+      info.badge === 'Funnel' ? 'rgba(201,107,63,.18)' : 'rgba(201,107,63,.15)';
+    badgeEl.style.color = info.badge === 'Admin' ? '#2D7A5F' :
+      info.badge === 'Kundenportal' ? '#185FA5' : '#C96B3F';
+    badgeEl.style.borderColor = info.badge === 'Admin' ? 'rgba(45,122,95,.25)' :
+      info.badge === 'Kundenportal' ? 'rgba(24,95,165,.2)' : 'rgba(201,107,63,.3)';
+  }
+  document.querySelector('.main').scrollTop = 0;
+}
+</script>
+</body>
+</html>
