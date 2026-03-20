@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,6 +8,7 @@
 
 :root {
   --font-cormorant: 'Cormorant Garamond', Georgia, serif;
+  --font-newsreader: 'Newsreader', Georgia, serif;
   --font-dm-sans: 'DM Sans', system-ui, sans-serif;
   --font-dm-mono: 'DM Mono', monospace;
 }
