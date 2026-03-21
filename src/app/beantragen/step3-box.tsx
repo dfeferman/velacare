@@ -15,7 +15,7 @@ const KATEGORIEN: ProduktKategorie[] = ['Handschuhe', 'Desinfektion', 'Mundschut
 
 export function Step3Box({ onWeiter, onZurueck }: Step3Props) {
   const [gewählt, setGewählt] = useState<BoxProdukt[]>([])
-  const [aktivKategorie, setAktivKategorie] = useState<string>('alle')
+  const [aktivKategorie, setAktivKategorie] = useState<ProduktKategorie | 'alle'>('alle')
 
   const verwendetBetrag = gewählt.reduce((sum, item) => sum + item.produkt.preis, 0)
   const budgetProzent = Math.min((verwendetBetrag / MOCK_BUDGET_LIMIT) * 100, 100)
@@ -28,7 +28,7 @@ export function Step3Box({ onWeiter, onZurueck }: Step3Props) {
     })
   }
 
-  const gefilterteProdukete = aktivKategorie === 'alle'
+  const gefilterteProdukte = aktivKategorie === 'alle'
     ? MOCK_PRODUKTE
     : MOCK_PRODUKTE.filter(p => p.kategorie === aktivKategorie)
 
@@ -97,7 +97,7 @@ export function Step3Box({ onWeiter, onZurueck }: Step3Props) {
 
       {/* Product grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-        {gefilterteProdukete.map(produkt => {
+        {gefilterteProdukte.map(produkt => {
           const isSelected = gewählt.some(p => p.produkt.id === produkt.id)
           return (
             <div

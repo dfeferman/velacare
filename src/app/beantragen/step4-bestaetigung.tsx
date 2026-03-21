@@ -5,6 +5,8 @@ import { ProgressBar } from '@/components/ui/progress-bar'
 import { Button } from '@/components/ui/button'
 import type { BoxProdukt } from '@/lib/types'
 
+const LIEFERTAGE = Array.from({ length: 28 }, (_, i) => i + 1)
+
 interface Step4Props {
   box: BoxProdukt[]
   onBestaetigen: (stichtag: number) => void
@@ -100,7 +102,7 @@ export function Step4Bestaetigung({ box, onBestaetigen, onZurueck }: Step4Props)
           onChange={e => setStichtag(Number(e.target.value))}
           className="w-full px-4 py-3 rounded-lg border border-mid-gray bg-bg text-dark text-sm focus:outline-none focus:ring-2 focus:ring-terra/30"
         >
-          {Array.from({ length: 28 }, (_, i) => i + 1).map(tag => (
+          {LIEFERTAGE.map(tag => (
             <option key={tag} value={tag}>{tag}. des Monats</option>
           ))}
         </select>
