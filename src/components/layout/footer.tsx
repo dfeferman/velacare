@@ -26,16 +26,19 @@ export function Footer() {
           </ul>
         </div>
         <div>
-          <div className="text-xs font-medium tracking-widest uppercase text-warm-white/40 mb-3">Rechtliches</div>
+          <div className="text-xs font-medium tracking-widest uppercase text-warm-white/40 mb-3">Kontakt</div>
           <ul className="space-y-2 text-xs">
-            <li><span className="opacity-50">Datenschutz</span></li>
+            <li><a href="mailto:hallo@velacare.de" className="hover:text-terra-light transition-colors">hallo@velacare.de</a></li>
+            <li><a href="tel:08000000000" className="hover:text-terra-light transition-colors">0800 000 0000 (kostenlos)</a></li>
+            <li><span className="opacity-70">Deutschland</span></li>
+            <li className="pt-2 border-t border-warm-white/10"><span className="opacity-50">Datenschutz</span></li>
             <li><span className="opacity-50">AGB</span></li>
             <li><span className="opacity-50">Impressum</span></li>
           </ul>
         </div>
       </div>
       <div className="max-w-5xl mx-auto border-t border-warm-white/10 mt-10 pt-6 text-xs text-center opacity-40">
-        © 2026 Velacare · Alle Rechte vorbehalten
+        © 2026 Velacare · Hergestellt mit Liebe in Deutschland
       </div>
     </footer>
   )
