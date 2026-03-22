@@ -1,0 +1,61 @@
+{
+  "projectId": "8244422556159444756",
+  "projectTitle": "Produkte & Box",
+  "exportedAt": "2026-03-20T22:52:51.324Z",
+  "screens": [
+    {
+      "order": 1,
+      "title": "Startseite Hero zuerst",
+      "screenId": "67084893c86441e9981610de405a4492",
+      "folder": "wireframes\\01-startseite-hero-zuerst"
+    },
+    {
+      "order": 2,
+      "title": "Registrierung Funnel (Wireframe-Style)",
+      "screenId": "95a7fa7db67642c7ad2b7a6e8210d458",
+      "folder": "wireframes\\02-registrierung-funnel-wireframe-style"
+    },
+    {
+      "order": 3,
+      "title": "Wie es funktioniert (Final)",
+      "screenId": "a0e38936804d4932ae0ee21b039c93a9",
+      "folder": "wireframes\\03-wie-es-funktioniert-final"
+    },
+    {
+      "order": 4,
+      "title": "Produkte & Box (Wireframe-Final)",
+      "screenId": "94b665fa50db4143841e96a4f63ad2b2",
+      "folder": "wireframes\\04-produkte-und-box-wireframe-final"
+    },
+    {
+      "order": 5,
+      "title": "Funnel Schritt 1: Anspruch",
+      "screenId": "0939af279e5e4f629728f21e822b3458",
+      "folder": "wireframes\\05-funnel-schritt-1-anspruch"
+    },
+    {
+      "order": 6,
+      "title": "Funnel Schritt 3: Box",
+      "screenId": "d7a66d22ec9f4e2181c63e8bf7746dff",
+      "folder": "wireframes\\06-funnel-schritt-3-box"
+    },
+    {
+      "order": 7,
+      "title": "Funnel Schritt 2: Daten",
+      "screenId": "e5ac3c8dadeb4b89b9500c12f2650c5d",
+      "folder": "wireframes\\07-funnel-schritt-2-daten"
+    },
+    {
+      "order": 8,
+      "title": "Funnel Schritt 4: Bestätigung",
+      "screenId": "048cb354fb1c4534afcd9ed54fe6d694",
+      "folder": "wireframes\\08-funnel-schritt-4-bestatigung"
+    },
+    {
+      "order": 9,
+      "title": "Danke-Seite (Final)",
+      "screenId": "ed90935e623940f0902de29b9e738c85",
+      "folder": "wireframes\\09-danke-seite-final"
+    }
+  ]
+}

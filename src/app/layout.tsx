@@ -12,10 +12,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="de">
-      <body className="font-sans bg-bg text-dark antialiased">
+      <body className="font-sans bg-bg text-dark antialiased selection:bg-terra/20">
         <MockStoreProvider>
           <Nav />
-          <main className="pt-14">{children}</main>
+          <main className="pt-[52px]">{children}</main>
           <Footer />
         </MockStoreProvider>
       </body>

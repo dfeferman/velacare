@@ -15,3 +15,43 @@
 
 html { scroll-behavior: smooth; }
 body { background-color: #F5F0EB; color: #2C2420; }
+
+/* Landing Hero — wireframes/01-startseite-hero-zuerst */
+@keyframes velacare-fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes velacare-pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.6; }
+}
+@keyframes velacare-hero-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-fade-up {
+  opacity: 0;
+  animation: velacare-fade-up 0.5s ease forwards;
+}
+.eyebrow-dot {
+  animation: velacare-pulse-dot 2s ease-in-out infinite;
+}
+.step-num-circle {
+  display: flex;
+  height: 24px;
+  width: 24px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: #c96b3f;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+}
+.photo-frame {
+  border-radius: 42% 58% 52% 48% / 48% 44% 56% 52%;
+  animation: velacare-hero-float 6s ease-in-out infinite;
+}
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }

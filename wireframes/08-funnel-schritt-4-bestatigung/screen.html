@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html class="light" lang="de"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Velacare - Schritt 4: Bestätigung</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,600;0,700;1,400;1,600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-lowest": "#ffffff",
+              "surface-container-high": "#eae8e5",
+              "secondary-container": "#a5f2d1",
+              "on-primary": "#ffffff",
+              "on-tertiary-container": "#fffbff",
+              "tertiary": "#645a55",
+              "secondary-fixed-dim": "#8ad6b6",
+              "surface-bright": "#fcf9f6",
+              "on-primary-fixed": "#360f00",
+              "inverse-primary": "#ffb596",
+              "surface-variant": "#e5e2df",
+              "on-background": "#1b1c1a",
+              "surface-tint": "#99461d",
+              "on-error-container": "#93000a",
+              "on-secondary-fixed-variant": "#00513b",
+              "primary-fixed": "#ffdbcd",
+              "on-secondary-fixed": "#002116",
+              "inverse-surface": "#31302f",
+              "outline-variant": "#dbc1b7",
+              "on-primary-container": "#fffbff",
+              "primary-fixed-dim": "#ffb596",
+              "background": "#fcf9f6",
+              "on-secondary-container": "#227156",
+              "surface": "#fcf9f6",
+              "on-error": "#ffffff",
+              "outline": "#88726a",
+              "on-tertiary-fixed": "#211a16",
+              "on-primary-fixed-variant": "#7a3006",
+              "primary": "#96441b",
+              "surface-container-highest": "#e5e2df",
+              "surface-container": "#f0edea",
+              "on-tertiary-fixed-variant": "#4e4540",
+              "error": "#ba1a1a",
+              "tertiary-fixed": "#efdfd9",
+              "surface-container-low": "#f6f3f0",
+              "primary-container": "#b55b31",
+              "inverse-on-surface": "#f3f0ed",
+              "on-tertiary": "#ffffff",
+              "on-surface-variant": "#55433b",
+              "secondary": "#196b51",
+              "on-surface": "#1b1c1a",
+              "tertiary-fixed-dim": "#d2c4bd",
+              "error-container": "#ffdad6",
+              "surface-dim": "#dcdad7",
+              "tertiary-container": "#7e726d",
+              "secondary-fixed": "#a5f2d1",
+              "on-secondary": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Newsreader", "serif"],
+              "body": ["Plus Jakarta Sans", "sans-serif"],
+              "label": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+      }
+      .serif-italic {
+        font-family: 'Newsreader', serif;
+        font-style: italic;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-[#fcf9f6] dark:bg-stone-950 docked full-width top-0 z-50">
+<div class="flex justify-between items-center px-6 py-4 w-full max-w-screen-xl mx-auto">
+<div class="flex items-center gap-4">
+<button class="text-[#96441b] dark:text-[#c96b3f] hover:bg-[#f6f3f0] dark:hover:bg-stone-800 transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-serif italic text-3xl text-[#96441b] dark:text-[#c96b3f] tracking-tight">Velacare</h1>
+</div>
+<div class="hidden md:flex gap-8 items-center">
+<span class="text-[#55433b] dark:text-stone-400 font-medium cursor-pointer">Anspruch</span>
+<span class="text-[#55433b] dark:text-stone-400 font-medium cursor-pointer">Daten</span>
+<span class="text-[#55433b] dark:text-stone-400 font-medium cursor-pointer">Box</span>
+<span class="text-[#96441b] dark:text-[#c96b3f] font-semibold cursor-pointer">Fertig</span>
+</div>
+</div>
+<div class="bg-[#f6f3f0] dark:bg-stone-900 h-1 w-full"></div>
+</header>
+<main class="flex-grow max-w-3xl mx-auto w-full px-6 py-12 pb-32">
+<!-- Progress Stepper -->
+<div class="mb-12">
+<div class="flex justify-between items-center relative">
+<div class="absolute top-1/2 left-0 w-full h-0.5 bg-surface-container-high -z-10 -translate-y-1/2"></div>
+<!-- Step 1 -->
+<div class="flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center text-sm font-bold ring-4 ring-surface">
+<span class="material-symbols-outlined text-sm">check</span>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center text-sm font-bold ring-4 ring-surface">
+<span class="material-symbols-outlined text-sm">check</span>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center text-sm font-bold ring-4 ring-surface">
+<span class="material-symbols-outlined text-sm">check</span>
+</div>
+</div>
+<!-- Step 4 Active -->
+<div class="flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-sm font-bold ring-4 ring-surface shadow-lg">4</div>
+</div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] uppercase tracking-widest font-bold text-on-surface-variant/60">
+<span>Anspruch</span>
+<span>Persönlich</span>
+<span>Inhalt</span>
+<span class="text-primary">Bestätigung</span>
+</div>
+</div>
+<section class="space-y-12">
+<header class="text-center md:text-left">
+<h2 class="font-serif italic text-4xl md:text-5xl text-on-surface mb-4">Fast geschafft.</h2>
+<p class="text-on-surface-variant text-lg max-w-xl leading-relaxed">Bitte überprüfen Sie Ihre Angaben ein letztes Mal, bevor wir Ihre Velacare-Box vorbereiten.</p>
+</header>
+<!-- Summary Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Contact Summary -->
+<div class="bg-surface-container-low rounded-xl p-8 transition-all hover:bg-surface-container hover:shadow-sm">
+<div class="flex justify-between items-start mb-6">
+<h3 class="font-serif italic text-2xl text-primary">Ihre Daten</h3>
+<button class="text-secondary text-sm font-semibold hover:underline decoration-2 underline-offset-4">Ändern</button>
+</div>
+<div class="space-y-4 text-on-surface-variant">
+<div>
+<p class="text-[10px] uppercase tracking-widest font-bold mb-1">Empfänger</p>
+<p class="font-medium text-on-surface">Maria Mustermann</p>
+<p>Musterstraße 123</p>
+<p>10115 Berlin</p>
+</div>
+<div>
+<p class="text-[10px] uppercase tracking-widest font-bold mb-1">Kontakt</p>
+<p>maria.mustermann@example.de</p>
+</div>
+</div>
+</div>
+<!-- Box Content Summary -->
+<div class="bg-surface-container-low rounded-xl p-8 transition-all hover:bg-surface-container hover:shadow-sm">
+<div class="flex justify-between items-start mb-6">
+<h3 class="font-serif italic text-2xl text-primary">Ihre Auswahl</h3>
+<button class="text-secondary text-sm font-semibold hover:underline decoration-2 underline-offset-4">Ändern</button>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-3 text-on-surface">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="font-medium">Premium Pflegepaket</span>
+</div>
+<div class="pt-4 border-t border-outline-variant/20">
+<p class="text-[10px] uppercase tracking-widest font-bold mb-2">Inklusive:</p>
+<ul class="text-sm text-on-surface-variant space-y-1">
+<li>• Bettschutzeinlagen</li>
+<li>• Einmalhandschuhe</li>
+<li>• Händedesinfektion</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Delivery Date Selection -->
+<div class="md:col-span-2 bg-surface-container-lowest border border-outline-variant/10 rounded-xl p-8 shadow-sm">
+<h3 class="font-serif italic text-2xl text-primary mb-6">Gewünschter Liefertermin</h3>
+<p class="text-on-surface-variant mb-6 text-sm">Wann im Monat sollen wir Ihre Box zustellen? (Immer zwischen dem 1. und 28. eines Monats)</p>
+<div class="relative max-w-xs">
+<select class="w-full bg-surface-container-low border-none rounded-xl py-4 px-5 focus:ring-2 focus:ring-primary-fixed-dim text-on-surface appearance-none cursor-pointer">
+<option disabled="" selected="" value="">Tag auswählen...</option>
+<script>
+                                for(let i=1; i<=28; i++) {
+                                    document.write(`<option value="${i}">${i}. jeden Monats</option>`);
+                                }
+                            </script>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Legal Checkboxes -->
+<div class="space-y-6 pt-6">
+<label class="flex items-start gap-4 cursor-pointer group">
+<div class="mt-1 relative flex items-center">
+<input class="w-6 h-6 rounded-md border-outline-variant bg-surface-container-low text-primary focus:ring-primary-fixed-dim transition-all cursor-pointer" type="checkbox"/>
+</div>
+<span class="text-sm text-on-surface-variant leading-relaxed">
+                        Ich stimme den <a class="text-primary font-semibold hover:underline" href="#">Allgemeinen Geschäftsbedingungen (AGB)</a> zu und habe die Widerrufsbelehrung zur Kenntnis genommen.
+                    </span>
+</label>
+<label class="flex items-start gap-4 cursor-pointer group">
+<div class="mt-1 relative flex items-center">
+<input class="w-6 h-6 rounded-md border-outline-variant bg-surface-container-low text-primary focus:ring-primary-fixed-dim transition-all cursor-pointer" type="checkbox"/>
+</div>
+<span class="text-sm text-on-surface-variant leading-relaxed">
+                        Ich willige in die Verarbeitung meiner personenbezogenen Daten gemäß der <a class="text-primary font-semibold hover:underline" href="#">Datenschutzerklärung (DSGVO)</a> ein, um die Beantragung der Pflegebox durchzuführen.
+                    </span>
+</label>
+</div>
+<!-- Footer Actions -->
+<div class="flex flex-col md:flex-row gap-4 items-center justify-between pt-12 border-t border-outline-variant/20">
+<button class="w-full md:w-auto px-8 py-4 text-[#96441b] font-semibold hover:bg-[#f6f3f0] transition-colors rounded-xl text-lg">
+                    Zurück
+                </button>
+<button class="w-full md:w-auto px-12 py-4 bg-primary text-on-primary font-bold rounded-xl text-lg shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 transition-all">
+                    Jetzt kostenfrei beantragen
+                </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile only as per Responsive Pivot Rule) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-white/80 dark:bg-stone-900/80 backdrop-blur-md shadow-[0_-10px_30px_rgba(44,36,32,0.05)] rounded-t-[24px]">
+<div class="flex flex-col items-center justify-center text-[#55433b] dark:text-stone-400 p-2 hover:text-[#96441b] transition-colors">
+<span class="material-symbols-outlined mb-1">verified_user</span>
+<span class="font-sans text-[11px] font-medium tracking-wide uppercase">Anspruch</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#55433b] dark:text-stone-400 p-2 hover:text-[#96441b] transition-colors">
+<span class="material-symbols-outlined mb-1">person_edit</span>
+<span class="font-sans text-[11px] font-medium tracking-wide uppercase">Daten</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#55433b] dark:text-stone-400 p-2 hover:text-[#96441b] transition-colors">
+<span class="material-symbols-outlined mb-1">inventory_2</span>
+<span class="font-sans text-[11px] font-medium tracking-wide uppercase">Box</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-[#96441b] text-white rounded-2xl p-3 scale-110 -translate-y-2 shadow-lg transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-sans text-[11px] font-medium tracking-wide uppercase mt-1">Fertig</span>
+</div>
+</nav>
+</body></html>

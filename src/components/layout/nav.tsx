@@ -1,26 +1,35 @@
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+import { VelacareLogo } from '@/components/brand/velacare-logo'
 
+/** Navigation gemäß wireframes/01-startseite-hero-zuerst — Höhe 52px wie velacare-brandbook.html */
 export function Nav() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-warm-white/95 backdrop-blur-sm border-b border-mid-gray h-14 flex items-center px-6 gap-8">
-      <Link href="/" className="font-serif text-xl font-semibold text-dark flex-shrink-0">
-        Velacare
-        <span className="font-sans text-xs font-normal tracking-widest uppercase text-terra ml-2">
-          Pflegehilfsmittel
-        </span>
-      </Link>
-      <div className="flex gap-1 flex-1 overflow-x-auto">
-        <Link href="/wie-es-funktioniert" className="text-xs text-warm-gray hover:text-terra px-3 py-1 whitespace-nowrap transition-colors">Wie es funktioniert</Link>
-        <Link href="/produkte" className="text-xs text-warm-gray hover:text-terra px-3 py-1 whitespace-nowrap transition-colors">Produkte</Link>
-        <Link href="/faq" className="text-xs text-warm-gray hover:text-terra px-3 py-1 whitespace-nowrap transition-colors">FAQ</Link>
-        <Link href="/ueber-uns" className="text-xs text-warm-gray hover:text-terra px-3 py-1 whitespace-nowrap transition-colors">Über uns</Link>
-      </div>
-      <div className="flex items-center gap-3 flex-shrink-0">
-        <Link href="/login" className="text-xs text-warm-gray hover:text-dark transition-colors">Anmelden</Link>
-        <Button variant="primary" className="text-xs px-4 py-2">
-          <Link href="/beantragen">Jetzt beantragen</Link>
-        </Button>
+    <nav className="fixed top-0 z-50 w-full border-b border-mid-gray/30 bg-warm-white/90 shadow-sm backdrop-blur-xl">
+      <div className="mx-auto flex h-[52px] max-w-7xl items-center justify-between px-6">
+        <Link href="/" className="flex items-center gap-2">
+          <VelacareLogo className="h-6 w-6" />
+          <span className="font-serif text-xl font-bold tracking-tight text-dark">Velacare</span>
+        </Link>
+        <div className="hidden items-center gap-6 text-sm font-medium text-warm-gray md:flex">
+          <Link href="/wie-es-funktioniert" className="transition-colors hover:text-terra">
+            Wie es funktioniert
+          </Link>
+          <Link href="/produkte" className="transition-colors hover:text-terra">
+            Produkte
+          </Link>
+          <Link href="/ueber-uns" className="transition-colors hover:text-terra">
+            Über uns
+          </Link>
+          <Link href="/faq" className="transition-colors hover:text-terra">
+            FAQ
+          </Link>
+        </div>
+        <Link
+          href="/beantragen"
+          className="rounded-lg bg-terra px-4 py-2 text-xs font-bold text-white shadow-sm shadow-terra/20 transition-all hover:bg-terra-dark active:scale-95"
+        >
+          Jetzt beantragen
+        </Link>
       </div>
     </nav>
   )

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html class="light" lang="de"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-low": "#f6f3f0",
+              "surface-container-high": "#eae8e5",
+              "on-tertiary-fixed": "#211a16",
+              "error-container": "#ffdad6",
+              "on-surface-variant": "#55433b",
+              "surface-container": "#f0edea",
+              "primary-fixed-dim": "#ffb596",
+              "secondary-fixed-dim": "#8ad6b6",
+              "surface-container-lowest": "#ffffff",
+              "surface": "#fcf9f6",
+              "primary": "#96441b",
+              "on-surface": "#1b1c1a",
+              "surface-bright": "#fcf9f6",
+              "surface-variant": "#e5e2df",
+              "error": "#ba1a1a",
+              "tertiary-container": "#7e726d",
+              "secondary": "#196b51",
+              "inverse-on-surface": "#f3f0ed",
+              "inverse-surface": "#31302f",
+              "on-error": "#ffffff",
+              "on-secondary-container": "#227156",
+              "surface-container-highest": "#e5e2df",
+              "on-secondary-fixed-variant": "#00513b",
+              "on-tertiary-fixed-variant": "#4e4540",
+              "on-primary": "#ffffff",
+              "tertiary-fixed-dim": "#d2c4bd",
+              "outline-variant": "#dbc1b7",
+              "tertiary-fixed": "#efdfd9",
+              "on-primary-fixed": "#360f00",
+              "on-error-container": "#93000a",
+              "on-background": "#1b1c1a",
+              "on-primary-fixed-variant": "#7a3006",
+              "surface-dim": "#dcdad7",
+              "on-secondary-fixed": "#002116",
+              "on-primary-container": "#fffbff",
+              "primary-fixed": "#ffdbcd",
+              "on-tertiary": "#ffffff",
+              "surface-tint": "#99461d",
+              "secondary-fixed": "#a5f2d1",
+              "secondary-container": "#a5f2d1",
+              "inverse-primary": "#ffb596",
+              "background": "#fcf9f6",
+              "tertiary": "#645a55",
+              "outline": "#88726a",
+              "primary-container": "#b55b31",
+              "on-tertiary-container": "#fffbff",
+              "on-secondary": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Newsreader", "serif"],
+              "body": ["Plus Jakarta Sans", "sans-serif"],
+              "label": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        background-color: #fcf9f6;
+        color: #2c2420;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+      }
+      .font-serif { font-family: 'Newsreader', serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="bg-[#fcf9f6]/80 dark:bg-[#1c1917]/80 backdrop-blur-xl fixed top-0 w-full z-50">
+<div class="flex justify-between items-center px-6 py-4 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#96441b] dark:text-[#e2845e] scale-95 active:opacity-80 transition-transform cursor-pointer" data-icon="menu">menu</span>
+<span class="font-serif italic text-2xl text-[#96441b] dark:text-[#e2845e]">Velacare</span>
+</div>
+<nav class="hidden md:flex gap-8 items-center">
+<a class="text-[#96441b] font-semibold font-serif text-lg Newsreader" href="#">Produkte</a>
+<a class="text-[#55433b] dark:text-[#d6ccc7] hover:bg-[#f6f3f0] dark:hover:bg-[#3d332e] transition-colors px-3 py-1 rounded-lg" href="#">Beratung</a>
+<a class="text-[#55433b] dark:text-[#d6ccc7] hover:bg-[#f6f3f0] dark:hover:bg-[#3d332e] transition-colors px-3 py-1 rounded-lg" href="#">Mein Konto</a>
+</nav>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#96441b]" data-icon="shopping_basket">shopping_basket</span>
+</div>
+</div>
+</header>
+<main class="pt-24 px-6 max-w-4xl mx-auto">
+<!-- Breadcrumb -->
+<nav class="mb-6">
+<p class="text-xs uppercase tracking-widest text-on-surface-variant/60 font-medium">Startseite   /   Produkte</p>
+</nav>
+<!-- Headline -->
+<h1 class="text-4xl md:text-5xl font-serif text-on-tertiary-fixed mb-8 leading-tight">Produkte &amp; Box zusammenstellen</h1>
+<!-- Budget Card -->
+<section class="bg-surface-container-low rounded-xl p-6 mb-10 border border-outline-variant/10">
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-end">
+<div>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-1">Ihr monatlicher Anspruch</p>
+<h2 class="text-xl font-serif">Budget genutzt: <span class="text-primary font-bold">0,00 €</span> <span class="text-on-surface-variant/40 font-serif italic text-lg">von 42,00 €</span></h2>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant/40" data-icon="info">info</span>
+</div>
+<div class="w-full bg-surface-container-high h-2.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-0 transition-all duration-500"></div>
+</div>
+<p class="text-xs text-on-surface-variant italic">In der Regel werden Pflegehilfsmittel bis zu 40€ (aktuell 42€) von der Pflegekasse erstattet.</p>
+</div>
+</section>
+<!-- Categories / Filter Chips -->
+<section class="flex gap-2 overflow-x-auto pb-4 no-scrollbar mb-8">
+<button class="whitespace-nowrap bg-primary text-white px-6 py-2 rounded-full text-sm font-medium shadow-sm">Alle</button>
+<button class="whitespace-nowrap bg-surface-container-high text-on-surface-variant px-6 py-2 rounded-full text-sm font-medium hover:bg-surface-container-highest transition-colors">Handschuhe</button>
+<button class="whitespace-nowrap bg-surface-container-high text-on-surface-variant px-6 py-2 rounded-full text-sm font-medium hover:bg-surface-container-highest transition-colors">Desinfektion</button>
+<button class="whitespace-nowrap bg-surface-container-high text-on-surface-variant px-6 py-2 rounded-full text-sm font-medium hover:bg-surface-container-highest transition-colors">Mundschutz</button>
+<button class="whitespace-nowrap bg-surface-container-high text-on-surface-variant px-6 py-2 rounded-full text-sm font-medium hover:bg-surface-container-highest transition-colors">Hygiene</button>
+</section>
+<!-- Product List -->
+<div class="grid grid-cols-1 gap-8">
+<!-- Product 1 -->
+<div class="group flex flex-col md:flex-row bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(44,36,32,0.03)] border border-outline-variant/10">
+<div class="relative w-full md:w-64 h-64 bg-surface-container-low p-8 flex items-center justify-center overflow-hidden">
+<span class="absolute top-4 left-4 bg-secondary text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">Kostenlos</span>
+<img alt="Einmalhandschuhe" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" data-alt="White nitrile disposable gloves in professional packaging" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBA1V7mhjeNHha3yVVze583G2H9jxOvBDIWQdey5IVGNZYX0vktPAwfYBHahfgwK97RKSMxftyO7zHkZm6xfzBg1K-layMA5-MRhb5bG2b-5tK8x-erk2gYU2YVewbyyDpNvVt3P8j8aHVCQFurHHMK8dLKP0DYs6nz4Fj9FoCefLVVDEQ1sG1478ACJjoIYpBOr3leA0KqysG9725Wm5iJL9BxAndh1Fx_T5RMu3EIVlj4We7AJZnhnfTqekVWOfCviTqv_ZQA7ik"/>
+</div>
+<div class="flex-1 p-8 flex flex-col justify-center">
+<h3 class="text-2xl font-serif text-on-tertiary-fixed mb-2">Einmalhandschuhe, Nitril</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">Puderfrei, latexfrei. Optimaler Schutz bei der täglichen Pflege. In verschiedenen Größen verfügbar.</p>
+<div class="flex items-center justify-between mt-auto">
+<span class="text-xl font-serif font-bold text-on-tertiary-fixed">0,00 €</span>
+<button class="bg-primary text-white w-12 h-12 rounded-xl flex items-center justify-center hover:bg-primary-container active:scale-95 transition-all shadow-lg shadow-primary/10">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="group flex flex-col md:flex-row bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(44,36,32,0.03)] border border-outline-variant/10">
+<div class="relative w-full md:w-64 h-64 bg-surface-container-low p-8 flex items-center justify-center overflow-hidden">
+<span class="absolute top-4 left-4 bg-secondary text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">Kostenlos</span>
+<img alt="Händedesinfektion" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" data-alt="Hand sanitizer bottle with medical labeling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5o8IF2XQpxGsXLcMYQXjJh_zrNjSv3VVFwNytxkVHoDxpuol1RgS7EKnDbki1xT4ya8c8-04fPAe28GP_-mAsOi-z66x66CGbc2XLct5O9BjsvZSvJMQlH2IAerBMTtgf1dv9oAJ5W3s4t1qnkvKIP2EaERLQ1eEdCOSw7O3YWJcdyzbyHkdekwX1ICVTamOlhmRgWmHWbfBoWDMGeWEah2h76K3-Y5nwvVdFj2IMb8ONFyk2lUiHpVlVhmvAp854od2xxWhEEvg"/>
+</div>
+<div class="flex-1 p-8 flex flex-col justify-center">
+<h3 class="text-2xl font-serif text-on-tertiary-fixed mb-2">Händedesinfektion</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">Begrenzt viruzid, sanft zur Haut. Effektiver Schutz gegen Keime und Bakterien.</p>
+<div class="flex items-center justify-between mt-auto">
+<span class="text-xl font-serif font-bold text-on-tertiary-fixed">0,00 €</span>
+<button class="bg-primary text-white w-12 h-12 rounded-xl flex items-center justify-center hover:bg-primary-container active:scale-95 transition-all shadow-lg shadow-primary/10">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="group flex flex-col md:flex-row bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(44,36,32,0.03)] border border-outline-variant/10">
+<div class="relative w-full md:w-64 h-64 bg-surface-container-low p-8 flex items-center justify-center overflow-hidden">
+<span class="absolute top-4 left-4 bg-secondary text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">Kostenlos</span>
+<img alt="Bettschutzeinlagen" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" data-alt="Stacked soft absorbent disposable bed pads" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUDt36hO9H3sdk4T2VzL2Ft5sQbqVXOwNPTfsffUEhlBFxv5IQ_hYM3MwuUBwmELinNmw7lWH7iCe9N2BJbhPAe04auoA7T3W_0YjT3_ZZBYTwVb2QZwlnW09pLbSzHZMSjDYAYk6zhXTV2EkDXR5pZYNGLLcv3snLyKm0rHfYu1uk9vouRZeyUJuatB8v4-W-IqkZGC4ZNLTBySv-tlYse3jkhWIBY_vgWBC_YhOKmCaNE20-AK1FLzMLKxSKNEojsjY-GR7qRRY"/>
+</div>
+<div class="flex-1 p-8 flex flex-col justify-center">
+<h3 class="text-2xl font-serif text-on-tertiary-fixed mb-2">Bettschutzeinlagen</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">Einmal-Bettschutzunterlagen, saugstark und flüssigkeitsundurchlässig.</p>
+<div class="flex items-center justify-between mt-auto">
+<span class="text-xl font-serif font-bold text-on-tertiary-fixed">0,00 €</span>
+<button class="bg-primary text-white w-12 h-12 rounded-xl flex items-center justify-center hover:bg-primary-container active:scale-95 transition-all shadow-lg shadow-primary/10">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Sticky Footer / Selection Bar -->
+<div class="fixed bottom-0 left-0 w-full z-50">
+<!-- Selection Preview -->
+<div class="bg-[#fcf9f6] dark:bg-[#1c1917] p-4 flex flex-col md:flex-row justify-between items-center gap-4 shadow-[0_-10px_30px_rgba(44,36,32,0.08)] border-t border-[#dbc1b7]/15">
+<div class="flex items-center gap-4">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Ihre Auswahl</span>
+<span class="font-sans font-medium text-sm Plus Jakarta Sans text-[#55433b] dark:text-[#d6ccc7]">Bisher keine Produkte ausgewählt</span>
+</div>
+</div>
+<div class="flex items-center gap-8 w-full md:w-auto">
+<div class="flex flex-col items-end">
+<span class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Gesamt</span>
+<span class="text-xl font-bold text-primary font-serif">0,00 €</span>
+</div>
+<button class="bg-[#96441b] text-white rounded-xl px-8 py-4 flex items-center gap-3 font-medium flex-1 md:flex-none justify-center active:scale-98 transition-all hover:opacity-90">
+                    Box beantragen 
+                    <span class="material-symbols-outlined text-base" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

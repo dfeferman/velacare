@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html class="light" lang="de"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Velacare - Box beantragen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,600;0,700;1,400;1,600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#96441b",
+              "on-primary": "#ffffff",
+              "primary-container": "#ffdbcd",
+              "secondary": "#196b51",
+              "tertiary": "#645a55",
+              "error": "#ba1a1a",
+              "background": "#fcf9f6",
+              "surface": "#fcf9f6",
+              "outline": "#88726a",
+              "outline-variant": "#dbc1b7",
+              "surface-container": "#f0edea",
+              "surface-container-low": "#f6f3f0",
+              "surface-container-high": "#eae8e5",
+              "surface-variant": "#e5e2df",
+              "on-surface": "#1b1c1a",
+              "on-surface-variant": "#55433b",
+              "terra-pale": "#FAF0E8",
+              "terra": "#C96B3F",
+              "sage-pale": "#EAF5F0",
+            },
+            fontFamily: {
+              "headline": ["Newsreader", "serif"],
+              "body": ["Plus Jakarta Sans", "sans-serif"],
+            },
+            borderRadius: {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "2xl": "1rem",
+              "3xl": "1.5rem",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-editorial-gradient {
+            background: linear-gradient(135deg, #96441b 0%, #b55b31 100%);
+        }
+        .progress-connector {
+            height: 2px;
+            background-color: #dbc1b7;
+            flex-grow: 1;
+            margin: 0 8px;
+        }
+        .progress-connector.done {
+            background-color: #96441b;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-6 py-4 w-full sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-outline-variant/10">
+<div class="flex items-center gap-4">
+<button class="p-2 text-primary hover:bg-surface-container rounded-full transition-all active:scale-95">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="text-2xl font-headline italic text-primary font-semibold">Velacare</h1>
+</div>
+<div class="flex items-center">
+<button class="p-2 text-primary hover:bg-surface-container rounded-full transition-all active:scale-95">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</header>
+<main class="flex-grow w-full max-w-2xl mx-auto px-6 py-6 pb-32">
+<!-- Progress Indicator - Wireframe Style -->
+<nav class="mb-10">
+<div class="flex items-center justify-between">
+<!-- Step 1 (Done) -->
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'wght' 700;">check</span>
+</div>
+</div>
+<div class="progress-connector done"></div>
+<!-- Step 2 (Current) -->
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full border-2 border-primary text-primary flex items-center justify-center text-xs font-bold">
+                    2
+                </div>
+</div>
+<div class="progress-connector"></div>
+<!-- Step 3 -->
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full border-2 border-outline-variant text-outline-variant flex items-center justify-center text-xs font-bold">
+                    3
+                </div>
+</div>
+<div class="progress-connector"></div>
+<!-- Step 4 -->
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full border-2 border-outline-variant text-outline-variant flex items-center justify-center text-xs font-bold">
+                    4
+                </div>
+</div>
+</div>
+<div class="flex justify-between mt-2 px-1">
+<span class="text-[10px] uppercase tracking-wider font-bold text-primary">Anspruch</span>
+<span class="text-[10px] uppercase tracking-wider font-bold text-primary">Daten</span>
+<span class="text-[10px] uppercase tracking-wider font-bold text-outline">Box</span>
+<span class="text-[10px] uppercase tracking-wider font-bold text-outline">Bestätigung</span>
+</div>
+</nav>
+<!-- Summary Box (Integrated for Mobile) -->
+<aside class="mb-8">
+<div class="bg-terra-pale border border-primary/20 rounded-2xl p-5 shadow-sm">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">savings</span>
+</div>
+<div>
+<h3 class="text-sm font-bold text-primary uppercase tracking-tight">Ihr monatlicher Anspruch</h3>
+<p class="text-2xl font-headline italic text-primary font-bold">42,00 €</p>
+</div>
+</div>
+<div class="space-y-2 border-t border-primary/10 pt-3 mt-3">
+<div class="flex justify-between text-xs text-on-surface-variant">
+<span>Pflegegrad bestätigt</span>
+<span class="font-semibold text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Aktiv
+                    </span>
+</div>
+<div class="flex justify-between text-xs text-on-surface-variant">
+<span>Box-Wert</span>
+<span class="font-semibold">0,00 € (noch keine Box gewählt)</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Form Section -->
+<section>
+<header class="mb-8">
+<h2 class="text-3xl font-headline italic text-on-background mb-2">Persönliche Angaben</h2>
+<p class="text-on-surface-variant text-sm">Wir benötigen Ihre Daten, um den Antrag bei Ihrer Pflegekasse einzureichen.</p>
+</header>
+<form class="space-y-6">
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1.5">
+<label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant px-1">Vorname</label>
+<input class="w-full bg-white border-outline-variant rounded-xl px-4 py-3 text-sm focus:ring-primary focus:border-primary" placeholder="z.B. Maria" type="text"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant px-1">Nachname</label>
+<input class="w-full bg-white border-outline-variant rounded-xl px-4 py-3 text-sm focus:ring-primary focus:border-primary" placeholder="z.B. Müller" type="text"/>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant px-1">Geburtsdatum</label>
+<input class="w-full bg-white border-outline-variant rounded-xl px-4 py-3 text-sm focus:ring-primary focus:border-primary" type="date"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant px-1">Adresse</label>
+<input class="w-full bg-white border-outline-variant rounded-xl px-4 py-3 text-sm focus:ring-primary focus:border-primary" placeholder="Straße und Hausnummer" type="text"/>
+</div>
+<div class="grid grid-cols-3 gap-4">
+<div class="space-y-1.5">
+<label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant px-1">PLZ</label>
+<input class="w-full bg-white border-outline-variant rounded-xl px-4 py-3 text-sm focus:ring-primary focus:border-primary" placeholder="12345" type="text"/>
+</div>
+<div class="col-span-2 space-y-1.5">
+<label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant px-1">Ort</label>
+<input class="w-full bg-white border-outline-variant rounded-xl px-4 py-3 text-sm focus:ring-primary focus:border-primary" placeholder="München" type="text"/>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant px-1">Krankenkasse</label>
+<div class="relative">
+<input class="w-full bg-white border-outline-variant rounded-xl px-4 py-3 text-sm focus:ring-primary focus:border-primary" placeholder="Suchen Sie Ihre Krankenkasse..." type="text"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant px-1">Telefonnummer</label>
+<input class="w-full bg-white border-outline-variant rounded-xl px-4 py-3 text-sm focus:ring-primary focus:border-primary" placeholder="+49 123 456789" type="tel"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant px-1">E-Mail Adresse</label>
+<input class="w-full bg-white border-outline-variant rounded-xl px-4 py-3 text-sm focus:ring-primary focus:border-primary" placeholder="beispiel@mail.de" type="email"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant px-1">Passwort festlegen</label>
+<input class="w-full bg-white border-outline-variant rounded-xl px-4 py-3 text-sm focus:ring-primary focus:border-primary" placeholder="Mind. 8 Zeichen" type="password"/>
+<p class="text-[10px] text-on-surface-variant mt-1 px-1">Damit können Sie Ihre Box später jederzeit anpassen.</p>
+</div>
+</form>
+</section>
+</main>
+<!-- Sticky Navigation Footer -->
+<footer class="fixed bottom-0 left-0 w-full z-50 px-6 pb-8 pt-4 bg-background/80 backdrop-blur-xl border-t border-outline-variant/20 shadow-[0_-10px_30px_rgba(44,36,32,0.05)] rounded-t-3xl">
+<div class="max-w-2xl mx-auto flex justify-between items-center gap-4">
+<button class="px-6 py-3.5 text-primary font-bold flex items-center gap-2 transition-all hover:bg-surface-container rounded-xl active:scale-95">
+<span class="material-symbols-outlined text-xl">west</span>
+            Zurück
+        </button>
+<button class="flex-grow bg-editorial-gradient px-8 py-3.5 rounded-xl text-white font-bold shadow-lg shadow-primary/20 transition-all active:scale-95 flex items-center justify-center gap-2">
+            Weiter
+            <span class="material-symbols-outlined text-xl">east</span>
+</button>
+</div>
+</footer>
+</body></html>

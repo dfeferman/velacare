@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html class="light" lang="de"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Velacare - Box Konfigurator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,600;0,700;1,400;1,600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-lowest": "#ffffff",
+              "surface-container-high": "#eae8e5",
+              "secondary-container": "#a5f2d1",
+              "on-primary": "#ffffff",
+              "on-tertiary-container": "#fffbff",
+              "tertiary": "#645a55",
+              "secondary-fixed-dim": "#8ad6b6",
+              "surface-bright": "#fcf9f6",
+              "on-primary-fixed": "#360f00",
+              "inverse-primary": "#ffb596",
+              "surface-variant": "#e5e2df",
+              "on-background": "#1b1c1a",
+              "surface-tint": "#99461d",
+              "on-error-container": "#93000a",
+              "on-secondary-fixed-variant": "#00513b",
+              "primary-fixed": "#ffdbcd",
+              "on-secondary-fixed": "#002116",
+              "inverse-surface": "#31302f",
+              "outline-variant": "#dbc1b7",
+              "on-primary-container": "#fffbff",
+              "primary-fixed-dim": "#ffb596",
+              "background": "#fcf9f6",
+              "on-secondary-container": "#227156",
+              "surface": "#fcf9f6",
+              "on-error": "#ffffff",
+              "outline": "#88726a",
+              "on-tertiary-fixed": "#211a16",
+              "on-primary-fixed-variant": "#7a3006",
+              "primary": "#96441b",
+              "surface-container-highest": "#e5e2df",
+              "surface-container": "#f0edea",
+              "on-tertiary-fixed-variant": "#4e4540",
+              "error": "#ba1a1a",
+              "tertiary-fixed": "#efdfd9",
+              "surface-container-low": "#f6f3f0",
+              "primary-container": "#b55b31",
+              "inverse-on-surface": "#f3f0ed",
+              "on-tertiary": "#ffffff",
+              "on-surface-variant": "#55433b",
+              "secondary": "#196b51",
+              "on-surface": "#1b1c1a",
+              "tertiary-fixed-dim": "#d2c4bd",
+              "error-container": "#ffdad6",
+              "surface-dim": "#dcdad7",
+              "tertiary-container": "#7e726d",
+              "secondary-fixed": "#a5f2d1",
+              "on-secondary": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Newsreader", "serif"],
+              "body": ["Plus Jakarta Sans", "sans-serif"],
+              "label": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .headline-serif { font-family: 'Newsreader', serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-[#fcf9f6] dark:bg-stone-950 sticky top-0 z-50">
+<div class="flex justify-between items-center px-6 py-4 w-full max-w-screen-xl mx-auto">
+<button class="text-[#96441b] dark:text-[#c96b3f] hover:bg-[#f6f3f0] dark:hover:bg-stone-800 transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-serif italic text-3xl text-[#96441b] dark:text-[#c96b3f] tracking-tight">Velacare</h1>
+<div class="w-10"></div> <!-- Spacer for centering -->
+</div>
+<div class="bg-[#f6f3f0] dark:bg-stone-900 h-1 w-full"></div>
+</header>
+<main class="flex-grow max-w-screen-xl mx-auto w-full px-6 py-8 pb-40">
+<!-- Progress Stepper -->
+<section class="mb-12">
+<div class="flex items-center justify-between max-w-2xl mx-auto">
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center text-xs font-bold shadow-sm">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="text-[10px] font-medium uppercase tracking-tighter text-on-surface-variant">Anspruch</span>
+</div>
+<div class="h-px flex-grow bg-secondary/30 mx-4"></div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center text-xs font-bold shadow-sm">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="text-[10px] font-medium uppercase tracking-tighter text-on-surface-variant">Daten</span>
+</div>
+<div class="h-px flex-grow bg-primary/30 mx-4"></div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-bold shadow-md ring-4 ring-primary-fixed">
+                        3
+                    </div>
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary">Box</span>
+</div>
+<div class="h-px flex-grow bg-surface-container-highest mx-4"></div>
+<div class="flex flex-col items-center gap-2 opacity-40">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center text-xs font-bold">
+                        4
+                    </div>
+<span class="text-[10px] font-medium uppercase tracking-tighter text-on-surface-variant">Fertig</span>
+</div>
+</div>
+</section>
+<!-- Intro Section -->
+<div class="max-w-4xl mx-auto text-center mb-10">
+<h2 class="headline-serif italic text-4xl lg:text-5xl text-on-surface-variant leading-tight mb-4">Wähle deine Pflegehilfsmittel</h2>
+<p class="text-on-surface-variant font-body max-w-lg mx-auto">
+                Stelle deine individuelle Box zusammen. Dir stehen monatlich Produkte im Wert von bis zu <span class="font-bold">42,00 €</span> kostenfrei zu.
+            </p>
+</div>
+<!-- Budget & Categories Bar -->
+<div class="sticky top-20 z-40 bg-surface/95 backdrop-blur-xl py-6 space-y-6">
+<!-- Budget Counter -->
+<div class="max-w-4xl mx-auto px-6 py-4 bg-surface-container-low rounded-2xl shadow-sm border border-outline-variant/10">
+<div class="flex justify-between items-center mb-2">
+<span class="text-sm font-semibold text-on-surface-variant">Dein Budget</span>
+<span class="text-lg font-headline font-bold text-primary italic">0,00 € / 42,00 €</span>
+</div>
+<div class="w-full h-3 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-0 rounded-full transition-all duration-500"></div>
+</div>
+</div>
+<!-- Category Filter (Bento Style Chips) -->
+<div class="max-w-4xl mx-auto flex flex-wrap gap-3 justify-center">
+<button class="px-5 py-2.5 rounded-full bg-primary text-on-primary text-sm font-medium shadow-sm transition-all hover:scale-105">Alle Produkte</button>
+<button class="px-5 py-2.5 rounded-full bg-surface-container-highest text-on-surface-variant text-sm font-medium hover:bg-surface-container-high transition-all">Desinfektion</button>
+<button class="px-5 py-2.5 rounded-full bg-surface-container-highest text-on-surface-variant text-sm font-medium hover:bg-surface-container-high transition-all">Handschuhe</button>
+<button class="px-5 py-2.5 rounded-full bg-surface-container-highest text-on-surface-variant text-sm font-medium hover:bg-surface-container-high transition-all">Bettschutz</button>
+<button class="px-5 py-2.5 rounded-full bg-surface-container-highest text-on-surface-variant text-sm font-medium hover:bg-surface-container-high transition-all">Mundschutz</button>
+</div>
+</div>
+<!-- Product Grid (Asymmetric/Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 max-w-6xl mx-auto">
+<!-- Product Card 1 -->
+<div class="group relative bg-surface-container-low rounded-xl p-6 transition-all hover:bg-white hover:shadow-[0_10px_30px_rgba(44,36,32,0.05)] border border-transparent hover:border-outline-variant/10">
+<div class="aspect-square mb-6 rounded-lg overflow-hidden bg-surface-container-high relative">
+<img alt="Händedesinfektionsmittel" class="w-full h-full object-cover mix-blend-multiply opacity-90 group-hover:scale-105 transition-transform duration-500" data-alt="Bottle of medical hand sanitizer on clean background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0_SeX1du_6edAXaqjzxgRm5kgvgx2yPgwuDSWDRCxMqxMOs7EVUDhZdJRuLoZRvU6RpAaSVMXcr_DYg7d-Xc54KBvSiwcIPO1uzczU9YvMhOrbuSPG6kBwrlDsWmXc6x1Zbn3DarFN2zjQPUvsEhyLEcYa4u5Oj7mX77LWofq1fYMzPmmFhma8mWEpAeMsSym7hYhu7civBf0OtM9dq1in-4cfsq7KGQwcrXQZRrjIgSJ2GKAhHDSTaSr45vIyVgzfSJXBjG40jU"/>
+<div class="absolute top-3 right-3 bg-secondary-container text-on-secondary-container text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-widest">Bestseller</div>
+</div>
+<h3 class="font-headline text-xl italic font-semibold mb-1">Händedesinfektion</h3>
+<p class="text-on-surface-variant text-sm mb-4 line-clamp-2">500ml Flasche mit Pumpverschluss für die hygienische Händedesinfektion.</p>
+<div class="flex items-center justify-between">
+<span class="font-bold text-primary">8,95 €</span>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-lg">add</span>
+                        Hinzufügen
+                    </button>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="group relative bg-surface-container-low rounded-xl p-6 transition-all hover:bg-white hover:shadow-[0_10px_30px_rgba(44,36,32,0.05)] border border-transparent hover:border-outline-variant/10 lg:translate-y-6">
+<div class="aspect-square mb-6 rounded-lg overflow-hidden bg-surface-container-high relative">
+<img alt="Einmalhandschuhe" class="w-full h-full object-cover mix-blend-multiply opacity-90 group-hover:scale-105 transition-transform duration-500" data-alt="Box of blue nitrile medical gloves" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiaQxkuBjF16W3qlTCQZXZxdUG3mQXwo3D5KoduxmXxZnXHtCRzSTDlJtEmGPKX0SOSHdh1o9Fw8FXwlBjiw1LWO3GgRcavmChnE0qP0Keiuf1mYuFly9DCTfD2BZrLy-oSWlpLd_ITyy4aBjb67BD7q7zyobSOTRXU0AG1pfiATLX9Z7BOFS-97eKKc63FcbWDKaT-V7gb3Asx-I8WgNWPt4dY5S1OPAL-rOHsAAsX25SNStOHaN8N6JRhfVyOwpFT1XDrdc0GqI"/>
+</div>
+<h3 class="font-headline text-xl italic font-semibold mb-1">Einmalhandschuhe</h3>
+<p class="text-on-surface-variant text-sm mb-4 line-clamp-2">Nitril, puderfrei. 100 Stück pro Packung. Verschiedene Größen verfügbar.</p>
+<div class="flex items-center justify-between">
+<span class="font-bold text-primary">12,50 €</span>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-lg">add</span>
+                        Hinzufügen
+                    </button>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="group relative bg-surface-container-low rounded-xl p-6 transition-all hover:bg-white hover:shadow-[0_10px_30px_rgba(44,36,32,0.05)] border border-transparent hover:border-outline-variant/10">
+<div class="aspect-square mb-6 rounded-lg overflow-hidden bg-surface-container-high relative">
+<img alt="Bettschutzeinlagen" class="w-full h-full object-cover mix-blend-multiply opacity-90 group-hover:scale-105 transition-transform duration-500" data-alt="Absorbent medical bed pads stacked neatly" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKqdOM9svyQwOCoLI1ZA7e7JoGN8_oWCocY9DxT7b6-G6Fpc0oi1W3qPQJOyNK37_DIq3Tu0sa-HO0hHlut5qMPZJv4mG4zQaFf5DkOhaazc1FyXTYSHuOitL4QzBebaU2ZB0CckrBwQhQP9crXA3D31s6b7GS2zHsWmgGq4bEr1BjoFejoMizUVp1EsdedWhVw_mNllR0b1vnWp7HEGMEGbafYAK5oXB3CJXETCYbgrTValD360r6cgONYUlcfN6ax-419LX8m70"/>
+</div>
+<h3 class="font-headline text-xl italic font-semibold mb-1">Bettschutzeinlagen</h3>
+<p class="text-on-surface-variant text-sm mb-4 line-clamp-2">60x90 cm, hochsaugfähig. 25 Stück pro Packung zum Einmalgebrauch.</p>
+<div class="flex items-center justify-between">
+<span class="font-bold text-primary">14,90 €</span>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-lg">add</span>
+                        Hinzufügen
+                    </button>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="group relative bg-surface-container-low rounded-xl p-6 transition-all hover:bg-white hover:shadow-[0_10px_30px_rgba(44,36,32,0.05)] border border-transparent hover:border-outline-variant/10">
+<div class="aspect-square mb-6 rounded-lg overflow-hidden bg-surface-container-high relative">
+<img alt="Flächendesinfektion" class="w-full h-full object-cover mix-blend-multiply opacity-90 group-hover:scale-105 transition-transform duration-500" data-alt="Disinfectant spray bottle on a bright surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsU90TriIQYfdrRKm80fwyUe8JFrP6hfNeGN-YjVHg6Y3PG90snYP2GWdDIiQk3QYhC_j8kB_dOPQHPdhcDTvOvB21CJZhEkZxxylJUJIyn640GrJmhYjM3LKc_j7NJGe-yFHdd_s68HenKV44Xy-pG4ocEvnO77UfVmTdNunPX83xrjo9TV9_Eu5ItxaKxGNOv3s-rA-ghbImSpXEjG8jOKzE3Io6zv4n4Ro7gLZRdH5ptPBrYuSX-eHwH5LGDJ_R486hNOZG728"/>
+</div>
+<h3 class="font-headline text-xl italic font-semibold mb-1">Flächendesinfektion</h3>
+<p class="text-on-surface-variant text-sm mb-4 line-clamp-2">Alkoholfreies Schnell-Desinfektionsmittel für empfindliche Flächen.</p>
+<div class="flex items-center justify-between">
+<span class="font-bold text-primary">9,20 €</span>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-lg">add</span>
+                        Hinzufügen
+                    </button>
+</div>
+</div>
+<!-- Product Card 5 (Visual Break/Promotion Card) -->
+<div class="md:col-span-2 lg:col-span-1 bg-secondary rounded-xl p-8 flex flex-col justify-center text-on-secondary lg:-translate-y-6">
+<span class="material-symbols-outlined text-4xl mb-4" style="font-variation-settings: 'FILL' 1;">eco</span>
+<h3 class="font-headline text-2xl italic mb-3">Nachhaltige Auswahl</h3>
+<p class="text-on-secondary/80 text-sm mb-6">Wir wählen unsere Lieferanten sorgfältig aus, um dir höchste Qualität und beste Verträglichkeit zu garantieren.</p>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3 text-xs">
+<span class="material-symbols-outlined text-lg">verified</span>
+                        Zertifizierte Medizinprodukte
+                    </div>
+<div class="flex items-center gap-3 text-xs">
+<span class="material-symbols-outlined text-lg">local_shipping</span>
+                        Kostenfreier monatlicher Versand
+                    </div>
+</div>
+</div>
+<!-- Product Card 6 -->
+<div class="group relative bg-surface-container-low rounded-xl p-6 transition-all hover:bg-white hover:shadow-[0_10px_30px_rgba(44,36,32,0.05)] border border-transparent hover:border-outline-variant/10">
+<div class="aspect-square mb-6 rounded-lg overflow-hidden bg-surface-container-high relative">
+<img alt="Mundschutz" class="w-full h-full object-cover mix-blend-multiply opacity-90 group-hover:scale-105 transition-transform duration-500" data-alt="Blue surgical face masks on clear surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsmTPBPU-y6egaqS87-lL1BYrURchYY7CY8ewih7cHI40LBNBPEiN1nlWRRXSOyLMyLU1hz1SpnM7ppYNx0vIquxWGAEuNuYHkePWfS1xJYxs00thM1PC1bUnZXGWBK2AnIUz64jj92e_UqWxPWSYZM8rVaGXNnCnfBOIt7YXFjBPo64io0hu2ALsSGtO7NidiUL-KwTsG6U0eqPwZtsz8iNb3bMejJRRDw67sTPI9jPupMZJdAkvssySHat_7KrTcGKfwJaikDTE"/>
+</div>
+<h3 class="font-headline text-xl italic font-semibold mb-1">Mundschutz (OP)</h3>
+<p class="text-on-surface-variant text-sm mb-4 line-clamp-2">3-lagig, Typ IIR. 50 Stück pro Packung mit weichen Ohrschlaufen.</p>
+<div class="flex items-center justify-between">
+<span class="font-bold text-primary">6,50 €</span>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-lg">add</span>
+                        Hinzufügen
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Sticky Footer (Selection Summary) -->
+<footer class="fixed bottom-0 left-0 w-full z-50">
+<div class="bg-white/80 dark:bg-stone-900/80 backdrop-blur-md shadow-[0_-10px_30px_rgba(44,36,32,0.05)] rounded-t-[24px]">
+<div class="max-w-screen-xl mx-auto px-6 py-6 lg:py-8">
+<div class="flex flex-col md:flex-row items-center justify-between gap-6">
+<!-- Left: Current Selection Status -->
+<div class="flex items-center gap-4">
+<div class="flex -space-x-3 overflow-hidden">
+<!-- Placeholder for selected product avatars if any were added -->
+<div class="inline-block h-10 w-10 rounded-full ring-2 ring-white bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">inventory_2</span>
+</div>
+</div>
+<div class="text-left">
+<p class="text-[11px] font-medium tracking-wide uppercase text-on-surface-variant">Deine Auswahl</p>
+<p class="text-sm font-semibold text-primary">Keine Produkte ausgewählt</p>
+</div>
+</div>
+<!-- Center: Total -->
+<div class="text-center md:text-right">
+<p class="text-[11px] font-medium tracking-wide uppercase text-on-surface-variant">Gesamtsumme (Monat)</p>
+<p class="text-3xl font-headline italic font-bold text-on-surface">0,00 €</p>
+</div>
+<!-- Right: Actions -->
+<div class="flex items-center gap-4 w-full md:w-auto">
+<button class="flex-1 md:flex-none px-8 py-3.5 rounded-xl bg-surface-container-highest text-primary font-bold text-sm transition-all hover:bg-surface-container-high active:scale-95">
+                            Zurück
+                        </button>
+<button class="flex-1 md:flex-none px-12 py-3.5 rounded-xl bg-primary text-on-primary font-bold text-sm shadow-sm transition-all hover:shadow-md hover:scale-[1.02] active:scale-95 disabled:opacity-50" disabled="">
+                            Weiter
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<!-- BottomNavBar (Hidden on desktop, mapped to JSON schema) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-white/80 dark:bg-stone-900/80 backdrop-blur-md rounded-t-[24px] shadow-[0_-10px_30px_rgba(44,36,32,0.05)] translate-y-full opacity-0">
+<!-- Hidden because this is a transactional funnel page as per "Shell Visibility & Relevance" rule -->
+<div class="flex flex-col items-center justify-center text-[#55433b] dark:text-stone-400 p-2">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="font-sans text-[11px] font-medium tracking-wide uppercase">Anspruch</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#55433b] dark:text-stone-400 p-2">
+<span class="material-symbols-outlined">person_edit</span>
+<span class="font-sans text-[11px] font-medium tracking-wide uppercase">Daten</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-[#96441b] text-white rounded-2xl p-3 scale-110 -translate-y-2 transition-all">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-sans text-[11px] font-medium tracking-wide uppercase">Box</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#55433b] dark:text-stone-400 p-2">
+<span class="material-symbols-outlined">check_circle</span>
+<span class="font-sans text-[11px] font-medium tracking-wide uppercase">Fertig</span>
+</div>
+</nav>
+</body></html>
