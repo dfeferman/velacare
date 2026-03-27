@@ -33,9 +33,21 @@ Produktionsbereite Infrastruktur-Basis für Velacare: Supabase verbunden, vollst
 ## Infrastruktur
 
 **Supabase:**
-- Ein Projekt (Free Tier) für Development — wird später zu Production oder per Prisma-Migration auf ein neues Prod-Projekt übertragen
+- Ein Projekt (Free Tier) für Development
 - Region: EU Frankfurt (DSGVO)
 - Rolle wird in Supabase Auth `app_metadata.rolle` gespeichert → im JWT enthalten, kein DB-Abfrage in Middleware nötig
+
+**Rollen — Single Source of Truth:**
+- **DB (`profiles.rolle`) ist autoritativ** — sie ist der offizielle Zustand
+- **JWT (`app_metadata.rolle`) ist Cache** — für schnelle Middleware-Prüfungen ohne DB-Roundtrip
+- Bei Rollenänderung: Admin setzt neue Rolle in DB + invalidiert Session des Nutzers (Force-Logout via Supabase Admin API) → nächste Session erhält aktuellen JWT
+- Für Phase 1 sind Rollenänderungen nicht vorgesehen (Rollen werden einmalig bei Anlage gesetzt und ändern sich nicht)
+
+**Deployment-Pfad Dev → Production:**
+- Development läuft gegen das bestehende Free-Tier-Projekt
+- Bei Launch: neues Supabase-Projekt (Prod) anlegen, `prisma migrate deploy` spielt alle Migrationen sauber durch
+- Migrations sind in Git versioniert → Umgebungen sind jederzeit reproduzierbar
+- Secrets werden pro Umgebung getrennt in Vercel Environment Variables gepflegt (nie `.env` committen)
 
 **Environment:**
 ```
@@ -67,6 +79,18 @@ Supabase PostgreSQL (EU-Frankfurt)
 ```
 
 **Trennung:** Prisma greift ausschließlich auf `public.*` zu. `auth.*` wird nie direkt per Prisma abgefragt — nur via Supabase Auth Client.
+
+**Server-only Datenzugriff:** Der Supabase Client wird im Browser ausschließlich für Auth-Operationen verwendet (Login, Logout, Session lesen). Alle Datenbankzugriffe laufen server-side über Prisma. Supabase Row Level Security (RLS) ist daher nicht erforderlich — die Zugriffskontrolle liegt vollständig in den Server Components und Server Actions.
+
+**Mehrschichtige Autorisierung:** Middleware allein reicht nicht. Jede Server Action und jeder API-Endpunkt prüft die Session und Rolle eigenständig:
+```typescript
+// Pflicht-Pattern in jeder Server Action / Route Handler
+const { data: { user } } = await supabase.auth.getUser()
+if (!user || user.app_metadata.rolle !== 'admin') {
+  throw new Error('Unauthorized')
+}
+```
+Middleware schützt das Routing — Server Guards schützen die Businesslogik.
 
 ---
 
