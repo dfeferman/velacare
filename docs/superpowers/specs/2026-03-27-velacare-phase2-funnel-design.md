@@ -2,7 +2,7 @@
 
 > **Entstehung:** Skill: superpowers:brainstorming
 > **Datum:** 27. März 2026
-> **Status:** Approved
+> **Status:** Approved (überarbeitet nach Architektur-Review 2026-03-28)
 
 ---
 
@@ -50,9 +50,11 @@ Den bestehenden `/beantragen`-Funnel durch die v2-UI ersetzen und gleichzeitig m
 
 | Feld | Typ | Wo |
 |---|---|---|
+| `pflegegrad` | `1 \| 2 \| 3 \| 4 \| 5` | Step 2 |
 | `versicherungsnummer` | string | Step 2 |
+| `hausnummer` | string | Step 2 (war bisher mit Straße zusammen) |
 | `adresszusatz` | string (optional) | Step 2 |
-| `versorgungssituation` | `'erstversorgung' \| 'wechsel'` | Step 2 |
+| `versorgungssituation` | `'erstversorgung' \| 'wechsel'` (Prisma Enum) | Step 2 |
 | `beratung` | boolean | Step 2 |
 | `lieferadresse_abweichend` | boolean | Step 2 |
 | `lieferadresse` | `{ strasse, hausnummer, plz, ort }` (optional) | Step 2 |
@@ -65,45 +67,77 @@ Den bestehenden `/beantragen`-Funnel durch die v2-UI ersetzen und gleichzeitig m
 /beantragen (page.tsx — 'use client')
   ├── Step1Produktauswahl   → onWeiter(produkte: BoxProdukt[])
   ├── Step2Daten            → onWeiter(data: Step2Data)
-  ├── Step3Bestaetigung     → ruft registerKunde(step1, step2) auf
+  ├── Step3Bestaetigung     → hält liefertag lokal, ruft registerKunde(produkte, liefertag, step2) auf
   └── redirect → /beantragen/danke
+```
+
+### Gemeinsames Validierungsschema
+
+**Datei:** `src/lib/schemas/register.ts`
+
+Wird sowohl von Step2 (Client-Validierung) als auch von `registerKunde()` (Server-Validierung) importiert. Single Source of Truth für alle Felder und Regeln.
+
+```typescript
+import { z } from 'zod'
+
+export const registerSchema = z.object({
+  // Persönliche Daten
+  vorname:             z.string().min(2, 'Mindestens 2 Zeichen'),
+  nachname:            z.string().min(2, 'Mindestens 2 Zeichen'),
+  geburtsdatum:        z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Ungültiges Datum (YYYY-MM-DD)'),
+  pflegegrad:          z.number().int().min(1).max(5),
+  krankenkasse:        z.string().min(2, 'Pflichtfeld'),
+  versicherungsnummer: z.string().min(6, 'Ungültige Versicherungsnummer'),
+  // Adresse
+  strasse:             z.string().min(2, 'Pflichtfeld'),
+  hausnummer:          z.string().min(1, 'Pflichtfeld'),
+  adresszusatz:        z.string().optional(),
+  plz:                 z.string().regex(/^\d{5}$/, '5-stellige PLZ'),
+  ort:                 z.string().min(2, 'Pflichtfeld'),
+  // Kontakt
+  telefon:             z.string().min(6, 'Pflichtfeld'),
+  // Versorgung
+  versorgungssituation: z.enum(['erstversorgung', 'wechsel']),
+  beratung:            z.boolean(),
+  // Lieferadresse
+  lieferadresse_abweichend: z.boolean(),
+  lieferadresse: z.object({
+    strasse:    z.string().min(2),
+    hausnummer: z.string().min(1),
+    plz:        z.string().regex(/^\d{5}$/),
+    ort:        z.string().min(2),
+  }).optional(),
+  // Account
+  email:   z.string().email('Gültige E-Mail-Adresse'),
+  passwort: z.string().min(8, 'Mindestens 8 Zeichen'),
+})
+
+export type Step2Data = z.infer<typeof registerSchema>
 ```
 
 ### State Management (`page.tsx`)
 
-`page.tsx` bleibt ein Client Component und hält den gesamten Funnel-State:
+`page.tsx` bleibt ein Client Component und hält den gesamten Funnel-State. `Step2Data` wird aus `registerSchema` inferiert (kein doppelter Typ).
 
 ```typescript
-type Step2Data = {
-  vorname: string
-  nachname: string
-  geburtsdatum: string
-  pflegegrad: 1 | 2 | 3 | 4 | 5
-  krankenkasse: string
-  versicherungsnummer: string
-  strasse: string
-  hausnummer: string
-  adresszusatz?: string
-  plz: string
-  ort: string
-  lieferadresse_abweichend: boolean
-  lieferadresse?: { strasse: string; hausnummer: string; plz: string; ort: string }
-  telefon: string
-  email: string
-  passwort: string
-  versorgungssituation: 'erstversorgung' | 'wechsel'
-  beratung: boolean
-}
-
 // State in page.tsx
-const [schritt, setSchritt] = useState<1 | 2 | 3 | 4>(1)
+const [schritt, setSchritt] = useState<1 | 2 | 3>(1)
 const [step1, setStep1] = useState<{ produkte: BoxProdukt[] } | null>(null)
 const [step2, setStep2] = useState<Step2Data | null>(null)
 ```
 
 - Step1 `onWeiter(produkte)` → setzt `step1`, geht zu Schritt 2
 - Step2 `onWeiter(data)` → setzt `step2`, geht zu Schritt 3
-- Step3 erhält `step1` + `step2` als Props, ruft Server Action auf
+- Step3 hält `liefertag` lokal (`useState<number>(1)`), ruft Server Action auf
+- Die Danke-Seite ist eine eigene statische Route `/beantragen/danke` (kein Schritt 4 im State)
+
+### Datenschutz-Regeln (Client-State)
+
+Das Passwort liegt kurzzeitig im Client-State von `page.tsx`. Explizite Regeln:
+- `passwort` darf **niemals geloggt** werden (kein `console.log(step2)`)
+- `versicherungsnummer` darf **niemals geloggt** werden
+- `pflegegrad` und `geburtsdatum` dürfen **niemals in Fehlermeldungen oder Analytics** erscheinen
+- Fehlermeldungen dürfen **keine Feldwerte** enthalten, nur Feldnamen
 
 ---
 
@@ -111,74 +145,100 @@ const [step2, setStep2] = useState<Step2Data | null>(null)
 
 Datei: `src/app/actions/register.ts`
 
-Wird von Step3 bei Klick auf "Jetzt kostenfrei beantragen" aufgerufen.
+Wird von Step3 bei Klick auf "Jetzt kostenfrei beantragen" aufgerufen. `liefertag` wird in Step3 lokal gehalten (1–28, Standardwert 1) und beim Submit übergeben.
 
 ### Ablauf
 
 ```typescript
 'use server'
 
-// liefertag wird in Step 3 (Bestätigung) ausgewählt, nicht in Step 1
+import { registerSchema, type Step2Data } from '@/lib/schemas/register'
+
 export async function registerKunde(
   produkte: BoxProdukt[],
   liefertag: number,
   step2: Step2Data
 ): Promise<{ error?: string }> {
 
+  // 0. Serverseitige Validierung — kein Trust auf Client-Daten
+  const result = registerSchema.safeParse(step2)
+  if (!result.success) return { error: 'Ungültige Eingabedaten' }
+  const d = result.data
+
   // 1. Supabase signUp
   const supabase = createClient()
-  const { data, error } = await supabase.auth.signUp({
-    email: step2.email,
-    password: step2.passwort,
+  const { data: authData, error } = await supabase.auth.signUp({
+    email: d.email,
+    password: d.passwort,
   })
   if (error) return { error: error.message }
-  const userId = data.user!.id
+  const userId = authData.user!.id
 
-  // 2. app_metadata.rolle = 'kunde' via Admin API (Service Role Key)
+  // 2. app_metadata.rolle = 'kunde' via Admin API (Service Role Key — nur server-side)
   const admin = createAdminClient()
   await admin.auth.admin.updateUserById(userId, {
     app_metadata: { rolle: 'kunde' },
   })
 
-  // 3. KundenProfile upsert (idempotent gegen DB-Trigger-Race)
-  await prisma.kundenProfile.upsert({
-    where: { profileId: userId },
-    create: {
-      profileId: userId,
-      vorname: step2.vorname,
-      nachname: step2.nachname,
-      geburtsdatum: new Date(step2.geburtsdatum),
-      pflegegrad: step2.pflegegrad,
-      krankenkasse: step2.krankenkasse,
-      versicherungsnummer: step2.versicherungsnummer,
-      strasse: step2.strasse,
-      hausnummer: step2.hausnummer,
-      adresszusatz: step2.adresszusatz,
-      plz: step2.plz,
-      ort: step2.ort,
-      versorgungssituation: step2.versorgungssituation,
-      beratung: step2.beratung,
-    },
-    update: { /* same fields */ },
-  })
+  // 3–5. Prisma-Transaktion: alle DB-Writes atomar
+  await prisma.$transaction([
+    // 3. KundenProfile upsert (idempotent gegen DB-Trigger-Race + Retry)
+    prisma.kundenProfile.upsert({
+      where: { profileId: userId },
+      create: {
+        profileId: userId,
+        vorname:             d.vorname,
+        nachname:            d.nachname,
+        geburtsdatum:        new Date(d.geburtsdatum),
+        pflegegrad:          d.pflegegrad,
+        krankenkasse:        d.krankenkasse,
+        versicherungsnummer: d.versicherungsnummer,
+        strasse:             d.strasse,
+        hausnummer:          d.hausnummer,
+        adresszusatz:        d.adresszusatz,
+        plz:                 d.plz,
+        ort:                 d.ort,
+        versorgungssituation: d.versorgungssituation,
+        beratung:            d.beratung,
+        lieferadresse_json:  d.lieferadresse_abweichend ? d.lieferadresse : null,
+      },
+      update: {
+        vorname:             d.vorname,
+        nachname:            d.nachname,
+        geburtsdatum:        new Date(d.geburtsdatum),
+        pflegegrad:          d.pflegegrad,
+        krankenkasse:        d.krankenkasse,
+        versicherungsnummer: d.versicherungsnummer,
+        strasse:             d.strasse,
+        hausnummer:          d.hausnummer,
+        adresszusatz:        d.adresszusatz,
+        plz:                 d.plz,
+        ort:                 d.ort,
+        versorgungssituation: d.versorgungssituation,
+        beratung:            d.beratung,
+        lieferadresse_json:  d.lieferadresse_abweichend ? d.lieferadresse : null,
+      },
+    }),
 
-  // 4. BoxKonfiguration erstellen
-  await prisma.boxKonfiguration.create({
-    data: {
-      kundeId: userId,
-      liefertag,
-      produkte, // JSONB snapshot
-      status: 'aktiv',
-    },
-  })
+    // 4. BoxKonfiguration — initialer Snapshot
+    prisma.boxKonfiguration.create({
+      data: {
+        kundeId:  userId,
+        liefertag,
+        produkte, // JSONB snapshot, führendes Modell für Phase 2
+        status:   'aktiv',
+      },
+    }),
 
-  // 5. Einwilligungen speichern
-  await prisma.einwilligung.createMany({
-    data: [
-      { profileId: userId, typ: 'agb', version: '1.0', zugestimmtAm: new Date() },
-      { profileId: userId, typ: 'dsgvo', version: '1.0', zugestimmtAm: new Date() },
-    ],
-  })
+    // 5. Einwilligungen — skipDuplicates sichert Idempotenz bei Retry
+    prisma.einwilligung.createMany({
+      data: [
+        { profileId: userId, typ: 'agb',   version: '1.0', zugestimmtAm: new Date() },
+        { profileId: userId, typ: 'dsgvo',  version: '1.0', zugestimmtAm: new Date() },
+      ],
+      skipDuplicates: true, // Unique Constraint: profileId + typ + version
+    }),
+  ])
 
   redirect('/beantragen/danke')
 }
@@ -186,8 +246,16 @@ export async function registerKunde(
 
 ### Fehlerbehandlung
 
-- E-Mail bereits vergeben → Supabase gibt Fehler zurück → `{ error: 'Email already registered' }` → Step3 zeigt Fehlermeldung, kein Redirect, kein DB-Write
-- Netzwerkfehler → gleicher Weg → Fehlermeldung in Step3
+| Fehlerfall | Verhalten |
+|---|---|
+| E-Mail bereits vergeben | Supabase-Fehler → `{ error: 'Diese E-Mail-Adresse ist bereits registriert.' }` → Step3 zeigt Fehlermeldung, kein Redirect, kein DB-Write |
+| Ungültige Eingaben (Schema) | `{ error: 'Ungültige Eingabedaten' }` → ohne Felddetails (kein Leak sensibler Werte) |
+| Prisma-Transaktion fehlgeschlagen | `{ error: 'Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut.' }` |
+| Netzwerkfehler | Gleicher Weg → Fehlermeldung in Step3 |
+
+**Doppelklick-Schutz:** Button wird beim ersten Klick deaktiviert (Loading State). `skipDuplicates: true` bei Einwilligungen schützt zusätzlich serverseitig.
+
+**Bekannte Einschränkung Phase 2:** Wenn Schritt 2 (Admin API: Rolle setzen) erfolgreich war, aber die Prisma-Transaktion fehlschlägt, existiert ein Auth-Account ohne Kundenprofil. In Phase 2 wird dieser Fall manuell behandelt (Support-Eskalation). Vollständige Compensation-Logik → Phase 6.
 
 ---
 
@@ -238,21 +306,48 @@ Das v2 Design-System wird **ausschließlich für `/beantragen`** eingeführt. Al
 
 Phase 1 hat `KundenProfile` ohne `versicherungsnummer`, `hausnummer`, `adresszusatz`, `versorgungssituation`, `beratung`. Phase 2 ergänzt diese Felder via Prisma Migration.
 
-**Neue Felder in `KundenProfile`:**
+### Neuer Enum
+
 ```prisma
-versicherungsnummer  String?     @db.VarChar(20)
-hausnummer           String      @db.VarChar(10)
-adresszusatz         String?     @db.VarChar(100)
-versorgungssituation String      @default("erstversorgung") @db.VarChar(20)
-beratung             Boolean     @default(false)
-lieferadresse_json   Json?       // abweichende Lieferadresse als JSONB
+enum VersorgungsSituation {
+  erstversorgung
+  wechsel
+}
 ```
+
+### Neue Felder in `KundenProfile`
+
+```prisma
+versicherungsnummer  String?              @db.VarChar(20)
+hausnummer           String               @db.VarChar(10)
+adresszusatz         String?              @db.VarChar(100)
+versorgungssituation VersorgungsSituation @default(erstversorgung)
+beratung             Boolean              @default(false)
+lieferadresse_json   Json?                // abweichende Lieferadresse als JSONB
+```
+
+### Unique Constraint auf `Einwilligung`
+
+```prisma
+model Einwilligung {
+  // ... bestehende Felder ...
+  @@unique([profileId, typ, version])
+}
+```
+
+Verhindert doppelte Einwilligungen bei Retry / Doppelklick.
 
 ---
 
-## Neue Utility-Datei
+## Neue Dateien
 
-`src/lib/supabase/admin.ts` — neu in Phase 2 (nicht in Phase 1 enthalten):
+### `src/lib/schemas/register.ts`
+
+Gemeinsames Zod-Schema (siehe Abschnitt Architektur). Wird von Client (Step2) und Server (`registerKunde()`) importiert.
+
+### `src/lib/supabase/admin.ts`
+
+Neu in Phase 2 (nicht in Phase 1 enthalten):
 
 ```typescript
 import { createClient } from '@supabase/supabase-js'
@@ -265,7 +360,11 @@ export function createAdminClient() {
 }
 ```
 
-Wird nur in Server Actions verwendet. `SUPABASE_SERVICE_ROLE_KEY` darf nie im Browser landen.
+**Governance-Regeln für `createAdminClient()`:**
+- Darf **ausschließlich in Server Actions und Route Handlers** importiert werden
+- Darf **niemals in Client Components** importiert werden
+- `SUPABASE_SERVICE_ROLE_KEY` muss in Vercel als Server-only Env-Variable konfiguriert sein (kein `NEXT_PUBLIC_`-Präfix)
+- Jeder Aufruf von `admin.auth.admin.*` muss im AuditLog landen (Phase 6)
 
 ---
 
@@ -281,12 +380,16 @@ Wird nur in Server Actions verwendet. `SUPABASE_SERVICE_ROLE_KEY` darf nie im Br
 
 Nach Abschluss ist folgendes funktionsfähig und testbar:
 
-- [ ] v2 Funnel-UI unter `/beantragen` (alle 4 Schritte)
+- [ ] `src/lib/schemas/register.ts` — gemeinsames Zod-Schema für Client + Server
+- [ ] v2 Funnel-UI unter `/beantragen` (alle 3 Schritte + Danke-Seite)
 - [ ] Step1: Produktauswahl mit Budget-Tracker
-- [ ] Step2: Alle neuen Felder vorhanden, Validierung funktioniert
-- [ ] Step3: Zeigt echte Nutzerdaten, Konto-Hinweis, AGB/DSGVO
-- [ ] Step3: `registerKunde()` Server Action erstellt echten Account
-- [ ] Step3: Fehlerbehandlung bei bereits vorhandener E-Mail
+- [ ] Step2: Alle neuen Felder vorhanden, Client-Validierung via `registerSchema`
+- [ ] Step3: Zeigt echte Nutzerdaten, `liefertag`-Auswahl, Konto-Hinweis, AGB/DSGVO
+- [ ] Step3: `registerKunde()` Server Action mit serverseitiger Validierung
+- [ ] Step3: Prisma-Transaktion für atomare DB-Writes
+- [ ] Step3: Fehlerbehandlung (E-Mail vergeben, Validierungsfehler, Transaktionsfehler)
+- [ ] Step3: Doppelklick-Schutz (Button deaktiviert während Verarbeitung)
 - [ ] Danke-Seite mit E-Mail-Bestätigungs-Hinweis
-- [ ] Neue Prisma-Migration für zusätzliche KundenProfile-Felder
+- [ ] Neue Prisma-Migration: neue KundenProfile-Felder + `VersorgungsSituation`-Enum + Unique Constraint auf Einwilligung
+- [ ] `src/lib/supabase/admin.ts` — Service Role Client (server-only)
 - [ ] Alle anderen Seiten weiterhin funktionsfähig (Mock unverändert)
