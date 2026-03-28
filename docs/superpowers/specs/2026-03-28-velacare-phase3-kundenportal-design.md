@@ -133,12 +133,14 @@ export async function getKundenEinstellungen(userId: string) {
 ```
 1. Auth: supabase.auth.getUser() → userId (kein User → Unauthorized-Error)
 2. KundenProfile.id holen via user_id
-3. BoxKonfiguration updaten:
+3. BoxKonfiguration updaten — WHERE: { kunde_id: profile.id } (niemals eine client-seitige ID verwenden):
    - produkte: produkte as object  (JSONB-Snapshot)
-   - gesamtpreis: Summe der Produktpreise
+   - gesamtpreis: Summe der Produktpreise (Σ produkt.preis × produkt.menge)
    - geaendert_am: auto via @updatedAt
 4. Gibt { error?: string } zurück
 ```
+
+**Ownership-Invariante:** `BoxKonfiguration.kunde_id @unique` im Phase-1-Schema garantiert genau eine Box pro Kunde. Das WHERE `{ kunde_id: profile.id }` ist die einzige korrekte Lookup-Strategie — kein Client-seitiger BoxId-Parameter.
 
 ### `createAnfrage(kategorie: AnfrageKategorie, nachricht: string)`
 
