@@ -12,7 +12,7 @@
 | 1 | Foundation (Supabase, Prisma, Auth, Middleware) | ✅ | ✅ | ⏳ |
 | 2 | Echter Funnel (v2 UI + Signup + DB-Writes) | ✅ | ✅ | ⏳ |
 | 3 | Kundenportal (echte Daten statt Mock) | ✅ | ✅ | — |
-| 4 | Admin-Panel (echte Daten statt Mock) | — | — | — |
+| 4 | Admin-Panel (echte Daten statt Mock) | ✅ | — | — |
 | 5 | E-Mail & Jobs (Resend, pg_cron) | — | — | — |
 | 6 | Sicherheit & DSGVO (Encryption, AuditLog, MFA) | — | — | — |
 
@@ -35,7 +35,7 @@
 - Plan: `docs/superpowers/plans/2026-03-28-phase3-kundenportal.md`
 
 ### Phase 4 — Admin
-- Spec: —
+- Spec: `docs/superpowers/specs/2026-03-28-velacare-phase4-admin-design.md`
 - Plan: —
 
 ### Phase 5 — E-Mail & Jobs
