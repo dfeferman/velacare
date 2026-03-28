@@ -36,10 +36,10 @@ Die 6 bestehenden `/admin/*`-Seiten von statischen Mock-Daten auf echte Prisma-D
 Browser
   ↓
 /admin/* Server Components
-  ↓  supabase.auth.getUser() (Defense in Depth — Middleware schützt Routing bereits)
+  ↓  requireAdmin()  ← prüft Authentication + Admin-Rolle
   ↓
 src/lib/dal/admin.ts      ← 6 Lese-Funktionen (eine pro Seite)
-src/app/actions/admin.ts  ← 4 Produkt-Write-Actions
+src/app/actions/admin.ts  ← 4 Produkt-Write-Actions (rufen requireAdmin() auf)
   ↓
 Prisma → Supabase PostgreSQL
 ```
@@ -49,6 +49,26 @@ Prisma → Supabase PostgreSQL
 - Client Components nur wo State nötig (Produkte Inline-Edit, Anfragen Demo-Antwort)
 - DAL-Funktionen brauchen kein `userId` — Admin sieht alle Daten (kein Row-Level-Filter)
 - Kein `useEffect`, kein Browser-Fetch für Datenbankdaten
+
+**`requireAdmin()` — `src/lib/auth/require-admin.ts`:**
+
+```typescript
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
+
+export async function requireAdmin() {
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/login')
+  if (user.app_metadata?.role !== 'admin') redirect('/')
+  return user
+}
+```
+
+- Wird in jedem `/admin/*` Server Component aufgerufen (vor DAL-Call)
+- Wird in jeder Admin Server Action aufgerufen (vor DB-Write)
+- DAL-Funktionen selbst rufen es **nicht** auf — sie sind rein datenbanknahe Hilfsfunktionen
+- `app_metadata.role` wird über Supabase Dashboard oder Service Role gesetzt (nicht vom User änderbar)
 
 ---
 
@@ -129,35 +149,41 @@ export async function getAdminProdukte() {
 
 ## Server Actions: `src/app/actions/admin.ts`
 
+Jede Action ruft als ersten Schritt `requireAdmin()` auf — schützt gegen direkte Action-Aufrufe ohne Middleware.
+
 ### `createProdukt()`
 
 ```
-1. Produkt.create mit Defaults:
+1. requireAdmin()
+2. Produkt.create mit Defaults:
    name: 'Neues Produkt', preis: 5.00, kategorie: 'Sonstiges',
    beschreibung: 'Beschreibung', bild_url: '', hersteller: '—', aktiv: true
-2. Gibt { error?: string } zurück
+3. Gibt { error?: string } zurück
 ```
 
 ### `updateProduktName(id: string, name: string)`
 
 ```
-1. Validation: name.trim().length >= 1
-2. Produkt.update({ where: { id }, data: { name: name.trim() } })
-3. Gibt { error?: string } zurück
+1. requireAdmin()
+2. Validation: name.trim().length >= 1
+3. Produkt.update({ where: { id }, data: { name: name.trim() } })
+4. Gibt { error?: string } zurück
 ```
 
 ### `toggleProduktAktiv(id: string, aktiv: boolean)`
 
 ```
-1. Produkt.update({ where: { id }, data: { aktiv } })
-2. Gibt { error?: string } zurück
+1. requireAdmin()
+2. Produkt.update({ where: { id }, data: { aktiv } })
+3. Gibt { error?: string } zurück
 ```
 
 ### `deleteProdukt(id: string)`
 
 ```
-1. Produkt.delete({ where: { id } })
-2. Gibt { error?: string } zurück
+1. requireAdmin()
+2. Produkt.delete({ where: { id } })
+3. Gibt { error?: string } zurück
 ```
 
 **Fehlerbehandlung:** Bei fehlgeschlagenen Writes gibt die Action `{ error: '...' }` zurück. Das Client Component zeigt die Fehlermeldung inline.
@@ -253,6 +279,8 @@ ProdukteClient
 ```
 src/
   lib/
+    auth/
+      require-admin.ts            NEW — requireAdmin() Helper
     dal/
       admin.ts                    NEW — 6 Lese-Funktionen
   app/
