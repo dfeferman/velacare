@@ -1,0 +1,23 @@
+{
+  "outDir": "wireframes/v2",
+  "projectId": "2806271559993600874",
+  "projectTitle": "Velacare Brand Guide",
+  "screens": [
+    {
+      "id": "104688026fd94af7b129799477bf23f0",
+      "title": "Velacare Home (Ethos Desktop Exakt)"
+    },
+    {
+      "id": "42dc2c83c1a248f1ac38a37b01b98856",
+      "title": "Schritt 1: Produktauswahl (Ohne Preise)"
+    },
+    {
+      "id": "2a7453502ac546e8aa5c6076da5bb838",
+      "title": "Schritt 2: Ihre Daten (Ethos Update)"
+    },
+    {
+      "id": "11843d61a15048c1b0cb78cee0c889c4",
+      "title": "Bestellschritt 3: Bestätigung (Ethos Final)"
+    }
+  ]
+}

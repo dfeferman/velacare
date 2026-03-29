@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html class="light" lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Velacare — Linde &amp; Lavendel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: false,
+    theme: {
+      extend: {
+        colors: {
+          /* ── Linde & Lavendel Palette ── */
+          "primary":            "#4A7259",   /* sage grün   */
+          "primary-mid":        "#5E8C6E",
+          "primary-light":      "#E8F2EB",
+          "primary-pale":       "#F0F6F2",
+          "primary-dark":       "#375E46",
+          "secondary":          "#9E5A35",   /* terrakotta  */
+          "secondary-light":    "#D4906E",
+          "secondary-pale":     "#F7EEE7",
+          "dark":               "#261E17",   /* warm dunkel */
+          "background":         "#FAF6EF",   /* warmes creme */
+          "surface":            "#FFFDF7",   /* warmes weiß  */
+          "outline":            "#D5CAB9",
+          "on-surface":         "#261E17",
+          "on-surface-variant": "#6B5747",
+          /* Rechner-Sektion (ehemals bg-dark) */
+          "section-warm":       "#EEF4F1",
+          "section-terra":      "#F5EDE5",
+        },
+        fontFamily: {
+          "headline": ["Newsreader", "serif"],
+          "body":     ["DM Sans", "sans-serif"],
+        },
+        borderRadius: {
+          "DEFAULT": "0.5rem",
+          "lg":      "0.5rem",
+          "xl":      "0.75rem",
+          "2xl":     "1rem",
+          "3xl":     "1.5rem",
+          "full":    "9999px",
+        },
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  /* Arch-shaped photo frame — ersetzt blob */
+  .arch-frame {
+    border-radius: 50% 50% 14px 14px / 56% 56% 14px 14px;
+  }
+  /* Subtle floating animation */
+  @keyframes float {
+    0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+    50%       { transform: translate(-50%, -50%) translateY(-8px); }
+  }
+  .photo-float {
+    animation: float 7s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%       { transform: scale(1.5); opacity: 0.5; }
+  }
+  .eyebrow-dot { animation: pulse-dot 2.5s ease-in-out infinite; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-up { animation: fadeUp 0.5s ease forwards; }
+
+  /* Warm mesh background für die Hero-Right-Seite */
+  .hero-right-bg {
+    background-color: #FAF6EF;
+    background-image:
+      radial-gradient(at 30% 40%, rgba(74,114,89,0.07) 0px, transparent 55%),
+      radial-gradient(at 75% 70%, rgba(158,90,53,0.05) 0px, transparent 50%);
+  }
+  /* Step circle */
+  .step-num-circle {
+    width: 24px; height: 24px; border-radius: 50%;
+    background-color: #4A7259; color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; flex-shrink: 0;
+  }
+  /* Decorative rule beneath headings */
+  .deco-rule {
+    width: 48px; height: 2px;
+    background: linear-gradient(90deg, #9E5A35, #D4906E);
+    border-radius: 1px;
+  }
+  body { min-height: 100dvh; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/20">
+
+<!-- ════════════════════════════════════════════════
+     1. NAV
+════════════════════════════════════════════════ -->
+<nav class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-xl border-b border-outline/40 shadow-sm shadow-[#4A7259]/5">
+  <div class="flex justify-between items-center px-6 py-3 w-full max-w-7xl mx-auto">
+    <!-- Logo: identische SVG aus Wireframe, Farben auf Sage umgestellt -->
+    <a class="flex items-center gap-2" href="#">
+      <svg fill="none" height="24" viewBox="0 0 80 80" width="24">
+        <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" fill="none" stroke="#4A7259" stroke-linecap="round" stroke-width="9"/>
+        <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" fill="none" stroke="#4A7259" stroke-linecap="round" stroke-width="9"/>
+        <circle cx="15" cy="70" fill="#4A7259" r="6"/>
+        <circle cx="65" cy="70" fill="#4A7259" r="6"/>
+        <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#9E5A35"/>
+      </svg>
+      <span class="text-xl font-headline font-bold text-dark tracking-tight">Velacare</span>
+    </a>
+    <div class="hidden md:flex gap-6 text-sm font-medium text-on-surface-variant">
+      <a class="hover:text-primary transition-colors" href="#">Wie es funktioniert</a>
+      <a class="hover:text-primary transition-colors" href="#">Produkte</a>
+      <a class="hover:text-primary transition-colors" href="#">Über uns</a>
+      <a class="hover:text-primary transition-colors" href="#">FAQ</a>
+    </div>
+    <button class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-primary-dark transition-all active:scale-95 shadow-sm shadow-primary/20">
+      Jetzt beantragen
+    </button>
+  </div>
+</nav>
+
+<main class="pt-[52px]">
+
+  <!-- ════════════════════════════════════════════════
+       2. HERO
+  ════════════════════════════════════════════════ -->
+  <section class="grid grid-cols-1 lg:grid-cols-2 min-h-[calc(100vh-52px)] max-h-[860px]">
+
+    <!-- Left: Content -->
+    <div class="p-8 md:p-16 lg:p-24 flex flex-col justify-center bg-surface relative overflow-hidden">
+      <!-- Warm ambient glow -->
+      <div class="absolute w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(74,114,89,0.05)_0%,transparent_70%)] -bottom-[150px] -left-[100px] pointer-events-none"></div>
+      <div class="absolute w-[300px] h-[300px] rounded-full bg-[radial-gradient(circle,rgba(158,90,53,0.04)_0%,transparent_70%)] -top-[80px] right-[10%] pointer-events-none"></div>
+
+      <!-- Eyebrow -->
+      <div class="inline-flex items-center gap-2 bg-primary-pale border border-primary/20 px-3.5 py-1.5 rounded-full text-xs font-medium text-primary-dark mb-6 self-start animate-fade-up">
+        <span class="w-1.5 h-1.5 rounded-full bg-primary eyebrow-dot"></span>
+        Gesetzlicher Anspruch ab Pflegegrad 1
+      </div>
+
+      <!-- Headline — Newsreader wie im Original -->
+      <h1 class="font-headline text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.08] text-dark tracking-tight mb-2 animate-fade-up" style="animation-delay:0.1s">
+        Pflegehilfsmittel kostenlos —
+        <em class="text-primary not-italic block">jeden Monat nach Hause.</em>
+      </h1>
+
+      <!-- Decorative terracotta rule -->
+      <div class="deco-rule mt-4 mb-0 animate-fade-up" style="animation-delay:0.15s"></div>
+
+      <p class="text-base md:text-lg font-light text-on-surface-variant leading-relaxed max-w-[500px] mt-5 mb-7 animate-fade-up" style="animation-delay:0.2s">
+        Haben Sie oder ein Angehöriger einen Pflegegrad?
+        Dann übernimmt Ihre Pflegekasse die Kosten —
+        <strong class="text-dark font-medium">bis zu 42 € monatlich.</strong>
+        Wir kümmern uns um den Rest.
+      </p>
+
+      <!-- Step indicators -->
+      <div class="flex items-center gap-2 flex-wrap mb-7 animate-fade-up" style="animation-delay:0.3s">
+        <div class="flex items-center gap-2 text-xs font-medium text-dark">
+          <div class="step-num-circle">1</div>
+          <span>Angaben machen</span>
+        </div>
+        <div class="text-outline text-xs px-1 hidden sm:block">→</div>
+        <div class="flex items-center gap-2 text-xs font-medium text-dark">
+          <div class="step-num-circle">2</div>
+          <span>Box wählen</span>
+        </div>
+        <div class="text-outline text-xs px-1 hidden sm:block">→</div>
+        <div class="flex items-center gap-2 text-xs font-medium text-dark">
+          <div class="step-num-circle">3</div>
+          <span>Monatlich geliefert</span>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="flex flex-col gap-3 items-start animate-fade-up" style="animation-delay:0.4s">
+        <a class="inline-flex items-center gap-2.5 bg-primary text-white text-base font-medium px-6 py-3.5 rounded-xl shadow-[0_4px_16px_rgba(74,114,89,0.28)] hover:bg-primary-dark hover:-translate-y-0.5 hover:shadow-[0_6px_24px_rgba(74,114,89,0.38)] transition-all" href="#">
+          Anspruch prüfen — kostenlos &amp; unverbindlich
+          <div class="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-[10px]">→</div>
+        </a>
+        <div class="text-xs text-on-surface-variant flex items-center gap-1.5 pl-0.5">
+          <span>✓ Nur 2 Minuten</span>
+          <span class="text-outline">·</span>
+          <span>✓ Kein Papierkram</span>
+          <span class="text-outline">·</span>
+          <span>✓ Wir erledigen alles</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Visual — warme Hintergrundfläche + Arch-Frame -->
+    <div class="relative overflow-hidden hero-right-bg min-h-[44vh] lg:min-h-0">
+
+      <!-- Arch-shaped photo (ersetzt blob) -->
+      <div class="arch-frame absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[68%] max-w-[340px] aspect-[4/5] overflow-hidden shadow-[0_20px_60px_rgba(38,30,23,0.12),0_4px_16px_rgba(38,30,23,0.07)] photo-float">
+        <img
+          alt="Warm and natural photo of a caring female relative and an elderly person at home"
+          class="w-full h-full object-cover"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDH7ZoCZc5ho2m8Sgd_45LRVBz_umuRz0uKtkX88chiUtjrepnOR3amTIaFKEODR5HRTuDFPBmfxwJ7HGmXaKHvLibRKezsYfL9CaCq57I4Zd2srJZ05uyEyn2pmePB6Q4WFQYTufFipnSJ6ZG-wj-Sf3pI0oYO8T01q-a3pidC7Qv80tcDF7x_VwHm3AIfj_TIvuT9M6e2Nxoe4SdiyUA2eY21aET3XI569Ir3jgjDuSWFr1avoILhQAuO2ePa1e3zISKG2NeHVdM"
+        />
+      </div>
+
+      <!-- Floating badge — 42 € -->
+      <div class="absolute bottom-[10%] left-[10%] bg-surface rounded-2xl p-3.5 flex items-center gap-3 shadow-xl border border-outline/30 animate-fade-up" style="animation-delay:0.7s">
+        <div class="w-9 h-9 rounded-xl bg-secondary-pale flex items-center justify-center text-lg">💶</div>
+        <div>
+          <div class="text-[15px] font-medium text-dark leading-tight">42 € / Monat</div>
+          <div class="text-[11px] text-on-surface-variant">komplett von der Pflegekasse</div>
+        </div>
+      </div>
+
+      <!-- Trust badge -->
+      <div class="absolute top-[10%] right-[10%] bg-primary-pale border border-primary/25 rounded-xl px-3.5 py-2.5 flex items-center gap-2 animate-fade-up" style="animation-delay:0.9s">
+        <div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">✓</div>
+        <div class="text-xs font-medium text-primary-dark">Keine Vertragsbindung</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       3. RECHNER — warm hell statt dunkel
+  ════════════════════════════════════════════════ -->
+  <section class="bg-section-warm text-on-surface py-10 px-6 border-y border-outline/20">
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-6">
+        <span class="inline-block px-3 py-0.5 bg-primary/10 text-primary rounded-full text-[9px] font-bold uppercase tracking-widest mb-3">Pflegekasse-Rechner</span>
+        <h2 class="font-headline text-2xl md:text-3xl font-bold mb-2 leading-tight text-dark">Wie viel Geld haben Sie bereits verpasst?</h2>
+        <div class="deco-rule mb-3"></div>
+        <p class="text-on-surface-variant text-xs max-w-xl">Haben Sie Anspruch auf 42 € pro Monat? Prüfen Sie es in 10 Sekunden.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+        <!-- Left: Inputs -->
+        <div class="space-y-6">
+          <div>
+            <label class="text-[9px] font-bold uppercase tracking-widest text-on-surface-variant mb-2 block">Pflegegrad wählen</label>
+            <div class="grid grid-cols-5 gap-1.5">
+              <button class="flex flex-col items-center py-2 bg-surface border border-outline/40 rounded-lg hover:bg-primary-light hover:border-primary transition-all text-on-surface-variant">
+                <span class="text-base font-bold">1</span>
+                <span class="text-[7px] opacity-60 uppercase">Gering</span>
+              </button>
+              <button class="flex flex-col items-center py-2 bg-surface border border-outline/40 rounded-lg hover:bg-primary-light hover:border-primary transition-all text-on-surface-variant">
+                <span class="text-base font-bold">2</span>
+                <span class="text-[7px] opacity-60 uppercase">Erheblich</span>
+              </button>
+              <button class="flex flex-col items-center py-2 bg-primary border border-primary rounded-lg text-white">
+                <span class="text-base font-bold">3</span>
+                <span class="text-[7px] opacity-90 uppercase font-bold">Schwer</span>
+              </button>
+              <button class="flex flex-col items-center py-2 bg-surface border border-outline/40 rounded-lg hover:bg-primary-light hover:border-primary transition-all text-on-surface-variant">
+                <span class="text-base font-bold">4</span>
+                <span class="text-[7px] opacity-60 uppercase">Schwerst</span>
+              </button>
+              <button class="flex flex-col items-center py-2 bg-surface border border-outline/40 rounded-lg hover:bg-primary-light hover:border-primary transition-all text-on-surface-variant">
+                <span class="text-base font-bold">5</span>
+                <span class="text-[7px] opacity-60 uppercase">Extrem</span>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label class="text-[9px] font-bold uppercase tracking-widest text-on-surface-variant mb-2 block">Pflegegrad anerkannt seit</label>
+            <div class="grid grid-cols-2 gap-2">
+              <div class="bg-surface border border-outline/40 rounded-lg py-2 px-3 flex justify-between items-center cursor-pointer hover:border-primary">
+                <span class="text-xs">Januar</span>
+                <span class="material-symbols-outlined text-[10px]">expand_more</span>
+              </div>
+              <div class="bg-surface border border-outline/40 rounded-lg py-2 px-3 flex justify-between items-center cursor-pointer hover:border-primary">
+                <span class="text-xs">2024</span>
+                <span class="material-symbols-outlined text-[10px]">expand_more</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Info-Box -->
+          <div class="bg-secondary-pale border border-secondary/20 rounded-lg p-3 flex gap-2.5 items-start">
+            <span class="material-symbols-outlined text-secondary-light text-lg">info</span>
+            <div class="text-[9px] text-on-surface-variant leading-relaxed">
+              <span class="font-bold block mb-0.5 text-secondary">Gut zu wissen</span>
+              Alle Pflegegrade berechtigen zum gleichen Betrag — 42 € pro Monat.
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Result -->
+        <div class="bg-surface border border-outline/20 rounded-2xl p-5 flex flex-col gap-4 shadow-sm shadow-primary/5">
+          <div>
+            <label class="text-[9px] font-bold uppercase tracking-widest text-primary block mb-1">Das gehört Ihnen — ungenutzt</label>
+            <p class="text-[9px] text-on-surface-variant mb-2">12 Monate mit Pflegegrad (1 Jahr)</p>
+            <div class="text-4xl font-headline font-bold text-primary leading-none mb-1">504,00 €</div>
+            <p class="text-[9px] text-on-surface-variant">hätten Ihnen seit 01/2024 zugestanden</p>
+          </div>
+          <div class="bg-primary-pale rounded-lg p-3 space-y-2">
+            <div class="flex justify-between items-center text-[9px]">
+              <span class="text-on-surface-variant">Monatlicher Anspruch</span>
+              <span class="font-bold text-dark">42,00 €</span>
+            </div>
+            <div class="flex justify-between items-center pt-1.5 border-t border-outline/20 text-[9px]">
+              <span class="text-primary font-bold">Ab heute pro Jahr</span>
+              <span class="text-primary font-bold text-base">504,00 €</span>
+            </div>
+          </div>
+          <button class="w-full bg-primary text-white text-xs font-bold py-3 rounded-lg shadow-md shadow-primary/20 hover:bg-primary-dark transition-all active:scale-95">
+            Jetzt kostenlos beantragen →
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       TRUST STRIP — warm
+  ════════════════════════════════════════════════ -->
+  <div class="bg-primary-pale/60 border-b border-outline/20 py-3 overflow-x-auto whitespace-nowrap scrollbar-hide">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between gap-8 md:gap-0 items-center text-[10px] font-medium text-on-surface-variant">
+      <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span>Gilt für alle gesetzlichen &amp; privaten Pflegekassen</div>
+      <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span>Anspruch beginnt ab Pflegegradanerkennung</div>
+      <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span>Ab sofort: 42 € monatlich — ohne Zuzahlung</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════
+       TRUST BAR — warm statt dunkel
+  ════════════════════════════════════════════════ -->
+  <section class="bg-section-terra text-on-surface py-6 overflow-x-auto whitespace-nowrap scrollbar-hide border-b border-outline/20">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between gap-8 md:gap-12">
+      <div class="flex items-center gap-3 shrink-0">
+        <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-lg">💶</div>
+        <div>
+          <p class="text-sm font-bold leading-tight text-dark">42 € / Monat</p>
+          <p class="text-[10px] text-on-surface-variant">Pflegekasse übernimmt alles</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 shrink-0">
+        <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-lg">✓</div>
+        <div>
+          <p class="text-sm font-bold leading-tight text-dark">0 € Zuzahlung</p>
+          <p class="text-[10px] text-on-surface-variant">komplett kostenlos für Sie</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 shrink-0">
+        <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-lg">🔓</div>
+        <div>
+          <p class="text-sm font-bold leading-tight text-dark">Keine Bindung</p>
+          <p class="text-[10px] text-on-surface-variant">jederzeit pausieren</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 shrink-0">
+        <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-lg">📦</div>
+        <div>
+          <p class="text-sm font-bold leading-tight text-dark">Deutschlandweit</p>
+          <p class="text-[10px] text-on-surface-variant">versandkostenfrei</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       4. SO FUNKTIONIERT'S
+  ════════════════════════════════════════════════ -->
+  <section class="px-6 py-20 bg-background">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex justify-between items-baseline mb-4">
+        <h2 class="font-headline text-3xl font-bold text-dark">So funktioniert's</h2>
+        <span class="text-on-surface-variant text-sm font-medium">3 einfache Schritte</span>
+      </div>
+      <div class="deco-rule mb-12"></div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-surface p-8 rounded-3xl border border-outline/20 hover:shadow-xl hover:shadow-primary/5 transition-all group">
+          <div class="w-12 h-12 bg-primary/10 text-primary font-bold rounded-full flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors font-headline text-lg">1</div>
+          <h3 class="font-bold text-lg mb-4 text-dark">Angaben machen</h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed">Pflegegrad und Adresse eingeben — dauert 2 Minuten. Kein Papierkram nötig.</p>
+        </div>
+        <div class="bg-surface p-8 rounded-3xl border border-outline/20 hover:shadow-xl hover:shadow-primary/5 transition-all group">
+          <div class="w-12 h-12 bg-primary/10 text-primary font-bold rounded-full flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors font-headline text-lg">2</div>
+          <h3 class="font-bold text-lg mb-4 text-dark">Box wählen</h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed">Wählen Sie aus, was Sie wirklich brauchen. Handschuhe, Desinfektion, Masken &amp; mehr.</p>
+        </div>
+        <div class="bg-surface p-8 rounded-3xl border border-outline/20 hover:shadow-xl hover:shadow-primary/5 transition-all group">
+          <div class="w-12 h-12 bg-primary/10 text-primary font-bold rounded-full flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors font-headline text-lg">3</div>
+          <h3 class="font-bold text-lg mb-4 text-dark">Monatlich geliefert</h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed">Wir regeln alles mit Ihrer Kasse. Ihre Box kommt automatisch jeden Monat direkt an die Haustür.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       5. PRODUKTE
+  ════════════════════════════════════════════════ -->
+  <section class="px-6 py-20 bg-surface">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex justify-between items-baseline mb-4">
+        <h2 class="font-headline text-3xl font-bold text-dark">Unsere Produkte</h2>
+        <span class="text-on-surface-variant text-sm font-medium">Qualität für Ihre Pflege</span>
+      </div>
+      <div class="deco-rule mb-12"></div>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-background border border-outline/20 rounded-3xl overflow-hidden hover:shadow-lg hover:shadow-primary/8 transition-all">
+          <div class="h-48 bg-primary-pale flex items-center justify-center relative">
+            <span class="material-symbols-outlined text-primary/40 text-6xl">sanitizer</span>
+            <div class="absolute top-4 left-4">
+              <span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded uppercase">Kostenlos</span>
+            </div>
+          </div>
+          <div class="p-5">
+            <h4 class="font-bold text-sm mb-1 text-dark">Einmalhandschuhe</h4>
+            <p class="text-[11px] text-on-surface-variant mb-4">Latexfrei, 100er Pack</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-bold text-primary">0,00 €</span>
+              <span class="material-symbols-outlined text-outline text-lg">add_circle</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-background border border-outline/20 rounded-3xl overflow-hidden hover:shadow-lg hover:shadow-primary/8 transition-all">
+          <div class="h-48 bg-primary-pale flex items-center justify-center relative">
+            <span class="material-symbols-outlined text-primary/40 text-6xl">clean_hands</span>
+            <div class="absolute top-4 left-4">
+              <span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded uppercase">Kostenlos</span>
+            </div>
+          </div>
+          <div class="p-5">
+            <h4 class="font-bold text-sm mb-1 text-dark">Flächendesinfektion</h4>
+            <p class="text-[11px] text-on-surface-variant mb-4">Sprühflasche, 500ml</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-bold text-primary">0,00 €</span>
+              <span class="material-symbols-outlined text-outline text-lg">add_circle</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-background border border-outline/20 rounded-3xl overflow-hidden hover:shadow-lg hover:shadow-primary/8 transition-all">
+          <div class="h-48 bg-primary-pale flex items-center justify-center relative">
+            <span class="material-symbols-outlined text-primary/40 text-6xl">mask</span>
+            <div class="absolute top-4 left-4">
+              <span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded uppercase">Kostenlos</span>
+            </div>
+          </div>
+          <div class="p-5">
+            <h4 class="font-bold text-sm mb-1 text-dark">Mundschutz FFP2</h4>
+            <p class="text-[11px] text-on-surface-variant mb-4">Hochwertig, 20er Pack</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-bold text-primary">0,00 €</span>
+              <span class="material-symbols-outlined text-outline text-lg">add_circle</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-background border border-outline/20 rounded-3xl overflow-hidden hover:shadow-lg hover:shadow-primary/8 transition-all">
+          <div class="h-48 bg-primary-pale flex items-center justify-center relative">
+            <span class="material-symbols-outlined text-primary/40 text-6xl">bed</span>
+            <div class="absolute top-4 left-4">
+              <span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded uppercase">Kostenlos</span>
+            </div>
+          </div>
+          <div class="p-5">
+            <h4 class="font-bold text-sm mb-1 text-dark">Bettschutzeinlagen</h4>
+            <p class="text-[11px] text-on-surface-variant mb-4">Einweg, 50er Pack</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-bold text-primary">0,00 €</span>
+              <span class="material-symbols-outlined text-outline text-lg">add_circle</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-12 text-center">
+        <button class="bg-primary text-white font-bold px-10 py-4 rounded-xl shadow-lg shadow-primary/20 hover:bg-primary-dark transition-all active:scale-95 inline-flex items-center gap-2">
+          Jetzt Anspruch prüfen
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       6. KUNDENSTIMMEN
+  ════════════════════════════════════════════════ -->
+  <section class="px-6 py-20 bg-background">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="font-headline text-3xl font-bold mb-4 text-center text-dark">Das sagen unsere Kunden</h2>
+      <div class="flex justify-center mb-12"><div class="deco-rule"></div></div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-surface p-8 rounded-3xl border border-outline/20 hover:shadow-lg hover:shadow-primary/5 transition-all">
+          <div class="flex gap-1 text-secondary mb-6">
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">star</span>
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">star</span>
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">star</span>
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">star</span>
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">star</span>
+          </div>
+          <p class="font-headline italic text-on-surface-variant text-sm mb-6 leading-relaxed">"Die Beantragung war super einfach. Endlich keine Sorgen mehr um die monatliche Versorgung meiner Mutter."</p>
+          <div class="flex items-center gap-3 pt-6 border-t border-outline/15">
+            <div class="w-10 h-10 rounded-full bg-primary-pale flex items-center justify-center font-bold text-primary text-xs">MS</div>
+            <div>
+              <p class="font-bold text-xs uppercase tracking-wider text-dark">Marianne S.</p>
+              <p class="text-[10px] text-on-surface-variant">Pflegende Angehörige</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-surface p-8 rounded-3xl border border-outline/20 hover:shadow-lg hover:shadow-primary/5 transition-all">
+          <div class="flex gap-1 text-secondary mb-6">
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">star</span>
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">star</span>
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">star</span>
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">star</span>
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">star</span>
+          </div>
+          <p class="font-headline italic text-on-surface-variant text-sm mb-6 leading-relaxed">"Toller Service! Die Box kommt pünktlich und die Qualität der Produkte ist hervorragend. Nur zu empfehlen."</p>
+          <div class="flex items-center gap-3 pt-6 border-t border-outline/15">
+            <div class="w-10 h-10 rounded-full bg-secondary-pale flex items-center justify-center font-bold text-secondary text-xs">HW</div>
+            <div>
+              <p class="font-bold text-xs uppercase tracking-wider text-dark">Helmut W.</p>
+              <p class="text-[10px] text-on-surface-variant">Kunde seit 2 Jahren</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-surface p-8 rounded-3xl border border-outline/20 hover:shadow-lg hover:shadow-primary/5 transition-all">
+          <div class="flex gap-1 text-secondary mb-6">
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">star</span>
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">star</span>
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">star</span>
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">star</span>
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">star</span>
+          </div>
+          <p class="font-headline italic text-on-surface-variant text-sm mb-6 leading-relaxed">"Ich bin so froh Velacare gefunden zu haben. Die Hilfe bei der Abrechnung mit der Kasse war Gold wert."</p>
+          <div class="flex items-center gap-3 pt-6 border-t border-outline/15">
+            <div class="w-10 h-10 rounded-full bg-primary-pale flex items-center justify-center font-bold text-primary text-xs">GK</div>
+            <div>
+              <p class="font-bold text-xs uppercase tracking-wider text-dark">Gisela K.</p>
+              <p class="text-[10px] text-on-surface-variant">Pflegende Angehörige</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       7. FAQ
+  ════════════════════════════════════════════════ -->
+  <section class="px-6 py-20 bg-surface">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-headline text-3xl font-bold mb-4 text-dark">Häufige Fragen</h2>
+      <div class="deco-rule mb-12"></div>
+      <div class="space-y-3">
+        <div class="bg-background border border-outline/20 rounded-2xl p-6 flex justify-between items-center group cursor-pointer hover:border-primary hover:bg-primary-pale/30 transition-all">
+          <span class="font-bold text-sm text-dark">Ist der Service wirklich kostenlos?</span>
+          <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">expand_more</span>
+        </div>
+        <div class="bg-background border border-outline/20 rounded-2xl p-6 flex justify-between items-center group cursor-pointer hover:border-primary hover:bg-primary-pale/30 transition-all">
+          <span class="font-bold text-sm text-dark">Wer hat Anspruch auf die 42€?</span>
+          <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">expand_more</span>
+        </div>
+        <div class="bg-background border border-outline/20 rounded-2xl p-6 flex justify-between items-center group cursor-pointer hover:border-primary hover:bg-primary-pale/30 transition-all">
+          <span class="font-bold text-sm text-dark">Wie ändere ich meine Box?</span>
+          <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">expand_more</span>
+        </div>
+        <div class="bg-background border border-outline/20 rounded-2xl p-6 flex justify-between items-center group cursor-pointer hover:border-primary hover:bg-primary-pale/30 transition-all">
+          <span class="font-bold text-sm text-dark">Benötige ich ein Rezept?</span>
+          <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">expand_more</span>
+        </div>
+        <div class="bg-background border border-outline/20 rounded-2xl p-6 flex justify-between items-center group cursor-pointer hover:border-primary hover:bg-primary-pale/30 transition-all">
+          <span class="font-bold text-sm text-dark">Was ist bei einer Kündigung?</span>
+          <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">expand_more</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ════════════════════════════════════════════════
+     8. FOOTER — warmes Espresso-Braun statt Cool-Dark
+════════════════════════════════════════════════ -->
+<footer class="bg-[#2C1F15] text-[#F0EBE3] py-16 px-6">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+    <div class="space-y-6">
+      <div class="flex items-center gap-2">
+        <svg fill="none" height="24" viewBox="0 0 80 80" width="24">
+          <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" fill="none" stroke="#4A7259" stroke-linecap="round" stroke-width="7"/>
+          <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" fill="none" stroke="#4A7259" stroke-linecap="round" stroke-width="7"/>
+          <circle cx="15" cy="70" fill="#4A7259" r="5.5"/>
+          <circle cx="65" cy="70" fill="#4A7259" r="5.5"/>
+          <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#9E5A35"/>
+        </svg>
+        <span class="text-2xl font-headline font-bold text-[#F0EBE3]">Velacare</span>
+      </div>
+      <p class="text-sm opacity-60 leading-relaxed">Pflegehilfsmittel einfach und warmherzig direkt zu Ihnen nach Hause geliefert. Wir kümmern uns um die Bürokratie.</p>
+    </div>
+    <div>
+      <h4 class="font-bold text-sm mb-6 uppercase tracking-wider text-[#F0EBE3]">Service</h4>
+      <ul class="space-y-4 text-sm opacity-60">
+        <li><a class="hover:text-[#7FA98C] transition-colors" href="#">Produkte</a></li>
+        <li><a class="hover:text-[#7FA98C] transition-colors" href="#">Wie es funktioniert</a></li>
+        <li><a class="hover:text-[#7FA98C] transition-colors" href="#">Konto</a></li>
+        <li><a class="hover:text-[#7FA98C] transition-colors" href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-bold text-sm mb-6 uppercase tracking-wider text-[#F0EBE3]">Rechtliches</h4>
+      <ul class="space-y-4 text-sm opacity-60">
+        <li><a class="hover:text-[#7FA98C] transition-colors" href="#">Impressum</a></li>
+        <li><a class="hover:text-[#7FA98C] transition-colors" href="#">Datenschutz</a></li>
+        <li><a class="hover:text-[#7FA98C] transition-colors" href="#">AGB</a></li>
+        <li><a class="hover:text-[#7FA98C] transition-colors" href="#">Widerruf</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-bold text-sm mb-6 uppercase tracking-wider text-[#F0EBE3]">Kontakt</h4>
+      <ul class="space-y-4 text-sm opacity-60">
+        <li class="flex items-center gap-3"><span class="material-symbols-outlined text-[#7FA98C]">mail</span> info@velacare.de</li>
+        <li class="flex items-center gap-3"><span class="material-symbols-outlined text-[#7FA98C]">phone</span> +49 (0) 123 456789</li>
+        <li class="flex items-center gap-3"><span class="material-symbols-outlined text-[#7FA98C]">location_on</span> Berlin, Deutschland</li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto pt-16 mt-16 border-t border-white/5 text-center text-[10px] opacity-30">
+    © 2025 Velacare GmbH. Alle Rechte vorbehalten.
+  </div>
+</footer>
+
+<!-- Mobile Bottom Nav -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface border-t border-outline/20 px-6 py-3 flex justify-around items-center z-50">
+  <div class="flex flex-col items-center gap-1 text-primary">
+    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">home</span>
+    <span class="text-[9px] font-bold uppercase tracking-widest">Start</span>
+  </div>
+  <div class="flex flex-col items-center gap-1 text-on-surface-variant">
+    <span class="material-symbols-outlined">inventory_2</span>
+    <span class="text-[9px] font-bold uppercase tracking-widest">Box</span>
+  </div>
+  <div class="flex flex-col items-center gap-1 bg-primary text-white p-2 rounded-xl -mt-8 shadow-xl">
+    <span class="material-symbols-outlined">add</span>
+  </div>
+  <div class="flex flex-col items-center gap-1 text-on-surface-variant">
+    <span class="material-symbols-outlined">help</span>
+    <span class="text-[9px] font-bold uppercase tracking-widest">FAQ</span>
+  </div>
+  <div class="flex flex-col items-center gap-1 text-on-surface-variant">
+    <span class="material-symbols-outlined">person</span>
+    <span class="text-[9px] font-bold uppercase tracking-widest">Konto</span>
+  </div>
+</nav>
+
+</body>
+</html>

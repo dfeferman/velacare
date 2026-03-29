@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html class="light" lang="de"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Velacare - Zusammenfassung &amp; Bestätigung</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&amp;family=DM+Sans:wght@300;400;500;700&amp;family=Manrope:wght@300;400;500;700&amp;family=Newsreader:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#00A3AD",
+              "on-primary": "#ffffff",
+              "primary-container": "#E0F7F8",
+              "on-primary-container": "#003235",
+              "background": "#F4FAFD",
+              "on-background": "#161D1F",
+              "surface": "#FFFFFF",
+              "on-surface": "#161D1F",
+              "surface-variant": "#DDE4E6",
+              "on-surface-variant": "#3D494A",
+              "outline": "#6D797B",
+              "outline-variant": "#BCC9CA",
+              "secondary": "#00696F",
+              "on-secondary": "#ffffff",
+              "secondary-container": "#9FF0F7",
+              "on-secondary-container": "#002022"
+            },
+            fontFamily: {
+              "headline": ["Newsreader", "serif"],
+              "body": ["DM Sans", "sans-serif"],
+              "label": ["DM Sans", "sans-serif"],
+              "serif": ["Newsreader", "serif"]
+            },
+            borderRadius: {
+                "DEFAULT": "8px",
+                "lg": "12px",
+                "xl": "16px",
+                "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #F4FAFD;
+            color: #161D1F;
+        }
+        .editorial-shadow {
+            box-shadow: 0 40px 40px 0 rgba(0, 163, 173, 0.06);
+        }
+        .signature-pad {
+            background-image: radial-gradient(#BCC9CA 0.5px, transparent 0.5px);
+            background-size: 10px 10px;
+        }
+        h1, h2, h3, .brand-logo {
+            font-family: 'Newsreader', serif;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 w-full flex justify-between items-center px-6 py-4 max-w-7xl mx-auto bg-background/80 backdrop-blur-xl z-50">
+<div class="flex items-center gap-2">
+<span class="text-2xl brand-logo italic text-primary">Velacare</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium" href="#">Hilfe</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium" href="#">Kontakt</a>
+<button class="text-primary">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</nav>
+<div class="md:hidden">
+<span class="material-symbols-outlined text-primary" data-icon="menu">menu</span>
+</div>
+</header>
+<main class="pt-24 px-4 md:px-8 max-w-5xl mx-auto">
+<!-- Progress Stepper -->
+<div class="flex justify-between items-center mb-16 px-4">
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="check" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="text-[10px] uppercase tracking-widest font-bold text-primary">Auswahl</span>
+</div>
+<div class="h-[1px] flex-1 bg-primary/20 mx-4"></div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="check" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="text-[10px] uppercase tracking-widest font-bold text-primary">Daten</span>
+</div>
+<div class="h-[1px] flex-1 bg-primary/20 mx-4"></div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-lg shadow-primary/20 scale-110">
+<span class="material-symbols-outlined" data-icon="fact_check">fact_check</span>
+</div>
+<span class="text-[10px] uppercase tracking-widest font-bold text-primary">Prüfen</span>
+</div>
+<div class="h-[1px] flex-1 bg-outline-variant/30 mx-4"></div>
+<div class="flex flex-col items-center gap-2 opacity-40">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" data-icon="verified">verified</span>
+</div>
+<span class="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Abschluss</span>
+</div>
+</div>
+<!-- Editorial Header -->
+<div class="mb-12">
+<h1 class="text-5xl md:text-6xl text-on-surface leading-tight mb-4">
+                Letzter Schritt zur <br/><span class="italic text-primary">besten Versorgung</span>
+</h1>
+<p class="text-on-surface-variant font-body text-lg max-w-2xl leading-relaxed">
+                Bitte überprüfen Sie Ihre Auswahl und die Angaben zum Versicherten. Mit Ihrer digitalen Unterschrift schließen wir den Antrag ab.
+            </p>
+</div>
+<div class="grid grid-cols-1 gap-8">
+<!-- Left Column: Summary -->
+<div class="lg:col-span-12 space-y-12">
+<!-- Section: Summary Products -->
+<section>
+<h2 class="text-2xl text-on-surface mb-6 flex items-center gap-3">
+<span class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="shopping_basket">shopping_basket</span>
+</span>
+                        Zusammenfassung Ihrer Produkte
+                    </h2>
+<div class="bg-surface rounded-lg p-6 editorial-shadow border border-outline-variant/20">
+<div class="space-y-6">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-lg bg-background overflow-hidden border border-outline-variant/10">
+<img alt="Handschuhe" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbRfn0fuE2xTQgN9Nsux2gJAwjEdBD93TDaxE7ovTvWbfEdIco_Y1wifgz5Nc8VDAW1ebPL4XXCHi-hf9zbDElJTqUaBohHawVXVTRm88mtkezBSgm_ccCtdDQUoO2Pt4h9TALNJbKHB6wty0O2ykjw2e6HfIW-buUamiArZotnVCpMdUC5kCBdBp3o2A-By1vs5sb-eqy8sqo9w9eyEf-EHnalWxKDDdY5jLD3ZRfGBlIANIVwFBRjo9k-CsDvoGv9nJAtVFqUVA"/>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Einmalhandschuhe</h4>
+<p class="text-xs text-on-surface-variant">Größe M, Vinyl, Puderfrei</p>
+</div>
+</div>
+<span class="bg-primary-container text-primary px-3 py-1 rounded-full text-xs font-bold">2 Pakete</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-lg bg-background overflow-hidden border border-outline-variant/10">
+<img alt="Desinfektion" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4fRkOyYwouBFw_TESO0CfN6XGq41QaNQAZGHlmCp3G75dodtMjL8zgCavt9c_bbIirwkcJlXfeaiqlhPZgC7BhiN60_aTZ5-Iwsp0O8VrX1tKnZ6Y02PtI8E0EdOefycFeXknWX5MfyLaeFn2ABRqrXNobqmv7oaXKaIZpStCXjL6V6GWIwjT21u2K4IaHSJAA70Tk9B8iJCNsTfIrlGIn-70gOejgacTdyvRBJ4nshklv7JKZrIkTAM_U2dRoi4bhULWtkZ23sQ"/>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Händedesinfektion</h4>
+<p class="text-xs text-on-surface-variant">500ml Flasche, Rückfettend</p>
+</div>
+</div>
+<span class="bg-primary-container text-primary px-3 py-1 rounded-full text-xs font-bold">1 Flasche</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-lg bg-background overflow-hidden border border-outline-variant/10">
+<img alt="Unterlagen" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATXcXnWxVa4RmBpbGwIoQRVfkCzWSyTRCPBDcayWAfngpgVs5F06zC8J31cI2PhLpWsIqrmz-GrB_TTf8Zoicv-7trccNg31tmTcBqOMrbJs0DEYCJ0XxRupGL01XyppsxBaPafcfFs7MSkFsafna88kc9XFzZbJ0gHhf3uxiEpPSGR-oQtstEZUWzi2jrP3QucdEkNJf7KtLxNREeJk_Uz3MUbs1gAbrT_nC78H3DPpA_4WZSFAPzH6qYsZ1n2iWRzA_DhU-5DcE"/>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Bettschutzeinlagen</h4>
+<p class="text-xs text-on-surface-variant">60x90cm, Saugstark</p>
+</div>
+</div>
+<span class="bg-primary-container text-primary px-3 py-1 rounded-full text-xs font-bold">30 Stück</span>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant/20 flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant italic">Pflegebox-Abwicklung:</span>
+<span class="text-primary font-bold">Kostenfrei über Pflegekasse</span>
+</div>
+</div>
+</section>
+<!-- Section: Insured Person Data -->
+<section>
+<h2 class="text-2xl text-on-surface mb-6 flex items-center gap-3">
+<span class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="person">person</span>
+</span>
+                        Angaben zum Versicherten
+                    </h2>
+<div class="bg-background border border-outline-variant/30 rounded-lg p-8 grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12">
+<div>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant/60 font-bold mb-1">Name</p>
+<p class="text-on-surface font-medium">Maria Musterfrau</p>
+</div>
+<div>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant/60 font-bold mb-1">Geburtsdatum</p>
+<p class="text-on-surface font-medium">12.05.1944</p>
+</div>
+<div>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant/60 font-bold mb-1">Versicherungsnummer</p>
+<p class="text-on-surface font-medium">A123456789</p>
+</div>
+<div>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant/60 font-bold mb-1">Pflegekasse</p>
+<p class="text-on-surface font-medium">Techniker Krankenkasse</p>
+</div>
+<div class="md:col-span-2">
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant/60 font-bold mb-1">Lieferadresse</p>
+<p class="text-on-surface font-medium">Beispielstraße 42, 12345 Musterstadt</p>
+</div>
+</div>
+</section>
+<!-- Section: Signature -->
+<section class="mt-12">
+<h2 class="text-3xl text-on-surface mb-2">Digitale Unterschrift</h2>
+<p class="text-on-surface-variant font-body mb-6 italic">Mit Ihrer Unterschrift bevollmächtigen Sie uns, den Antrag bei Ihrer Pflegekasse zu stellen.</p>
+<div class="bg-surface rounded-lg p-8 editorial-shadow border border-outline-variant/20">
+<div class="signature-pad w-full h-64 rounded-lg border border-outline-variant/40 bg-background/50 flex items-center justify-center relative cursor-crosshair mb-8">
+<p class="text-outline font-medium">Hier unterschreiben (Maus oder Touch)</p>
+<button class="absolute bottom-4 right-4 text-xs font-bold uppercase text-primary hover:text-secondary flex items-center gap-1 bg-surface px-3 py-1.5 rounded-full shadow-sm border border-outline-variant/20">
+<span class="material-symbols-outlined text-sm">refresh</span> Löschen
+                            </button>
+</div>
+<div class="space-y-4 max-w-3xl mx-auto">
+<label class="flex items-start gap-4 group cursor-pointer">
+<div class="relative flex items-center h-6">
+<input class="h-6 w-6 rounded-full border-outline text-primary focus:ring-primary transition-all" type="checkbox"/>
+</div>
+<div class="text-sm text-on-surface-variant leading-relaxed">
+                                    Ich bestätige, dass ich pflegebedürftig bin (mind. Pflegegrad 1), zu Hause gepflegt werde und die oben genannten Hilfsmittel für den privaten Gebrauch benötige.
+                                </div>
+</label>
+<label class="flex items-start gap-4 group cursor-pointer">
+<div class="relative flex items-center h-6">
+<input class="h-6 w-6 rounded-full border-outline text-primary focus:ring-primary transition-all" type="checkbox"/>
+</div>
+<div class="text-sm text-on-surface-variant leading-relaxed">
+                                    Ich akzeptiere die <a class="text-primary underline font-medium" href="#">AGB</a> und die <a class="text-primary underline font-medium" href="#">Datenschutzerklärung</a>.
+                                </div>
+</label>
+</div>
+<div class="mt-12 flex flex-col items-center gap-4">
+<button class="w-full max-w-md py-5 px-8 rounded-lg bg-primary text-on-primary font-bold text-lg shadow-xl shadow-primary/20 hover:bg-[#008A93] active:scale-95 transition-all">
+                                Kostenfrei &amp; verbindlich bestellen
+                            </button>
+<p class="text-sm text-on-surface-variant italic">Keine Kosten für Sie – Abrechnung direkt mit der Kasse.</p>
+</div>
+<div class="flex items-center justify-center gap-8 mt-8 text-outline pt-8 border-t border-outline-variant/20">
+<div class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-base">lock</span> SSL VERSCHLÜSSELT
+                            </div>
+<div class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-base">verified_user</span> TÜV ZERTIFIZIERT
+                            </div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- BottomNavBar Shell (Mobile) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe h-20 bg-surface/95 backdrop-blur-md rounded-t-xl border-t border-outline-variant/20 shadow-lg md:hidden">
+<div class="flex flex-col items-center justify-center text-outline px-4 py-2">
+<span class="material-symbols-outlined" data-icon="shopping_basket">shopping_basket</span>
+<span class="text-[10px] tracking-wider uppercase font-bold mt-1">Auswahl</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline px-4 py-2">
+<span class="material-symbols-outlined" data-icon="person_edit">person_edit</span>
+<span class="text-[10px] tracking-wider uppercase font-bold mt-1">Daten</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-primary rounded-lg px-4 py-2 scale-90">
+<span class="material-symbols-outlined" data-icon="fact_check" data-weight="fill" style="font-variation-settings: 'FILL' 1;">fact_check</span>
+<span class="text-[10px] tracking-wider uppercase font-bold mt-1">Prüfen</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline px-4 py-2">
+<span class="material-symbols-outlined" data-icon="verified">verified</span>
+<span class="text-[10px] tracking-wider uppercase font-bold mt-1">Abschluss</span>
+</div>
+</nav>
+</body></html>

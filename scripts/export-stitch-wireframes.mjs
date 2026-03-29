@@ -5,6 +5,7 @@
  *   set STITCH_API_KEY=...   (cmd)
  *   $env:STITCH_API_KEY="..."   (PowerShell)
  *   npm run stitch:wireframes
+ *   node scripts/export-stitch-wireframes.mjs wireframes/v2/stitch-export.config.json
  */
 
 import fs from "node:fs/promises";
@@ -14,12 +15,13 @@ import { stitch } from "@google/stitch-sdk";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
-const OUT = path.join(ROOT, "wireframes");
 
-const PROJECT_ID = "8244422556159444756";
+const DEFAULT_PROJECT_ID = "8244422556159444756";
+const DEFAULT_PROJECT_TITLE = "Produkte & Box";
+const DEFAULT_OUT = "wireframes";
 
-/** Reihenfolge und Metadaten wie in der Stitch-Anweisung */
-const SCREENS = [
+/** Legacy-Export (ohne Config-Argument) */
+const LEGACY_SCREENS = [
   { id: "67084893c86441e9981610de405a4492", title: "Startseite Hero zuerst" },
   { id: "95a7fa7db67642c7ad2b7a6e8210d458", title: "Registrierung Funnel (Wireframe-Style)" },
   { id: "a0e38936804d4932ae0ee21b039c93a9", title: "Wie es funktioniert (Final)" },
@@ -30,6 +32,31 @@ const SCREENS = [
   { id: "048cb354fb1c4534afcd9ed54fe6d694", title: "Funnel Schritt 4: Bestätigung" },
   { id: "ed90935e623940f0902de29b9e738c85", title: "Danke-Seite (Final)" },
 ];
+
+async function loadJobFromArgs() {
+  const arg = process.argv[2];
+  if (!arg?.trim()) {
+    return {
+      outDir: path.join(ROOT, DEFAULT_OUT),
+      projectId: DEFAULT_PROJECT_ID,
+      projectTitle: DEFAULT_PROJECT_TITLE,
+      screens: LEGACY_SCREENS,
+    };
+  }
+  const configPath = path.isAbsolute(arg) ? arg : path.join(ROOT, arg);
+  const raw = await fs.readFile(configPath, "utf8");
+  const cfg = JSON.parse(raw);
+  if (!cfg.projectId || !Array.isArray(cfg.screens) || cfg.screens.length === 0) {
+    throw new Error(`Ungültige Config: ${configPath} (projectId, screens[] erforderlich)`);
+  }
+  const relOut = cfg.outDir || DEFAULT_OUT;
+  return {
+    outDir: path.join(ROOT, relOut),
+    projectId: String(cfg.projectId),
+    projectTitle: cfg.projectTitle || "Stitch",
+    screens: cfg.screens.map((s) => ({ id: String(s.id), title: String(s.title) })),
+  };
+}
 
 function slugify(title) {
   return title
@@ -70,10 +97,13 @@ async function main() {
     process.exit(1);
   }
 
+  const { outDir: OUT, projectId: PROJECT_ID, projectTitle, screens: SCREENS } =
+    await loadJobFromArgs();
+
   await fs.mkdir(OUT, { recursive: true });
   const manifest = {
     projectId: PROJECT_ID,
-    projectTitle: "Produkte & Box",
+    projectTitle,
     exportedAt: new Date().toISOString(),
     screens: [],
   };
