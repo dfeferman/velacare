@@ -1,6 +1,6 @@
 # Velacare — Implementierungs-Roadmap
 
-> Zuletzt aktualisiert: 2026-03-28
+> Zuletzt aktualisiert: 2026-03-30
 > Prinzip: Alle Phasen vollständig planen, bevor die Implementierung beginnt.
 
 ---
@@ -14,8 +14,8 @@
 | 2     | Echter Funnel (v2 UI + Signup + DB-Writes)      | ✅    | ✅    | ⏳    |
 | 3     | Kundenportal (echte Daten statt Mock)           | ✅    | ✅    | —    |
 | 4     | Admin-Panel (echte Daten statt Mock)            | ✅    | ✅    | —    |
-| 5     | E-Mail & Jobs (Resend, pg_cron)                 | —    | —    | —    |
-| 6     | Sicherheit & DSGVO (Encryption, AuditLog, MFA)  | —    | —    | —    |
+| 5     | E-Mail & Jobs (Resend, pg_cron)                 | ✅    | ✅    | ⏳    |
+| 6     | Sicherheit & DSGVO (Encryption, AuditLog, MFA)  | ✅    | ✅    | —    |
 
 
 **Legende:** ✅ fertig · ⏳ in Arbeit / als nächstes · — noch nicht begonnen
@@ -46,13 +46,13 @@
 
 ### Phase 5 — E-Mail & Jobs
 
-- Spec: —
-- Plan: —
+- Spec: `docs/superpowers/specs/2026-03-30-velacare-phase5-email-jobs-design.md`
+- Plan: `docs/superpowers/plans/2026-03-30-phase5-email-jobs.md`
 
 ### Phase 6 — Sicherheit & DSGVO
 
-- Spec: —
-- Plan: —
+- Spec: `docs/superpowers/specs/2026-03-30-velacare-phase6-sicherheit-dsgvo-design.md`
+- Plan: `docs/superpowers/plans/2026-03-30-phase6-sicherheit-dsgvo.md`
 
 ---
 
