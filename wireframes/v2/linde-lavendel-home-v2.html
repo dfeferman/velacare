@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Velacare — Linde &amp; Lavendel v2</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        "primary":            "#4A7259",
+        "primary-mid":        "#5E8C6E",
+        "primary-light":      "#E8F2EB",
+        "primary-pale":       "#F0F6F2",
+        "primary-dark":       "#375E46",
+        "secondary":          "#9E5A35",
+        "secondary-light":    "#D4906E",
+        "secondary-pale":     "#F7EEE7",
+        "dark":               "#261E17",
+        "background":         "#FAF6EF",
+        "surface":            "#FFFDF7",
+        "outline":            "#D5CAB9",
+        "on-surface":         "#261E17",
+        "on-surface-variant": "#6B5747",
+        "section-warm":       "#EEF4F1",
+        "section-terra":      "#F5EDE5",
+      },
+      fontFamily: {
+        "headline": ["Newsreader", "serif"],
+        "body":     ["DM Sans", "sans-serif"],
+      },
+      borderRadius: {
+        "DEFAULT": "0.5rem",
+        "lg":      "0.5rem",
+        "xl":      "0.75rem",
+        "2xl":     "1rem",
+        "3xl":     "1.5rem",
+        "full":    "9999px",
+      },
+    },
+  },
+}
+</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+  }
+
+  /* ── Dot grid bg ── */
+  .dot-bg {
+    background-image: radial-gradient(circle, rgba(74,114,89,0.08) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* ── Decorative rule ── */
+  .deco-rule {
+    width: 44px; height: 2px;
+    background: linear-gradient(90deg, #9E5A35, #D4906E);
+    border-radius: 1px;
+  }
+
+  /* ── Hero fade-up ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-up { animation: fadeUp 0.52s ease both; }
+
+  /* ── Eyebrow pulse dot ── */
+  @keyframes pulseDot {
+    0%,100% { transform: scale(1); opacity: 1; }
+    50%      { transform: scale(1.7); opacity: 0.35; }
+  }
+  .eyebrow-dot { animation: pulseDot 2.6s ease-in-out infinite; }
+
+  /* ── Budget bar fill (hero card) ── */
+  @keyframes barFill {
+    from { width: 0; }
+    to   { width: 100%; }
+  }
+  .bar-fill { animation: barFill 1.5s cubic-bezier(.4,0,.2,1) 1.6s both; }
+
+  /* ── Arch photo frame ── */
+  .arch-frame {
+    border-radius: 50% 50% 14px 14px / 56% 56% 14px 14px;
+  }
+  /* ── Gentle float animation (hero image) ── */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-10px); }
+  }
+  .photo-float { animation: float 7s ease-in-out infinite; }
+
+  /* ── Scroll reveal ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.52s ease, transform 0.52s ease;
+  }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.1s; }
+  .reveal-d2 { transition-delay: 0.2s; }
+  .reveal-d3 { transition-delay: 0.3s; }
+  .reveal-d4 { transition-delay: 0.4s; }
+
+  /* ── Accordion ── */
+  .acc-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.34s cubic-bezier(.4,0,.2,1);
+  }
+  .acc-body.open { grid-template-rows: 1fr; }
+  .acc-body > div { overflow: hidden; }
+  .acc-chevron { transition: transform 0.3s ease; }
+  .acc-chevron.open { transform: rotate(180deg); }
+
+  /* ── Grade tabs ── */
+  .grade-btn {
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+  }
+  .grade-btn.active {
+    background: #4A7259;
+    color: #fff;
+    border-color: #4A7259;
+    box-shadow: 0 2px 8px rgba(74,114,89,0.3);
+  }
+  .grade-btn:not(.active):hover {
+    background: #F0F6F2;
+    border-color: #5E8C6E;
+  }
+
+  /* ── Counter number ── */
+  @keyframes countReveal {
+    from { opacity: 0; transform: translateY(6px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .count-reveal { animation: countReveal 0.45s ease both; }
+
+  /* ── Card hover lift ── */
+  .card-lift {
+    transition: transform 0.24s ease, box-shadow 0.24s ease;
+  }
+  .card-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(74,114,89,0.11), 0 3px 10px rgba(38,30,23,0.06);
+  }
+
+  /* ── Product add button ── */
+  .add-btn {
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 1.5px solid #D5CAB9;
+    display: flex; align-items: center; justify-content: center;
+    color: #6B5747; cursor: pointer; flex-shrink: 0;
+    transition: all 0.2s ease; background: transparent;
+  }
+  .add-btn:hover {
+    border-color: #4A7259; background: #4A7259; color: #fff;
+    transform: scale(1.15) rotate(90deg);
+  }
+
+  /* ── Testimonial scroll ── */
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* ── Step connector line (Wie es funktioniert) ── */
+  .step-connector {
+    position: absolute;
+    top: 22px; left: calc(50% + 22px);
+    right: calc(-50% + 22px);
+    height: 1px;
+    background: repeating-linear-gradient(90deg, #D5CAB9 0, #D5CAB9 6px, transparent 6px, transparent 12px);
+  }
+
+  /* ── Nav scroll styles ── */
+  #main-nav { transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease; }
+  #main-nav.scrolled {
+    background: rgba(255,253,247,0.92) !important;
+    box-shadow: 0 1px 0 rgba(213,202,185,0.5);
+    backdrop-filter: blur(16px);
+  }
+
+  /* ── Chevron icon (inline SVG util) ── */
+  svg { display: inline-block; }
+</style>
+</head>
+<body class="bg-background font-body text-on-surface selection:bg-primary/15" style="min-height:100dvh">
+
+<!-- ═══════════════════════════════════
+     NAV
+════════════════════════════════════ -->
+<nav id="main-nav" class="fixed top-0 w-full z-50" style="background:rgba(255,253,247,0)">
+  <div class="flex justify-between items-center px-6 py-3.5 max-w-7xl mx-auto">
+    <!-- Left group: logo + nav links -->
+    <div class="flex items-center gap-8">
+      <a class="flex items-center gap-3" href="#">
+        <svg fill="none" height="34" viewBox="0 0 80 80" width="34">
+          <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" fill="none" stroke="#4A7259" stroke-linecap="round" stroke-width="9"/>
+          <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" fill="none" stroke="#4A7259" stroke-linecap="round" stroke-width="9"/>
+          <circle cx="15" cy="70" fill="#4A7259" r="6"/>
+          <circle cx="65" cy="70" fill="#4A7259" r="6"/>
+          <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#9E5A35"/>
+        </svg>
+        <span class="font-headline text-2xl font-bold text-dark tracking-tight">Velacare</span>
+      </a>
+      <div class="hidden md:flex gap-6 text-sm font-medium text-on-surface-variant">
+        <a class="hover:text-primary transition-colors" href="#">Wie es funktioniert</a>
+        <a class="hover:text-primary transition-colors" href="#">Produkte</a>
+        <a class="hover:text-primary transition-colors" href="#">Über uns</a>
+        <a class="hover:text-primary transition-colors" href="#">FAQ</a>
+      </div>
+    </div>
+    <!-- Right: CTA -->
+    <button class="bg-primary text-white text-xs font-semibold px-5 py-2.5 rounded-lg hover:bg-primary-dark transition-all active:scale-95" style="box-shadow:0 2px 8px rgba(74,114,89,0.25)">
+      Jetzt beantragen
+    </button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ═══════════════════════════════════
+     1. HERO
+════════════════════════════════════ -->
+<section class="dot-bg min-h-screen flex items-center pt-20 pb-16 px-6 overflow-hidden">
+  <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_440px] gap-12 xl:gap-20 items-center">
+
+    <!-- Left: editorial text -->
+    <div>
+      <!-- Badge (shadcn style) -->
+      <div class="inline-flex items-center gap-2 border border-primary/25 bg-surface px-3.5 py-1.5 rounded-full text-xs font-medium text-primary-dark mb-7 animate-fade-up" style="box-shadow:0 1px 4px rgba(74,114,89,0.1)">
+        <span class="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0 eyebrow-dot"></span>
+        Gesetzlicher Anspruch · §40 SGB XI · ab Pflegegrad 1
+      </div>
+
+      <!-- Headline -->
+      <h1 class="font-headline text-[2.75rem] md:text-[3.5rem] lg:text-[3.75rem] font-semibold leading-[1.06] text-dark tracking-tight mb-3 animate-fade-up" style="animation-delay:.08s">
+        Pflegehilfsmittel —<br/>
+        <em class="text-primary not-italic">jeden Monat kostenlos</em><br/>
+        zu Ihnen nach Hause.
+      </h1>
+      <div class="deco-rule my-5 animate-fade-up" style="animation-delay:.13s"></div>
+
+      <p class="text-base md:text-lg font-light text-on-surface-variant leading-relaxed max-w-[520px] mb-8 animate-fade-up" style="animation-delay:.18s">
+        Haben Sie oder ein Angehöriger einen Pflegegrad? Ihre Pflegekasse übernimmt bis zu
+        <strong class="text-dark font-semibold">42 € monatlich</strong> — wir kümmern uns um alles weitere.
+      </p>
+
+      <!-- Step pills -->
+      <div class="flex flex-wrap gap-2 mb-8 animate-fade-up" style="animation-delay:.24s">
+        <div class="inline-flex items-center gap-2 bg-surface border border-outline/35 rounded-lg px-3 py-2 text-xs font-medium text-dark" style="box-shadow:0 1px 4px rgba(38,30,23,0.06)">
+          <span class="w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">1</span>
+          Angaben machen
+        </div>
+        <svg class="self-center text-outline flex-shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        <div class="inline-flex items-center gap-2 bg-surface border border-outline/35 rounded-lg px-3 py-2 text-xs font-medium text-dark" style="box-shadow:0 1px 4px rgba(38,30,23,0.06)">
+          <span class="w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">2</span>
+          Box konfigurieren
+        </div>
+        <svg class="self-center text-outline flex-shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        <div class="inline-flex items-center gap-2 bg-surface border border-outline/35 rounded-lg px-3 py-2 text-xs font-medium text-dark" style="box-shadow:0 1px 4px rgba(38,30,23,0.06)">
+          <span class="w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">3</span>
+          Monatlich geliefert
+        </div>
+      </div>
+
+      <!-- CTAs -->
+      <div class="flex flex-col sm:flex-row gap-3 mb-6 animate-fade-up" style="animation-delay:.32s">
+        <a href="#" class="inline-flex items-center gap-2.5 bg-primary text-white font-medium px-6 py-3.5 rounded-xl hover:bg-primary-dark transition-all active:scale-[.98]" style="box-shadow:0 4px 18px rgba(74,114,89,0.3)">
+          Anspruch prüfen — kostenlos
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        <a href="#rechner" class="inline-flex items-center gap-2 border border-outline text-on-surface-variant font-medium px-5 py-3.5 rounded-xl hover:bg-surface hover:border-on-surface-variant transition-all text-sm">
+          Anspruch berechnen
+        </a>
+      </div>
+
+      <!-- Trust microcopy -->
+      <div class="flex flex-wrap gap-4 animate-fade-up" style="animation-delay:.4s">
+        <span class="text-xs text-on-surface-variant flex items-center gap-1.5">
+          <svg class="flex-shrink-0" style="color:#4A7259" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          Nur 2 Minuten
+        </span>
+        <span class="text-xs text-on-surface-variant flex items-center gap-1.5">
+          <svg class="flex-shrink-0" style="color:#4A7259" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          Kein Papierkram
+        </span>
+        <span class="text-xs text-on-surface-variant flex items-center gap-1.5">
+          <svg class="flex-shrink-0" style="color:#4A7259" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          Wir erledigen alles
+        </span>
+        <span class="text-xs text-on-surface-variant flex items-center gap-1.5">
+          <svg class="flex-shrink-0" style="color:#4A7259" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          Keine Vertragsbindung
+        </span>
+      </div>
+    </div>
+
+    <!-- Right: Arch Photo -->
+    <div class="relative min-h-[460px] lg:min-h-[540px] flex items-center justify-center animate-fade-up overflow-hidden rounded-3xl" style="animation-delay:.44s;background-color:#FAF6EF;background-image:radial-gradient(at 30% 40%,rgba(74,114,89,0.07) 0px,transparent 55%),radial-gradient(at 75% 70%,rgba(158,90,53,0.05) 0px,transparent 50%)">
+
+      <!-- Arch-shaped photo -->
+      <div class="arch-frame w-[78%] max-w-[390px] aspect-[4/5] overflow-hidden photo-float" style="box-shadow:0 20px 60px rgba(38,30,23,0.14),0 4px 16px rgba(38,30,23,0.08)">
+        <img
+          alt="Warm and natural photo of a caring female relative and an elderly person at home"
+          class="w-full h-full object-cover"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDH7ZoCZc5ho2m8Sgd_45LRVBz_umuRz0uKtkX88chiUtjrepnOR3amTIaFKEODR5HRTuDFPBmfxwJ7HGmXaKHvLibRKezsYfL9CaCq57I4Zd2srJZ05uyEyn2pmePB6Q4WFQYTufFipnSJ6ZG-wj-Sf3pI0oYO8T01q-a3pidC7Qv80tcDF7x_VwHm3AIfj_TIvuT9M6e2Nxoe4SdiyUA2eY21aET3XI569Ir3jgjDuSWFr1avoILhQAuO2ePa1e3zISKG2NeHVdM"
+        />
+      </div>
+
+      <!-- Floating badge — 42 € -->
+      <div class="absolute bottom-[9%] left-[8%] bg-surface rounded-2xl p-3.5 flex items-center gap-3 animate-fade-up" style="box-shadow:0 8px 28px rgba(38,30,23,0.13);border:1px solid rgba(213,202,185,0.35);animation-delay:0.72s">
+        <div class="w-9 h-9 rounded-xl bg-secondary-pale flex items-center justify-center text-lg">💶</div>
+        <div>
+          <div class="text-[15px] font-medium text-dark leading-tight">42 € / Monat</div>
+          <div class="text-[11px] text-on-surface-variant">komplett von der Pflegekasse</div>
+        </div>
+      </div>
+
+      <!-- Trust badge -->
+      <div class="absolute top-[9%] right-[8%] bg-primary-pale border border-primary/25 rounded-xl px-3.5 py-2.5 flex items-center gap-2 animate-fade-up" style="animation-delay:0.9s">
+        <div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px] flex-shrink-0">✓</div>
+        <div class="text-xs font-medium text-primary-dark">Keine Vertragsbindung</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     2. STATS STRIP (grün)
+════════════════════════════════════ -->
+<div class="bg-primary text-white py-5 px-6">
+  <div class="max-w-7xl mx-auto flex flex-wrap justify-around gap-6 items-center">
+    <div class="text-center">
+      <div class="font-headline text-2xl font-bold">12.000+</div>
+      <div class="text-[10px] opacity-65 mt-0.5 font-medium uppercase tracking-wider">Kunden</div>
+    </div>
+    <div class="w-px h-8 hidden md:block" style="background:rgba(255,255,255,0.18)"></div>
+    <div class="text-center">
+      <div class="font-headline text-2xl font-bold">42 €</div>
+      <div class="text-[10px] opacity-65 mt-0.5 font-medium uppercase tracking-wider">Monatlicher Anspruch</div>
+    </div>
+    <div class="w-px h-8 hidden md:block" style="background:rgba(255,255,255,0.18)"></div>
+    <div class="text-center">
+      <div class="font-headline text-2xl font-bold">504 €</div>
+      <div class="text-[10px] opacity-65 mt-0.5 font-medium uppercase tracking-wider">Pro Jahr gratis</div>
+    </div>
+    <div class="w-px h-8 hidden md:block" style="background:rgba(255,255,255,0.18)"></div>
+    <div class="text-center">
+      <div class="font-headline text-2xl font-bold">2 Min.</div>
+      <div class="text-[10px] opacity-65 mt-0.5 font-medium uppercase tracking-wider">Beantragung</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     3. RECHNER
+════════════════════════════════════ -->
+<section id="rechner" class="bg-section-warm py-16 px-6 border-y border-outline/20">
+  <div class="max-w-4xl mx-auto">
+    <div class="mb-8 reveal">
+      <span class="inline-block px-3 py-0.5 bg-primary/10 text-primary rounded-full text-[9px] font-bold uppercase tracking-widest mb-3">Pflegekasse-Rechner</span>
+      <h2 class="font-headline text-2xl md:text-3xl font-semibold text-dark leading-tight mb-2">Wie viel Geld haben Sie bereits verpasst?</h2>
+      <div class="deco-rule mb-3"></div>
+      <p class="text-on-surface-variant text-sm max-w-lg">Wählen Sie Ihren Pflegegrad und das Datum der Anerkennung — wir rechnen es für Sie aus.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+
+      <!-- Inputs -->
+      <div class="space-y-6 reveal reveal-d1">
+
+        <!-- Pflegegrad Tabs -->
+        <div>
+          <label class="text-[9px] font-bold uppercase tracking-widest text-on-surface-variant mb-2.5 block">Pflegegrad wählen</label>
+          <div class="flex gap-2" id="grade-tabs">
+            <button class="grade-btn flex-1 flex flex-col items-center py-2.5 bg-surface border border-outline/40 rounded-xl text-on-surface-variant" data-grade="1">
+              <span class="text-sm font-bold">1</span>
+              <span class="text-[8px] mt-0.5 uppercase tracking-wide opacity-60">Gering</span>
+            </button>
+            <button class="grade-btn flex-1 flex flex-col items-center py-2.5 bg-surface border border-outline/40 rounded-xl text-on-surface-variant" data-grade="2">
+              <span class="text-sm font-bold">2</span>
+              <span class="text-[8px] mt-0.5 uppercase tracking-wide opacity-60">Erheblich</span>
+            </button>
+            <button class="grade-btn active flex-1 flex flex-col items-center py-2.5 rounded-xl" data-grade="3">
+              <span class="text-sm font-bold">3</span>
+              <span class="text-[8px] mt-0.5 uppercase tracking-wide opacity-80 font-semibold">Schwer</span>
+            </button>
+            <button class="grade-btn flex-1 flex flex-col items-center py-2.5 bg-surface border border-outline/40 rounded-xl text-on-surface-variant" data-grade="4">
+              <span class="text-sm font-bold">4</span>
+              <span class="text-[8px] mt-0.5 uppercase tracking-wide opacity-60">Schwerst</span>
+            </button>
+            <button class="grade-btn flex-1 flex flex-col items-center py-2.5 bg-surface border border-outline/40 rounded-xl text-on-surface-variant" data-grade="5">
+              <span class="text-sm font-bold">5</span>
+              <span class="text-[8px] mt-0.5 uppercase tracking-wide opacity-60">Extrem</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Date inputs -->
+        <div>
+          <label class="text-[9px] font-bold uppercase tracking-widest text-on-surface-variant mb-2.5 block">Pflegegrad anerkannt seit</label>
+          <div class="grid grid-cols-2 gap-2">
+            <select class="bg-surface border border-outline/40 rounded-xl py-2.5 px-3 text-xs text-on-surface appearance-none cursor-pointer focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" style="background-image:none" id="month-sel">
+              <option>Januar</option><option>Februar</option><option>März</option>
+              <option>April</option><option>Mai</option><option>Juni</option>
+              <option>Juli</option><option>August</option><option>September</option>
+              <option>Oktober</option><option>November</option><option>Dezember</option>
+            </select>
+            <select class="bg-surface border border-outline/40 rounded-xl py-2.5 px-3 text-xs text-on-surface appearance-none cursor-pointer focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" style="background-image:none" id="year-sel">
+              <option>2020</option><option>2021</option><option>2022</option>
+              <option selected>2023</option><option>2024</option><option>2025</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Info box (shadcn Alert style) -->
+        <div class="bg-secondary-pale border border-secondary/20 rounded-xl p-4 flex gap-3 items-start">
+          <svg style="color:#D4906E;flex-shrink:0;margin-top:1px" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <div>
+            <p class="text-[10px] font-bold text-secondary mb-0.5">Gut zu wissen</p>
+            <p class="text-[10px] text-on-surface-variant leading-relaxed">Alle Pflegegrade (1–5) berechtigen zum gleichen Betrag: <strong>42 € pro Monat</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result Card -->
+      <div class="bg-surface border border-outline/25 rounded-2xl p-5 flex flex-col gap-4 reveal reveal-d2" style="box-shadow:0 2px 12px rgba(38,30,23,0.05)">
+        <div>
+          <label class="text-[9px] font-bold uppercase tracking-widest text-primary block mb-1.5">Das gehört Ihnen — bisher ungenutzt</label>
+          <p class="text-[10px] text-on-surface-variant mb-3" id="months-label">26 Monate mit Pflegegrad</p>
+          <div class="font-headline font-bold text-primary leading-none mb-1 count-reveal" id="total-amount" style="font-size:2.75rem">1.092,00 €</div>
+          <p class="text-[10px] text-on-surface-variant" id="since-label">hätten Ihnen seit 01/2023 zugestanden</p>
+        </div>
+
+        <div class="bg-primary-pale rounded-xl p-3.5 space-y-2">
+          <div class="flex justify-between items-center text-[10px]">
+            <span class="text-on-surface-variant">Monatlicher Anspruch</span>
+            <span class="font-bold text-dark">42,00 €</span>
+          </div>
+          <div class="flex justify-between items-center text-[10px]">
+            <span class="text-on-surface-variant">Anerkannte Monate</span>
+            <span class="font-bold text-dark" id="months-count">26 Monate</span>
+          </div>
+          <div class="pt-2 border-t border-outline/20 flex justify-between items-center">
+            <span class="text-[10px] font-bold text-primary">Ab heute pro Jahr</span>
+            <span class="font-bold text-primary" style="font-size:1.1rem">504,00 €</span>
+          </div>
+        </div>
+
+        <button class="w-full bg-primary text-white text-sm font-semibold py-3 rounded-xl hover:bg-primary-dark transition-all active:scale-[.98]" style="box-shadow:0 3px 12px rgba(74,114,89,0.25)">
+          Jetzt kostenlos beantragen →
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     4. TRUST BAR
+════════════════════════════════════ -->
+<div class="bg-section-terra py-5 px-6 border-b border-outline/20 overflow-x-auto">
+  <div class="max-w-7xl mx-auto flex gap-10 md:justify-between items-center whitespace-nowrap" style="min-width:max-content">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-lg">💶</div>
+      <div>
+        <p class="text-sm font-bold text-dark leading-tight">42 € / Monat</p>
+        <p class="text-[10px] text-on-surface-variant">Pflegekasse zahlt alles</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-lg">✅</div>
+      <div>
+        <p class="text-sm font-bold text-dark leading-tight">0 € Zuzahlung</p>
+        <p class="text-[10px] text-on-surface-variant">komplett kostenlos für Sie</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-lg">🔓</div>
+      <div>
+        <p class="text-sm font-bold text-dark leading-tight">Keine Bindung</p>
+        <p class="text-[10px] text-on-surface-variant">jederzeit pausieren</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-lg">📦</div>
+      <div>
+        <p class="text-sm font-bold text-dark leading-tight">Deutschlandweit</p>
+        <p class="text-[10px] text-on-surface-variant">versandkostenfrei</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     5. SO FUNKTIONIERT'S — Timeline
+════════════════════════════════════ -->
+<section class="bg-background px-6 py-20">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-4 reveal">
+      <h2 class="font-headline text-3xl font-semibold text-dark">So funktioniert's</h2>
+      <span class="text-sm text-on-surface-variant font-medium mt-1 sm:mt-0">3 einfache Schritte</span>
+    </div>
+    <div class="deco-rule mb-12 reveal"></div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+      <!-- Connector lines (desktop) -->
+      <div class="hidden md:block absolute top-[22px] left-[calc(33.33%+22px)] right-[calc(33.33%+22px)] h-px" style="background:repeating-linear-gradient(90deg,#D5CAB9 0,#D5CAB9 6px,transparent 6px,transparent 12px)"></div>
+
+      <!-- Step 1 -->
+      <div class="bg-surface border border-outline/25 rounded-2xl p-7 card-lift reveal" style="box-shadow:0 1px 6px rgba(38,30,23,0.05)">
+        <div class="w-11 h-11 bg-primary/10 text-primary font-bold rounded-full flex items-center justify-center mb-6 font-headline text-lg transition-all duration-300 group-hover:bg-primary group-hover:text-white" id="step-circle-1">1</div>
+        <h3 class="font-bold text-base mb-3 text-dark">Angaben machen</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed">Pflegegrad und Adresse eingeben — dauert nur 2 Minuten. Kein Papierkram nötig.</p>
+        <div class="mt-5 pt-5 border-t border-outline/15 flex items-center gap-2 text-[10px] text-primary font-medium">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Vollständig online
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="bg-surface border border-outline/25 rounded-2xl p-7 card-lift reveal reveal-d1" style="box-shadow:0 1px 6px rgba(38,30,23,0.05)">
+        <div class="w-11 h-11 bg-primary/10 text-primary font-bold rounded-full flex items-center justify-center mb-6 font-headline text-lg">2</div>
+        <h3 class="font-bold text-base mb-3 text-dark">Box konfigurieren</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed">Wählen Sie aus, was Sie wirklich brauchen. Handschuhe, Desinfektion, Masken und mehr.</p>
+        <div class="mt-5 pt-5 border-t border-outline/15 flex items-center gap-2 text-[10px] text-primary font-medium">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Flexibel anpassbar
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="bg-surface border border-outline/25 rounded-2xl p-7 card-lift reveal reveal-d2" style="box-shadow:0 1px 6px rgba(38,30,23,0.05)">
+        <div class="w-11 h-11 bg-primary/10 text-primary font-bold rounded-full flex items-center justify-center mb-6 font-headline text-lg">3</div>
+        <h3 class="font-bold text-base mb-3 text-dark">Monatlich geliefert</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed">Wir regeln alles mit Ihrer Kasse. Ihre Box kommt automatisch jeden Monat zur Haustür.</p>
+        <div class="mt-5 pt-5 border-t border-outline/15 flex items-center gap-2 text-[10px] text-primary font-medium">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Vollautomatisch
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     6. PRODUKTE
+════════════════════════════════════ -->
+<section class="bg-surface px-6 py-20 border-t border-outline/15">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-4 reveal">
+      <h2 class="font-headline text-3xl font-semibold text-dark">Unsere Produkte</h2>
+      <span class="text-sm text-on-surface-variant font-medium mt-1 sm:mt-0">Qualität für Ihre Pflege</span>
+    </div>
+    <div class="deco-rule mb-12 reveal"></div>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+
+      <!-- Product card 1 -->
+      <div class="bg-background border border-outline/20 rounded-2xl overflow-hidden card-lift reveal" style="box-shadow:0 1px 4px rgba(38,30,23,0.04)">
+        <div class="h-44 bg-primary-pale flex items-center justify-center relative">
+          <span class="material-symbols-outlined text-primary/35" style="font-size:52px">glove</span>
+          <div class="absolute top-3 left-3">
+            <span class="inline-flex items-center bg-primary/15 text-primary text-[9px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide">Kostenlos</span>
+          </div>
+        </div>
+        <div class="p-4">
+          <h4 class="font-bold text-sm text-dark mb-0.5">Einmalhandschuhe</h4>
+          <p class="text-[10px] text-on-surface-variant mb-4">Latexfrei, 100er Pack</p>
+          <div class="flex justify-between items-center">
+            <span class="text-sm font-bold text-primary">0,00 €</span>
+            <button class="add-btn" aria-label="Hinzufügen">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product card 2 -->
+      <div class="bg-background border border-outline/20 rounded-2xl overflow-hidden card-lift reveal reveal-d1" style="box-shadow:0 1px 4px rgba(38,30,23,0.04)">
+        <div class="h-44 bg-primary-pale flex items-center justify-center relative">
+          <span class="material-symbols-outlined text-primary/35" style="font-size:52px">sanitizer</span>
+          <div class="absolute top-3 left-3">
+            <span class="inline-flex items-center bg-primary/15 text-primary text-[9px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide">Kostenlos</span>
+          </div>
+        </div>
+        <div class="p-4">
+          <h4 class="font-bold text-sm text-dark mb-0.5">Flächendesinfektion</h4>
+          <p class="text-[10px] text-on-surface-variant mb-4">Sprühflasche, 500 ml</p>
+          <div class="flex justify-between items-center">
+            <span class="text-sm font-bold text-primary">0,00 €</span>
+            <button class="add-btn" aria-label="Hinzufügen">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product card 3 -->
+      <div class="bg-background border border-outline/20 rounded-2xl overflow-hidden card-lift reveal reveal-d2" style="box-shadow:0 1px 4px rgba(38,30,23,0.04)">
+        <div class="h-44 bg-primary-pale flex items-center justify-center relative">
+          <span class="material-symbols-outlined text-primary/35" style="font-size:52px">masks</span>
+          <div class="absolute top-3 left-3">
+            <span class="inline-flex items-center bg-primary/15 text-primary text-[9px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide">Kostenlos</span>
+          </div>
+        </div>
+        <div class="p-4">
+          <h4 class="font-bold text-sm text-dark mb-0.5">Mundschutz FFP2</h4>
+          <p class="text-[10px] text-on-surface-variant mb-4">Hochwertig, 20er Pack</p>
+          <div class="flex justify-between items-center">
+            <span class="text-sm font-bold text-primary">0,00 €</span>
+            <button class="add-btn" aria-label="Hinzufügen">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product card 4 -->
+      <div class="bg-background border border-outline/20 rounded-2xl overflow-hidden card-lift reveal reveal-d3" style="box-shadow:0 1px 4px rgba(38,30,23,0.04)">
+        <div class="h-44 bg-primary-pale flex items-center justify-center relative">
+          <span class="material-symbols-outlined text-primary/35" style="font-size:52px">bed</span>
+          <div class="absolute top-3 left-3">
+            <span class="inline-flex items-center bg-primary/15 text-primary text-[9px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide">Kostenlos</span>
+          </div>
+        </div>
+        <div class="p-4">
+          <h4 class="font-bold text-sm text-dark mb-0.5">Bettschutzeinlagen</h4>
+          <p class="text-[10px] text-on-surface-variant mb-4">Einweg, 50er Pack</p>
+          <div class="flex justify-between items-center">
+            <span class="text-sm font-bold text-primary">0,00 €</span>
+            <button class="add-btn" aria-label="Hinzufügen">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="mt-12 text-center reveal">
+      <button class="inline-flex items-center gap-2 bg-primary text-white font-semibold px-9 py-4 rounded-xl hover:bg-primary-dark transition-all active:scale-[.98]" style="box-shadow:0 4px 16px rgba(74,114,89,0.25)">
+        Jetzt Anspruch prüfen
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     7. KUNDENSTIMMEN — horizontal scroll
+════════════════════════════════════ -->
+<section class="bg-background py-20 border-t border-outline/15">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="font-headline text-3xl font-semibold text-dark mb-4 reveal">Das sagen unsere Kunden</h2>
+    <div class="deco-rule mb-10 reveal"></div>
+  </div>
+  <!-- Horizontal scroll container -->
+  <div class="px-6 overflow-x-auto scrollbar-hide pb-2">
+    <div class="flex gap-5 w-max max-w-none pl-0 pr-6" style="max-width:calc(7xl+1.5rem)">
+
+      <!-- Testimonial 1 -->
+      <div class="w-[300px] flex-shrink-0 bg-surface border border-outline/25 rounded-2xl p-6 card-lift" style="box-shadow:0 1px 6px rgba(38,30,23,0.05)">
+        <div class="font-headline text-5xl text-secondary/30 leading-none mb-2 select-none">"</div>
+        <div class="flex gap-0.5 mb-4">
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="font-headline italic text-on-surface-variant text-sm leading-relaxed mb-6">"Die Beantragung war super einfach. Endlich keine Sorgen mehr um die monatliche Versorgung meiner Mutter."</p>
+        <div class="flex items-center gap-3 pt-5 border-t border-outline/15">
+          <div class="w-9 h-9 rounded-full bg-primary-pale flex items-center justify-center font-bold text-primary text-xs flex-shrink-0">MS</div>
+          <div>
+            <p class="font-bold text-xs uppercase tracking-wider text-dark">Marianne S.</p>
+            <p class="text-[10px] text-on-surface-variant">Pflegende Angehörige</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 2 -->
+      <div class="w-[300px] flex-shrink-0 bg-surface border border-outline/25 rounded-2xl p-6 card-lift" style="box-shadow:0 1px 6px rgba(38,30,23,0.05)">
+        <div class="font-headline text-5xl text-secondary/30 leading-none mb-2 select-none">"</div>
+        <div class="flex gap-0.5 mb-4">
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="font-headline italic text-on-surface-variant text-sm leading-relaxed mb-6">"Toller Service! Die Box kommt pünktlich und die Qualität der Produkte ist hervorragend. Nur zu empfehlen."</p>
+        <div class="flex items-center gap-3 pt-5 border-t border-outline/15">
+          <div class="w-9 h-9 rounded-full bg-secondary-pale flex items-center justify-center font-bold text-secondary text-xs flex-shrink-0">HW</div>
+          <div>
+            <p class="font-bold text-xs uppercase tracking-wider text-dark">Helmut W.</p>
+            <p class="text-[10px] text-on-surface-variant">Kunde seit 2 Jahren</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 3 -->
+      <div class="w-[300px] flex-shrink-0 bg-surface border border-outline/25 rounded-2xl p-6 card-lift" style="box-shadow:0 1px 6px rgba(38,30,23,0.05)">
+        <div class="font-headline text-5xl text-secondary/30 leading-none mb-2 select-none">"</div>
+        <div class="flex gap-0.5 mb-4">
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="font-headline italic text-on-surface-variant text-sm leading-relaxed mb-6">"Ich bin so froh, Velacare gefunden zu haben. Die Hilfe bei der Abrechnung mit der Kasse war absolut Gold wert."</p>
+        <div class="flex items-center gap-3 pt-5 border-t border-outline/15">
+          <div class="w-9 h-9 rounded-full bg-primary-pale flex items-center justify-center font-bold text-primary text-xs flex-shrink-0">GK</div>
+          <div>
+            <p class="font-bold text-xs uppercase tracking-wider text-dark">Gisela K.</p>
+            <p class="text-[10px] text-on-surface-variant">Pflegende Angehörige</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 4 -->
+      <div class="w-[300px] flex-shrink-0 bg-surface border border-outline/25 rounded-2xl p-6 card-lift" style="box-shadow:0 1px 6px rgba(38,30,23,0.05)">
+        <div class="font-headline text-5xl text-secondary/30 leading-none mb-2 select-none">"</div>
+        <div class="flex gap-0.5 mb-4">
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg style="color:#9E5A35" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="font-headline italic text-on-surface-variant text-sm leading-relaxed mb-6">"Schnell, unkompliziert und wirklich alles kostenlos. Nach 3 Monaten weiß ich nicht mehr, wie ich früher ohne gemacht habe."</p>
+        <div class="flex items-center gap-3 pt-5 border-t border-outline/15">
+          <div class="w-9 h-9 rounded-full bg-secondary-pale flex items-center justify-center font-bold text-secondary text-xs flex-shrink-0">RB</div>
+          <div>
+            <p class="font-bold text-xs uppercase tracking-wider text-dark">Roland B.</p>
+            <p class="text-[10px] text-on-surface-variant">Pflegebedürftiger</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     8. FAQ — Animated Accordion
+════════════════════════════════════ -->
+<section class="bg-surface px-6 py-20 border-t border-outline/15">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="font-headline text-3xl font-semibold text-dark mb-4 reveal">Häufige Fragen</h2>
+    <div class="deco-rule mb-10 reveal"></div>
+
+    <div class="space-y-2" id="faq-list">
+
+      <!-- FAQ Item 1 (open by default) -->
+      <div class="bg-background border border-primary/30 rounded-2xl overflow-hidden">
+        <button class="acc-trigger w-full flex items-center justify-between px-6 py-4 text-left" aria-expanded="true">
+          <span class="font-semibold text-sm text-dark">Ist der Service wirklich kostenlos?</span>
+          <svg class="acc-chevron open flex-shrink-0 ml-3 text-on-surface-variant" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="acc-body open">
+          <div>
+            <p class="px-6 pb-4 text-sm text-on-surface-variant leading-relaxed">Ja, vollständig. Ihre Pflegekasse übernimmt bis zu 42 € pro Monat für Pflegehilfsmittel nach §40 SGB XI. Wir liefern innerhalb dieses Budgets — für Sie entstehen keinerlei Kosten.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-background border border-outline/20 rounded-2xl overflow-hidden">
+        <button class="acc-trigger w-full flex items-center justify-between px-6 py-4 text-left" aria-expanded="false">
+          <span class="font-semibold text-sm text-dark">Wer hat Anspruch auf die 42 €?</span>
+          <svg class="acc-chevron flex-shrink-0 ml-3 text-on-surface-variant" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="acc-body">
+          <div>
+            <p class="px-6 pb-4 text-sm text-on-surface-variant leading-relaxed">Alle Personen mit einem anerkannten Pflegegrad 1–5, die zu Hause gepflegt werden und bei einer gesetzlichen oder privaten Pflegekasse versichert sind. Der Anspruch beginnt mit der Anerkennung des Pflegegrades.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-background border border-outline/20 rounded-2xl overflow-hidden">
+        <button class="acc-trigger w-full flex items-center justify-between px-6 py-4 text-left" aria-expanded="false">
+          <span class="font-semibold text-sm text-dark">Wie kann ich meine Box ändern?</span>
+          <svg class="acc-chevron flex-shrink-0 ml-3 text-on-surface-variant" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="acc-body">
+          <div>
+            <p class="px-6 pb-4 text-sm text-on-surface-variant leading-relaxed">Über Ihr persönliches Konto auf velacare.de können Sie die Zusammensetzung Ihrer Box jederzeit anpassen — bis zum 20. des Vormonats für die nächste Lieferung.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-background border border-outline/20 rounded-2xl overflow-hidden">
+        <button class="acc-trigger w-full flex items-center justify-between px-6 py-4 text-left" aria-expanded="false">
+          <span class="font-semibold text-sm text-dark">Benötige ich ein Rezept?</span>
+          <svg class="acc-chevron flex-shrink-0 ml-3 text-on-surface-variant" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="acc-body">
+          <div>
+            <p class="px-6 pb-4 text-sm text-on-surface-variant leading-relaxed">Nein. Pflegehilfsmittel nach §40 SGB XI benötigen kein ärztliches Rezept. Es reicht die Angabe Ihres Pflegegrades. Wir kümmern uns um die Abrechnung mit Ihrer Pflegekasse.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-background border border-outline/20 rounded-2xl overflow-hidden">
+        <button class="acc-trigger w-full flex items-center justify-between px-6 py-4 text-left" aria-expanded="false">
+          <span class="font-semibold text-sm text-dark">Was passiert, wenn ich kündigen möchte?</span>
+          <svg class="acc-chevron flex-shrink-0 ml-3 text-on-surface-variant" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="acc-body">
+          <div>
+            <p class="px-6 pb-4 text-sm text-on-surface-variant leading-relaxed">Sie können jederzeit ohne Angabe von Gründen kündigen — es gibt keine Mindestlaufzeit. Einfach in Ihrem Konto auf "Kündigen" klicken oder uns per E-Mail kontaktieren.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     9. CTA BANNER
+════════════════════════════════════ -->
+<section class="bg-primary-pale px-6 py-20 text-center border-t border-outline/20 overflow-hidden relative">
+  <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at 50% 60%,rgba(74,114,89,0.07) 0,transparent 65%)"></div>
+  <div class="relative max-w-2xl mx-auto reveal">
+    <span class="inline-block px-3 py-1 border border-primary/25 bg-primary/10 text-primary rounded-full text-[10px] font-bold uppercase tracking-widest mb-6">Jetzt starten</span>
+    <h2 class="font-headline text-3xl md:text-4xl font-semibold leading-[1.1] text-dark mb-4">
+      Holen Sie sich, was Ihnen<br/>
+      <em class="text-primary not-italic">gesetzlich zusteht.</em>
+    </h2>
+    <p class="text-on-surface-variant text-sm leading-relaxed mb-8 max-w-md mx-auto">Beantragen Sie Ihre kostenlose Pflegehilfsmittel-Box in 2 Minuten. Keine Vertragsbindung, kein Papierkram.</p>
+    <a href="#" class="inline-flex items-center gap-2.5 bg-primary text-white font-semibold px-8 py-4 rounded-xl hover:bg-primary-dark transition-all active:scale-[.98]" style="box-shadow:0 4px 20px rgba(74,114,89,0.25)">
+      Anspruch kostenlos prüfen
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+    <div class="flex flex-wrap justify-center gap-5 mt-6">
+      <span class="text-xs text-on-surface-variant flex items-center gap-1.5">
+        <svg style="color:#4A7259" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        Nur 2 Minuten
+      </span>
+      <span class="text-xs text-on-surface-variant flex items-center gap-1.5">
+        <svg style="color:#4A7259" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        Kein Risiko
+      </span>
+      <span class="text-xs text-on-surface-variant flex items-center gap-1.5">
+        <svg style="color:#4A7259" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        0 € Kosten
+      </span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer class="bg-[#2C1F15] text-[#F0EBE3] py-16 px-6">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+    <div class="space-y-5">
+      <div class="flex items-center gap-2.5">
+        <svg fill="none" height="24" viewBox="0 0 80 80" width="24">
+          <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" fill="none" stroke="#4A7259" stroke-linecap="round" stroke-width="7"/>
+          <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" fill="none" stroke="#4A7259" stroke-linecap="round" stroke-width="7"/>
+          <circle cx="15" cy="70" fill="#4A7259" r="5.5"/>
+          <circle cx="65" cy="70" fill="#4A7259" r="5.5"/>
+          <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#9E5A35"/>
+        </svg>
+        <span class="text-2xl font-headline font-bold text-[#F0EBE3]">Velacare</span>
+      </div>
+      <p class="text-sm leading-relaxed" style="opacity:.55">Pflegehilfsmittel einfach und warmherzig direkt zu Ihnen nach Hause. Wir kümmern uns um die Bürokratie.</p>
+    </div>
+    <div>
+      <h4 class="font-bold text-xs mb-5 uppercase tracking-wider text-[#F0EBE3]">Service</h4>
+      <ul class="space-y-3.5 text-sm" style="opacity:.5">
+        <li><a class="hover:text-[#7FA98C] transition-colors" href="#">Produkte</a></li>
+        <li><a class="hover:text-[#7FA98C] transition-colors" href="#">Wie es funktioniert</a></li>
+        <li><a class="hover:text-[#7FA98C] transition-colors" href="#">Konto</a></li>
+        <li><a class="hover:text-[#7FA98C] transition-colors" href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-bold text-xs mb-5 uppercase tracking-wider text-[#F0EBE3]">Rechtliches</h4>
+      <ul class="space-y-3.5 text-sm" style="opacity:.5">
+        <li><a class="hover:text-[#7FA98C] transition-colors" href="#">Impressum</a></li>
+        <li><a class="hover:text-[#7FA98C] transition-colors" href="#">Datenschutz</a></li>
+        <li><a class="hover:text-[#7FA98C] transition-colors" href="#">AGB</a></li>
+        <li><a class="hover:text-[#7FA98C] transition-colors" href="#">Widerruf</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-bold text-xs mb-5 uppercase tracking-wider text-[#F0EBE3]">Kontakt</h4>
+      <ul class="space-y-3.5 text-sm" style="opacity:.5">
+        <li class="flex items-center gap-3"><span class="material-symbols-outlined text-[#7FA98C]" style="font-size:16px">mail</span>info@velacare.de</li>
+        <li class="flex items-center gap-3"><span class="material-symbols-outlined text-[#7FA98C]" style="font-size:16px">phone</span>+49 (0) 123 456 789</li>
+        <li class="flex items-center gap-3"><span class="material-symbols-outlined text-[#7FA98C]" style="font-size:16px">location_on</span>Berlin, Deutschland</li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto pt-14 mt-14 text-center text-[10px]" style="border-top:1px solid rgba(255,255,255,0.06);opacity:.25">
+    © 2025 Velacare GmbH. Alle Rechte vorbehalten.
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════ -->
+<script>
+// ── Nav scroll ──────────────────────────────────
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 40) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+}, { passive: true });
+
+// ── Scroll reveal ────────────────────────────────
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('revealed');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ── FAQ Accordion ────────────────────────────────
+document.querySelectorAll('.acc-trigger').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+    const body   = btn.nextElementSibling;
+    const icon   = btn.querySelector('.acc-chevron');
+    const parent = btn.closest('div[class*="rounded-2xl"]');
+
+    // Close all
+    document.querySelectorAll('.acc-trigger').forEach(b => {
+      b.setAttribute('aria-expanded', 'false');
+      b.nextElementSibling.classList.remove('open');
+      b.querySelector('.acc-chevron').classList.remove('open');
+      b.closest('div[class*="rounded-2xl"]').style.borderColor = '';
+    });
+
+    // Open clicked if it was closed
+    if (!isOpen) {
+      btn.setAttribute('aria-expanded', 'true');
+      body.classList.add('open');
+      icon.classList.add('open');
+      parent.style.borderColor = 'rgba(74,114,89,0.35)';
+    }
+  });
+});
+
+// ── Rechner grade tabs + counter ─────────────────
+const MONTHLY = 42;
+
+function calcMonths(monthIdx, year) {
+  const now    = new Date();
+  const from   = new Date(year, monthIdx, 1);
+  const months = Math.max(0, (now.getFullYear() - from.getFullYear()) * 12 + (now.getMonth() - from.getMonth()));
+  return months;
+}
+
+function formatEuro(val) {
+  return val.toFixed(2).replace('.', ',') + ' €';
+}
+
+function updateCalculator() {
+  const monthIdx = document.getElementById('month-sel').selectedIndex;
+  const year     = parseInt(document.getElementById('year-sel').value);
+  const months   = calcMonths(monthIdx, year);
+  const total    = months * MONTHLY;
+
+  const monthNames = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  const shortMonths = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+
+  const amountEl  = document.getElementById('total-amount');
+  const labelEl   = document.getElementById('months-label');
+  const sinceEl   = document.getElementById('since-label');
+  const countEl   = document.getElementById('months-count');
+
+  // Animate out → update → animate in
+  amountEl.classList.remove('count-reveal');
+  void amountEl.offsetWidth; // reflow
+  amountEl.classList.add('count-reveal');
+
+  amountEl.textContent = formatEuro(total);
+  labelEl.textContent  = `${months} Monat${months !== 1 ? 'e' : ''} mit Pflegegrad`;
+  sinceEl.textContent  = `hätten Ihnen seit ${shortMonths[monthIdx]}/${year} zugestanden`;
+  countEl.textContent  = `${months} Monat${months !== 1 ? 'e' : ''}`;
+}
+
+// Grade tab switching
+document.getElementById('grade-tabs').addEventListener('click', e => {
+  const btn = e.target.closest('.grade-btn');
+  if (!btn) return;
+  document.querySelectorAll('.grade-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  updateCalculator();
+});
+
+document.getElementById('month-sel').addEventListener('change', updateCalculator);
+document.getElementById('year-sel').addEventListener('change', updateCalculator);
+
+// Initial calculation
+updateCalculator();
+</script>
+
+</body>
+</html>

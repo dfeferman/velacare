@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velacare — Brand Guide v2.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+/* ── Reset ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+
+/* ── Tokens ── */
+:root{
+  --terra:#4A7259;
+  --terra-mid:#5E8C6E;
+  --terra-light:#B3D4C5;
+  --terra-pale:#F0F6F2;
+  --terra-dark:#375E46;
+  --sage:#9E5A35;
+  --sage-light:#D4906E;
+  --sage-pale:#F7EEE7;
+  --sky:#185FA5;
+  --amber:#BA7517;
+  --warm-white:#FFFDF7;
+  --mid-gray:#D5CAB9;
+  --warm-gray:#6B5747;
+  --dark:#261E17;
+  --bg:#FAF6EF;
+  --ff:'Newsreader',Georgia,serif;
+  --fs:'DM Sans',system-ui,sans-serif;
+  --fm:'DM Mono',monospace;
+}
+
+/* ── Base ── */
+body{font-family:var(--fs);background:var(--bg);color:var(--dark);line-height:1.7;overflow-x:hidden}
+
+/* ── Fixed Nav ── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  height:52px;
+  background:rgba(255,253,247,.96);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--mid-gray);
+  display:flex;align-items:center;
+  padding:0 2rem;gap:1.5rem;
+}
+.nav-brand{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--ff);font-size:20px;font-weight:600;
+  color:var(--dark);text-decoration:none;flex-shrink:0;
+}
+.nav-links{
+  display:flex;gap:0;overflow-x:auto;flex:1;
+  scrollbar-width:none;
+}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{
+  font-size:12px;color:var(--warm-gray);text-decoration:none;
+  padding:0 14px;white-space:nowrap;
+  border-bottom:2px solid transparent;
+  height:52px;display:flex;align-items:center;
+  transition:color .15s,border-color .15s;
+}
+.nav-link:hover,.nav-link.active{color:var(--terra);border-bottom-color:var(--terra)}
+.nav-badge{
+  margin-left:auto;font-size:10px;font-weight:500;
+  padding:4px 12px;background:var(--terra-pale);
+  color:var(--terra);border-radius:20px;white-space:nowrap;flex-shrink:0;
+}
+
+/* ── Page layout ── */
+.page{padding-top:52px}
+.section{padding:5rem 2.5rem;max-width:1100px;margin:0 auto}
+.section-sm{padding:3rem 2.5rem;max-width:1100px;margin:0 auto}
+
+/* ── Cover ── */
+.cover{
+  min-height:100vh;background:var(--dark);
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;padding:5rem 2rem;
+  position:relative;overflow:hidden;
+}
+.cover-glow{
+  position:absolute;width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(74,114,89,.12) 0%,transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  animation:pulse 6s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
+.cover-eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--terra-light);margin-bottom:2rem;position:relative}
+.cover-logo{margin-bottom:2rem;position:relative}
+.cover-title{
+  font-family:var(--ff);font-size:clamp(56px,8vw,100px);
+  font-weight:600;color:var(--warm-white);line-height:1.02;
+  letter-spacing:-.01em;margin-bottom:.75rem;position:relative;
+}
+.cover-subtitle{
+  font-size:14px;font-weight:300;letter-spacing:.25em;
+  text-transform:uppercase;color:var(--terra-light);
+  margin-bottom:3rem;position:relative;
+}
+.cover-rule{width:80px;height:1px;background:rgba(255,255,255,.15);margin:0 auto 2rem;position:relative}
+.cover-meta{
+  display:flex;gap:2.5rem;justify-content:center;
+  flex-wrap:wrap;position:relative;
+}
+.cover-meta-item{font-size:11px;color:rgba(255,253,247,.4);letter-spacing:.05em}
+.cover-meta-item span{color:rgba(255,253,247,.8);display:block;margin-top:2px;font-weight:500}
+
+/* ── Chapter header ── */
+.chapter{
+  background:var(--terra);padding:3rem 2.5rem;
+  display:flex;align-items:flex-end;gap:1.5rem;
+  position:relative;overflow:hidden;
+}
+.chapter::before{
+  content:'';position:absolute;
+  right:-20px;top:-20px;width:200px;height:200px;
+  background:rgba(255,255,255,.06);border-radius:50%;
+}
+.ch-num{
+  font-family:var(--ff);font-size:72px;font-weight:600;
+  color:rgba(255,255,255,.18);line-height:1;flex-shrink:0;
+}
+.ch-meta{padding-bottom:6px}
+.ch-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:4px}
+.ch-title{font-family:var(--ff);font-size:30px;font-weight:600;color:var(--warm-white);line-height:1.1}
+
+/* ── Typography ── */
+h2{font-family:var(--ff);font-size:clamp(26px,3vw,36px);font-weight:600;color:var(--dark);line-height:1.15;margin-bottom:.75rem}
+h3{font-family:var(--ff);font-size:22px;font-weight:500;color:var(--dark);margin-bottom:.6rem}
+h4{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:1rem}
+p{color:var(--warm-gray);line-height:1.75}
+.lead{font-size:18px;font-weight:300;color:var(--dark);line-height:1.65}
+strong{font-weight:500;color:var(--dark)}
+
+/* ── Card ── */
+.card{background:var(--warm-white);border-radius:16px;border:1px solid var(--mid-gray);overflow:hidden}
+.card-p{padding:1.5rem}
+
+/* ── Grids ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+
+/* ── Divider ── */
+.divider{height:1px;background:var(--mid-gray);margin:3rem 0}
+.divider-sm{height:1px;background:rgba(213,202,185,.35);margin:1.5rem 0}
+
+/* ── Label ── */
+.label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:1.25rem;display:block}
+
+/* ── Value card ── */
+.value-card{
+  background:var(--terra-pale);border-radius:14px;padding:1.5rem;
+  border-top:3px solid var(--terra);
+}
+.value-card .num{font-family:var(--ff);font-size:42px;font-weight:600;color:var(--terra);opacity:.3;line-height:1;margin-bottom:8px}
+.value-card h3{font-size:20px;margin-bottom:6px}
+.value-card p{font-size:13.5px;line-height:1.65}
+
+/* ── Logo stages ── */
+.logo-stage{
+  padding:3rem 2rem;
+  display:flex;align-items:center;justify-content:center;
+  min-height:180px;
+}
+.logo-lockup{display:flex;align-items:center;gap:20px}
+.logo-lockup-vert{display:flex;flex-direction:column;align-items:center;gap:10px}
+.wm{font-family:var(--ff);font-size:44px;font-weight:600;letter-spacing:.02em;line-height:1;color:var(--dark)}
+.wm-light{color:#F0F6F2}
+.wm-sub{font-family:var(--fs);font-size:11px;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:var(--terra);margin-top:6px}
+.wm-sub-light{color:var(--terra-light)}
+.wm-sub-white{color:rgba(255,253,247,.7)}
+.wm-vert{font-family:var(--ff);font-size:32px;font-weight:600;letter-spacing:.05em;text-align:center;color:var(--dark)}
+.wm-vert-sub{font-family:var(--fs);font-size:9.5px;font-weight:400;letter-spacing:.28em;text-transform:uppercase;text-align:center;color:var(--terra)}
+
+/* ── App icon ── */
+.app-icon{width:64px;height:64px;background:var(--terra);border-radius:16px;display:flex;align-items:center;justify-content:center}
+.app-icon-sm{width:48px;height:48px;background:var(--terra);border-radius:12px;display:flex;align-items:center;justify-content:center}
+.app-icon-xs{width:32px;height:32px;background:var(--dark);border-radius:8px;display:flex;align-items:center;justify-content:center}
+
+/* ── Color swatches ── */
+.swatch{border-radius:14px;overflow:hidden;border:1px solid rgba(0,0,0,.06)}
+.swatch-color{height:90px}
+.swatch-info{padding:12px 14px;background:var(--warm-white)}
+.swatch-name{font-size:13px;font-weight:500;color:var(--dark);margin-bottom:2px}
+.swatch-hex{font-family:var(--fm);font-size:11px;color:var(--warm-gray);display:block;margin-bottom:4px}
+.swatch-use{font-size:11px;color:var(--warm-gray);line-height:1.4}
+
+/* ── Type specimen ── */
+.type-specimen{
+  background:var(--warm-white);border-radius:14px;
+  border:1px solid var(--mid-gray);padding:1.75rem;
+  margin-bottom:1rem;
+}
+.ts-name{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:12px}
+.ts-preview-serif{font-family:var(--ff);font-size:44px;font-weight:600;color:var(--dark);line-height:1.1;margin-bottom:6px}
+.ts-preview-italic{font-family:var(--ff);font-size:28px;font-weight:400;font-style:italic;color:var(--terra);margin-bottom:8px}
+.ts-preview-sans{font-family:var(--fs);font-size:15px;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--warm-gray)}
+.ts-meta{font-family:var(--fm);font-size:11px;color:var(--mid-gray);border-top:1px solid var(--mid-gray);padding-top:10px;margin-top:12px}
+
+/* ── Scale ── */
+.scale-row{display:flex;align-items:baseline;gap:1.5rem;padding:14px 0;border-bottom:1px solid rgba(213,202,185,.3)}
+.scale-row:last-child{border:none}
+.scale-label{width:110px;font-size:11px;font-family:var(--fm);color:var(--warm-gray);flex-shrink:0}
+
+/* ── Spacing scale ── */
+.space-row{display:flex;align-items:center;gap:1rem;padding:9px 0;border-bottom:1px solid rgba(213,202,185,.25)}
+.space-row:last-child{border:none}
+.space-bar{background:var(--terra);height:10px;border-radius:3px;opacity:.7;flex-shrink:0}
+.space-info{font-size:12px;color:var(--warm-gray);font-family:var(--fm)}
+
+/* ── Buttons ── */
+.btn-demo{display:inline-flex;align-items:center;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:500;cursor:default;white-space:nowrap;font-family:var(--fs)}
+.btn-primary-d{background:var(--terra);color:white}
+.btn-secondary-d{background:transparent;color:var(--dark);border:1.5px solid var(--mid-gray)}
+.btn-ghost-d{background:var(--terra-pale);color:var(--terra)}
+
+/* ── Badges ── */
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:4px 10px;border-radius:20px;white-space:nowrap}
+.badge-terra{background:rgba(74,114,89,.14);color:var(--terra)}
+.badge-sage{background:rgba(158,90,53,.12);color:var(--sage)}
+.badge-gray{background:var(--bg);color:var(--warm-gray)}
+.badge-amber{background:rgba(186,117,23,.12);color:var(--amber)}
+
+/* ── Do/Don't ── */
+.tone-card{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:10px}
+.tone-do{background:var(--sage-pale);border-left:3px solid var(--sage)}
+.tone-dont{background:#FFF0ED;border-left:3px solid #E05A3A}
+.tone-label{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.tone-label-do{color:var(--sage)}
+.tone-label-dont{color:#E05A3A}
+.tone-text{font-size:14px;font-style:italic;color:var(--dark);line-height:1.6}
+
+/* ── Slogan card ── */
+.slogan-card{
+  display:flex;align-items:flex-start;gap:16px;
+  background:var(--warm-white);border-radius:14px;
+  padding:1.5rem;border:1px solid var(--mid-gray);margin-bottom:1rem;
+}
+.slogan-accent{width:4px;min-height:60px;border-radius:2px;flex-shrink:0}
+.slogan-text{font-family:var(--ff);font-size:22px;font-weight:500;font-style:italic;color:var(--dark);margin-bottom:4px;line-height:1.35}
+.slogan-desc{font-size:13px;color:var(--warm-gray);line-height:1.5}
+
+/* ── Sitemap ── */
+.sitemap-home{background:var(--terra);color:white;padding:12px 20px;border-radius:10px;font-weight:500;font-size:14px}
+.sitemap-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-left:2rem}
+.sitemap-page{background:var(--warm-white);border:1px solid var(--mid-gray);padding:10px 16px;border-radius:8px;font-size:12px;color:var(--dark)}
+.sitemap-page.cta{border-color:var(--terra);background:var(--terra-pale);color:var(--terra-dark);font-weight:500}
+.sitemap-url{font-family:var(--fm);font-size:10px;color:var(--warm-gray);display:block;margin-top:2px}
+
+/* ── Conversion path ── */
+.conv-path{display:flex;align-items:center;gap:0;flex-wrap:wrap;row-gap:12px}
+.conv-step{background:var(--warm-white);border:1px solid var(--mid-gray);padding:10px 16px;border-radius:8px;font-size:13px;color:var(--dark)}
+.conv-step.primary{background:var(--terra);border-color:var(--terra);color:white;font-weight:500}
+.conv-step.success{background:var(--sage-pale);border-color:var(--sage-light);color:var(--sage);font-weight:500}
+.conv-step.start{background:var(--terra-pale);border-color:var(--terra);color:var(--terra-dark);font-weight:500}
+.conv-arrow{padding:0 8px;color:var(--mid-gray);font-size:18px}
+
+/* ── Section structure ── */
+.structure-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 18px;border-radius:8px;margin-bottom:6px;font-size:13px;
+}
+.structure-row .sr-name{font-weight:500}
+.structure-row .sr-desc{font-size:12px;opacity:.75}
+
+/* ── Principle cards ── */
+.principle-card{background:var(--warm-white);border-radius:14px;padding:1.5rem;border:1px solid var(--mid-gray)}
+.principle-num{font-family:var(--ff);font-size:48px;font-weight:600;color:var(--terra);opacity:.2;line-height:1;margin-bottom:8px}
+.principle-title{font-family:var(--ff);font-size:20px;font-weight:500;color:var(--dark);margin-bottom:8px}
+.principle-desc{font-size:13.5px;color:var(--warm-gray);line-height:1.65}
+
+/* ── Target cards ── */
+.target-card{background:var(--warm-white);border-radius:14px;border:1px solid var(--mid-gray);padding:1.5rem}
+.target-tag{font-size:12px;font-weight:500;margin-bottom:12px;display:inline-block}
+.target-body{font-size:14px;color:var(--warm-gray);line-height:1.65;margin-bottom:1rem}
+.target-point{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--dark);padding:4px 0}
+.target-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+/* ── Note box ── */
+.note{padding:1rem 1.25rem;border-radius:10px;font-size:13px;line-height:1.65}
+.note-terra{background:var(--terra-pale);border-left:3px solid var(--terra);color:var(--terra-dark)}
+.note-sage{background:var(--sage-pale);border-left:3px solid var(--sage);color:var(--sage)}
+
+/* ── Usage rules ── */
+.usage-card{border-radius:12px;overflow:hidden;border:1px solid var(--mid-gray)}
+.usage-stage{height:110px;display:flex;align-items:center;justify-content:center;position:relative}
+.usage-footer{padding:10px 14px;background:var(--warm-white);border-top:1px solid var(--mid-gray);font-size:12px;color:var(--warm-gray)}
+.usage-tag{font-size:10px;font-weight:500;padding:2px 8px;border-radius:10px;display:inline-block;margin-bottom:4px}
+.tag-ok{background:#DCF0E4;color:#0F5240}
+.tag-no{background:#FDDDD8;color:#9E2910}
+
+/* ── Avoided list ── */
+.avoid-item{background:#FFF0ED;border-left:3px solid #E05A3A;border-radius:0 10px 10px 0;padding:10px 14px;margin-bottom:8px}
+.avoid-title{font-size:13px;font-weight:500;color:#9E2910;margin-bottom:2px}
+.avoid-ex{font-size:12px;color:#9E2910;font-style:italic}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .section,.section-sm{padding:3rem 1.25rem}
+  .chapter{padding:2rem 1.25rem}
+  .ch-num{font-size:48px}
+  .nav-links{display:none}
+  .logo-stage{min-height:140px;padding:2rem 1rem}
+}
+
+/* ── Animations ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.animate{animation:fadeUp .6s ease forwards;opacity:0}
+.animate-delay-1{animation-delay:.1s}
+.animate-delay-2{animation-delay:.2s}
+.animate-delay-3{animation-delay:.3s}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="nav">
+  <a href="#cover" class="nav-brand">
+    <svg width="22" height="22" viewBox="0 0 80 80" fill="none">
+      <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#4A7259" stroke-width="9" stroke-linecap="round" fill="none"/>
+      <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#4A7259" stroke-width="9" stroke-linecap="round" fill="none"/>
+      <circle cx="15" cy="70" r="6" fill="#4A7259"/><circle cx="65" cy="70" r="6" fill="#4A7259"/>
+      <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#9E5A35"/>
+    </svg>
+    Velacare
+  </a>
+  <div class="nav-links">
+    <a href="#marke" class="nav-link">Marke</a>
+    <a href="#logo" class="nav-link">Logo</a>
+    <a href="#farben" class="nav-link">Farben</a>
+    <a href="#typografie" class="nav-link">Typografie</a>
+    <a href="#komponenten" class="nav-link">Komponenten</a>
+    <a href="#ton" class="nav-link">Stimme & Ton</a>
+    <a href="#website" class="nav-link">Website</a>
+  </div>
+  <div class="nav-badge">Brand Guide v2.0</div>
+</nav>
+
+<div class="page">
+
+<!-- ══════════════════════════════════════ -->
+<!-- COVER -->
+<!-- ══════════════════════════════════════ -->
+<section id="cover" class="cover">
+  <div class="cover-glow"></div>
+  <p class="cover-eyebrow animate">Brand Guide · Version 2.0</p>
+  <div class="cover-logo animate animate-delay-1">
+    <svg width="96" height="96" viewBox="0 0 80 80" fill="none">
+      <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#B3D4C5" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#B3D4C5" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <circle cx="15" cy="70" r="5.5" fill="#B3D4C5"/><circle cx="65" cy="70" r="5.5" fill="#B3D4C5"/>
+      <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#D4906E"/>
+    </svg>
+  </div>
+  <h1 class="cover-title animate animate-delay-1">Velacare</h1>
+  <p class="cover-subtitle animate animate-delay-2">Pflegehilfsmittel</p>
+  <div class="cover-rule animate animate-delay-2"></div>
+  <div class="cover-meta animate animate-delay-3">
+    <div class="cover-meta-item">Branche<span>Pflegehilfsmittel</span></div>
+    <div class="cover-meta-item">Zielgruppe<span>Ältere Menschen & Angehörige</span></div>
+    <div class="cover-meta-item">Tonalität<span>Warm · Vertrauensvoll · Klar</span></div>
+    <div class="cover-meta-item">Stand<span>2025</span></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- KAPITEL 1: MARKE -->
+<!-- ══════════════════════════════════════ -->
+<div id="marke" class="chapter">
+  <div class="ch-num">01</div>
+  <div class="ch-meta"><div class="ch-label">Kapitel 1</div><div class="ch-title">Marke & Positionierung</div></div>
+</div>
+
+<div class="section">
+  <h4>Mission</h4>
+  <h2>Pflege, die jeden Monat ankommt.</h2>
+  <p class="lead" style="max-width:680px;margin-bottom:2.5rem">Velacare macht es pflegenden Menschen einfach, die Hilfsmittel zu bekommen, die ihnen gesetzlich zustehen — ohne Bürokratie, ohne Stress, mit Wärme und Verlässlichkeit.</p>
+
+  <div class="g3" style="margin-bottom:3rem">
+    <div class="value-card">
+      <div class="num">01</div>
+      <h3 class="principle-title">Vertrauen</h3>
+      <p class="principle-desc">Velacare ist der verlässliche Partner, der immer pünktlich da ist und die Bürokratie übernimmt — jeden Monat aufs Neue.</p>
+    </div>
+    <div class="value-card">
+      <div class="num">02</div>
+      <h3 class="principle-title">Einfachheit</h3>
+      <p class="principle-desc">Kein Papierkram, kein Hin und Her. Was komplex klingt, ist mit Velacare in wenigen Minuten erledigt.</p>
+    </div>
+    <div class="value-card">
+      <div class="num">03</div>
+      <h3 class="principle-title">Menschlichkeit</h3>
+      <p class="principle-desc">Hinter jedem Auftrag steckt eine Familie. Velacare kommuniziert warm, persönlich und auf Augenhöhe.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h4>Positionierung im Wettbewerb</h4>
+  <div class="g2">
+    <div class="card card-p">
+      <h3>Wettbewerber</h3>
+      <p>Frontida, pflegebox.de und pflegetipp.de dominieren mit einem stark funktionalen Ansatz: Kostenlos, Pflegekasse, 42 €. Das Versprechen steht im Vordergrund — das Gefühl bleibt auf der Strecke.</p>
+      <div style="margin-top:1rem" class="note note-terra">Das schafft eine klare Lücke: Keine Marke kommuniziert <strong>Wärme und Menschlichkeit</strong> als Kernidentität.</div>
+    </div>
+    <div class="card card-p">
+      <h3>Velacare</h3>
+      <p>Velacare füllt diese Lücke. Wir kommunizieren nicht nur das Versprechen (kostenlos, einfach) — wir kommunizieren das <em>Gefühl</em>: „Jemand kümmert sich. Jeden Monat. Verlässlich."</p>
+      <div style="margin-top:1rem" class="note note-sage">Das Produkt ist identisch mit dem Wettbewerb. <strong>Die Marke ist es nicht.</strong></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h4>Zielgruppen</h4>
+  <div class="g2">
+    <div class="target-card">
+      <h3>Pflegende Angehörige</h3>
+      <span class="target-tag" style="color:var(--terra)">Primäre Zielgruppe · 40–65 Jahre</span>
+      <p class="target-body">Töchter, Söhne, Partner die einen Elternteil oder Ehepartner zuhause pflegen. Sie suchen Entlastung und Verlässlichkeit. Zeit ist knapp. Sie wollen, dass jemand das für sie erledigt.</p>
+      <div class="target-point"><span class="target-dot" style="background:var(--terra)"></span>Suchen unkomplizierten Service</div>
+      <div class="target-point"><span class="target-dot" style="background:var(--terra)"></span>Entscheiden oft für Elternteil</div>
+      <div class="target-point"><span class="target-dot" style="background:var(--terra)"></span>Empfehlen weiter wenn zufrieden</div>
+    </div>
+    <div class="target-card">
+      <h3>Ältere Menschen</h3>
+      <span class="target-tag" style="color:var(--sage)">Sekundäre Zielgruppe · 65+ Jahre</span>
+      <p class="target-body">Pflegebedürftige mit Pflegegrad 1–5, die zuhause leben. Die Website muss für sie lesbar, verständlich und nicht technisch sein.</p>
+      <div class="target-point"><span class="target-dot" style="background:var(--sage)"></span>Große Schrift, klare Sprache</div>
+      <div class="target-point"><span class="target-dot" style="background:var(--sage)"></span>Telefonnummer immer sichtbar</div>
+      <div class="target-point"><span class="target-dot" style="background:var(--sage)"></span>Vertrauen durch Menschlichkeit</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- KAPITEL 2: LOGO -->
+<!-- ══════════════════════════════════════ -->
+<div id="logo" class="chapter">
+  <div class="ch-num">02</div>
+  <div class="ch-meta"><div class="ch-label">Kapitel 2</div><div class="ch-title">Logo & Icon</div></div>
+</div>
+
+<div class="section">
+  <h4>Logo-Konzept</h4>
+  <h2>Umhüllende Arme — verbunden durch ein Herz</h2>
+  <p class="lead" style="max-width:680px;margin-bottom:2.5rem">Das Icon zeigt zwei Arme, die sich schützend um einen Kern schließen — in der Mitte ein Herz als Symbol für Fürsorge. Klar, warm, auf jeder Größe erkennbar.</p>
+
+  <!-- Primary logo hell -->
+  <h4>Primäres Logo — Hell</h4>
+  <div class="card" style="margin-bottom:1rem">
+    <div class="logo-stage" style="background:var(--warm-white)">
+      <div class="logo-lockup">
+        <svg width="82" height="82" viewBox="0 0 80 80" fill="none">
+          <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#4A7259" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#4A7259" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <circle cx="15" cy="70" r="5.5" fill="#4A7259"/><circle cx="65" cy="70" r="5.5" fill="#4A7259"/>
+          <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#9E5A35"/>
+        </svg>
+        <div><div class="wm">Velacare</div><div class="wm-sub">Pflegehilfsmittel</div></div>
+      </div>
+    </div>
+    <div style="padding:10px 18px;border-top:1px solid var(--mid-gray);font-size:12px;color:var(--warm-gray)">Primäre Version · für Website, Briefkopf, Visitenkarte, Rechnungen</div>
+  </div>
+
+  <!-- Dark + Primary -->
+  <div class="g2" style="margin-bottom:1rem">
+    <div class="card">
+      <div class="logo-stage" style="background:var(--dark)">
+        <div class="logo-lockup">
+          <svg width="68" height="68" viewBox="0 0 80 80" fill="none">
+            <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#B3D4C5" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#B3D4C5" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <circle cx="15" cy="70" r="5.5" fill="#B3D4C5"/><circle cx="65" cy="70" r="5.5" fill="#B3D4C5"/>
+            <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#D4906E"/>
+          </svg>
+          <div><div class="wm wm-light">Velacare</div><div class="wm-sub wm-sub-light">Pflegehilfsmittel</div></div>
+        </div>
+      </div>
+      <div style="padding:10px 14px;border-top:1px solid var(--mid-gray);font-size:12px;color:var(--warm-gray)">Dark · Header, E-Mail, Packaging</div>
+    </div>
+    <div class="card">
+      <div class="logo-stage" style="background:var(--terra)">
+        <div class="logo-lockup">
+          <svg width="68" height="68" viewBox="0 0 80 80" fill="none">
+            <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#F0F6F2" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#F0F6F2" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <circle cx="15" cy="70" r="5.5" fill="#F0F6F2"/><circle cx="65" cy="70" r="5.5" fill="#F0F6F2"/>
+            <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#F0F6F2" opacity=".85"/>
+          </svg>
+          <div><div class="wm wm-light">Velacare</div><div class="wm-sub wm-sub-white">Pflegehilfsmittel</div></div>
+        </div>
+      </div>
+      <div style="padding:10px 14px;border-top:1px solid var(--mid-gray);font-size:12px;color:var(--warm-gray)">Auf Markenfarbe · Box-Aufdruck, Social, Werbung</div>
+    </div>
+  </div>
+
+  <!-- Vertikal + Icons -->
+  <div class="g4" style="margin-bottom:2.5rem">
+    <div class="card">
+      <div class="logo-stage" style="min-height:150px">
+        <div class="logo-lockup-vert">
+          <svg width="56" height="56" viewBox="0 0 80 80" fill="none">
+            <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#4A7259" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#4A7259" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <circle cx="15" cy="70" r="5.5" fill="#4A7259"/><circle cx="65" cy="70" r="5.5" fill="#4A7259"/>
+            <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#9E5A35"/>
+          </svg>
+          <div class="wm-vert">Velacare</div>
+          <div class="wm-vert-sub">Pflegehilfsmittel</div>
+        </div>
+      </div>
+      <div style="padding:8px 12px;border-top:1px solid var(--mid-gray);font-size:11px;color:var(--warm-gray)">Vertikal · Social Profil</div>
+    </div>
+    <div class="card">
+      <div class="logo-stage" style="min-height:150px">
+        <div class="app-icon">
+          <svg width="44" height="44" viewBox="0 0 80 80" fill="none">
+            <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#F0F6F2" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#F0F6F2" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <circle cx="15" cy="70" r="5.5" fill="#F0F6F2"/><circle cx="65" cy="70" r="5.5" fill="#F0F6F2"/>
+            <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#F0F6F2" opacity=".9"/>
+          </svg>
+        </div>
+      </div>
+      <div style="padding:8px 12px;border-top:1px solid var(--mid-gray);font-size:11px;color:var(--warm-gray)">App Icon · Waldgrün</div>
+    </div>
+    <div class="card">
+      <div class="logo-stage" style="min-height:150px">
+        <div class="app-icon" style="background:var(--warm-white);border:1px solid var(--mid-gray)">
+          <svg width="44" height="44" viewBox="0 0 80 80" fill="none">
+            <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#4A7259" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#4A7259" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <circle cx="15" cy="70" r="5.5" fill="#4A7259"/><circle cx="65" cy="70" r="5.5" fill="#4A7259"/>
+            <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#9E5A35"/>
+          </svg>
+        </div>
+      </div>
+      <div style="padding:8px 12px;border-top:1px solid var(--mid-gray);font-size:11px;color:var(--warm-gray)">App Icon · Hell</div>
+    </div>
+    <div class="card">
+      <div class="logo-stage" style="min-height:150px">
+        <div class="app-icon-xs">
+          <svg width="20" height="20" viewBox="0 0 80 80" fill="none">
+            <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#B3D4C5" stroke-width="9" stroke-linecap="round" fill="none"/>
+            <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#B3D4C5" stroke-width="9" stroke-linecap="round" fill="none"/>
+            <circle cx="15" cy="70" r="7" fill="#B3D4C5"/><circle cx="65" cy="70" r="7" fill="#B3D4C5"/>
+            <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#D4906E"/>
+          </svg>
+        </div>
+      </div>
+      <div style="padding:8px 12px;border-top:1px solid var(--mid-gray);font-size:11px;color:var(--warm-gray)">Favicon · 32px</div>
+    </div>
+  </div>
+
+  <!-- Usage Rules -->
+  <div class="divider"></div>
+  <h4>Logo-Regeln</h4>
+  <div class="g4">
+    <div class="usage-card">
+      <div class="usage-stage" style="background:var(--warm-white)">
+        <svg width="56" height="56" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#4A7259" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#4A7259" stroke-width="7" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="5.5" fill="#4A7259"/><circle cx="65" cy="70" r="5.5" fill="#4A7259"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#9E5A35"/></svg>
+      </div>
+      <div class="usage-footer"><span class="usage-tag tag-ok">✓ Richtig</span><br>Auf hellem Hintergrund</div>
+    </div>
+    <div class="usage-card">
+      <div class="usage-stage" style="background:var(--dark)">
+        <svg width="56" height="56" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#B3D4C5" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#B3D4C5" stroke-width="7" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="5.5" fill="#B3D4C5"/><circle cx="65" cy="70" r="5.5" fill="#B3D4C5"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#D4906E"/></svg>
+      </div>
+      <div class="usage-footer"><span class="usage-tag tag-ok">✓ Richtig</span><br>Auf dunklem Hintergrund</div>
+    </div>
+    <div class="usage-card">
+      <div class="usage-stage" style="background:var(--bg);position:relative">
+        <svg width="56" height="56" viewBox="0 0 80 80" fill="none" style="opacity:.25;filter:grayscale(1)"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#4A7259" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#4A7259" stroke-width="7" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="5.5" fill="#4A7259"/><circle cx="65" cy="70" r="5.5" fill="#4A7259"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#9E5A35"/></svg>
+        <div style="position:absolute;font-size:36px;color:#E05A3A;opacity:.8">✗</div>
+      </div>
+      <div class="usage-footer"><span class="usage-tag tag-no">✗ Falsch</span><br>Nicht verblassen</div>
+    </div>
+    <div class="usage-card">
+      <div class="usage-stage" style="background:linear-gradient(135deg,#6B8FC9,#A06BC9)">
+        <svg width="56" height="56" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="white" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="white" stroke-width="7" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="5.5" fill="white"/><circle cx="65" cy="70" r="5.5" fill="white"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="white" opacity=".7"/></svg>
+      </div>
+      <div class="usage-footer"><span class="usage-tag tag-no">✗ Falsch</span><br>Nicht auf Fremdfarben</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- KAPITEL 3: FARBEN -->
+<!-- ══════════════════════════════════════ -->
+<div id="farben" class="chapter">
+  <div class="ch-num">03</div>
+  <div class="ch-meta"><div class="ch-label">Kapitel 3</div><div class="ch-title">Farben</div></div>
+</div>
+
+<div class="section">
+  <h4>Primärpalette</h4>
+  <h2>Warm, geerdet, vertrauensvoll</h2>
+  <p style="max-width:620px;margin-bottom:2.5rem">Die Palette stammt nicht aus dem klinischen Pflegebereich — sie ist bewusst warm und menschlich. Waldgrün als Primärfarbe, Terrakotta als Akzent, warmes Weiß als Basis.</p>
+
+  <div class="g3" style="margin-bottom:2.5rem">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#4A7259"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Waldgrün — Primär</div>
+        <span class="swatch-hex">#4A7259</span>
+        <div class="swatch-use">Hauptfarbe. CTAs, Buttons, Logo-Arme, aktive Elemente. Die Farbe die man mit Velacare assoziiert.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#9E5A35"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Terrakotta — Akzent</div>
+        <span class="swatch-hex">#9E5A35</span>
+        <div class="swatch-use">Sekundäre Akzentfarbe. Logo-Herz, Wärme-Akzente, Badges. Ergänzt Waldgrün warm.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#261E17"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Dunkelbraun — Text</div>
+        <span class="swatch-hex">#261E17</span>
+        <div class="swatch-use">Haupttextfarbe. Überschriften, Body, Footer-Hintergrund. Wärmer als reines Schwarz.</div>
+      </div>
+    </div>
+  </div>
+
+  <h4>Sekundärpalette</h4>
+  <div class="g4" style="margin-bottom:2.5rem">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#B3D4C5;height:70px"></div>
+      <div class="swatch-info"><div class="swatch-name">Hellgrün</div><span class="swatch-hex">#B3D4C5</span><div class="swatch-use">Hover, Dark-Mode</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#F0F6F2;height:70px;border-bottom:1px solid var(--mid-gray)"></div>
+      <div class="swatch-info"><div class="swatch-name">Warm-Weiß</div><span class="swatch-hex">#F0F6F2</span><div class="swatch-use">Cards, Hintergründe</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#D4906E;height:70px"></div>
+      <div class="swatch-info"><div class="swatch-name">Apricot</div><span class="swatch-hex">#D4906E</span><div class="swatch-use">Helle Akzent-Flächen</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#6B5747;height:70px"></div>
+      <div class="swatch-info"><div class="swatch-name">Warmgrau</div><span class="swatch-hex">#6B5747</span><div class="swatch-use">Sekundärer Text</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <h4>Farben in der Anwendung</h4>
+  <div class="g3">
+    <div class="card" style="overflow:hidden">
+      <div style="background:var(--terra);padding:1.5rem">
+        <div style="font-family:var(--ff);font-size:20px;font-weight:600;color:#F0F6F2;margin-bottom:8px">Jetzt beantragen</div>
+        <div style="font-size:12px;color:rgba(255,253,247,.7)">Kostenlos · Ohne Vertragsbindung</div>
+        <div style="display:inline-block;background:rgba(255,253,247,.15);color:#F0F6F2;padding:7px 16px;border-radius:6px;font-size:12px;font-weight:500;margin-top:10px">Anspruch prüfen →</div>
+      </div>
+      <div style="padding:10px 14px;font-size:11px;color:var(--warm-gray)">CTA-Banner auf Waldgrün</div>
+    </div>
+    <div class="card" style="overflow:hidden">
+      <div style="background:var(--sage-pale);border:1px solid var(--sage-light);padding:1.5rem">
+        <div style="display:inline-block;background:rgba(158,90,53,.15);color:var(--sage);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:500;margin-bottom:8px">✓ Anspruch bestätigt</div>
+        <div style="font-family:var(--ff);font-size:18px;font-weight:500;color:var(--dark)">Sie haben Anspruch auf 42 €/Monat</div>
+      </div>
+      <div style="padding:10px 14px;font-size:11px;color:var(--warm-gray)">Erfolgsbestätigung auf Terrakotta-Ton</div>
+    </div>
+    <div class="card" style="overflow:hidden">
+      <div style="background:var(--dark);padding:1.5rem;display:flex;align-items:center;gap:12px">
+        <svg width="32" height="32" viewBox="0 0 80 80" fill="none"><path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#B3D4C5" stroke-width="8" stroke-linecap="round" fill="none"/><path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#B3D4C5" stroke-width="8" stroke-linecap="round" fill="none"/><circle cx="15" cy="70" r="5.5" fill="#B3D4C5"/><circle cx="65" cy="70" r="5.5" fill="#B3D4C5"/><path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#D4906E"/></svg>
+        <div><div style="font-family:var(--ff);font-size:22px;font-weight:600;color:#F0F6F2">Velacare</div><div style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--terra-light)">Pflegehilfsmittel</div></div>
+      </div>
+      <div style="padding:10px 14px;font-size:11px;color:var(--warm-gray)">Logo auf dunklem Footer</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- KAPITEL 4: TYPOGRAFIE -->
+<!-- ══════════════════════════════════════ -->
+<div id="typografie" class="chapter">
+  <div class="ch-num">04</div>
+  <div class="ch-meta"><div class="ch-label">Kapitel 4</div><div class="ch-title">Typografie</div></div>
+</div>
+
+<div class="section">
+  <h4>Schriftenfamilien</h4>
+  <h2>Serif trifft Sans — elegant und lesbar</h2>
+  <p style="max-width:620px;margin-bottom:2.5rem">Newsreader für alles Emotionale und Markenprägende — DM Sans für alles Funktionale und Lesbare.</p>
+
+  <div class="type-specimen">
+    <div class="ts-name">Newsreader — Display & Markenschrift</div>
+    <div class="ts-preview-serif">Velacare</div>
+    <div class="ts-preview-italic">„Jeden Monat ein Stück Fürsorge."</div>
+    <div class="ts-meta">Gewichte: 400 regular · 500 medium · 600 semibold · 700 bold · Italic verfügbar · Einsatz: Logo, H1, H2, Zitate, emotionale Headlines</div>
+  </div>
+
+  <div class="type-specimen">
+    <div class="ts-name">DM Sans — Interface & Fließtext</div>
+    <div style="font-family:var(--fs);font-size:32px;font-weight:500;color:var(--dark);margin-bottom:8px">DM Sans — klar & freundlich</div>
+    <div class="ts-preview-sans">Pflegehilfsmittel · Kostenlos · Monatlich</div>
+    <p style="margin-top:12px;font-size:14px">Fließtext, Buttons, Navigation, Labels und alle funktionalen Texte. Klar, modern und sehr gut lesbar — auch für ältere Nutzer.</p>
+    <div class="ts-meta">Gewichte: 300 light · 400 regular · 500 medium · Einsatz: Body, Nav, Buttons, Formulare, Labels</div>
+  </div>
+
+  <div class="divider-sm"></div>
+  <h4>Typografische Skala</h4>
+  <div class="card card-p">
+    <div class="scale-row"><div class="scale-label">Display / H1</div><div style="font-family:var(--ff);font-size:52px;font-weight:600;color:var(--dark);line-height:1">Velacare</div></div>
+    <div class="scale-row"><div class="scale-label">H2 · 36px</div><div style="font-family:var(--ff);font-size:36px;font-weight:600;color:var(--dark)">Pflege mit Herz</div></div>
+    <div class="scale-row"><div class="scale-label">H3 · 24px</div><div style="font-family:var(--ff);font-size:24px;font-weight:500;color:var(--dark)">Wie es funktioniert</div></div>
+    <div class="scale-row"><div class="scale-label">Lead · 18px</div><div style="font-size:18px;font-weight:300;color:var(--dark)">Monatliche Lieferung direkt nach Hause</div></div>
+    <div class="scale-row"><div class="scale-label">Body · 15px</div><div style="font-size:15px;color:var(--warm-gray)">Die Pflegekasse übernimmt Kosten bis zu 42€ monatlich.</div></div>
+    <div class="scale-row"><div class="scale-label">Small · 13px</div><div style="font-size:13px;color:var(--warm-gray)">Pflegegrad 1–5 · Häusliche Pflege · Gesetzlich versichert</div></div>
+    <div class="scale-row"><div class="scale-label">Label · 11px</div><div style="font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--warm-gray)">Pflegehilfsmittel · Kostenlos</div></div>
+  </div>
+
+  <div class="divider-sm"></div>
+  <h4>Abstands-System</h4>
+  <div class="card card-p">
+    <div class="space-row"><div class="space-bar" style="width:4px"></div><div class="space-info">4px — Minimal: Icon-Text Abstand, Inline-Gaps</div></div>
+    <div class="space-row"><div class="space-bar" style="width:8px"></div><div class="space-info">8px — Klein: Label-Abstand, dichte Elemente</div></div>
+    <div class="space-row"><div class="space-bar" style="width:16px"></div><div class="space-info">16px — Standard: Card-Padding, Form-Gap</div></div>
+    <div class="space-row"><div class="space-bar" style="width:24px"></div><div class="space-info">24px — Medium: Section-interne Abstände</div></div>
+    <div class="space-row"><div class="space-bar" style="width:40px"></div><div class="space-info">40px — Groß: Zwischen Content-Blöcken</div></div>
+    <div class="space-row"><div class="space-bar" style="width:80px"></div><div class="space-info">80px — Section-Padding oben/unten</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- KAPITEL 5: KOMPONENTEN -->
+<!-- ══════════════════════════════════════ -->
+<div id="komponenten" class="chapter">
+  <div class="ch-num">05</div>
+  <div class="ch-meta"><div class="ch-label">Kapitel 5</div><div class="ch-title">UI-Komponenten</div></div>
+</div>
+
+<div class="section">
+  <div class="g2" style="margin-bottom:2.5rem">
+    <div>
+      <h4>Buttons</h4>
+      <div class="card card-p" style="display:flex;flex-direction:column;gap:14px">
+        <div>
+          <div style="font-size:11px;color:var(--warm-gray);margin-bottom:7px">Primär — Hauptaktion</div>
+          <div class="btn-demo btn-primary-d">Jetzt beantragen →</div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--warm-gray);margin-bottom:7px">Sekundär — Nebenhandlung</div>
+          <div class="btn-demo btn-secondary-d">Wie es funktioniert</div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--warm-gray);margin-bottom:7px">Ghost — Tertiäre Aktion</div>
+          <div class="btn-demo btn-ghost-d">Anspruch prüfen</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h4>Badges & Tags</h4>
+      <div class="card card-p" style="display:flex;flex-direction:column;gap:12px">
+        <div><div style="font-size:11px;color:var(--warm-gray);margin-bottom:7px">Kostenlos / Positiv</div><span class="badge badge-terra">Kostenlos</span></div>
+        <div><div style="font-size:11px;color:var(--warm-gray);margin-bottom:7px">Anspruch bestätigt</div><span class="badge badge-sage">✓ Anspruch bestätigt</span></div>
+        <div><div style="font-size:11px;color:var(--warm-gray);margin-bottom:7px">Neutral</div><span class="badge badge-gray">Pflegegrad 1–5</span></div>
+        <div><div style="font-size:11px;color:var(--warm-gray);margin-bottom:7px">Status</div><span class="badge badge-amber">Pausiert</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Produktkarte Demo -->
+  <h4>Produktkarte (Konfigurator)</h4>
+  <div class="g3" style="margin-bottom:2.5rem">
+    <div class="card" style="overflow:hidden">
+      <div style="height:80px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--warm-gray)">Produktfoto</div>
+      <div style="padding:14px">
+        <span class="badge badge-terra" style="margin-bottom:8px">Kostenlos</span>
+        <div style="font-size:15px;font-weight:500;color:var(--dark);margin-bottom:4px">Einmalhandschuhe</div>
+        <div style="font-size:13px;color:var(--warm-gray);margin-bottom:10px">Latexfrei, Größe M/L</div>
+        <div style="font-size:14px;font-weight:500;color:var(--dark);margin-bottom:10px">8,90 €</div>
+        <div class="btn-demo btn-primary-d" style="font-size:12px;padding:8px 16px;width:100%;justify-content:center">Zur Box hinzufügen</div>
+      </div>
+    </div>
+    <div class="card" style="overflow:hidden">
+      <div style="height:80px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--warm-gray)">Produktfoto</div>
+      <div style="padding:14px">
+        <span class="badge badge-terra" style="margin-bottom:8px">Kostenlos</span>
+        <div style="font-size:15px;font-weight:500;color:var(--dark);margin-bottom:4px">Desinfektionsmittel</div>
+        <div style="font-size:13px;color:var(--warm-gray);margin-bottom:10px">Sterillium, 100ml</div>
+        <div style="font-size:14px;font-weight:500;color:var(--dark);margin-bottom:10px">12,50 €</div>
+        <div class="btn-demo btn-secondary-d" style="font-size:12px;padding:8px 16px;width:100%;justify-content:center">Hinzufügen</div>
+      </div>
+    </div>
+    <!-- Budget counter -->
+    <div>
+      <h4 style="margin-bottom:12px">Budget-Counter</h4>
+      <div class="card card-p">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px">
+          <span style="font-size:13px;font-weight:500;color:var(--dark)">Budget genutzt</span>
+          <span style="font-size:20px;font-weight:600;color:var(--terra)">34,80 €</span>
+        </div>
+        <div style="font-size:12px;color:var(--warm-gray);margin-bottom:10px">von 42,00 € verfügbar</div>
+        <div style="background:var(--mid-gray);border-radius:4px;height:8px;overflow:hidden">
+          <div style="background:var(--terra);height:100%;width:82.86%;border-radius:4px;transition:width .3s"></div>
+        </div>
+        <div style="font-size:11px;color:var(--warm-gray);margin-top:6px;text-align:right">7,20 € noch verfügbar</div>
+        <div class="btn-demo btn-primary-d" style="width:100%;justify-content:center;margin-top:14px;font-size:13px">Box speichern</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formfelder -->
+  <h4>Formularfelder</h4>
+  <div class="g2">
+    <div class="card card-p">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div>
+          <label style="font-size:12px;font-weight:500;color:var(--dark);display:block;margin-bottom:6px">Vorname</label>
+          <div style="width:100%;height:38px;background:white;border:1.5px solid var(--mid-gray);border-radius:8px;padding:0 12px;display:flex;align-items:center;font-size:14px;color:var(--warm-gray)">Maria</div>
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:500;color:var(--dark);display:block;margin-bottom:6px">Pflegegrad</label>
+          <div style="width:100%;height:38px;background:white;border:1.5px solid var(--mid-gray);border-radius:8px;padding:0 12px;display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--dark)"><span>Pflegegrad 1</span><span style="color:var(--warm-gray)">▾</span></div>
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:500;color:var(--dark);display:block;margin-bottom:6px">Krankenkasse</label>
+          <div style="width:100%;height:38px;background:white;border:1.5px solid var(--terra);border-radius:8px;padding:0 12px;display:flex;align-items:center;font-size:14px;color:var(--dark)">AOK Bayern</div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-p">
+      <div style="font-size:12px;font-weight:500;color:var(--warm-gray);margin-bottom:12px;letter-spacing:.08em;text-transform:uppercase">Formular-Zustände</div>
+      <div style="margin-bottom:10px">
+        <div style="font-size:11px;color:var(--warm-gray);margin-bottom:5px">Normal</div>
+        <div style="height:36px;background:white;border:1.5px solid var(--mid-gray);border-radius:8px"></div>
+      </div>
+      <div style="margin-bottom:10px">
+        <div style="font-size:11px;color:var(--warm-gray);margin-bottom:5px">Fokus (aktiv)</div>
+        <div style="height:36px;background:white;border:1.5px solid var(--terra);border-radius:8px;box-shadow:0 0 0 3px rgba(74,114,89,.12)"></div>
+      </div>
+      <div style="margin-bottom:10px">
+        <div style="font-size:11px;color:var(--warm-gray);margin-bottom:5px">Fehler</div>
+        <div style="height:36px;background:white;border:1.5px solid #E05A3A;border-radius:8px"></div>
+        <div style="font-size:11px;color:#E05A3A;margin-top:4px">Bitte geben Sie Ihren Vornamen ein.</div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--warm-gray);margin-bottom:5px">Deaktiviert</div>
+        <div style="height:36px;background:var(--bg);border:1.5px solid var(--mid-gray);border-radius:8px;opacity:.6"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- KAPITEL 6: STIMME & TON -->
+<!-- ══════════════════════════════════════ -->
+<div id="ton" class="chapter">
+  <div class="ch-num">06</div>
+  <div class="ch-meta"><div class="ch-label">Kapitel 6</div><div class="ch-title">Stimme & Ton</div></div>
+</div>
+
+<div class="section">
+  <h4>Markenstimme</h4>
+  <h2>Wie ein vertrauensvoller Mensch spricht</h2>
+  <p class="lead" style="max-width:680px;margin-bottom:2.5rem">Velacare spricht wie ein erfahrener Freund — nicht wie eine Behörde, nicht wie eine Werbeanzeige. Warm, klar, verständlich. Immer auf Augenhöhe.</p>
+
+  <div class="g2" style="margin-bottom:2.5rem">
+    <div>
+      <div class="tone-card tone-do">
+        <div class="tone-label tone-label-do">✓ So klingt Velacare</div>
+        <div class="tone-text">„Haben Sie einen Pflegegrad? Dann steht Ihnen die Box einfach zu — wir erledigen alles mit Ihrer Pflegekasse."</div>
+      </div>
+      <div class="tone-card tone-do">
+        <div class="tone-label tone-label-do">✓ So klingt Velacare</div>
+        <div class="tone-text">„Ihre erste Box ist schon unterwegs. Wir haben alles geregelt — Sie müssen nichts weiter tun."</div>
+      </div>
+    </div>
+    <div>
+      <div class="tone-card tone-dont">
+        <div class="tone-label tone-label-dont">✗ So klingt Velacare nicht</div>
+        <div class="tone-text">„Gemäß § 40 SGB XI haben Anspruchsberechtigte mit anerkanntem Pflegegrad Anrecht auf Pflegehilfsmittel zum Verbrauch."</div>
+      </div>
+      <div class="tone-card tone-dont">
+        <div class="tone-label tone-label-dont">✗ So klingt Velacare nicht</div>
+        <div class="tone-text">„Ihre Bestellung wurde erfolgreich im System erfasst. Die Bearbeitungszeit beträgt 5–10 Werktage."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-sm"></div>
+  <h4>Ton-Eigenschaften</h4>
+  <div class="g4" style="margin-bottom:2.5rem">
+    <div class="principle-card">
+      <div class="principle-title" style="font-size:18px">Warm</div>
+      <p class="principle-desc">Wir reden mit Menschen, nicht zu ihnen. Echte Empathie, kein Marketing-Gerede.</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-title" style="font-size:18px">Klar</div>
+      <p class="principle-desc">Kurze Sätze. Einfache Worte. Keine Behördensprache, kein Fachjargon.</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-title" style="font-size:18px">Verlässlich</div>
+      <p class="principle-desc">Konkrete Versprechen statt Weichspüler. „Wir melden uns in 24h" — nicht „baldmöglichst".</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-title" style="font-size:18px">Respektvoll</div>
+      <p class="principle-desc">Kein Herunterlassen. Die Zielgruppe sucht Unterstützung — keine Belehrung.</p>
+    </div>
+  </div>
+
+  <div class="divider-sm"></div>
+  <h4>Slogans & Taglines</h4>
+  <div class="slogan-card">
+    <div class="slogan-accent" style="background:var(--terra)"></div>
+    <div>
+      <div class="slogan-text">„Jeden Monat ein Stück Fürsorge."</div>
+      <div class="slogan-desc">Fokus auf Rhythmus und Verlässlichkeit. Ideal für Hero-Bereich und E-Mail-Header.</div>
+    </div>
+  </div>
+  <div class="slogan-card">
+    <div class="slogan-accent" style="background:var(--sage)"></div>
+    <div>
+      <div class="slogan-text">„Weil die wichtigsten Menschen die beste Pflege verdienen."</div>
+      <div class="slogan-desc">Emotionaler Appell an Angehörige. Stark für Ads und Social Media.</div>
+    </div>
+  </div>
+  <div class="slogan-card">
+    <div class="slogan-accent" style="background:var(--terra-dark)"></div>
+    <div>
+      <div class="slogan-text">„Einfach bestellt. Warm empfangen."</div>
+      <div class="slogan-desc">Verbindet Einfachheit mit Wärme — doppeldeutig, kurz, einprägsam.</div>
+    </div>
+  </div>
+
+  <div class="divider-sm"></div>
+  <h4>Vermeiden</h4>
+  <div class="avoid-item"><div class="avoid-title">✗ Behördensprache</div><div class="avoid-ex">„Gemäß §40 SGB XI ist ein Anspruch auf Pflegehilfsmittel gegeben…"</div></div>
+  <div class="avoid-item"><div class="avoid-title">✗ Klinisches Vokabular</div><div class="avoid-ex">„Hygieneprodukte zur Infektionsprävention bei pflegebedürftigen Personen"</div></div>
+  <div class="avoid-item"><div class="avoid-title">✗ Leere Floskeln</div><div class="avoid-ex">„Unser engagiertes Team steht Ihnen für Ihre Anliegen zur Verfügung"</div></div>
+  <div class="avoid-item"><div class="avoid-title">✗ Übertriebene Werbung</div><div class="avoid-ex">„Die revolutionäre Lösung für Ihr Pflegeproblem!"</div></div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- KAPITEL 7: WEBSITE-STRUKTUR -->
+<!-- ══════════════════════════════════════ -->
+<div id="website" class="chapter">
+  <div class="ch-num">07</div>
+  <div class="ch-meta"><div class="ch-label">Kapitel 7</div><div class="ch-title">Website-Struktur</div></div>
+</div>
+
+<div class="section">
+  <h4>Sitemap</h4>
+  <h2>7 Seiten, ein klarer Weg</h2>
+  <p style="max-width:600px;margin-bottom:2.5rem">Die Navigation führt den Besucher auf dem kürzesten Weg von der Erkenntnis zur Beantragung.</p>
+
+  <div style="margin-bottom:2.5rem">
+    <div class="sitemap-home" style="display:inline-block">velacare.de · Startseite</div>
+    <div class="sitemap-grid">
+      <div class="sitemap-page">Wie es funktioniert<span class="sitemap-url">/wie-es-funktioniert</span></div>
+      <div class="sitemap-page">Produkte & Box<span class="sitemap-url">/produkte</span></div>
+      <div class="sitemap-page cta">Pflegebox beantragen<span class="sitemap-url">/beantragen</span></div>
+      <div class="sitemap-page">Über uns<span class="sitemap-url">/ueber-uns</span></div>
+      <div class="sitemap-page">Kontakt<span class="sitemap-url">/kontakt</span></div>
+      <div class="sitemap-page">FAQ<span class="sitemap-url">/faq</span></div>
+      <div class="sitemap-page" style="border-color:var(--sage);background:var(--sage-pale);color:var(--sage)">✓ Danke-Seite<span class="sitemap-url">/danke</span></div>
+    </div>
+  </div>
+
+  <div class="divider-sm"></div>
+  <h4>Conversion-Pfad</h4>
+  <div class="card card-p" style="margin-bottom:2.5rem">
+    <div class="conv-path">
+      <div class="conv-step start">Startseite</div>
+      <div class="conv-arrow">→</div>
+      <div class="conv-step">Wie es funktioniert</div>
+      <div class="conv-arrow">→</div>
+      <div class="conv-step">Produkte ansehen</div>
+      <div class="conv-arrow">→</div>
+      <div class="conv-step primary">Box beantragen</div>
+      <div class="conv-arrow">→</div>
+      <div class="conv-step success">✓ Danke-Seite</div>
+    </div>
+    <p style="font-size:13px;margin-top:1rem">Der Hauptpfad führt in 4 Klicks zur Beantragung. CTA „Jetzt beantragen" ist auf jeder Seite in der Navigation sichtbar.</p>
+  </div>
+
+  <h4>Startseiten-Aufbau</h4>
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <div class="structure-row" style="background:var(--dark);color:white">
+      <span class="sr-name">Navigation (sticky)</span>
+      <span class="sr-desc" style="opacity:.5">Logo · Links · CTA Button — immer sichtbar</span>
+    </div>
+    <div class="structure-row" style="background:var(--terra);color:white">
+      <span class="sr-name">Hero · Above the fold</span>
+      <span class="sr-desc" style="opacity:.7">Headline · Subtext · CTA · Bild · Trust-Bar</span>
+    </div>
+    <div class="structure-row" style="background:var(--warm-white);border:1px solid var(--mid-gray)">
+      <span class="sr-name">Wie es funktioniert</span>
+      <span class="sr-desc">3 Schritte mit Icons</span>
+    </div>
+    <div class="structure-row" style="background:var(--warm-white);border:1px solid var(--mid-gray)">
+      <span class="sr-name">Produkte & Box-Inhalt</span>
+      <span class="sr-desc">Produktgrid · individuell wählbar</span>
+    </div>
+    <div class="structure-row" style="background:var(--terra-pale);border:1px solid var(--terra-mid)">
+      <span class="sr-name" style="color:var(--terra)">CTA-Banner</span>
+      <span class="sr-desc" style="color:var(--terra)">"Jetzt Anspruch prüfen" — wiederholt</span>
+    </div>
+    <div class="structure-row" style="background:var(--warm-white);border:1px solid var(--mid-gray)">
+      <span class="sr-name">Testimonials</span>
+      <span class="sr-desc">3 Kundenstimmen mit Sternebewertung</span>
+    </div>
+    <div class="structure-row" style="background:var(--warm-white);border:1px solid var(--mid-gray)">
+      <span class="sr-name">FAQ</span>
+      <span class="sr-desc">Akkordeon · 5 häufige Fragen</span>
+    </div>
+    <div class="structure-row" style="background:var(--dark);color:white">
+      <span class="sr-name">Footer</span>
+      <span class="sr-desc" style="opacity:.5">4 Spalten · Links · Impressum · Datenschutz</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- BACK COVER -->
+<!-- ══════════════════════════════════════ -->
+<section style="background:var(--dark);padding:8rem 2rem;text-align:center;position:relative;overflow:hidden">
+  <div style="position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(74,114,89,.1) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+  <div style="position:relative">
+    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" style="margin-bottom:1.5rem">
+      <path d="M15 70 C13 58,9 44,13 31 C16 21,25 13,40 12" stroke="#B3D4C5" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <path d="M65 70 C67 58,71 44,67 31 C64 21,55 13,40 12" stroke="#B3D4C5" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <circle cx="15" cy="70" r="5.5" fill="#B3D4C5"/><circle cx="65" cy="70" r="5.5" fill="#B3D4C5"/>
+      <path d="M40 46 C40 46,28 37,28 30 C28 25,32 22,35.5 22 C37.5 22,39 23,40 24.5 C41 23,42.5 22,44.5 22 C48 22,52 25,52 30 C52 37,40 46,40 46Z" fill="#D4906E"/>
+    </svg>
+    <div style="font-family:var(--ff);font-size:52px;font-weight:600;color:var(--warm-white);margin-bottom:.5rem">Velacare</div>
+    <div style="font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--terra-light);margin-bottom:2rem">Brand Guide v2.0</div>
+    <div style="width:60px;height:1px;background:rgba(255,255,255,.15);margin:0 auto 2rem"></div>
+    <p style="color:rgba(255,253,247,.3);font-size:13px;max-width:400px;margin:0 auto">Dieses Dokument ist vertraulich und nur für den internen Gebrauch bestimmt.</p>
+    <p style="color:rgba(255,253,247,.15);font-size:12px;margin-top:1rem">velacare.de</p>
+  </div>
+</section>
+
+</div><!-- /page -->
+
+<script>
+// ── Active nav link on scroll ──
+const sections = document.querySelectorAll('[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-40% 0px -40% 0px' });
+sections.forEach(s => observer.observe(s));
+
+// ── Animate on scroll ──
+const animEls = document.querySelectorAll('.animate');
+const animObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.style.animationPlayState = 'running'; });
+}, { threshold: .1 });
+animEls.forEach(el => {
+  el.style.animationPlayState = 'paused';
+  animObs.observe(el);
+});
+</script>
+</body>
+</html>

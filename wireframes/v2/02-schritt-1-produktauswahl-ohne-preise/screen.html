@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html lang="de"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#00A3AD",
+              "on-primary": "#ffffff",
+              "primary-container": "#D1F2F4",
+              "on-primary-container": "#002022",
+              "secondary": "#4D6264",
+              "on-secondary": "#ffffff",
+              "secondary-container": "#CFE8EA",
+              "on-secondary-container": "#091F21",
+              "tertiary": "#515E7D",
+              "on-tertiary": "#ffffff",
+              "tertiary-container": "#D9E2FF",
+              "on-tertiary-container": "#0C1B36",
+              "error": "#BA1A1A",
+              "on-error": "#ffffff",
+              "error-container": "#FFDAD6",
+              "on-error-container": "#410002",
+              "background": "#F4FBFC",
+              "on-background": "#191C1D",
+              "surface": "#F4FBFC",
+              "on-surface": "#191C1D",
+              "surface-variant": "#DAE4E5",
+              "on-surface-variant": "#3F484A",
+              "outline": "#6F797A",
+              "outline-variant": "#BFC8C9",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-low": "#EFF5F6",
+              "surface-container": "#E9EFEF",
+              "surface-container-high": "#E3E9EA",
+              "surface-container-highest": "#DDE3E4",
+            },
+            fontFamily: {
+              "headline": ["Newsreader", "serif"],
+              "body": ["DM Sans", "sans-serif"],
+              "label": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {
+                "DEFAULT": "0.5rem",
+                "lg": "0.5rem",
+                "xl": "1rem",
+                "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'DM Sans', sans-serif; }
+        h1, h2, h3 { font-family: 'Newsreader', serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen">
+<!-- Top Navigation -->
+<header class="bg-surface-container-lowest fixed top-0 left-0 right-0 z-50">
+<div class="flex justify-between items-center w-full px-8 py-4 max-w-7xl mx-auto">
+<span class="text-2xl font-headline font-bold text-primary">PflegeHaus</span>
+<nav class="hidden md:flex gap-8">
+<a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">Sortiment</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-medium" href="#">Mein Budget</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-medium" href="#">Bestellungen</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-medium" href="#">Hilfe</a>
+</nav>
+<div class="flex gap-4 items-center">
+<span class="material-symbols-outlined text-primary cursor-pointer">shopping_cart</span>
+<span class="material-symbols-outlined text-primary cursor-pointer">account_circle</span>
+</div>
+</div>
+<div class="bg-outline-variant h-[1px] w-full"></div>
+</header>
+<main class="pt-24 pb-20 max-w-7xl mx-auto px-8">
+<!-- Progress Bar Section -->
+<div class="mb-12">
+<div class="flex items-center justify-start gap-12 max-w-2xl">
+<div class="flex items-center gap-3">
+<span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm">1</span>
+<span class="font-bold text-primary">Box zusammenstellen</span>
+</div>
+<div class="h-px bg-outline-variant w-16"></div>
+<div class="flex items-center gap-3 opacity-50">
+<span class="w-8 h-8 rounded-full border-2 border-outline text-on-surface flex items-center justify-center font-bold text-sm">2</span>
+<span class="font-medium text-on-surface">Daten eingeben</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col lg:flex-row gap-12">
+<!-- Left Column: Product Selection (60%) -->
+<section class="lg:w-[60%] flex flex-col gap-6">
+<div class="mb-4">
+<h1 class="text-4xl font-headline text-primary mb-2 italic">Pflegebox konfigurieren</h1>
+<p class="text-on-surface-variant max-w-xl">Wählen Sie Ihre benötigten Pflegehilfsmittel aus. Die Kosten werden direkt mit Ihrer Pflegekasse abgerechnet.</p>
+</div>
+<!-- Product List -->
+<div class="grid gap-4">
+<!-- Product Item 1 -->
+<div class="bg-surface-container-low p-5 rounded-xl flex items-center justify-between group hover:bg-surface-container-high transition-all">
+<div class="flex items-center gap-5">
+<div class="w-16 h-16 bg-surface-container-lowest rounded-lg flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-3xl">sanitizer</span>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<h3 class="text-xl font-bold text-on-surface">Antibakterielle Handcreme</h3>
+<span class="bg-primary-container text-on-primary-container text-[10px] px-2 py-0.5 rounded-full font-bold tracking-tight uppercase">NEU</span>
+</div>
+<p class="text-sm text-on-surface-variant">500ml Spenderflasche • Rückfettend</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-lowest p-2 rounded-lg border border-outline-variant">
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface hover:bg-surface-container-high transition-colors text-primary font-bold">-</button>
+<span class="w-6 text-center font-bold">0</span>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-on-primary hover:opacity-90 transition-opacity font-bold">+</button>
+</div>
+</div>
+<!-- Product Item 2 -->
+<div class="bg-surface-container-low p-5 rounded-xl flex items-center justify-between group hover:bg-surface-container-high transition-all">
+<div class="flex items-center gap-5">
+<div class="w-16 h-16 bg-surface-container-lowest rounded-lg flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-3xl">clean_hands</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-on-surface mb-1">Handseife Mild</h3>
+<p class="text-sm text-on-surface-variant">300ml Pumpspender • Sensitiv</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-lowest p-2 rounded-lg border border-outline-variant">
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface hover:bg-surface-container-high transition-colors text-primary font-bold">-</button>
+<span class="w-6 text-center font-bold">1</span>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-on-primary hover:opacity-90 transition-opacity font-bold">+</button>
+</div>
+</div>
+<!-- Product Item 3 -->
+<div class="bg-surface-container-low p-5 rounded-xl flex items-center justify-between group hover:bg-surface-container-high transition-all border-l-4 border-primary">
+<div class="flex items-center gap-5">
+<div class="w-16 h-16 bg-surface-container-lowest rounded-lg flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-3xl">texture</span>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<h3 class="text-xl font-bold text-on-surface">Flächendesinfektionstücher</h3>
+<span class="bg-primary-container text-on-primary-container text-[10px] px-2 py-0.5 rounded-full font-bold tracking-tight uppercase">NEU</span>
+</div>
+<p class="text-sm text-on-surface-variant">80 Tücher • Alkoholfrei</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-lowest p-2 rounded-lg border border-outline-variant">
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface hover:bg-surface-container-high transition-colors text-primary font-bold">-</button>
+<span class="w-6 text-center font-bold">2</span>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-on-primary hover:opacity-90 transition-opacity font-bold">+</button>
+</div>
+</div>
+<!-- Product Item 4 -->
+<div class="bg-surface-container-low p-5 rounded-xl flex items-center justify-between group hover:bg-surface-container-high transition-all">
+<div class="flex items-center gap-5">
+<div class="w-16 h-16 bg-surface-container-lowest rounded-lg flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-3xl">front_hand</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-on-surface mb-1">Einmalhandschuhe Nitril</h3>
+<p class="text-sm text-on-surface-variant">100 Stück • Größe M • Blau</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-lowest p-2 rounded-lg border border-outline-variant">
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface hover:bg-surface-container-high transition-colors text-primary font-bold">-</button>
+<span class="w-6 text-center font-bold">1</span>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-on-primary hover:opacity-90 transition-opacity font-bold">+</button>
+</div>
+</div>
+<!-- Product Item 5 -->
+<div class="bg-surface-container-low p-5 rounded-xl flex items-center justify-between group hover:bg-surface-container-high transition-all">
+<div class="flex items-center gap-5">
+<div class="w-16 h-16 bg-surface-container-lowest rounded-lg flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-3xl">bed</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-on-surface mb-1">Bettschutzeinlagen</h3>
+<p class="text-sm text-on-surface-variant">30 Stück • 60x90cm</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-lowest p-2 rounded-lg border border-outline-variant">
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface hover:bg-surface-container-high transition-colors text-primary font-bold">-</button>
+<span class="w-6 text-center font-bold">0</span>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-on-primary hover:opacity-90 transition-opacity font-bold">+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: Cart / Summary (35%) -->
+<aside class="lg:w-[35%]">
+<div class="sticky top-28 bg-surface-container-lowest rounded-2xl p-8 shadow-sm border border-outline-variant">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-2xl font-headline font-bold text-on-surface">Ihr Warenkorb</h2>
+<span class="material-symbols-outlined text-primary">shopping_bag</span>
+</div>
+<!-- Budget Progress -->
+<div class="mb-8">
+<div class="flex justify-between items-end mb-2">
+<span class="text-sm font-bold text-primary">86% Budget genutzt</span>
+<span class="text-xs text-on-surface-variant uppercase tracking-wider">34,40 € von 40,00 €</span>
+</div>
+<div class="w-full bg-primary-container h-3 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 86%"></div>
+</div>
+</div>
+<!-- Selected Items List -->
+<div class="space-y-6 mb-10">
+<div class="flex items-center justify-between">
+<div>
+<h4 class="font-bold text-on-surface text-sm">Handseife Mild</h4>
+<p class="text-xs text-on-surface-variant">1 Stück</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="w-6 h-6 flex items-center justify-center rounded border border-outline-variant text-primary text-xs">-</button>
+<span class="text-sm font-bold">1</span>
+<button class="w-6 h-6 flex items-center justify-center rounded border border-outline-variant text-primary text-xs">+</button>
+</div>
+</div>
+<div class="bg-outline-variant/30 h-px w-full"></div>
+<div class="flex items-center justify-between">
+<div>
+<h4 class="font-bold text-on-surface text-sm">Flächendesinfektion</h4>
+<p class="text-xs text-on-surface-variant">2 Stück</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="w-6 h-6 flex items-center justify-center rounded border border-outline-variant text-primary text-xs">-</button>
+<span class="text-sm font-bold">2</span>
+<button class="w-6 h-6 flex items-center justify-center rounded border border-outline-variant text-primary text-xs">+</button>
+</div>
+</div>
+<div class="bg-outline-variant/30 h-px w-full"></div>
+<div class="flex items-center justify-between">
+<div>
+<h4 class="font-bold text-on-surface text-sm">Einmalhandschuhe Nitril</h4>
+<p class="text-xs text-on-surface-variant">1 Packung</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="w-6 h-6 flex items-center justify-center rounded border border-outline-variant text-primary text-xs">-</button>
+<span class="text-sm font-bold">1</span>
+<button class="w-6 h-6 flex items-center justify-center rounded border border-outline-variant text-primary text-xs">+</button>
+</div>
+</div>
+</div>
+<!-- Footer Action -->
+<div class="pt-6 border-t border-outline-variant">
+<div class="flex justify-between items-center mb-6">
+<span class="font-headline italic text-lg text-on-surface-variant">Gesamtbetrag</span>
+<span class="text-2xl font-bold text-on-surface">34,40 €</span>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 rounded-xl font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                            Weiter zur Dateneingabe
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+<p class="text-[10px] text-center text-on-surface-variant mt-4 uppercase tracking-widest">Abrechnung erfolgt direkt mit Ihrer Kasse</p>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest w-full flex flex-col items-center gap-6 px-8 py-12">
+<div class="flex flex-col md:flex-row gap-8 items-center justify-between w-full max-w-7xl">
+<span class="font-headline italic text-lg text-primary">PflegeHaus</span>
+<div class="flex gap-8">
+<a class="font-label text-sm uppercase tracking-wider text-on-surface-variant opacity-70 hover:opacity-100 transition-opacity" href="#">Impressum</a>
+<a class="font-label text-sm uppercase tracking-wider text-on-surface-variant opacity-70 hover:opacity-100 transition-opacity" href="#">Datenschutz</a>
+<a class="font-label text-sm uppercase tracking-wider text-on-surface-variant opacity-70 hover:opacity-100 transition-opacity" href="#">AGB</a>
+<a class="font-label text-sm uppercase tracking-wider text-on-surface-variant opacity-70 hover:opacity-100 transition-opacity" href="#">Kontakt</a>
+</div>
+</div>
+<p class="font-label text-[10px] uppercase tracking-wider text-primary opacity-70">© 2024 PflegeHaus Kuratierte Pflege. Alle Rechte vorbehalten.</p>
+</footer>
+</body></html>

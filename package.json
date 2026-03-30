@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "stitch:wireframes": "node scripts/export-stitch-wireframes.mjs"
+    "stitch:wireframes": "node scripts/export-stitch-wireframes.mjs",
+    "stitch:wireframes:v2": "node scripts/export-stitch-wireframes.mjs wireframes/v2/stitch-export.config.json"
   },
   "dependencies": {
     "clsx": "^2.1.1",
