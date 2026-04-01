@@ -47,22 +47,34 @@ Steps receive `onWeiter`/`onZurueck` callbacks. The `FunnelHeader` replaces the 
 - `src/components/brand/` — `VelacareLogo`
 - `src/components/box-konfigurator/` — Reusable box configurator (also used in `/konto/meine-box`)
 
-### Design System
-Tailwind with a custom brand palette defined in `tailwind.config.ts`:
-- **terra** (`#C96B3F`) — primary brand/CTA color
-- **sage** (`#2D7A5F`) — success/confirmation states
-- **dark** (`#2C2420`) — primary text
-- **bg** (`#F5F0EB`) — page background (warm off-white)
-- **warm-white** (`#FDFAF7`) — card/surface background
-- **warm-gray** (`#8A8078`) — secondary text
+### Design System (canonical: v3)
 
-Fonts (loaded via Google Fonts in `globals.css`):
-- `font-serif` → Cormorant Garamond (headings, hero, brand)
-- `font-sans` → DM Sans (body, UI)
-- `font-mono` → DM Mono
+**Source of truth:** [`wireframes/v3/design.md`](wireframes/v3/design.md) — *Produktdesign-Richtlinien v3.0* (Farben, Typo, Komponenten, Animation, Do’s/Don’ts). For HTML references in that generation, see `wireframes/v3/*.html`. When implementing or reviewing UI, treat that document as authoritative; align Tailwind/CSS with it over time.
+
+**North star (from design.md):** “Warme Autorität” — medical trust + human warmth; editorial spacing; **no cold blues as primaries**; avoid hard 1px section borders (use tonal section backgrounds, spacing, ghost borders ≤20–35% opacity).
+
+**v3 tokens (summary — full table in design.md):**
+
+| Role | Token / note | Hex (reference) |
+|------|----------------|-----------------|
+| Primary (CTA, links, accents) | `primary` | `#4A7259` |
+| Primary hover / mid | `primary-mid` | `#5E8C6E` |
+| Secondary (logo heart, deco, italic accents) | `secondary` | `#9E5A35` |
+| Page background | `background` | `#FAF6EF` |
+| Cards / elevated surfaces | `surface` | `#FFFDF7` |
+| Primary text | `dark` / `on-surface` | `#261E17` |
+| Secondary text | `on-surface-variant` | `#6B5747` |
+| Dividers / soft borders | `outline` | `#D5CAB9` |
+| Section alternation | `section-warm`, `section-terra` (+ pale variants) | per design.md |
+
+**Typography (v3):** Headlines — **Newsreader** (`font-newsreader` in Tailwind). Body & UI — **DM Sans** (`font-sans`). Technical — **DM Mono** (`font-mono`). *design.md* specifies weights, eyebrow/label styles, and the **deco-rule** (44×2px gradient `secondary` → `secondary-light`) before headlines.
+
+**Code today (transitional):** `tailwind.config.ts` still exposes older names (**terra**, **sage**, **bg**, **dark** `#2C2420`, etc.) and `font-serif` (Cormorant). Prefer mapping new work to **v3** semantics from `design.md`; use **Newsreader** for new hero/editorial headings where the spec applies. Global styles and tokens live in `globals.css` + `tailwind.config.ts`.
+
+**Animation / motion:** Follow §6 in `design.md` (durations, easing, `prefers-reduced-motion`, skeletons not spinners, card lift, bar fill, etc.).
 
 ### Path Alias
 `@/` resolves to `src/`. Use `@/components/...`, `@/lib/...` etc.
 
 ### Wireframes
-Reference designs live in `wireframes/` as Stitch SDK exports and HTML files. Comments in component files reference the relevant wireframe (e.g., `/* wireframes/01-startseite-hero-zuerst */`). Detailed docs/brand guidelines are in `docs/konzept/`.
+Reference designs live in `wireframes/` (including **v3** under `wireframes/v3/`). Comments in component files may cite older paths (e.g. `/* wireframes/01-startseite-hero-zuerst */`). **Product design rules for v3:** [`wireframes/v3/design.md`](wireframes/v3/design.md). Additional concept docs: `docs/konzept/`, `docs/superpowers/specs/`.

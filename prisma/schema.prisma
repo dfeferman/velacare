@@ -72,6 +72,11 @@ enum BenachrichtigungTyp {
   system
 }
 
+enum VersorgungsSituation {
+  erstversorgung
+  wechsel
+}
+
 // ─── Models ───────────────────────────────────────────────────────────────────
 
 /// Extends auth.users (Supabase Auth). id = auth.users.id.
@@ -101,6 +106,12 @@ model KundenProfile {
   geburtsdatum             DateTime            @db.Date
   pflegegrad               Int
   krankenkasse             String              @db.VarChar(200)
+  versicherungsnummer      String?             @db.VarChar(20)
+  hausnummer               String?             @db.VarChar(10)
+  adresszusatz             String?             @db.VarChar(100)
+  versorgungssituation     VersorgungsSituation @default(erstversorgung)
+  beratung                 Boolean             @default(false)
+  lieferadresse_json       Json?
   telefon                  String              @db.VarChar(30)
   strasse                  String              @db.VarChar(200)
   plz                      String              @db.VarChar(10)
@@ -215,6 +226,7 @@ model Einwilligung {
   profile Profile @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([user_id])
+  @@unique([user_id, typ, version])
   @@map("einwilligungen")
 }
 

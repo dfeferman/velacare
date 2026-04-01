@@ -5,7 +5,7 @@ import { logout } from '@/app/actions/auth'
 
 /** Navigation gemäß wireframes/01-startseite-hero-zuerst — Höhe 52px wie velacare-brandbook.html */
 export async function Nav() {
-  const supabase = createClient()
+  const supabase = await createClient()
   const {
     data: { user },
   } = await supabase.auth.getUser()
