@@ -14,7 +14,7 @@
 | 2     | Echter Funnel (v2 UI + Signup + DB-Writes)      | ✅    | ✅    | ⏳    |
 | 3     | Kundenportal (echte Daten statt Mock)           | ✅    | ✅    | —    |
 | 4     | Admin-Panel (echte Daten statt Mock)            | ✅    | ✅    | —    |
-| 5     | E-Mail & Jobs (Resend, pg_cron)                 | ✅    | ✅    | ⏳    |
+| 5     | E-Mail & Jobs (Resend, pg_cron)                 | ✅    | ✅    | ✅    |
 | 6     | Sicherheit & DSGVO (Encryption, AuditLog, MFA)  | ✅    | ✅    | —    |
 
 
