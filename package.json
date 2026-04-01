@@ -9,11 +9,13 @@
     "lint": "next lint",
     "stitch:wireframes": "node scripts/export-stitch-wireframes.mjs",
     "stitch:wireframes:v2": "node scripts/export-stitch-wireframes.mjs wireframes/v2/stitch-export.config.json",
-    "seed:admin": "tsx --env-file=.env.local scripts/seed-admin.ts"
+    "seed:admin": "tsx --env-file=.env.local scripts/seed-admin.ts",
+    "email:preview": "email dev --dir src/emails --port 3002"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.6.0",
     "@prisma/client": "^7.6.0",
+    "@react-email/components": "^1.0.11",
     "@supabase/ssr": "^0.10.0",
     "@supabase/supabase-js": "^2.101.0",
     "@types/pg": "^8.20.0",
@@ -22,6 +24,8 @@
     "pg": "^8.20.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-email": "^5.2.10",
+    "resend": "^6.10.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
