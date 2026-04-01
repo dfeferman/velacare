@@ -1,49 +1,38 @@
-'use client'
+// src/app/konto/einstellungen/page.tsx
+import { createClient } from '@/lib/supabase/server'
+import { getKundenEinstellungen } from '@/lib/dal/konto'
+import { EinstellungenClient } from './einstellungen-client'
 
-import { useState } from 'react'
-import { MOCK_KUNDEN } from '@/lib/mock-data'
-import { Button } from '@/components/ui/button'
+function KeinProfilHinweis() {
+  return (
+    <div className="bg-amber-pale border border-amber rounded-lg p-6">
+      <p className="text-amber font-medium">Profil wird eingerichtet.</p>
+      <p className="text-amber/70 text-sm mt-1">
+        Bitte bestätigen Sie zuerst Ihre E-Mail-Adresse.
+      </p>
+    </div>
+  )
+}
 
-const KUNDE = MOCK_KUNDEN[0]
+export default async function EinstellungenPage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  const profile = user ? await getKundenEinstellungen(user.id) : null
 
-export default function EinstellungenPage() {
-  const [loeschDialog, setLoeschDialog] = useState(false)
+  if (!profile || !user) return <KeinProfilHinweis />
+
+  const adresse = `${profile.strasse}, ${profile.plz} ${profile.ort}`
 
   return (
-    <div className="space-y-6">
-      <h1 className="font-serif text-3xl font-semibold">Einstellungen</h1>
-
-      <div className="bg-warm-white rounded-lg border border-mid-gray p-5">
-        <p className="text-xs font-medium tracking-widest uppercase text-warm-gray mb-4">Kontaktdaten</p>
-        <div className="grid grid-cols-2 gap-4 text-sm mb-4">
-          <div><span className="text-warm-gray">Name:</span><br />{KUNDE.vorname} {KUNDE.nachname}</div>
-          <div><span className="text-warm-gray">E-Mail:</span><br />{KUNDE.email}</div>
-          <div><span className="text-warm-gray">Adresse:</span><br />{KUNDE.adresse}</div>
-          <div><span className="text-warm-gray">Krankenkasse:</span><br />{KUNDE.krankenkasse}</div>
-        </div>
-        <Button variant="secondary" className="text-xs">Daten ändern (Demo)</Button>
-      </div>
-
-      <div className="bg-warm-white rounded-lg border border-mid-gray p-5">
-        <p className="text-xs font-medium tracking-widest uppercase text-warm-gray mb-4">Passwort</p>
-        <Button variant="secondary" className="text-xs">Passwort ändern (Demo)</Button>
-      </div>
-
-      <div className="bg-danger-pale rounded-lg border border-danger/20 p-5">
-        <p className="text-xs font-medium tracking-widest uppercase text-danger mb-2">Gefahrenzone</p>
-        <p className="text-sm text-warm-gray mb-4">Ihr Account und alle Daten werden innerhalb von 30 Tagen gelöscht (DSGVO).</p>
-        {!loeschDialog ? (
-          <Button variant="danger" onClick={() => setLoeschDialog(true)}>Account löschen</Button>
-        ) : (
-          <div className="space-y-3">
-            <p className="text-sm font-medium text-danger">Sind Sie sicher? Diese Aktion kann nicht rückgängig gemacht werden.</p>
-            <div className="flex gap-3">
-              <Button variant="ghost" onClick={() => setLoeschDialog(false)}>Abbrechen</Button>
-              <Button variant="danger">Ja, Account löschen (Demo)</Button>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+    <>
+      <h1 className="font-serif text-3xl font-semibold mb-6">Einstellungen</h1>
+      <EinstellungenClient
+        vorname={profile.vorname}
+        nachname={profile.nachname}
+        email={user.email ?? ''}
+        adresse={adresse}
+        krankenkasse={profile.krankenkasse}
+      />
+    </>
   )
 }
