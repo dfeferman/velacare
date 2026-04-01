@@ -2,11 +2,12 @@
 
 import { redirect } from 'next/navigation'
 import { headers } from 'next/headers'
-import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { prisma } from '@/lib/prisma'
 import { registerSchema, type Step2Data } from '@/lib/schemas/register'
 import type { BoxProdukt } from '@/lib/types'
+import { sendEmail } from '@/lib/email/sender'
+import { BestellbestaetigungEmail } from '@/emails/bestellbestaetigung'
 
 export async function registerKunde(
   produkte: BoxProdukt[],
@@ -19,26 +20,27 @@ export async function registerKunde(
   if (!result.success) return { error: 'Ungültige Eingabedaten.' }
   const d = result.data
 
-  // 1. Supabase Auth signup
-  const supabase = await createClient()
-  const { data: authData, error: signUpError } = await supabase.auth.signUp({
+  // 1. Supabase Auth — generate magic link (no password)
+  const admin = createAdminClient()
+
+  const { data: linkData, error: linkError } = await admin.auth.admin.generateLink({
+    type: 'magiclink',
     email: d.email,
-    password: d.passwort,
   })
 
-  if (signUpError) {
-    const msg = signUpError.message.toLowerCase()
+  if (linkError || !linkData?.user?.id) {
+    const msg = linkError?.message?.toLowerCase() ?? ''
     if (msg.includes('already registered') || msg.includes('user already exists')) {
       return { error: 'Diese E-Mail-Adresse ist bereits registriert.' }
     }
-    return { error: 'Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut.' }
+    console.error('generateLink fehlgeschlagen:', linkError?.message)
+    return { error: 'Konto konnte nicht erstellt werden. Bitte versuchen Sie es erneut.' }
   }
 
-  const userId = authData.user?.id
-  if (!userId) return { error: 'Registrierung fehlgeschlagen.' }
+  const userId = linkData.user.id
+  const hashedToken = linkData.properties?.hashed_token
 
   // 2. Set app_metadata.rolle = 'kunde' via Admin API (server-only)
-  const admin = createAdminClient()
   await admin.auth.admin.updateUserById(userId, {
     app_metadata: { rolle: 'kunde' },
   })
@@ -115,6 +117,33 @@ export async function registerKunde(
     })
   } catch {
     return { error: 'Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut.' }
+  }
+
+  // Kombinierte E-Mail: Bestellbestätigung + Magic Link
+  if (hashedToken) {
+    const appUrl = process.env.APP_URL ?? 'http://localhost:3001'
+    const magicLinkUrl = `${appUrl}/auth/callback?token_hash=${hashedToken}&type=magiclink`
+
+    try {
+      await sendEmail({
+        to: d.email,
+        subject: 'Dein Antrag ist eingegangen – Velacare',
+        template: BestellbestaetigungEmail({
+          vorname: d.vorname,
+          nachname: d.nachname,
+          pflegegrad: d.pflegegrad,
+          budgetGenutzt: Math.round(gesamtpreis * 100),
+          magicLinkUrl,
+          expiresInMinutes: 60,
+        }),
+      })
+    } catch (emailError) {
+      console.error('Bestellbestätigung/MagicLink konnte nicht gesendet werden:', {
+        email: d.email,
+        error: emailError,
+      })
+      // Registrierung trotzdem erfolgreich — kein Fehler zurückgeben
+    }
   }
 
   // Redirect happens outside try/catch — Next.js throws internally on redirect()

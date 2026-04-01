@@ -218,11 +218,9 @@ export function Step2Daten({ onWeiter, onZurueck }: Step2Props) {
             <label className={labelBase}>E-Mail-Adresse</label>
             <input type="email" className={inputBase} value={form.email ?? ''} onChange={e => set('email', e.target.value)} />
             {err('email')}
-          </div>
-          <div>
-            <label className={labelBase}>Passwort (min. 8 Zeichen)</label>
-            <input type="password" className={inputBase} value={form.passwort ?? ''} onChange={e => set('passwort', e.target.value)} />
-            {err('passwort')}
+            <p className="text-xs text-v2-on-surface-v mt-1">
+              Du erhältst per E-Mail einen Einmallink für deinen Kontozugang — kein Passwort nötig.
+            </p>
           </div>
         </div>
 

@@ -29,7 +29,6 @@ export const registerSchema = z.object({
   beratung:             z.boolean(),
   // Account
   email:                z.string().email('Gültige E-Mail-Adresse erforderlich'),
-  passwort:             z.string().min(8, 'Mindestens 8 Zeichen'),
 })
 
 export type Step2Data = z.infer<typeof registerSchema>
