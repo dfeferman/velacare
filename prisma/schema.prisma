@@ -127,6 +127,7 @@ model KundenProfile {
   box_konfigurationen_verlauf BoxKonfigurationVerlauf[]
   lieferungen                 Lieferung[]
   anfragen                    Anfrage[]
+  emailDeliveries             EmailDelivery[]
 
   @@map("kunden_profile")
 }
@@ -243,6 +244,22 @@ model Benachrichtigung {
 
   @@index([user_id])
   @@map("benachrichtigungen")
+}
+
+/// Idempotency log for sent emails. Prevents duplicate sends.
+model EmailDelivery {
+  id              String   @id @default(cuid())
+  kind            String   // z.B. "monthly-reminder", "bestellbestaetigung"
+  kundeId         String   @db.Uuid
+  periodKey       String   // z.B. "2026-04" (für Monats-Jobs), oder cuid() für einmalige Mails
+  providerMsgId   String?  // Resend Message-ID
+  sentAt          DateTime @default(now())
+
+  kunde           KundenProfile @relation(fields: [kundeId], references: [id])
+
+  @@unique([kind, kundeId, periodKey])
+  @@index([kundeId])
+  @@map("email_deliveries")
 }
 
 /// INSERT-only in production. Do not add UPDATE/DELETE in application code.
