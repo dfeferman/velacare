@@ -27,6 +27,19 @@ const config: Config = {
         mid: { gray: '#C8BFB5' },
         dark: '#2C2420',
         bg: '#F5F0EB',
+        v2: {
+          primary:          '#00A3AD',
+          secondary:        '#00696f',
+          surface:          '#f4fafd',
+          'surface-low':    '#eef5f7',
+          'surface-mid':    '#e8eff1',
+          'surface-lowest': '#ffffff',
+          'on-surface':     '#161d1f',
+          'on-surface-v':   '#3d494a',
+          'outline-v':      '#bcc9ca',
+          error:            '#ba1a1a',
+          'error-bg':       '#ffdad6',
+        },
       },
       borderRadius: {
         sm: '6px',
@@ -39,6 +52,7 @@ const config: Config = {
         newsreader: ['var(--font-newsreader)', 'Georgia', 'serif'],
         sans: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-dm-mono)', 'monospace'],
+        manrope: ['var(--font-manrope)', 'system-ui', 'sans-serif'],
       },
       keyframes: {
         'accordion-down': {

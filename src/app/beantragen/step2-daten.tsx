@@ -1,152 +1,241 @@
 'use client'
 
 import { useState } from 'react'
-import { z } from 'zod'
-import { Button } from '@/components/ui/button'
-import { ProgressBar } from '@/components/ui/progress-bar'
-
-const schema = z.object({
-  vorname: z.string().min(2, 'Mindestens 2 Zeichen'),
-  nachname: z.string().min(2, 'Mindestens 2 Zeichen'),
-  geburtsdatum: z.string().min(1, 'Pflichtfeld'),
-  strasse: z.string().min(3, 'Pflichtfeld'),
-  plz: z.string().regex(/^\d{5}$/, '5-stellige PLZ'),
-  ort: z.string().min(2, 'Pflichtfeld'),
-  krankenkasse: z.string().min(2, 'Pflichtfeld'),
-  telefon: z.string().min(6, 'Pflichtfeld'),
-  email: z.string().email('Gültige E-Mail-Adresse'),
-  passwort: z.string().min(8, 'Mindestens 8 Zeichen'),
-})
-
-type FormData = z.infer<typeof schema>
-type Errors = Partial<Record<keyof FormData, string>>
+import { registerSchema, type Step2Data } from '@/lib/schemas/register'
 
 interface Step2Props {
-  onWeiter: (data: FormData) => void
+  onWeiter:  (data: Step2Data) => void
   onZurueck: () => void
 }
 
+type FieldErrors = Partial<Record<keyof Step2Data | 'lieferadresse', string>>
+
+const inputBase = 'w-full bg-v2-surface-low text-v2-on-surface px-3 py-2.5 rounded-t-sm border-0 border-b border-v2-outline-v focus:border-v2-primary focus:outline-none transition-colors text-sm'
+const labelBase = 'block text-xs text-v2-on-surface-v mb-1'
+const sectionCard = 'bg-v2-surface-lowest rounded-xl p-6 mb-4'
+
 export function Step2Daten({ onWeiter, onZurueck }: Step2Props) {
-  const [form, setForm] = useState<Partial<FormData>>({})
-  const [errors, setErrors] = useState<Errors>({})
+  const [form, setForm] = useState<Partial<Step2Data>>({
+    versorgungssituation: 'erstversorgung',
+    beratung: false,
+    lieferadresse_abweichend: false,
+  })
+  const [errors, setErrors] = useState<FieldErrors>({})
 
-  const set = (field: keyof FormData) => (e: React.ChangeEvent<HTMLInputElement>) =>
-    setForm(prev => ({ ...prev, [field]: e.target.value }))
+  const set = (key: keyof Step2Data, value: unknown) =>
+    setForm(prev => ({ ...prev, [key]: value }))
 
-  const handleWeiter = () => {
-    const result = schema.safeParse(form)
+  const setLieferadresse = (key: string, value: string) =>
+    setForm(prev => ({
+      ...prev,
+      lieferadresse: { ...(prev.lieferadresse ?? { strasse: '', hausnummer: '', plz: '', ort: '' }), [key]: value },
+    }))
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    const result = registerSchema.safeParse(form)
     if (!result.success) {
-      const fieldErrors: Errors = {}
+      const errs: FieldErrors = {}
       result.error.issues.forEach(issue => {
-        const field = issue.path[0] as keyof FormData
-        fieldErrors[field] = issue.message
+        const path = issue.path.join('.')
+        if (path.startsWith('lieferadresse.')) {
+          errs.lieferadresse = issue.message
+        } else {
+          errs[path as keyof Step2Data] = issue.message
+        }
       })
-      setErrors(fieldErrors)
+      setErrors(errs)
       return
     }
     setErrors({})
     onWeiter(result.data)
   }
 
-  const field = (name: keyof FormData, label: string, type = 'text', placeholder = '') => (
-    <div>
-      <label className="block text-xs font-medium text-dark mb-1.5">{label}</label>
-      <input
-        type={type}
-        placeholder={placeholder}
-        value={(form[name] as string) ?? ''}
-        onChange={set(name)}
-        className={`w-full px-3 py-2.5 rounded-lg border text-sm bg-warm-white focus:outline-none focus:ring-2 focus:ring-terra/30 transition-colors ${
-          errors[name] ? 'border-danger' : 'border-mid-gray focus:border-terra'
-        }`}
-      />
-      {errors[name] && <p className="text-xs text-danger mt-1">{errors[name]}</p>}
-    </div>
-  )
+  const err = (field: keyof FieldErrors) =>
+    errors[field] ? <p className="text-v2-error text-xs mt-1">{errors[field]}</p> : null
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-10">
-      {/* Progress */}
-      <ProgressBar schritt={2} gesamtSchritte={4} label="Persönliche Angaben" />
+    <form onSubmit={handleSubmit} className="min-h-screen bg-v2-surface font-manrope">
+      <div className="max-w-2xl mx-auto px-4 py-8">
+        <h1 className="font-newsreader text-3xl text-v2-on-surface mb-2">Ihre Daten</h1>
+        <p className="text-v2-on-surface-v mb-8">Bitte füllen Sie alle Felder vollständig aus.</p>
 
-      <h1 className="font-serif text-3xl font-semibold text-dark mt-6 mb-1">Persönliche Angaben</h1>
-      <p className="text-warm-gray text-sm mb-8">Für den Antrag bei Ihrer Krankenkasse</p>
-
-      <div className="grid md:grid-cols-[1fr_300px] gap-8 items-start">
-        {/* Formular */}
-        <div className="space-y-8">
-          {/* Daten Pflegebedürftiger */}
-          <div>
-            <p className="text-xs font-semibold tracking-widest uppercase text-warm-gray mb-4">Daten des Pflegebedürftigen</p>
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                {field('vorname', 'Vorname')}
-                {field('nachname', 'Nachname')}
-              </div>
-              {field('geburtsdatum', 'Geburtsdatum', 'date')}
-              {field('krankenkasse', 'Krankenkasse', 'text', 'z.B. AOK Bayern')}
-              {field('strasse', 'Straße & Hausnummer', 'text', 'Musterstraße 1')}
-              <div className="grid grid-cols-2 gap-4">
-                {field('plz', 'PLZ', 'text', '80331')}
-                {field('ort', 'Ort', 'text', 'München')}
-              </div>
-              {field('telefon', 'Telefonnummer', 'tel', '+49 89 12345678')}
+        {/* Pflegebedürftiger */}
+        <div className={sectionCard}>
+          <h2 className="font-newsreader text-lg text-v2-on-surface mb-4">Pflegebedürftiger</h2>
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <label className={labelBase}>Vorname</label>
+              <input className={inputBase} value={form.vorname ?? ''} onChange={e => set('vorname', e.target.value)} />
+              {err('vorname')}
+            </div>
+            <div>
+              <label className={labelBase}>Nachname</label>
+              <input className={inputBase} value={form.nachname ?? ''} onChange={e => set('nachname', e.target.value)} />
+              {err('nachname')}
             </div>
           </div>
-
-          {/* Konto erstellen */}
-          <div>
-            <p className="text-xs font-semibold tracking-widest uppercase text-warm-gray mb-4">Konto erstellen</p>
-            <div className="space-y-4">
-              {field('email', 'E-Mail-Adresse', 'email', 'ihre@email.de')}
-              {field('passwort', 'Passwort festlegen', 'password', 'Mindestens 8 Zeichen')}
-              <p className="text-xs text-warm-gray">Damit können Sie Ihre Box jederzeit anpassen.</p>
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <label className={labelBase}>Geburtsdatum</label>
+              <input type="date" className={inputBase} value={form.geburtsdatum ?? ''} onChange={e => set('geburtsdatum', e.target.value)} />
+              {err('geburtsdatum')}
+            </div>
+            <div>
+              <label className={labelBase}>Pflegegrad</label>
+              <select className={inputBase} value={form.pflegegrad ?? ''} onChange={e => set('pflegegrad', Number(e.target.value))}>
+                <option value="">Bitte wählen</option>
+                {[1, 2, 3, 4, 5].map(g => <option key={g} value={g}>{g}</option>)}
+              </select>
+              {err('pflegegrad')}
             </div>
           </div>
-
-          <div className="flex gap-3">
-            <Button variant="ghost" onClick={onZurueck}>← Zurück</Button>
-            <Button variant="primary" className="flex-1 py-3" onClick={handleWeiter}>
-              Weiter zur Box-Auswahl →
-            </Button>
+          <div>
+            <label className={labelBase}>Telefon</label>
+            <input type="tel" className={inputBase} value={form.telefon ?? ''} onChange={e => set('telefon', e.target.value)} />
+            {err('telefon')}
           </div>
         </div>
 
-        {/* Sticky Sidebar: Ihr Anspruch */}
-        <div className="md:sticky md:top-6 space-y-4">
-          <div className="bg-warm-white rounded-xl border border-mid-gray p-5">
-            <p className="text-xs font-medium tracking-widest uppercase text-warm-gray mb-3">Ihr Anspruch</p>
-            <p className="font-serif text-3xl font-semibold text-terra mb-1">42,00 €</p>
-            <p className="text-xs text-warm-gray mb-4">monatlich von der Pflegekasse</p>
-            <ul className="space-y-2">
-              {[
-                'Vollständig kostenfrei',
-                'Direktabrechnung mit Kasse',
-                'Keine Vertragsbindung',
-              ].map(item => (
-                <li key={item} className="flex items-center gap-2 text-xs text-dark">
-                  <span className="text-sage">✓</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-4 pt-4 border-t border-mid-gray text-xs text-warm-gray">
-              Gesetzlicher Anspruch nach § 40 SGB XI
+        {/* Krankenkasse */}
+        <div className={sectionCard}>
+          <h2 className="font-newsreader text-lg text-v2-on-surface mb-4">Krankenkasse</h2>
+          <div className="mb-4">
+            <label className={labelBase}>Krankenkasse</label>
+            <input className={inputBase} placeholder="z. B. AOK Bayern" value={form.krankenkasse ?? ''} onChange={e => set('krankenkasse', e.target.value)} />
+            {err('krankenkasse')}
+          </div>
+          <div>
+            <label className={labelBase}>Versicherungsnummer</label>
+            <input className={inputBase} value={form.versicherungsnummer ?? ''} onChange={e => set('versicherungsnummer', e.target.value)} />
+            {err('versicherungsnummer')}
+          </div>
+        </div>
+
+        {/* Adresse */}
+        <div className={sectionCard}>
+          <h2 className="font-newsreader text-lg text-v2-on-surface mb-4">Adresse</h2>
+          <div className="grid grid-cols-3 gap-4 mb-4">
+            <div className="col-span-2">
+              <label className={labelBase}>Straße</label>
+              <input className={inputBase} value={form.strasse ?? ''} onChange={e => set('strasse', e.target.value)} />
+              {err('strasse')}
+            </div>
+            <div>
+              <label className={labelBase}>Hausnummer</label>
+              <input className={inputBase} value={form.hausnummer ?? ''} onChange={e => set('hausnummer', e.target.value)} />
+              {err('hausnummer')}
+            </div>
+          </div>
+          <div className="mb-4">
+            <label className={labelBase}>Adresszusatz (optional)</label>
+            <input className={inputBase} placeholder="Wohnung, Stockwerk, c/o …" value={form.adresszusatz ?? ''} onChange={e => set('adresszusatz', e.target.value)} />
+          </div>
+          <div className="grid grid-cols-3 gap-4 mb-4">
+            <div>
+              <label className={labelBase}>PLZ</label>
+              <input className={inputBase} maxLength={5} value={form.plz ?? ''} onChange={e => set('plz', e.target.value)} />
+              {err('plz')}
+            </div>
+            <div className="col-span-2">
+              <label className={labelBase}>Ort</label>
+              <input className={inputBase} value={form.ort ?? ''} onChange={e => set('ort', e.target.value)} />
+              {err('ort')}
             </div>
           </div>
 
-          {/* Box-Vorschau */}
-          <div className="bg-terra-pale rounded-xl p-5 relative overflow-hidden">
-            <div className="absolute top-2 right-2">
-              <span className="text-xs bg-terra text-white px-2 py-0.5 rounded-full">Vorschau Box</span>
+          {/* Abweichende Lieferadresse */}
+          <label className="flex items-center gap-2 cursor-pointer mt-2">
+            <input
+              type="checkbox"
+              checked={form.lieferadresse_abweichend ?? false}
+              onChange={e => set('lieferadresse_abweichend', e.target.checked)}
+              className="accent-v2-primary"
+            />
+            <span className="text-sm text-v2-on-surface">Lieferadresse weicht von der obigen Adresse ab</span>
+          </label>
+
+          {form.lieferadresse_abweichend && (
+            <div className="mt-4 pl-4 border-l-2 border-v2-outline-v space-y-4">
+              <div className="grid grid-cols-3 gap-4">
+                <div className="col-span-2">
+                  <label className={labelBase}>Straße (Lieferung)</label>
+                  <input className={inputBase} value={form.lieferadresse?.strasse ?? ''} onChange={e => setLieferadresse('strasse', e.target.value)} />
+                </div>
+                <div>
+                  <label className={labelBase}>Hausnummer</label>
+                  <input className={inputBase} value={form.lieferadresse?.hausnummer ?? ''} onChange={e => setLieferadresse('hausnummer', e.target.value)} />
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label className={labelBase}>PLZ</label>
+                  <input className={inputBase} maxLength={5} value={form.lieferadresse?.plz ?? ''} onChange={e => setLieferadresse('plz', e.target.value)} />
+                </div>
+                <div className="col-span-2">
+                  <label className={labelBase}>Ort</label>
+                  <input className={inputBase} value={form.lieferadresse?.ort ?? ''} onChange={e => setLieferadresse('ort', e.target.value)} />
+                </div>
+              </div>
+              {err('lieferadresse')}
             </div>
-            <div className="text-center py-4">
-              <div className="text-4xl mb-2">📦</div>
-              <p className="text-xs text-terra font-medium">Ihre persönliche Pflegebox</p>
-            </div>
+          )}
+        </div>
+
+        {/* Versorgung */}
+        <div className={sectionCard}>
+          <h2 className="font-newsreader text-lg text-v2-on-surface mb-4">Versorgungssituation</h2>
+          <div className="flex gap-6 mb-4">
+            {(['erstversorgung', 'wechsel'] as const).map(val => (
+              <label key={val} className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="versorgungssituation"
+                  value={val}
+                  checked={form.versorgungssituation === val}
+                  onChange={() => set('versorgungssituation', val)}
+                  className="accent-v2-primary"
+                />
+                <span className="text-sm text-v2-on-surface capitalize">{val === 'erstversorgung' ? 'Erstversorgung' : 'Anbieterwechsel'}</span>
+              </label>
+            ))}
           </div>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={form.beratung ?? false}
+              onChange={e => set('beratung', e.target.checked)}
+              className="accent-v2-primary"
+            />
+            <span className="text-sm text-v2-on-surface">Ich möchte eine persönliche Beratung</span>
+          </label>
+        </div>
+
+        {/* Konto erstellen */}
+        <div className={sectionCard}>
+          <h2 className="font-newsreader text-lg text-v2-on-surface mb-4">Konto erstellen</h2>
+          <div className="mb-4">
+            <label className={labelBase}>E-Mail-Adresse</label>
+            <input type="email" className={inputBase} value={form.email ?? ''} onChange={e => set('email', e.target.value)} />
+            {err('email')}
+          </div>
+          <div>
+            <label className={labelBase}>Passwort (min. 8 Zeichen)</label>
+            <input type="password" className={inputBase} value={form.passwort ?? ''} onChange={e => set('passwort', e.target.value)} />
+            {err('passwort')}
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <div className="flex justify-between gap-4">
+          <button type="button" onClick={onZurueck} className="px-6 py-3 text-v2-on-surface-v hover:text-v2-on-surface transition-colors text-sm">
+            ← Zurück
+          </button>
+          <button type="submit" className="px-8 py-3 bg-v2-primary text-white rounded-xl font-medium hover:bg-v2-secondary transition-colors">
+            Weiter
+          </button>
         </div>
       </div>
-    </div>
+    </form>
   )
 }
