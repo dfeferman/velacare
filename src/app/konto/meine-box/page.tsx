@@ -1,37 +1,27 @@
-'use client'
-
-import { useState } from 'react'
-import { Konfigurator } from '@/components/box-konfigurator/konfigurator'
-import { MOCK_PRODUKTE, MOCK_KUNDEN } from '@/lib/mock-data'
+import { createClient } from '@/lib/supabase/server'
+import { getKundenBox } from '@/lib/dal/konto'
+import { BoxEditor } from './box-editor'
 import type { BoxProdukt } from '@/lib/types'
 
-export default function MeineBoxPage() {
-  const [gespeichert, setGespeichert] = useState(false)
-
-  const handleSave = (_box: BoxProdukt[]) => { // eslint-disable-line @typescript-eslint/no-unused-vars
-    setGespeichert(true)
-    setTimeout(() => setGespeichert(false), 3000)
-  }
-
+function KeinProfilHinweis() {
   return (
-    <div>
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="font-serif text-3xl font-semibold mb-1">Meine Box</h1>
-          <p className="text-warm-gray text-sm">Änderungen gelten ab der nächsten Lieferung.</p>
-        </div>
-        {gespeichert && (
-          <div className="bg-sage-pale text-sage text-sm px-4 py-2 rounded-lg border border-sage-light">
-            ✓ Gespeichert
-          </div>
-        )}
-      </div>
-      <Konfigurator
-        produkte={MOCK_PRODUKTE}
-        initialBox={MOCK_KUNDEN[0].box}
-        onSave={handleSave}
-        saveLabel="Änderungen speichern"
-      />
+    <div className="bg-amber-pale border border-amber rounded-lg p-6">
+      <p className="text-amber font-medium">Profil wird eingerichtet.</p>
+      <p className="text-amber/70 text-sm mt-1">
+        Bitte bestätigen Sie zuerst Ihre E-Mail-Adresse.
+      </p>
     </div>
   )
+}
+
+export default async function MeineBoxPage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  const data = user ? await getKundenBox(user.id) : null
+
+  if (!data) return <KeinProfilHinweis />
+
+  const initialBox = (data.box_konfiguration?.produkte as unknown as BoxProdukt[]) ?? []
+
+  return <BoxEditor initialBox={initialBox} />
 }
