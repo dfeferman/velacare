@@ -8,9 +8,13 @@
     "start": "next start",
     "lint": "next lint",
     "stitch:wireframes": "node scripts/export-stitch-wireframes.mjs",
-    "stitch:wireframes:v2": "node scripts/export-stitch-wireframes.mjs wireframes/v2/stitch-export.config.json"
+    "stitch:wireframes:v2": "node scripts/export-stitch-wireframes.mjs wireframes/v2/stitch-export.config.json",
+    "seed:admin": "tsx --env-file=.env.local scripts/seed-admin.ts"
   },
   "dependencies": {
+    "@prisma/client": "^7.6.0",
+    "@supabase/ssr": "^0.10.0",
+    "@supabase/supabase-js": "^2.101.0",
     "clsx": "^2.1.1",
     "next": "14.2.35",
     "react": "^18",
@@ -25,7 +29,9 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.35",
     "postcss": "^8",
+    "prisma": "^7.6.0",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }
