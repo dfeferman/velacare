@@ -28,7 +28,7 @@ export async function registerKunde(
   const { data: linkData, error: linkError } = await admin.auth.admin.generateLink({
     type: 'magiclink',
     email: d.email,
-    options: { redirectTo: `${appUrl}/konto` },
+    options: { redirectTo: `${appUrl}/auth/callback` },
   })
 
   if (linkError || !linkData?.user?.id) {
