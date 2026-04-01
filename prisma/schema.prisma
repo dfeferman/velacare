@@ -1,0 +1,252 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Enums ────────────────────────────────────────────────────────────────────
+
+enum Rolle {
+  kunde
+  admin
+  superadmin
+}
+
+enum UserStatus {
+  aktiv
+  gesperrt
+  geloescht
+  ausstehend
+}
+
+enum ProduktKategorie {
+  handschuhe
+  desinfektion
+  mundschutz
+  schutzkleidung
+  hygiene
+  sonstiges
+}
+
+enum LieferungStatus {
+  geplant
+  in_bearbeitung
+  versendet
+  zugestellt
+  storniert
+}
+
+enum KundeDeliveryStatus {
+  aktiv
+  pausiert
+  gesperrt
+}
+
+enum AnfrageKategorie {
+  box
+  lieferung
+  adresse
+  loeschung
+  sonstiges
+}
+
+enum AnfrageStatus {
+  offen
+  in_bearbeitung
+  beantwortet
+  geschlossen
+}
+
+enum EinwilligungTyp {
+  dsgvo
+  agb
+  marketing
+}
+
+enum BenachrichtigungTyp {
+  lieferung_status
+  anfrage_beantwortet
+  system
+}
+
+// ─── Models ───────────────────────────────────────────────────────────────────
+
+/// Extends auth.users (Supabase Auth). id = auth.users.id.
+model Profile {
+  id                     String     @id @db.Uuid
+  rolle                  Rolle      @default(kunde)
+  status                 UserStatus @default(ausstehend)
+  email_bestaetigt       Boolean    @default(false)
+  erstellt_am            DateTime   @default(now())
+  letzter_login          DateTime?
+  loeschung_beantragt_am DateTime?
+
+  kunden_profile     KundenProfile?
+  einwilligungen     Einwilligung[]
+  benachrichtigungen Benachrichtigung[]
+  audit_log          AuditLog[]
+
+  @@map("profiles")
+}
+
+/// Healthcare data for customers. 1:1 with Profile.
+model KundenProfile {
+  id                       String              @id @default(uuid()) @db.Uuid
+  user_id                  String              @unique @db.Uuid
+  vorname                  String              @db.VarChar(100)
+  nachname                 String              @db.VarChar(100)
+  geburtsdatum             DateTime            @db.Date
+  pflegegrad               Int
+  krankenkasse             String              @db.VarChar(200)
+  telefon                  String              @db.VarChar(30)
+  strasse                  String              @db.VarChar(200)
+  plz                      String              @db.VarChar(10)
+  ort                      String              @db.VarChar(100)
+  angehoeriger_name        String?             @db.VarChar(200)
+  angehoeriger_verhaeltnis String?             @db.VarChar(100)
+  lieferstichtag           Int
+  lieferung_status         KundeDeliveryStatus @default(aktiv)
+  pausiert_bis             DateTime?           @db.Date
+
+  profile                     Profile                   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  box_konfiguration           BoxKonfiguration?
+  box_konfigurationen_verlauf BoxKonfigurationVerlauf[]
+  lieferungen                 Lieferung[]
+  anfragen                    Anfrage[]
+
+  @@map("kunden_profile")
+}
+
+model Produkt {
+  id                   String           @id @default(uuid()) @db.Uuid
+  name                 String           @db.VarChar(200)
+  kategorie            ProduktKategorie
+  beschreibung         String
+  bild_url             String
+  preis                Decimal          @db.Decimal(8, 2)
+  varianten            Json?
+  hersteller           String           @db.VarChar(100)
+  pflichtkennzeichnung String?
+  aktiv                Boolean          @default(true)
+  sortierung           Int              @default(0)
+  erstellt_am          DateTime         @default(now())
+
+  @@map("produkte")
+}
+
+/// One active box configuration per customer.
+model BoxKonfiguration {
+  id            String   @id @default(uuid()) @db.Uuid
+  kunde_id      String   @unique @db.Uuid
+  produkte      Json
+  gesamtpreis   Decimal  @db.Decimal(8, 2)
+  geaendert_am  DateTime @default(now()) @updatedAt
+  geaendert_von String?  @db.Uuid
+
+  kunde KundenProfile @relation(fields: [kunde_id], references: [id], onDelete: Cascade)
+
+  @@map("box_konfigurationen")
+}
+
+/// Immutable history of box changes.
+model BoxKonfigurationVerlauf {
+  id            String   @id @default(uuid()) @db.Uuid
+  kunde_id      String   @db.Uuid
+  produkte      Json
+  gesamtpreis   Decimal  @db.Decimal(8, 2)
+  geaendert_am  DateTime @default(now())
+  geaendert_von String?  @db.Uuid
+
+  kunde KundenProfile @relation(fields: [kunde_id], references: [id], onDelete: Cascade)
+
+  @@index([kunde_id])
+  @@map("box_konfigurationen_verlauf")
+}
+
+model Lieferung {
+  id              String          @id @default(uuid()) @db.Uuid
+  kunde_id        String          @db.Uuid
+  geplant_fuer    DateTime        @db.Date
+  status          LieferungStatus @default(geplant)
+  box_snapshot    Json
+  tracking_nummer String?
+  notizen         String?
+  erstellt_am     DateTime        @default(now())
+  aktualisiert_am DateTime        @updatedAt
+
+  kunde KundenProfile @relation(fields: [kunde_id], references: [id], onDelete: Cascade)
+
+  @@index([kunde_id])
+  @@index([geplant_fuer])
+  @@map("lieferungen")
+}
+
+model Anfrage {
+  id              String           @id @default(uuid()) @db.Uuid
+  kunde_id        String           @db.Uuid
+  kategorie       AnfrageKategorie
+  betreff         String           @db.VarChar(200)
+  nachricht       String
+  antwort         String?
+  beantwortet_von String?          @db.Uuid
+  status          AnfrageStatus    @default(offen)
+  erstellt_am     DateTime         @default(now())
+  beantwortet_am  DateTime?
+
+  kunde KundenProfile @relation(fields: [kunde_id], references: [id], onDelete: Cascade)
+
+  @@index([kunde_id])
+  @@map("anfragen")
+}
+
+model Einwilligung {
+  id          String          @id @default(uuid()) @db.Uuid
+  user_id     String          @db.Uuid
+  typ         EinwilligungTyp
+  version     String          @db.VarChar(50)
+  zeitpunkt   DateTime        @default(now())
+  ip_adresse  String
+  user_agent  String
+  widerruf_am DateTime?
+
+  profile Profile @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("einwilligungen")
+}
+
+model Benachrichtigung {
+  id          String              @id @default(uuid()) @db.Uuid
+  user_id     String              @db.Uuid
+  typ         BenachrichtigungTyp
+  titel       String              @db.VarChar(200)
+  gelesen     Boolean             @default(false)
+  link        String?
+  erstellt_am DateTime            @default(now())
+
+  profile Profile @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("benachrichtigungen")
+}
+
+/// INSERT-only in production. Do not add UPDATE/DELETE in application code.
+model AuditLog {
+  id          String   @id @default(uuid()) @db.Uuid
+  user_id     String   @db.Uuid
+  aktion      String   @db.VarChar(100)
+  entitaet    String   @db.VarChar(50)
+  entitaet_id String   @db.Uuid
+  alt_wert    Json?
+  neu_wert    Json?
+  ip_adresse  String   @db.VarChar(45)
+  erstellt_am DateTime @default(now())
+
+  profile Profile @relation(fields: [user_id], references: [id])
+
+  @@index([entitaet, entitaet_id])
+  @@map("audit_log")
+}
