@@ -23,9 +23,12 @@ export async function registerKunde(
   // 1. Supabase Auth — generate magic link (no password)
   const admin = createAdminClient()
 
+  const appUrl = process.env.APP_URL ?? 'http://localhost:3001'
+
   const { data: linkData, error: linkError } = await admin.auth.admin.generateLink({
     type: 'magiclink',
     email: d.email,
+    options: { redirectTo: `${appUrl}/konto` },
   })
 
   if (linkError || !linkData?.user?.id) {
@@ -38,7 +41,7 @@ export async function registerKunde(
   }
 
   const userId = linkData.user.id
-  const hashedToken = linkData.properties?.hashed_token
+  const actionLink = linkData.properties?.action_link
 
   // 2. Set app_metadata.rolle = 'kunde' via Admin API (server-only)
   await admin.auth.admin.updateUserById(userId, {
@@ -120,10 +123,7 @@ export async function registerKunde(
   }
 
   // Kombinierte E-Mail: Bestellbestätigung + Magic Link
-  if (hashedToken) {
-    const appUrl = process.env.APP_URL ?? 'http://localhost:3001'
-    const magicLinkUrl = `${appUrl}/auth/callback?token_hash=${hashedToken}&type=magiclink`
-
+  if (actionLink) {
     try {
       await sendEmail({
         to: d.email,
@@ -133,7 +133,7 @@ export async function registerKunde(
           nachname: d.nachname,
           pflegegrad: d.pflegegrad,
           budgetGenutzt: Math.round(gesamtpreis * 100),
-          magicLinkUrl,
+          magicLinkUrl: actionLink,
           expiresInMinutes: 60,
         }),
       })

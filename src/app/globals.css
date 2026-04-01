@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Manrope:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -56,3 +56,92 @@ body { background-color: #F5F0EB; color: #2C2420; }
 }
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── v3 Scroll Reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal.revealed { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+.reveal-d4 { transition-delay: 0.4s; }
+
+/* ── v3 Deco Rule ── */
+.deco-rule {
+  width: 44px; height: 2px;
+  background: linear-gradient(90deg, #9E5A35, #D4906E);
+  border-radius: 1px;
+}
+
+/* ── v3 Timeline Connector Draw ── */
+.connector {
+  width: 2px;
+  background: linear-gradient(to bottom, #4A7259, #5E8C6E);
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform 0.8s cubic-bezier(.4,0,.2,1);
+  border-radius: 1px;
+}
+.connector.drawn { transform: scaleY(1); }
+
+/* ── v3 Step Circle Pop-in ── */
+@keyframes v3-pop-in {
+  0%   { transform: scale(0.6); opacity: 0; }
+  70%  { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+.step-circle-v3 {
+  animation: v3-pop-in 0.5s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+/* ── v3 Card Hover Lift ── */
+.card-lift {
+  transition: transform 0.24s ease, box-shadow 0.24s ease;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(74,114,89,0.12), 0 3px 10px rgba(38,30,23,0.06);
+}
+
+/* ── v3 Animated Checkmark ── */
+@keyframes v3-check-draw {
+  from { stroke-dashoffset: 24; }
+  to   { stroke-dashoffset: 0; }
+}
+.check-path {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  transition: stroke-dashoffset 0.5s ease 0.3s;
+}
+.check-done .check-path { stroke-dashoffset: 0; }
+
+/* ── v3 Ripple Button ── */
+.ripple-btn {
+  position: relative;
+  overflow: hidden;
+}
+.ripple-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.3) 0%, transparent 70%);
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+.ripple-btn:active::after {
+  transform: scale(2);
+  opacity: 1;
+  transition: none;
+}
+
+/* ── Reduce motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .connector { transform: scaleY(1); transition: none; }
+  .step-circle-v3 { animation: none; opacity: 1; transform: none; }
+  .check-path { transition: none; stroke-dashoffset: 0; }
+}

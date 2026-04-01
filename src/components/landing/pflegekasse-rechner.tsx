@@ -5,15 +5,14 @@ import { useState } from 'react'
 
 const MONATSBETRAG = 42
 
-const PG_LABELS: Record<number, { sub: string }> = {
-  1: { sub: 'Gering' },
-  2: { sub: 'Erheblich' },
-  3: { sub: 'Schwer' },
-  4: { sub: 'Schwerst' },
-  5: { sub: 'Extrem' },
+const PG_LABELS: Record<number, string> = {
+  1: 'Gering',
+  2: 'Erheblich',
+  3: 'Schwer',
+  4: 'Schwerst',
+  5: 'Extrem',
 }
 
-/** Pflegekasse-Rechner — Anmutung wireframes/01-startseite-hero-zuerst (dunkle Sektion) */
 export function PflegekasseRechner() {
   const [pflegegrad, setPflegegrad] = useState(3)
   const [zeitraum, setZeitraum] = useState<'monat' | 'jahr'>('jahr')
@@ -22,46 +21,63 @@ export function PflegekasseRechner() {
   const einheit = zeitraum === 'monat' ? 'Monat' : 'Jahr'
 
   return (
-    <section className="bg-dark px-6 py-10 text-terra-pale">
+    <section
+      className="px-6 py-14"
+      style={{ background: '#261E17' }}
+    >
       <div className="mx-auto max-w-4xl">
-        <div className="mb-6">
-          <span className="mb-3 inline-block rounded-full bg-terra/20 px-3 py-0.5 text-[9px] font-bold uppercase tracking-widest text-terra-light">
+
+        {/* Header */}
+        <div className="mb-8">
+          <span
+            className="mb-3 inline-block rounded-full px-3 py-0.5 text-[9px] font-bold uppercase tracking-widest"
+            style={{ background: 'rgba(74,114,89,0.2)', color: '#A8C9B5' }}
+          >
             Pflegekasse-Rechner
           </span>
-          <h2 className="mb-2 font-serif text-2xl font-bold leading-tight text-terra-pale md:text-3xl">
-            Wie viel Geld haben Sie bereits verpasst?
+          <h2
+            className="mb-2 font-newsreader text-2xl font-semibold leading-tight md:text-3xl"
+            style={{ color: '#FFFDF7' }}
+          >
+            Wie viel steht Ihnen monatlich zu?
           </h2>
-          <p className="max-w-xl text-xs text-terra-pale/60">
-            Haben Sie Anspruch auf 42 € pro Monat? Prüfen Sie es in 10 Sekunden.
+          <p className="max-w-xl text-xs" style={{ color: 'rgba(255,253,247,0.45)' }}>
+            Jeder Pflegegrad berechtigt zu 42 € pro Monat nach § 40 SGB XI. Prüfen Sie Ihren Anspruch in 10 Sekunden.
           </p>
         </div>
 
         <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-2">
+
+          {/* Left: Controls */}
           <div className="space-y-6">
+
+            {/* Pflegegrad selector */}
             <div>
-              <label className="mb-2 block text-[9px] font-bold uppercase tracking-widest text-terra-pale/40">
+              <label
+                className="mb-2 block text-[9px] font-bold uppercase tracking-widest"
+                style={{ color: 'rgba(255,253,247,0.35)' }}
+              >
                 Pflegegrad wählen
               </label>
               <div className="grid grid-cols-5 gap-1.5">
                 {([1, 2, 3, 4, 5] as const).map((pg) => {
-                  const { sub } = PG_LABELS[pg]
                   const active = pflegegrad === pg
                   return (
                     <button
                       key={pg}
                       type="button"
                       onClick={() => setPflegegrad(pg)}
-                      className={`group flex flex-col items-center rounded-lg border py-2 transition-all ${
-                        active
-                          ? 'border-terra bg-terra text-white'
-                          : 'border-white/10 bg-white/5 text-terra-pale hover:bg-terra hover:text-white'
-                      }`}
+                      className="group flex flex-col items-center rounded-lg border py-2 transition-all"
+                      style={{
+                        background: active ? '#4A7259' : 'rgba(255,255,255,0.05)',
+                        borderColor: active ? '#4A7259' : 'rgba(255,255,255,0.1)',
+                        color: active ? 'white' : 'rgba(255,253,247,0.7)',
+                        boxShadow: active ? '0 2px 8px rgba(74,114,89,0.3)' : 'none',
+                      }}
                     >
                       <span className="text-base font-bold">{pg}</span>
-                      <span
-                        className={`text-[7px] uppercase opacity-50 group-hover:opacity-90 ${active ? 'font-bold opacity-80' : ''}`}
-                      >
-                        {sub}
+                      <span className="text-[7px] uppercase" style={{ opacity: active ? 0.9 : 0.4 }}>
+                        {PG_LABELS[pg]}
                       </span>
                     </button>
                   )
@@ -69,68 +85,115 @@ export function PflegekasseRechner() {
               </div>
             </div>
 
+            {/* Zeitraum toggle */}
             <div>
-              <label className="mb-2 block text-[9px] font-bold uppercase tracking-widest text-terra-pale/40">
+              <label
+                className="mb-2 block text-[9px] font-bold uppercase tracking-widest"
+                style={{ color: 'rgba(255,253,247,0.35)' }}
+              >
                 Anzeige
               </label>
               <div className="grid grid-cols-2 gap-2">
-                {[{ val: 'monat' as const, label: 'Pro Monat' }, { val: 'jahr' as const, label: 'Pro Jahr' }].map(
-                  (o) => (
-                    <button
-                      key={o.val}
-                      type="button"
-                      onClick={() => setZeitraum(o.val)}
-                      className={`flex cursor-pointer items-center justify-between rounded-lg border border-white/10 px-3 py-2 text-xs transition-colors hover:bg-white/10 ${
-                        zeitraum === o.val ? 'bg-white/10' : 'bg-white/5'
-                      }`}
-                    >
-                      <span className="text-terra-pale">{o.label}</span>
-                      <span className="text-[10px] text-terra-pale/50">▼</span>
-                    </button>
-                  )
-                )}
+                {[
+                  { val: 'monat' as const, label: 'Pro Monat' },
+                  { val: 'jahr' as const, label: 'Pro Jahr' },
+                ].map((o) => (
+                  <button
+                    key={o.val}
+                    type="button"
+                    onClick={() => setZeitraum(o.val)}
+                    className="flex items-center justify-between rounded-lg border px-3 py-2 text-xs transition-colors"
+                    style={{
+                      background: zeitraum === o.val ? 'rgba(74,114,89,0.2)' : 'rgba(255,255,255,0.04)',
+                      borderColor: zeitraum === o.val ? 'rgba(74,114,89,0.4)' : 'rgba(255,255,255,0.08)',
+                      color: 'rgba(255,253,247,0.8)',
+                    }}
+                  >
+                    <span>{o.label}</span>
+                    <span style={{ color: 'rgba(255,253,247,0.3)', fontSize: 10 }}>▼</span>
+                  </button>
+                ))}
               </div>
             </div>
 
-            <div className="flex items-start gap-2.5 rounded-lg border border-sage/20 bg-sage/10 p-3">
-              <span className="text-lg text-sage-light" aria-hidden>
-                ℹ
-              </span>
-              <div className="text-[9px] leading-relaxed text-sage-light">
+            {/* Info note */}
+            <div
+              className="flex items-start gap-2.5 rounded-lg p-3"
+              style={{
+                background: 'rgba(74,114,89,0.1)',
+                border: '1px solid rgba(74,114,89,0.2)',
+              }}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="#A8C9B5" strokeWidth="1.8" className="mt-0.5 h-4 w-4 flex-shrink-0">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>
+              </svg>
+              <div className="text-[9px] leading-relaxed" style={{ color: '#A8C9B5' }}>
                 <span className="mb-0.5 block font-bold">Gut zu wissen</span>
-                Alle Pflegegrade berechtigen zum gleichen Betrag — 42 € pro Monat.
+                Alle Pflegegrade berechtigen zum gleichen Betrag — 42 € pro Monat nach § 40 SGB XI.
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-5">
+          {/* Right: Result */}
+          <div
+            className="flex flex-col gap-4 rounded-2xl p-5"
+            style={{
+              background: 'rgba(255,255,255,0.05)',
+              border: '1px solid rgba(255,255,255,0.08)',
+            }}
+          >
             <div>
-              <label className="mb-1 block text-[9px] font-bold uppercase tracking-widest text-terra-light">
+              <label
+                className="mb-1 block text-[9px] font-bold uppercase tracking-widest"
+                style={{ color: '#A8C9B5' }}
+              >
                 Ihr Anspruch
               </label>
-              <p className="mb-2 text-[9px] text-white/40">
+              <p className="mb-2 text-[9px]" style={{ color: 'rgba(255,255,255,0.35)' }}>
                 {zeitraum === 'jahr' ? 'Hochrechnung 12 Monate' : 'Monatlicher Betrag'} · Pflegegrad {pflegegrad}
               </p>
-              <div className="mb-1 text-4xl font-bold leading-none text-terra">
+              <div
+                className="mb-1 font-newsreader text-4xl font-bold leading-none"
+                style={{ color: '#4A7259' }}
+              >
                 {betrag.toFixed(2).replace('.', ',')} €
               </div>
-              <p className="text-[9px] text-white/30">§ 40 SGB XI — von der Pflegekasse</p>
+              <p className="text-[9px]" style={{ color: 'rgba(255,255,255,0.25)' }}>
+                § 40 SGB XI — von der Pflegekasse
+              </p>
             </div>
-            <div className="space-y-2 rounded-lg bg-white/5 p-3">
-              <div className="flex items-center justify-between text-[9px] text-terra-pale/80">
-                <span className="opacity-40">Monatlicher Anspruch</span>
+
+            <div
+              className="space-y-2 rounded-lg p-3"
+              style={{ background: 'rgba(255,255,255,0.04)' }}
+            >
+              <div
+                className="flex items-center justify-between text-[9px]"
+                style={{ color: 'rgba(255,253,247,0.6)' }}
+              >
+                <span style={{ opacity: 0.5 }}>Monatlicher Anspruch</span>
                 <span className="font-bold">42,00 €</span>
               </div>
-              <div className="flex items-center justify-between border-t border-white/5 pt-1.5 text-[9px]">
-                <span className="font-bold text-terra-light">Anzeige ({einheit})</span>
-                <span className="text-base font-bold text-terra-light">
+              <div
+                className="flex items-center justify-between border-t pt-1.5 text-[9px]"
+                style={{ borderColor: 'rgba(255,255,255,0.06)' }}
+              >
+                <span className="font-bold" style={{ color: '#A8C9B5' }}>
+                  Anzeige ({einheit})
+                </span>
+                <span className="text-base font-bold" style={{ color: '#A8C9B5' }}>
                   {betrag.toFixed(2).replace('.', ',')} €
                 </span>
               </div>
             </div>
+
             <Link
               href="/beantragen"
-              className="w-full rounded-lg bg-terra py-3 text-center text-xs font-bold text-white shadow-lg transition-all hover:bg-terra-dark active:scale-95"
+              className="ripple-btn w-full rounded-xl py-3 text-center text-xs font-semibold text-white transition-all active:scale-[.98]"
+              style={{
+                background: '#4A7259',
+                boxShadow: '0 4px 14px rgba(74,114,89,0.3)',
+              }}
             >
               Jetzt kostenlos beantragen →
             </Link>
