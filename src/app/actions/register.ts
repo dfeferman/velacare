@@ -9,6 +9,7 @@ import type { BoxProdukt } from '@/lib/types'
 import { sendEmail } from '@/lib/email/sender'
 import { BestellbestaetigungEmail } from '@/emails/bestellbestaetigung'
 import { encryptKundenProfile } from '@/lib/crypto/field-encryption'
+import { writeAuditLog } from '@/lib/dal/audit'
 
 export async function registerKunde(
   produkte: BoxProdukt[],
@@ -55,9 +56,10 @@ export async function registerKunde(
   const userAgent = headersList.get('user-agent') ?? 'funnel-v2'
   const gesamtpreis = produkte.reduce((sum, item) => sum + Number(item.produkt.preis), 0)
 
+  let kundenProfileId: string | undefined
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await prisma.$transaction(async (tx: any) => {
+    kundenProfileId = await prisma.$transaction(async (tx: any) => {
 
       // 3a. KundenProfile upsert (idempotent: safe on retry or DB-trigger race)
       const encryptedFields = encryptKundenProfile({
@@ -125,9 +127,24 @@ export async function registerKunde(
         ],
         skipDuplicates: true,
       })
+
+      return profile.id as string
     })
   } catch {
     return { error: 'Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut.' }
+  }
+
+  // Best-effort AuditLog — never blocks registration on failure
+  try {
+    await writeAuditLog({
+      aktion:      'kunde_registriert',
+      entitaet:    'KundenProfile',
+      entitaet_id: kundenProfileId,
+      userId:      userId,
+      ipAdresse:   ipAdresse,
+    })
+  } catch (e) {
+    console.error('AuditLog-Write fehlgeschlagen (registerKunde):', e)
   }
 
   // Kombinierte E-Mail: Bestellbestätigung + Magic Link

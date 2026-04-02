@@ -3,11 +3,12 @@
 
 import { prisma } from '@/lib/prisma'
 import { requireAdmin } from '@/lib/auth/require-admin'
+import { writeAuditLog } from '@/lib/dal/audit'
 
 export async function createProdukt(): Promise<{ error?: string }> {
   try {
-    await requireAdmin()
-    await prisma.produkt.create({
+    const adminUser = await requireAdmin()
+    const neuesProdukt = await prisma.produkt.create({
       data: {
         name:         'Neues Produkt',
         preis:        5.00,
@@ -18,6 +19,17 @@ export async function createProdukt(): Promise<{ error?: string }> {
         aktiv:        true,
       },
     })
+    try {
+      await writeAuditLog({
+        aktion:      'produkt_erstellt',
+        entitaet:    'Produkt',
+        entitaet_id: neuesProdukt.id,
+        userId:      adminUser.id,
+        neuWert:     neuesProdukt as unknown as object,
+      })
+    } catch (e) {
+      console.error('AuditLog-Write fehlgeschlagen (createProdukt):', e)
+    }
     return {}
   } catch {
     return { error: 'Produkt konnte nicht erstellt werden.' }
@@ -29,9 +41,22 @@ export async function updateProduktName(
   name: string,
 ): Promise<{ error?: string }> {
   try {
-    await requireAdmin()
+    const adminUser = await requireAdmin()
     if (name.trim().length < 1) return { error: 'Name darf nicht leer sein.' }
-    await prisma.produkt.update({ where: { id }, data: { name: name.trim() } })
+    const vorherProdukt = await prisma.produkt.findUnique({ where: { id } })
+    const aktualisiert = await prisma.produkt.update({ where: { id }, data: { name: name.trim() } })
+    try {
+      await writeAuditLog({
+        aktion:      'produkt_aktualisiert',
+        entitaet:    'Produkt',
+        entitaet_id: id,
+        userId:      adminUser.id,
+        altWert:     vorherProdukt as unknown as object ?? undefined,
+        neuWert:     aktualisiert as unknown as object,
+      })
+    } catch (e) {
+      console.error('AuditLog-Write fehlgeschlagen (updateProduktName):', e)
+    }
     return {}
   } catch {
     return { error: 'Name konnte nicht aktualisiert werden.' }
@@ -43,8 +68,21 @@ export async function toggleProduktAktiv(
   aktiv: boolean,
 ): Promise<{ error?: string }> {
   try {
-    await requireAdmin()
-    await prisma.produkt.update({ where: { id }, data: { aktiv } })
+    const adminUser = await requireAdmin()
+    const vorherProdukt = await prisma.produkt.findUnique({ where: { id } })
+    const aktualisiert = await prisma.produkt.update({ where: { id }, data: { aktiv } })
+    try {
+      await writeAuditLog({
+        aktion:      'produkt_aktualisiert',
+        entitaet:    'Produkt',
+        entitaet_id: id,
+        userId:      adminUser.id,
+        altWert:     vorherProdukt as unknown as object ?? undefined,
+        neuWert:     aktualisiert as unknown as object,
+      })
+    } catch (e) {
+      console.error('AuditLog-Write fehlgeschlagen (toggleProduktAktiv):', e)
+    }
     return {}
   } catch {
     return { error: 'Status konnte nicht geändert werden.' }
@@ -53,8 +91,20 @@ export async function toggleProduktAktiv(
 
 export async function deleteProdukt(id: string): Promise<{ error?: string }> {
   try {
-    await requireAdmin()
+    const adminUser = await requireAdmin()
+    const geloeschtesProdukt = await prisma.produkt.findUnique({ where: { id } })
     await prisma.produkt.delete({ where: { id } })
+    try {
+      await writeAuditLog({
+        aktion:      'produkt_geloescht',
+        entitaet:    'Produkt',
+        entitaet_id: id,
+        userId:      adminUser.id,
+        altWert:     geloeschtesProdukt as unknown as object ?? undefined,
+      })
+    } catch (e) {
+      console.error('AuditLog-Write fehlgeschlagen (deleteProdukt):', e)
+    }
     return {}
   } catch {
     return { error: 'Produkt konnte nicht gelöscht werden.' }
