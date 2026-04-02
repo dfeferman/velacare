@@ -1,6 +1,6 @@
 # Velacare — Implementierungs-Roadmap
 
-> Zuletzt aktualisiert: 2026-04-01
+> Zuletzt aktualisiert: 2026-04-02
 > Prinzip: Alle Phasen vollständig planen, bevor die Implementierung beginnt.
 
 ---
@@ -54,6 +54,22 @@
 
 - Spec: `docs/superpowers/specs/2026-03-30-velacare-phase6-sicherheit-dsgvo-design.md`
 - Plan: `docs/superpowers/plans/2026-03-30-phase6-sicherheit-dsgvo.md`
+
+---
+
+## Production Deployment
+
+Alle Code-Phasen sind abgeschlossen. Vor dem ersten Production-Deploy die Checkliste abarbeiten:
+
+**→ [`docs/superpowers/PRODUCTION-CHECKLIST.md`](PRODUCTION-CHECKLIST.md)**
+
+Kurzübersicht der offenen Punkte:
+- Supabase: `prisma migrate deploy` ausführen
+- Supabase: pg_cron `app.base_url` + `app.cron_secret` setzen (SQL-Editor)
+- Supabase: Auth Redirect-URL auf Production-Domain setzen
+- Resend: Domain verifizieren, `RESEND_FROM` auf echte Domain setzen
+- Vercel: Alle 10 Environment Variables setzen (inkl. starker `CRON_SECRET` + `FIELD_ENCRYPTION_KEY`)
+- `FIELD_ENCRYPTION_KEY` extern sichern — darf nie verloren gehen
 
 ---
 

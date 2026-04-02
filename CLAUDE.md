@@ -17,8 +17,13 @@ No test suite exists yet.
 
 **Velacare** is a German healthcare SaaS — a Next.js 14 App Router application that helps people with care needs (Pflegebedürftige) receive free monthly supply boxes funded by their statutory care insurance (Pflegekasse, up to €42/month per §40 SGB XI).
 
-### Current State: Mock/Prototype
-The entire app runs on **in-memory mock data** — there is no real backend, authentication, or database. `src/lib/mock-data.ts` holds static seed data; `src/lib/mock-store.tsx` provides a React Context store (`MockStoreProvider`) that wraps the root layout. All data mutations only persist within a browser session.
+### Current State: Production-Ready (pre-deploy)
+All 6 implementation phases are complete. The app uses **real Supabase/Prisma infrastructure** — authentication (magic link), database writes, field encryption (AES-256-GCM), audit logging, and MFA for admins. Mock data has been removed.
+
+**Before deploying to production**, work through the checklist:
+→ [`docs/superpowers/PRODUCTION-CHECKLIST.md`](docs/superpowers/PRODUCTION-CHECKLIST.md)
+
+Key items: run `prisma migrate deploy`, configure pg_cron in Supabase SQL editor, set all 10 env vars in Vercel (especially `FIELD_ENCRYPTION_KEY` — back it up externally, it cannot be rotated without a data migration).
 
 ### Route Structure
 | Route | Purpose |
@@ -26,8 +31,10 @@ The entire app runs on **in-memory mock data** — there is no real backend, aut
 | `/` | Landing page (hero, rechner, products teaser, testimonials, FAQ, CTA) |
 | `/beantragen` | 4-step application funnel (see below) |
 | `/beantragen/danke` | Success page after funnel completion |
-| `/konto/*` | Customer portal (sidebar layout, mock-protected) |
-| `/admin/*` | Admin dashboard (sidebar layout, mock-protected) |
+| `/auth/callback` | Magic link OTP callback (verifyOtp → redirect to /konto) |
+| `/login/mfa` | TOTP MFA step for admin login |
+| `/konto/*` | Customer portal (sidebar layout, Supabase-auth-protected) |
+| `/admin/*` | Admin dashboard (sidebar layout, requireAdmin() + AAL2 MFA check) |
 | `/produkte`, `/faq`, `/kontakt`, `/ueber-uns`, `/wie-es-funktioniert`, `/login` | Public pages |
 
 ### Application Funnel (`/beantragen`)
@@ -38,6 +45,14 @@ The funnel is a single page component (`page.tsx`) managing step state locally, 
 4. **Step 4 – Bestätigung**: Order review and confirmation
 
 Steps receive `onWeiter`/`onZurueck` callbacks. The `FunnelHeader` replaces the main `Nav` inside the funnel (the root layout still renders Nav, but the funnel layout overrides the header).
+
+### Key Backend Files
+- `src/lib/crypto/field-encryption.ts` — AES-256-GCM encrypt/decrypt for sensitive KundenProfile fields
+- `src/lib/dal/` — Data Access Layer: `konto.ts`, `admin.ts`, `produkte.ts`, `audit.ts`
+- `src/lib/auth/require-admin.ts` — Server-side admin guard with AAL2 (MFA) check
+- `src/app/actions/register.ts` — `registerKunde()`: generateLink + Prisma transaction + compensation logic
+- `src/app/api/cron/monthly-reminder/route.ts` — Idempotent monthly reminder (EmailDelivery dedup)
+- `prisma/schema.prisma` — 13 models; `geburtsdatum`/`pflegegrad` stored as encrypted strings
 
 ### Component Organization
 - `src/components/ui/` — Primitive components: `Button`, `ProgressBar`, `Accordion`, `Badge`
