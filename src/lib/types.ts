@@ -12,7 +12,8 @@ export interface Produkt {
   id: string
   name: string
   beschreibung: string
-  preis: number
+  preis: number            // intern — nie im Kunden-Frontend anzeigen
+  maxBudgetProzent: number // abgeleitet: Math.round(preis / 42 * 100), Wertebereich 0–100
   kategorie: ProduktKategorie
   aktiv: boolean
   bildUrl: string

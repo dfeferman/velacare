@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import type { Produkt, BoxProdukt, ProduktKategorie } from '@/lib/types'
-import { BUDGET_LIMIT_EUR } from '@/lib/dal/produkte'
 import { ProduktKarte } from './produkt-karte'
 import { BudgetAnzeige } from './budget-anzeige'
 import { Button } from '@/components/ui/button'
@@ -20,7 +19,7 @@ export function Konfigurator({ produkte, initialBox = [], onSave, saveLabel = 'B
   const [box, setBox] = useState<BoxProdukt[]>(initialBox)
   const [kategorie, setKategorie] = useState<ProduktKategorie | 'Alle'>('Alle')
 
-  const gesamtwert = box.reduce((sum, item) => sum + item.produkt.preis, 0)
+  const gesamtProzent = box.reduce((sum, item) => sum + item.produkt.maxBudgetProzent, 0)
 
   const toggleProdukt = (produkt: Produkt, menge: string | null) => {
     const istDrin = box.some(b => b.produkt.id === produkt.id)
@@ -35,14 +34,14 @@ export function Konfigurator({ produkte, initialBox = [], onSave, saveLabel = 'B
     }
   }
 
-  const gefiltert = kategorie === 'Alle' ? produkte : produkte.filter(p => p.kategorie === kategorie)
-  const ueberschritten = gesamtwert > BUDGET_LIMIT_EUR
+  const gefiltert     = kategorie === 'Alle' ? produkte : produkte.filter(p => p.kategorie === kategorie)
+  const ueberschritten = gesamtProzent > 100
 
   return (
     <div className="grid md:grid-cols-[280px_1fr] gap-6">
       {/* Sidebar */}
       <div className="space-y-4">
-        <BudgetAnzeige genutzt={gesamtwert} />
+        <BudgetAnzeige genutztProzent={gesamtProzent} />
 
         <div className="bg-warm-white rounded-lg border border-mid-gray p-4">
           <p className="text-xs font-medium tracking-widest uppercase text-warm-gray mb-3">Kategorie</p>
@@ -68,7 +67,7 @@ export function Konfigurator({ produkte, initialBox = [], onSave, saveLabel = 'B
               {box.map(item => (
                 <div key={item.produkt.id} className="flex justify-between items-center text-xs">
                   <span className="text-dark">{item.produkt.name}{item.menge ? ` (${item.menge})` : ''}</span>
-                  <span className="text-terra font-medium">{item.produkt.preis.toFixed(2).replace('.', ',')} €</span>
+                  <span className="text-terra font-medium">{item.produkt.maxBudgetProzent} %</span>
                 </div>
               ))}
             </div>
@@ -90,14 +89,14 @@ export function Konfigurator({ produkte, initialBox = [], onSave, saveLabel = 'B
         {gefiltert.map(produkt => {
           const boxItem = box.find(b => b.produkt.id === produkt.id)
           const ausgewaehlt = !!boxItem
-          const budgetNachHinzufuegen = gesamtwert + (ausgewaehlt ? 0 : produkt.preis)
+          const budgetNachHinzufuegen = gesamtProzent + (ausgewaehlt ? 0 : produkt.maxBudgetProzent)
           return (
             <ProduktKarte
               key={produkt.id}
               produkt={produkt}
               ausgewaehlt={ausgewaehlt}
               gewaehlteMenge={boxItem?.menge ?? null}
-              budgetWuerdeUeberschritten={budgetNachHinzufuegen > BUDGET_LIMIT_EUR}
+              budgetWuerdeUeberschritten={budgetNachHinzufuegen > 100}
               onToggle={toggleProdukt}
             />
           )

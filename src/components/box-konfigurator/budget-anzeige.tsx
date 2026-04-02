@@ -1,32 +1,118 @@
-import { BUDGET_LIMIT_EUR } from '@/lib/dal/produkte'
+'use client'
 
 interface BudgetAnzeigeProps {
-  genutzt: number
+  genutztProzent: number  // 0–100 (Prozent des Maximalbudgets)
+  /** md = voller Ring mit Centertext (Sidebar/Desktop), sm = kompakter Ring inline (Mobile) */
+  size?: 'sm' | 'md'
 }
 
-export function BudgetAnzeige({ genutzt }: BudgetAnzeigeProps) {
-  const prozent = Math.min((genutzt / BUDGET_LIMIT_EUR) * 100, 100)
-  const ueberschritten = genutzt > BUDGET_LIMIT_EUR
-  const verbleibend = BUDGET_LIMIT_EUR - genutzt
+const R             = 38
+const CX            = 48
+const CY            = 48
+const CIRCUMFERENCE = 2 * Math.PI * R  // ≈ 238.76
+
+const PRIMARY      = '#4A7259'
+const ERROR_COLOR  = '#E05A3A'
+const TRACK_COLOR  = '#D5CAB9'
+const TEXT_VARIANT = '#6B5747'
+
+export function BudgetAnzeige({ genutztProzent, size = 'md' }: BudgetAnzeigeProps) {
+  const prozent        = Math.min(genutztProzent, 100)
+  const verbleibend    = Math.max(100 - genutztProzent, 0)
+  const ueberschritten = genutztProzent > 100
+  const dashOffset     = CIRCUMFERENCE * (1 - prozent / 100)
+  const ringColor      = ueberschritten ? ERROR_COLOR : PRIMARY
+
+  const isSm    = size === 'sm'
+  const svgSize = isSm ? 56 : 96
 
   return (
-    <div className="bg-warm-white rounded-lg border border-mid-gray p-4">
-      <div className="flex justify-between items-baseline mb-2">
-        <span className="text-xs font-medium tracking-widest uppercase text-warm-gray">Budget</span>
-        <span className={`text-sm font-medium ${ueberschritten ? 'text-danger' : 'text-dark'}`}>
-          {genutzt.toFixed(2).replace('.', ',')} € / {BUDGET_LIMIT_EUR.toFixed(2).replace('.', ',')} €
-        </span>
+    <div
+      className={isSm ? 'flex items-center gap-3' : 'flex flex-col items-center'}
+      role="img"
+      aria-label={`${verbleibend.toFixed(0)} Prozent von 100 Prozent verfügbar`}
+    >
+      {/* SVG Ring */}
+      <div className="relative shrink-0">
+        <svg
+          width={svgSize}
+          height={svgSize}
+          viewBox="0 0 96 96"
+          aria-hidden="true"
+          className="block"
+        >
+          {/* Track */}
+          <circle
+            cx={CX} cy={CY} r={R}
+            fill="none"
+            stroke={TRACK_COLOR}
+            strokeWidth="7"
+            opacity="0.5"
+          />
+          {/* Filled arc */}
+          <circle
+            cx={CX} cy={CY} r={R}
+            fill="none"
+            stroke={ringColor}
+            strokeWidth="7"
+            strokeLinecap="round"
+            strokeDasharray={CIRCUMFERENCE}
+            strokeDashoffset={dashOffset}
+            transform="rotate(-90 48 48)"
+            style={{
+              transition: 'stroke-dashoffset 0.65s cubic-bezier(.4,0,.2,1), stroke 0.3s',
+            }}
+          />
+          {/* Center text — nur bei md */}
+          {!isSm && (
+            <>
+              <text
+                x="48" y="45"
+                textAnchor="middle"
+                fill={ringColor}
+                fontFamily="DM Sans, system-ui, sans-serif"
+                fontSize="14"
+                fontWeight="700"
+              >
+                {verbleibend.toFixed(0)} %
+              </text>
+              <text
+                x="48" y="57"
+                textAnchor="middle"
+                fill={TEXT_VARIANT}
+                fontFamily="DM Sans, system-ui, sans-serif"
+                fontSize="8.5"
+              >
+                verfügbar
+              </text>
+            </>
+          )}
+        </svg>
       </div>
-      <div className="w-full bg-bg rounded-full h-2 overflow-hidden">
-        <div
-          className={`h-2 rounded-full transition-all duration-300 ${ueberschritten ? 'bg-danger' : 'bg-terra'}`}
-          style={{ width: `${prozent}%` }}
-        />
-      </div>
-      {ueberschritten ? (
-        <p className="text-xs text-danger mt-2">Budget überschritten um {Math.abs(verbleibend).toFixed(2).replace('.', ',')} €</p>
+
+      {/* Labels */}
+      {isSm ? (
+        <div>
+          <p className="text-sm font-semibold tabular-nums leading-tight" style={{ color: ringColor }}>
+            {verbleibend.toFixed(0)} %
+            <span className="text-v3-on-surface-v font-normal text-xs"> verfügbar</span>
+          </p>
+          <p className="text-xs text-v3-on-surface-v tabular-nums mt-0.5">
+            {genutztProzent.toFixed(0)} % von 100 % genutzt
+          </p>
+        </div>
       ) : (
-        <p className="text-xs text-warm-gray mt-2">Noch {verbleibend.toFixed(2).replace('.', ',')} € verfügbar</p>
+        <div className="mt-3 text-center space-y-1">
+          <p className="text-xs text-v3-on-surface-v tabular-nums">
+            <span className="font-medium text-v3-on-surface">{genutztProzent.toFixed(0)} %</span>
+            {' '}von 100 % genutzt
+          </p>
+          {ueberschritten && (
+            <p className="text-xs font-medium" style={{ color: ERROR_COLOR }}>
+              Budget überschritten
+            </p>
+          )}
+        </div>
       )}
     </div>
   )

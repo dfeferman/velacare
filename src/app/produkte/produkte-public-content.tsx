@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { BUDGET_LIMIT_EUR } from '@/lib/dal/produkte'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import type { Produkt } from '@/lib/types'
@@ -17,8 +16,8 @@ export function ProduktePublicContent({ produkte }: ProduktePublicContentProps) 
   const [auswahl, setAuswahl] = useState<Produkt[]>([])
   const [aktiveKat, setAktiveKat] = useState<string>('Alle')
 
-  const gesamtwert = auswahl.reduce((s, p) => s + p.preis, 0)
-  const prozent = Math.min((gesamtwert / BUDGET_LIMIT_EUR) * 100, 100)
+  const gesamtProzent = auswahl.reduce((s, p) => s + p.maxBudgetProzent, 0)
+  const prozent       = Math.min(gesamtProzent, 100)
 
   const gefiltert = aktiveKat === 'Alle'
     ? produkte
@@ -50,7 +49,7 @@ export function ProduktePublicContent({ produkte }: ProduktePublicContentProps) 
           <div className="flex justify-between items-baseline mb-2">
             <span className="text-xs font-medium tracking-widest uppercase text-warm-gray">Budget genutzt</span>
             <span className="text-sm font-semibold text-dark">
-              {gesamtwert.toFixed(2).replace('.', ',')} € von {BUDGET_LIMIT_EUR.toFixed(2).replace('.', ',')} €
+              {gesamtProzent} % von 100 %
             </span>
           </div>
           <div className="w-full h-2 bg-bg rounded-full overflow-hidden">
@@ -105,9 +104,8 @@ export function ProduktePublicContent({ produkte }: ProduktePublicContentProps) 
                   <h3 className="font-medium text-sm text-dark">{p.name}</h3>
                   <p className="text-xs text-warm-gray">{p.beschreibung}</p>
                 </div>
-                {/* Preis + Button */}
+                {/* Button */}
                 <div className="flex flex-col items-end gap-2 flex-shrink-0">
-                  <span className="text-sm font-semibold text-terra">0,00 €</span>
                   <button
                     onClick={() => toggle(p)}
                     className={`text-xs px-3 py-1.5 rounded-lg font-medium transition-colors ${
@@ -131,7 +129,7 @@ export function ProduktePublicContent({ produkte }: ProduktePublicContentProps) 
           <div>
             <p className="text-xs text-warm-gray">Ihre Auswahl</p>
             <p className="text-sm font-semibold text-dark">
-              {auswahl.length} Produkt{auswahl.length !== 1 ? 'e' : ''} · {gesamtwert.toFixed(2).replace('.', ',')} €
+              {auswahl.length} Produkt{auswahl.length !== 1 ? 'e' : ''} · {gesamtProzent} % genutzt
             </p>
           </div>
           <Button variant="primary" disabled={auswahl.length === 0}>

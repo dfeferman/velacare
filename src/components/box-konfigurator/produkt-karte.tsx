@@ -21,7 +21,6 @@ export function ProduktKarte({ produkt, ausgewaehlt, gewaehlteMenge, budgetWuerd
       <div className="p-4">
         <div className="flex justify-between items-start mb-2">
           <Badge variant="terra">{produkt.kategorie}</Badge>
-          <span className="text-sm font-medium text-terra">{produkt.preis.toFixed(2).replace('.', ',')} €</span>
         </div>
         <h4 className="font-medium text-sm text-dark mb-1">{produkt.name}</h4>
         <p className="text-xs text-warm-gray leading-relaxed mb-3">{produkt.beschreibung}</p>
