@@ -8,6 +8,7 @@ import { registerSchema, type Step2Data } from '@/lib/schemas/register'
 import type { BoxProdukt } from '@/lib/types'
 import { sendEmail } from '@/lib/email/sender'
 import { BestellbestaetigungEmail } from '@/emails/bestellbestaetigung'
+import { encryptKundenProfile } from '@/lib/crypto/field-encryption'
 
 export async function registerKunde(
   produkte: BoxProdukt[],
@@ -59,14 +60,21 @@ export async function registerKunde(
     await prisma.$transaction(async (tx: any) => {
 
       // 3a. KundenProfile upsert (idempotent: safe on retry or DB-trigger race)
+      const encryptedFields = encryptKundenProfile({
+        vorname:      d.vorname,
+        nachname:     d.nachname,
+        geburtsdatum: d.geburtsdatum,
+        pflegegrad:   String(d.pflegegrad),
+      })
+
       const profile = await tx.kundenProfile.upsert({
         where:  { user_id: userId },
         create: {
           user_id:              userId,
-          vorname:              d.vorname,
-          nachname:             d.nachname,
-          geburtsdatum:         new Date(d.geburtsdatum),
-          pflegegrad:           d.pflegegrad,
+          vorname:              encryptedFields.vorname,
+          nachname:             encryptedFields.nachname,
+          geburtsdatum:         encryptedFields.geburtsdatum,
+          pflegegrad:           encryptedFields.pflegegrad,
           krankenkasse:         d.krankenkasse,
           versicherungsnummer:  d.versicherungsnummer,
           strasse:              d.strasse,
@@ -81,10 +89,10 @@ export async function registerKunde(
           lieferstichtag:       liefertag,
         },
         update: {
-          vorname:              d.vorname,
-          nachname:             d.nachname,
-          geburtsdatum:         new Date(d.geburtsdatum),
-          pflegegrad:           d.pflegegrad,
+          vorname:              encryptedFields.vorname,
+          nachname:             encryptedFields.nachname,
+          geburtsdatum:         encryptedFields.geburtsdatum,
+          pflegegrad:           encryptedFields.pflegegrad,
           krankenkasse:         d.krankenkasse,
           versicherungsnummer:  d.versicherungsnummer,
           strasse:              d.strasse,
