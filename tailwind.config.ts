@@ -46,6 +46,7 @@ const config: Config = {
           'primary-mid':        '#5E8C6E',
           'primary-light':      '#A8C9B5',
           'primary-pale':       '#EEF4F1',
+          'primary-dark':       '#375E46',
           secondary:            '#9E5A35',
           'secondary-light':    '#C4895E',
           'secondary-pale':     '#F5EDE5',
@@ -67,11 +68,10 @@ const config: Config = {
         xl: '24px',
       },
       fontFamily: {
-        serif: ['var(--font-cormorant)', 'Georgia', 'serif'],
+        serif: ['var(--font-newsreader)', 'Georgia', 'serif'],
         newsreader: ['var(--font-newsreader)', 'Georgia', 'serif'],
         sans: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-dm-mono)', 'monospace'],
-        manrope: ['var(--font-manrope)', 'system-ui', 'sans-serif'],
       },
       keyframes: {
         'accordion-down': {

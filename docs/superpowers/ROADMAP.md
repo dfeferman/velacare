@@ -1,6 +1,6 @@
 # Velacare — Implementierungs-Roadmap
 
-> Zuletzt aktualisiert: 2026-03-30
+> Zuletzt aktualisiert: 2026-04-01
 > Prinzip: Alle Phasen vollständig planen, bevor die Implementierung beginnt.
 
 ---
@@ -10,12 +10,13 @@
 
 | Phase | Thema                                           | Spec | Plan | Code |
 | ----- | ----------------------------------------------- | ---- | ---- | ---- |
-| 1     | Foundation (Supabase, Prisma, Auth, Middleware) | ✅    | ✅    | ⏳    |
-| 2     | Echter Funnel (v2 UI + Signup + DB-Writes)      | ✅    | ✅    | ⏳    |
-| 3     | Kundenportal (echte Daten statt Mock)           | ✅    | ✅    | —    |
-| 4     | Admin-Panel (echte Daten statt Mock)            | ✅    | ✅    | —    |
-| 5     | E-Mail & Jobs (Resend, pg_cron)                 | ✅    | ✅    | ✅    |
-| 6     | Sicherheit & DSGVO (Encryption, AuditLog, MFA)  | ✅    | ✅    | —    |
+| 1     | Foundation (Supabase, Prisma, Auth, Middleware) | ✅    | ✅    | ✅    |
+| 2     | Echter Funnel (v2 UI + Signup + DB-Writes)      | ✅    | ✅    | ✅    |
+| 3     | Kundenportal (echte Daten statt Mock)           | ✅    | ✅    | ✅    |
+| 4     | Admin-Panel (echte Daten statt Mock)            | ✅    | ✅    | ✅    |
+| 5     | E-Mail & Jobs (Resend, pg_cron)                 | ✅    | ✅    | ⏳    |
+| 6     | Sicherheit & DSGVO (Encryption, AuditLog, MFA)  | ✅    | ✅    | ⏳    |
+| —     | Mock-Cleanup (Produkte aus DB, MockStore weg)   | —    | —    | ⏳    |
 
 
 **Legende:** ✅ fertig · ⏳ in Arbeit / als nächstes · — noch nicht begonnen

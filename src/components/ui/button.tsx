@@ -8,17 +8,23 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variants: Record<ButtonVariant, string> = {
-  primary: 'bg-terra text-warm-white hover:bg-terra-dark',
-  secondary: 'bg-transparent border border-terra text-terra hover:bg-terra-pale',
-  ghost: 'bg-transparent text-warm-gray hover:text-dark hover:bg-bg',
-  danger: 'bg-danger-pale text-danger hover:bg-danger hover:text-white',
+  primary:
+    'bg-v3-primary text-white hover:bg-v3-primary-mid active:bg-v3-primary-dark ripple-btn',
+  secondary:
+    'bg-transparent border border-v3-outline text-v3-on-surface hover:bg-v3-primary-pale hover:border-v3-primary',
+  ghost:
+    'bg-transparent text-v3-on-surface-v hover:text-v3-on-surface hover:bg-v3-primary-pale',
+  danger:
+    'bg-danger-pale text-danger hover:bg-danger hover:text-white',
 }
 
 export function Button({ variant = 'primary', className, children, ...props }: ButtonProps) {
   return (
     <button
       className={clsx(
-        'inline-flex items-center justify-center px-5 py-2.5 rounded-md font-sans font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed',
+        'inline-flex min-h-[44px] cursor-pointer items-center justify-center px-5 py-2.5 rounded-md font-sans font-medium text-sm transition-colors',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-v3-primary focus-visible:ring-offset-2',
+        'disabled:opacity-50 disabled:cursor-not-allowed',
         variants[variant],
         className
       )}
