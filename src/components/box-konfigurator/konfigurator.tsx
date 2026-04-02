@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import type { Produkt, BoxProdukt, ProduktKategorie } from '@/lib/types'
-import { MOCK_BUDGET_LIMIT } from '@/lib/mock-data'
+import { BUDGET_LIMIT_EUR } from '@/lib/dal/produkte'
 import { ProduktKarte } from './produkt-karte'
 import { BudgetAnzeige } from './budget-anzeige'
 import { Button } from '@/components/ui/button'
@@ -36,7 +36,7 @@ export function Konfigurator({ produkte, initialBox = [], onSave, saveLabel = 'B
   }
 
   const gefiltert = kategorie === 'Alle' ? produkte : produkte.filter(p => p.kategorie === kategorie)
-  const ueberschritten = gesamtwert > MOCK_BUDGET_LIMIT
+  const ueberschritten = gesamtwert > BUDGET_LIMIT_EUR
 
   return (
     <div className="grid md:grid-cols-[280px_1fr] gap-6">
@@ -97,7 +97,7 @@ export function Konfigurator({ produkte, initialBox = [], onSave, saveLabel = 'B
               produkt={produkt}
               ausgewaehlt={ausgewaehlt}
               gewaehlteMenge={boxItem?.menge ?? null}
-              budgetWuerdeUeberschritten={budgetNachHinzufuegen > MOCK_BUDGET_LIMIT}
+              budgetWuerdeUeberschritten={budgetNachHinzufuegen > BUDGET_LIMIT_EUR}
               onToggle={toggleProdukt}
             />
           )

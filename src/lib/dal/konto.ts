@@ -1,9 +1,34 @@
 // src/lib/dal/konto.ts
 import { prisma } from '@/lib/prisma'
+import { decryptKundenProfile } from '@/lib/crypto/field-encryption'
+import { writeAuditLog } from '@/lib/dal/audit'
+import type { BoxProdukt } from '@/lib/types'
+
+/** Decrypt sensitive fields on a KundenProfile and convert pflegegrad back to number */
+function decryptProfile<T extends {
+  vorname: string
+  nachname: string
+  geburtsdatum: string
+  pflegegrad: string
+}>(raw: T): Omit<T, 'pflegegrad'> & { pflegegrad: number } {
+  const dec = decryptKundenProfile({
+    vorname:      raw.vorname,
+    nachname:     raw.nachname,
+    geburtsdatum: raw.geburtsdatum,
+    pflegegrad:   raw.pflegegrad,
+  })
+  return {
+    ...raw,
+    vorname:      dec.vorname,
+    nachname:     dec.nachname,
+    geburtsdatum: dec.geburtsdatum,
+    pflegegrad:   Number(dec.pflegegrad),
+  }
+}
 
 /** Dashboard: KundenProfile + nächste geplante Lieferung + Anzahl offener Anfragen */
 export async function getKontoDashboard(userId: string) {
-  return prisma.kundenProfile.findUnique({
+  const raw = await prisma.kundenProfile.findUnique({
     where: { user_id: userId },
     include: {
       box_konfiguration: true,
@@ -18,14 +43,18 @@ export async function getKontoDashboard(userId: string) {
       },
     },
   })
+  if (!raw) return null
+  return decryptProfile(raw)
 }
 
 /** Meine Box: KundenProfile + BoxKonfiguration */
 export async function getKundenBox(userId: string) {
-  return prisma.kundenProfile.findUnique({
+  const raw = await prisma.kundenProfile.findUnique({
     where:   { user_id: userId },
     include: { box_konfiguration: true },
   })
+  if (!raw) return null
+  return decryptProfile(raw)
 }
 
 /** Lieferungen: alle Lieferungen des Kunden, absteigend nach Datum */
@@ -56,7 +85,44 @@ export async function getKundenAnfragen(userId: string) {
 
 /** Einstellungen: Kontaktdaten (read-only in Phase 3) */
 export async function getKundenEinstellungen(userId: string) {
-  return prisma.kundenProfile.findUnique({
+  const raw = await prisma.kundenProfile.findUnique({
     where: { user_id: userId },
   })
+  if (!raw) return null
+  return decryptProfile(raw)
+}
+
+/** Meine Box: BoxKonfiguration aktualisieren */
+export async function updateKundenBox(
+  userId: string,
+  produkte: BoxProdukt[],
+  gesamtpreis: number,
+): Promise<{ error?: string }> {
+  // Resolve KundenProfile.id from auth user ID
+  const profile = await prisma.kundenProfile.findUnique({
+    where:  { user_id: userId },
+    select: { id: true, box_konfiguration: { select: { id: true } } },
+  })
+  if (!profile) return { error: 'Profil nicht gefunden.' }
+
+  const boxId = profile.box_konfiguration?.id
+
+  await prisma.boxKonfiguration.update({
+    where: { kunde_id: profile.id },
+    data:  { produkte: produkte as object, gesamtpreis, geaendert_von: userId },
+  })
+
+  // Best-effort AuditLog — never blocks the update on failure
+  try {
+    await writeAuditLog({
+      aktion:      'box_geaendert',
+      entitaet:    'BoxKonfiguration',
+      entitaet_id: boxId,
+      userId:      userId,
+    })
+  } catch (e) {
+    console.error('AuditLog-Write fehlgeschlagen (updateKundenBox):', e)
+  }
+
+  return {}
 }

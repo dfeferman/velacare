@@ -3,15 +3,15 @@
 import { useTransition, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Konfigurator } from '@/components/box-konfigurator/konfigurator'
-import { MOCK_PRODUKTE } from '@/lib/mock-data'
 import { updateKundenBox } from '@/app/actions/konto'
-import type { BoxProdukt } from '@/lib/types'
+import type { BoxProdukt, Produkt } from '@/lib/types'
 
 interface BoxEditorProps {
+  produkte: Produkt[]
   initialBox: BoxProdukt[]
 }
 
-export function BoxEditor({ initialBox }: BoxEditorProps) {
+export function BoxEditor({ produkte, initialBox }: BoxEditorProps) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [fehler, setFehler] = useState<string | null>(null)
@@ -53,7 +53,7 @@ export function BoxEditor({ initialBox }: BoxEditorProps) {
         )}
       </div>
       <Konfigurator
-        produkte={MOCK_PRODUKTE}
+        produkte={produkte}
         initialBox={initialBox}
         onSave={handleSave}
         saveLabel={isPending ? 'Speichern...' : 'Änderungen speichern'}

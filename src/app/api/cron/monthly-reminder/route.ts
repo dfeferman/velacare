@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { sendEmail } from '@/lib/email/sender'
 import { MonatsErinnerungEmail } from '@/emails/monats-erinnerung'
+import { decrypt } from '@/lib/crypto/field-encryption'
 
 export async function POST(request: NextRequest) {
   const authHeader = request.headers.get('authorization')
@@ -74,7 +75,7 @@ export async function POST(request: NextRequest) {
         to: authUser.user.email,
         subject: `Dein Budget für ${monatLabel} wartet – Velacare`,
         template: MonatsErinnerungEmail({
-          vorname: kunde.vorname,
+          vorname: decrypt(kunde.vorname),
           monat: monatLabel,
           kontoUrl: `${appUrl}/konto/meine-box`,
         }),

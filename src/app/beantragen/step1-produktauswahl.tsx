@@ -1,10 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { MOCK_PRODUKTE, MOCK_BUDGET_LIMIT } from '@/lib/mock-data'
+import { BUDGET_LIMIT_EUR } from '@/lib/dal/produkte'
 import type { BoxProdukt, Produkt, ProduktKategorie } from '@/lib/types'
 
 interface Step1Props {
+  produkte: Produkt[]
   onWeiter: (produkte: BoxProdukt[]) => void
 }
 
@@ -12,26 +13,26 @@ const KATEGORIEN: ProduktKategorie[] = [
   'Handschuhe', 'Desinfektion', 'Mundschutz', 'Schutzkleidung', 'Hygiene', 'Sonstiges',
 ]
 
-export function Step1Produktauswahl({ onWeiter }: Step1Props) {
+export function Step1Produktauswahl({ produkte, onWeiter }: Step1Props) {
   const [gewählt, setGewählt]   = useState<BoxProdukt[]>([])
   const [kategorie, setKategorie] = useState<ProduktKategorie | 'alle'>('alle')
 
   const verwendetBetrag = gewählt.reduce((s, i) => s + Number(i.produkt.preis), 0)
-  const budgetProzent   = Math.min((verwendetBetrag / MOCK_BUDGET_LIMIT) * 100, 100)
-  const restBudget      = MOCK_BUDGET_LIMIT - verwendetBetrag
+  const budgetProzent   = Math.min((verwendetBetrag / BUDGET_LIMIT_EUR) * 100, 100)
+  const restBudget      = BUDGET_LIMIT_EUR - verwendetBetrag
 
   const toggle = (produkt: Produkt) => {
     setGewählt(prev => {
       const exists = prev.some(p => p.produkt.id === produkt.id)
       if (exists) return prev.filter(p => p.produkt.id !== produkt.id)
-      if (verwendetBetrag + Number(produkt.preis) > MOCK_BUDGET_LIMIT) return prev
+      if (verwendetBetrag + Number(produkt.preis) > BUDGET_LIMIT_EUR) return prev
       return [...prev, { produkt, menge: null }]
     })
   }
 
   const gefiltert = kategorie === 'alle'
-    ? MOCK_PRODUKTE
-    : MOCK_PRODUKTE.filter(p => p.kategorie === kategorie)
+    ? produkte
+    : produkte.filter(p => p.kategorie === kategorie)
 
   return (
     <div className="min-h-screen bg-v2-surface font-manrope">
@@ -85,7 +86,7 @@ export function Step1Produktauswahl({ onWeiter }: Step1Props) {
         <div className="grid sm:grid-cols-2 gap-3 mb-10">
           {gefiltert.map(produkt => {
             const selected  = gewählt.some(p => p.produkt.id === produkt.id)
-            const blocked   = !selected && verwendetBetrag + Number(produkt.preis) > MOCK_BUDGET_LIMIT
+            const blocked   = !selected && verwendetBetrag + Number(produkt.preis) > BUDGET_LIMIT_EUR
             return (
               <button
                 key={produkt.id}
