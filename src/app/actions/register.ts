@@ -42,24 +42,26 @@ export async function registerKunde(
     return { error: 'Konto konnte nicht erstellt werden. Bitte versuchen Sie es erneut.' }
   }
 
-  const userId = linkData.user.id
-  const actionLink = linkData.properties?.action_link
+  // Save auth user ID for potential compensation if Prisma transaction fails
+  let authUserId: string | undefined
 
-  // 2. Set app_metadata.rolle = 'kunde' via Admin API (server-only)
-  await admin.auth.admin.updateUserById(userId, {
-    app_metadata: { rolle: 'kunde' },
-  })
-
-  // 3. Prisma interactive transaction: KundenProfile → BoxKonfiguration → Einwilligungen
-  const headersList = await headers()
-  const ipAdresse = headersList.get('x-forwarded-for')?.split(',')[0].trim() ?? '0.0.0.0'
-  const userAgent = headersList.get('user-agent') ?? 'funnel-v2'
-  const gesamtpreis = produkte.reduce((sum, item) => sum + Number(item.produkt.preis), 0)
-
-  let kundenProfileId: string | undefined
   try {
+    authUserId = linkData.user.id
+    const actionLink = linkData.properties?.action_link
+
+    // 2. Set app_metadata.rolle = 'kunde' via Admin API (server-only)
+    await admin.auth.admin.updateUserById(authUserId, {
+      app_metadata: { rolle: 'kunde' },
+    })
+
+    // 3. Prisma interactive transaction: KundenProfile → BoxKonfiguration → Einwilligungen
+    const headersList = await headers()
+    const ipAdresse = headersList.get('x-forwarded-for')?.split(',')[0].trim() ?? '0.0.0.0'
+    const userAgent = headersList.get('user-agent') ?? 'funnel-v2'
+    const gesamtpreis = produkte.reduce((sum, item) => sum + Number(item.produkt.preis), 0)
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    kundenProfileId = await prisma.$transaction(async (tx: any) => {
+    const kundenProfileId: string = await prisma.$transaction(async (tx: any) => {
 
       // 3a. KundenProfile upsert (idempotent: safe on retry or DB-trigger race)
       const encryptedFields = encryptKundenProfile({
@@ -70,9 +72,9 @@ export async function registerKunde(
       })
 
       const profile = await tx.kundenProfile.upsert({
-        where:  { user_id: userId },
+        where:  { user_id: authUserId },
         create: {
-          user_id:              userId,
+          user_id:              authUserId,
           vorname:              encryptedFields.vorname,
           nachname:             encryptedFields.nachname,
           geburtsdatum:         encryptedFields.geburtsdatum,
@@ -122,53 +124,65 @@ export async function registerKunde(
       // 3c. Einwilligungen — skipDuplicates protects against retry / double-submit
       await tx.einwilligung.createMany({
         data: [
-          { user_id: userId, typ: 'agb',   version: '1.0', ip_adresse: ipAdresse, user_agent: userAgent },
-          { user_id: userId, typ: 'dsgvo',  version: '1.0', ip_adresse: ipAdresse, user_agent: userAgent },
+          { user_id: authUserId, typ: 'agb',   version: '1.0', ip_adresse: ipAdresse, user_agent: userAgent },
+          { user_id: authUserId, typ: 'dsgvo',  version: '1.0', ip_adresse: ipAdresse, user_agent: userAgent },
         ],
         skipDuplicates: true,
       })
 
       return profile.id as string
     })
-  } catch {
-    return { error: 'Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut.' }
-  }
 
-  // Best-effort AuditLog — never blocks registration on failure
-  try {
-    await writeAuditLog({
-      aktion:      'kunde_registriert',
-      entitaet:    'KundenProfile',
-      entitaet_id: kundenProfileId,
-      userId:      userId,
-      ipAdresse:   ipAdresse,
-    })
-  } catch (e) {
-    console.error('AuditLog-Write fehlgeschlagen (registerKunde):', e)
-  }
-
-  // Kombinierte E-Mail: Bestellbestätigung + Magic Link
-  if (actionLink) {
+    // Best-effort AuditLog — never blocks registration on failure
     try {
-      await sendEmail({
-        to: d.email,
-        subject: 'Dein Antrag ist eingegangen – Velacare',
-        template: BestellbestaetigungEmail({
-          vorname: d.vorname,
-          nachname: d.nachname,
-          pflegegrad: d.pflegegrad,
-          budgetGenutzt: Math.round(gesamtpreis * 100),
-          magicLinkUrl: actionLink,
-          expiresInMinutes: 60,
-        }),
+      await writeAuditLog({
+        aktion:      'kunde_registriert',
+        entitaet:    'KundenProfile',
+        entitaet_id: kundenProfileId,
+        userId:      authUserId,
+        ipAdresse:   ipAdresse,
       })
-    } catch (emailError) {
-      console.error('Bestellbestätigung/MagicLink konnte nicht gesendet werden:', {
-        email: d.email,
-        error: emailError,
-      })
-      // Registrierung trotzdem erfolgreich — kein Fehler zurückgeben
+    } catch (e) {
+      console.error('AuditLog-Write fehlgeschlagen (registerKunde):', e)
     }
+
+    // Kombinierte E-Mail: Bestellbestätigung + Magic Link
+    if (actionLink) {
+      try {
+        await sendEmail({
+          to: d.email,
+          subject: 'Dein Antrag ist eingegangen – Velacare',
+          template: BestellbestaetigungEmail({
+            vorname: d.vorname,
+            nachname: d.nachname,
+            pflegegrad: d.pflegegrad,
+            budgetGenutzt: Math.round(gesamtpreis * 100),
+            magicLinkUrl: actionLink,
+            expiresInMinutes: 60,
+          }),
+        })
+      } catch (emailError) {
+        console.error('Bestellbestätigung/MagicLink konnte nicht gesendet werden:', {
+          email: d.email,
+          error: emailError,
+        })
+        // Registrierung trotzdem erfolgreich — kein Fehler zurückgeben
+      }
+    }
+
+  } catch (error) {
+    // Compensation: delete orphaned auth user if Prisma transaction (or subsequent steps) failed
+    if (authUserId) {
+      await admin.auth.admin.deleteUser(authUserId).catch((compError) => {
+        console.error('Compensation fehlgeschlagen — Auth-User konnte nicht gelöscht werden:', {
+          authUserId,
+          error: compError,
+        })
+      })
+    }
+
+    console.error('registerKunde() fehlgeschlagen:', error)
+    return { error: 'Registrierung fehlgeschlagen. Bitte versuche es erneut.' }
   }
 
   // Redirect happens outside try/catch — Next.js throws internally on redirect()
