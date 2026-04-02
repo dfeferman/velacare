@@ -88,7 +88,7 @@ export default async function KontoDashboard() {
             💬 {profile.anfragen.length} offene Anfrage(n)
           </p>
           <p className="text-amber/70 text-xs mt-1">
-            Prüfen Sie Ihre Anfragen unter „Anfragen".
+            Prüfen Sie Ihre Anfragen unter &bdquo;Anfragen&ldquo;.
           </p>
         </div>
       )}

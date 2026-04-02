@@ -199,7 +199,7 @@ export default function WieEsFunktioniertPage() {
           {/* Left: Vertical Timeline */}
           <div>
             <h2 className="font-newsreader text-2xl font-semibold text-v3-on-surface mb-8 reveal">
-              So einfach geht's
+              So einfach geht&apos;s
             </h2>
 
             {SCHRITTE.map((schritt, i) => (
