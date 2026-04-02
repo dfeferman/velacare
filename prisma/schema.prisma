@@ -103,8 +103,8 @@ model KundenProfile {
   user_id                  String              @unique @db.Uuid
   vorname                  String              @db.VarChar(100)
   nachname                 String              @db.VarChar(100)
-  geburtsdatum             DateTime            @db.Date
-  pflegegrad               Int
+  geburtsdatum             String              // AES-256-GCM ciphertext
+  pflegegrad               String              // AES-256-GCM ciphertext
   krankenkasse             String              @db.VarChar(200)
   versicherungsnummer      String?             @db.VarChar(20)
   hausnummer               String?             @db.VarChar(10)
