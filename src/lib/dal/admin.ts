@@ -147,7 +147,21 @@ export async function getAdminAnfragen() {
   })
 }
 
-// Produkte: alle Produkte, alphabetisch
+// Produkte: alle Produkte, nach Sortierung dann Name
 export async function getAdminProdukte() {
-  return prisma.produkt.findMany({ orderBy: { name: 'asc' } })
+  return prisma.produkt.findMany({
+    orderBy: [{ sortierung: 'asc' }, { name: 'asc' }],
+    select: {
+      id:                   true,
+      name:                 true,
+      kategorie:            true,
+      preis:                true,
+      beschreibung:         true,
+      hersteller:           true,
+      pflichtkennzeichnung: true,
+      aktiv:                true,
+      sortierung:           true,
+      varianten:            true,
+    },
+  })
 }
