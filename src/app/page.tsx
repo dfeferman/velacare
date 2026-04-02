@@ -3,7 +3,7 @@ import { Accordion } from '@/components/ui/accordion'
 import { LandingHero } from '@/components/landing/landing-hero'
 import { PflegekasseRechner } from '@/components/landing/pflegekasse-rechner'
 import { ScrollReveal } from '@/components/landing/scroll-reveal'
-import { MOCK_PRODUKTE } from '@/lib/mock-data'
+import { getAktiveProdukte } from '@/lib/dal/produkte'
 
 // ── Data ─────────────────────────────────────────────────────────────────────
 
@@ -73,7 +73,8 @@ const SCHRITTE = [
 
 // ── Page ─────────────────────────────────────────────────────────────────────
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const produkte = await getAktiveProdukte()
   return (
     <>
       <ScrollReveal />
@@ -214,7 +215,7 @@ export default function LandingPage() {
           </div>
 
           <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
-            {MOCK_PRODUKTE.slice(0, 4).map((p, i) => (
+            {produkte.slice(0, 4).map((p, i) => (
               <div
                 key={p.id}
                 className={`card-lift overflow-hidden rounded-2xl bg-v3-surface reveal reveal-d${i + 1}`}

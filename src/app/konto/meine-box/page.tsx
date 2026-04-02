@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { getKundenBox } from '@/lib/dal/konto'
+import { getAktiveProdukte } from '@/lib/dal/produkte'
 import { BoxEditor } from './box-editor'
 import type { BoxProdukt } from '@/lib/types'
 
@@ -17,11 +18,14 @@ function KeinProfilHinweis() {
 export default async function MeineBoxPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  const data = user ? await getKundenBox(user.id) : null
+  const [data, produkte] = await Promise.all([
+    user ? getKundenBox(user.id) : null,
+    getAktiveProdukte(),
+  ])
 
   if (!data) return <KeinProfilHinweis />
 
   const initialBox = (data.box_konfiguration?.produkte as unknown as BoxProdukt[]) ?? []
 
-  return <BoxEditor initialBox={initialBox} />
+  return <BoxEditor produkte={produkte} initialBox={initialBox} />
 }
