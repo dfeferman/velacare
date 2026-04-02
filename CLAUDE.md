@@ -13,6 +13,22 @@ npm run stitch:wireframes  # Export Stitch wireframes via scripts/export-stitch-
 
 No test suite exists yet.
 
+## Dev Quirks & Gotchas
+
+**Build**: `npm run build` always fails at static export (Supabase URL missing in build env). `✓ Compiled successfully` in the output is the relevant TypeScript check — treat that as green.
+
+**Prisma**: After any `schema.prisma` change run `npx prisma generate` to regenerate the TS client, even without a live DB. Otherwise type errors appear that don't match the schema.
+
+**Next.js 15**: Use `useActionState` (not `useFormState` — that's Next.js 14/React 18).
+
+**Supabase MFA SDK**: Method is `getAuthenticatorAssuranceLevel()` — singular, not plural.
+
+**JSX / German text**: Characters like `„"` trigger `react/no-unescaped-entities`. Escape as `&bdquo;`/`&ldquo;` or `&apos;` for apostrophes.
+
+**Windows**: LF→CRLF warnings on git operations are harmless — ignore.
+
+**Mock data**: `src/lib/mock-data.ts` and `src/lib/mock-store.tsx` are deleted. Products come from `getAktiveProdukte()` in `src/lib/dal/produkte.ts`.
+
 ## Architecture
 
 **Velacare** is a German healthcare SaaS — a Next.js 14 App Router application that helps people with care needs (Pflegebedürftige) receive free monthly supply boxes funded by their statutory care insurance (Pflegekasse, up to €42/month per §40 SGB XI).
