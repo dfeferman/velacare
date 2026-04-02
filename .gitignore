@@ -23,6 +23,9 @@
 # local IDE / agent
 .claude/
 
+# git worktrees
+.worktrees/
+
 # debug
 npm-debug.log*
 yarn-debug.log*
