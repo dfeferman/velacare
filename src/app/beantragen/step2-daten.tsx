@@ -2,9 +2,10 @@
 
 import { useState } from 'react'
 import { registerSchema, type Step2Data } from '@/lib/schemas/register'
+import { SignaturPad } from '@/components/funnel/SignaturPad'
 
 interface Step2Props {
-  onWeiter:  (data: Step2Data) => void
+  onWeiter:  (data: Step2Data, unterschrift: string) => void
   onZurueck: () => void
 }
 
@@ -26,7 +27,7 @@ const inputErr = [
 ].join(' ')
 
 const labelBase = 'block text-xs font-medium text-v3-on-surface-v uppercase tracking-wide mb-1.5'
-const sectionCard = 'bg-white rounded-xl p-6 mb-5 border border-v3-outline/50 shadow-sm shadow-v3-outline/20'
+const sectionCard = 'bg-white rounded-xl p-6 mb-5 border border-v3-outline/60 shadow-sm shadow-black/[0.08]'
 
 export function Step2Daten({ onWeiter, onZurueck }: Step2Props) {
   const [form, setForm] = useState<Partial<Step2Data>>({
@@ -35,6 +36,8 @@ export function Step2Daten({ onWeiter, onZurueck }: Step2Props) {
     lieferadresse_abweichend: false,
   })
   const [errors, setErrors] = useState<FieldErrors>({})
+  const [unterschrift, setUnterschrift] = useState<string | null>(null)
+  const [showSigError, setShowSigError]  = useState(false)
 
   const set = (key: keyof Step2Data, value: unknown) =>
     setForm(prev => ({ ...prev, [key]: value }))
@@ -66,7 +69,12 @@ export function Step2Daten({ onWeiter, onZurueck }: Step2Props) {
       return
     }
     setErrors({})
-    onWeiter(result.data)
+    if (!unterschrift) {
+      setShowSigError(true)
+      return
+    }
+    setShowSigError(false)
+    onWeiter(result.data, unterschrift)
   }
 
   const hasError = (field: keyof FieldErrors) => !!errors[field]
@@ -351,24 +359,27 @@ export function Step2Daten({ onWeiter, onZurueck }: Step2Props) {
           </label>
         </div>
 
-        {/* ── Konto erstellen ── */}
+        {/* ── Unterschrift ── */}
         <div className={sectionCard}>
-          <h2 className="font-newsreader text-lg text-v3-on-surface mb-1">Konto erstellen</h2>
-          <p className="text-v3-on-surface-v text-sm mb-5 leading-relaxed">
-            Sie erhalten per E-Mail einen Einmallink — kein Passwort nötig.
+          <h2 className="font-newsreader text-lg text-v3-on-surface mb-1 flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 13c2-4 4-8 6-8s2 3 0 5-4 2-4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+              <path d="M11 4l1-1M13 8h1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+            </svg>
+            Unterschrift
+          </h2>
+          <p className="text-v3-on-surface-v text-sm mb-4 leading-relaxed">
+            Unterschreiben Sie mit der Maus oder w&auml;hlen Sie eine der Schriftarten.
           </p>
-          <div>
-            <label htmlFor="email" className={labelBase}>E-Mail-Adresse</label>
-            <input
-              id="email" name="email" type="email" autoComplete="email"
-              placeholder="ihre@email.de"
-              className={hasError('email') ? inputErr : inputBase}
-              aria-invalid={hasError('email') || undefined}
-              aria-describedby={hasError('email') ? 'err-email' : undefined}
-              value={form.email ?? ''} onChange={e => set('email', e.target.value)}
-            />
-            <ErrMsg field="email" />
-          </div>
+          <SignaturPad
+            nachname={form.nachname ?? ''}
+            onChange={sig => { setUnterschrift(sig); setShowSigError(false) }}
+          />
+          {showSigError && (
+            <p role="alert" className="text-[#E05A3A] text-xs mt-2">
+              Bitte unterschreiben Sie, um fortzufahren.
+            </p>
+          )}
         </div>
 
         {/* Navigation */}
