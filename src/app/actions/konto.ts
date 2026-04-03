@@ -21,9 +21,7 @@ export async function updateKundenBox(produkte: BoxProdukt[]): Promise<{ error?:
   if (!profile) return { error: 'Kein Profil gefunden.' }
 
   // Ownership-Invariante: WHERE { kunde_id: profile.id } — nie eine client-seitige Box-ID
-  // BoxProdukt.menge ist ein Varianten-String ("S"/"M"/"L"), keine numerische Menge →
-  // gesamtpreis = Σ produkt.preis (ein Eintrag pro Produkt)
-  const gesamtpreis = produkte.reduce((sum, bp) => sum + bp.produkt.preis, 0)
+  const gesamtpreis = produkte.reduce((sum, bp) => sum + bp.produkt.preis * bp.anzahl, 0)
 
   await prisma.boxKonfiguration.update({
     where: { kunde_id: profile.id },
