@@ -13,15 +13,16 @@ interface BeantragenContentProps {
 }
 
 export function BeantragenContent({ produkte }: BeantragenContentProps) {
-  const [schritt, setSchritt] = useState<1 | 2 | 3>(1)
-  const [step1, setStep1]     = useState<BoxProdukt[] | null>(null)
-  const [step2, setStep2]     = useState<Step2Data | null>(null)
+  const [schritt,      setSchritt]      = useState<1 | 2 | 3>(1)
+  const [step1,        setStep1]        = useState<BoxProdukt[] | null>(null)
+  const [step2,        setStep2]        = useState<Step2Data | null>(null)
+  const [unterschrift, setUnterschrift] = useState<string | null>(null)
 
   const zurueck = schritt > 1 ? () => setSchritt(s => (s - 1) as 1 | 2 | 3) : undefined
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <FunnelHeader onZurueck={zurueck} zeigeSchliessen={schritt === 1} />
+    <div className="min-h-screen flex flex-col bg-v3-background">
+      <FunnelHeader schritt={schritt} onZurueck={zurueck} zeigeSchliessen={schritt === 1} />
       <div className="flex-1">
         {schritt === 1 && (
           <Step1Produktauswahl
@@ -31,14 +32,15 @@ export function BeantragenContent({ produkte }: BeantragenContentProps) {
         )}
         {schritt === 2 && (
           <Step2Daten
-            onWeiter={data => { setStep2(data); setSchritt(3) }}
+            onWeiter={(data, sig) => { setStep2(data); setUnterschrift(sig); setSchritt(3) }}
             onZurueck={() => setSchritt(1)}
           />
         )}
-        {schritt === 3 && step1 !== null && step2 !== null && (
+        {schritt === 3 && step1 !== null && step2 !== null && unterschrift !== null && (
           <Step3Bestaetigung
             step1={step1}
             step2={step2}
+            unterschrift={unterschrift}
             onZurueck={() => setSchritt(2)}
           />
         )}
