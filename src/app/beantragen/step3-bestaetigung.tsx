@@ -27,7 +27,7 @@ export function Step3Bestaetigung({ step1, step2, unterschrift, onZurueck }: Ste
     setError(null)
     const emailResult = emailSchema.safeParse(email)
     if (!emailResult.success) {
-      setEmailErr(emailResult.error.errors[0].message)
+      setEmailErr(emailResult.error.issues[0]?.message ?? 'Ungültige E-Mail-Adresse')
       return
     }
     setEmailErr(null)
