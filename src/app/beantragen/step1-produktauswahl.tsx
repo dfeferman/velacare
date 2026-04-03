@@ -13,12 +13,12 @@ const KATEGORIEN_GEORDNET: ProduktKategorie[] = [
 type KategorieStil = { bg: string; accent: string; badgeBg: string; badgeText: string }
 
 const KATEGORIE_STIL: Record<ProduktKategorie, KategorieStil> = {
-  Handschuhe:     { bg: 'bg-[#EEF4F1]', accent: 'bg-v3-primary',   badgeBg: 'bg-v3-primary-pale',   badgeText: 'text-v3-primary' },
-  Desinfektion:   { bg: 'bg-[#F5EDE5]', accent: 'bg-v3-secondary', badgeBg: 'bg-v3-secondary-pale', badgeText: 'text-v3-secondary' },
-  Mundschutz:     { bg: 'bg-[#EEF4F1]', accent: 'bg-v3-primary',   badgeBg: 'bg-v3-primary-pale',   badgeText: 'text-v3-primary' },
-  Schutzkleidung: { bg: 'bg-[#F5EDE5]', accent: 'bg-v3-secondary', badgeBg: 'bg-v3-secondary-pale', badgeText: 'text-v3-secondary' },
-  Hygiene:        { bg: 'bg-[#EEF4F1]', accent: 'bg-v3-primary',   badgeBg: 'bg-v3-primary-pale',   badgeText: 'text-v3-primary' },
-  Sonstiges:      { bg: 'bg-[#F5EDE5]', accent: 'bg-v3-secondary', badgeBg: 'bg-v3-secondary-pale', badgeText: 'text-v3-secondary' },
+  Handschuhe:     { bg: 'bg-[#E3EDE6]', accent: 'bg-v3-primary',   badgeBg: 'bg-v3-primary-pale',   badgeText: 'text-v3-primary' },
+  Desinfektion:   { bg: 'bg-[#EFE3D4]', accent: 'bg-v3-secondary', badgeBg: 'bg-v3-secondary-pale', badgeText: 'text-v3-secondary' },
+  Mundschutz:     { bg: 'bg-[#E3EDE6]', accent: 'bg-v3-primary',   badgeBg: 'bg-v3-primary-pale',   badgeText: 'text-v3-primary' },
+  Schutzkleidung: { bg: 'bg-[#EFE3D4]', accent: 'bg-v3-secondary', badgeBg: 'bg-v3-secondary-pale', badgeText: 'text-v3-secondary' },
+  Hygiene:        { bg: 'bg-[#E3EDE6]', accent: 'bg-v3-primary',   badgeBg: 'bg-v3-primary-pale',   badgeText: 'text-v3-primary' },
+  Sonstiges:      { bg: 'bg-[#EFE3D4]', accent: 'bg-v3-secondary', badgeBg: 'bg-v3-secondary-pale', badgeText: 'text-v3-secondary' },
 }
 
 // ── Hilfsfunktion ─────────────────────────────────────────────────────────────
@@ -118,10 +118,10 @@ function ProduktKarteNeu({
       className={[
         'rounded-xl border p-4 transition-all duration-200 card-lift',
         selected
-          ? 'bg-v3-primary-pale border-v3-primary border-2'
+          ? 'bg-v3-primary-pale border-v3-primary border-2 shadow-sm shadow-v3-primary/10'
           : incrementDisabled
           ? 'bg-v3-outline/10 border-v3-outline/20 opacity-50'
-          : 'bg-v3-surface border-v3-outline/30 hover:border-v3-primary/40 hover:bg-v3-primary-pale/20',
+          : 'bg-white border-v3-outline/50 shadow-sm shadow-v3-outline/15 hover:border-v3-primary/50 hover:bg-v3-primary-pale/30',
       ].join(' ')}
     >
       <p className={['font-medium text-sm mb-1 pr-2', selected ? 'text-v3-primary' : 'text-v3-on-surface'].join(' ')}>
@@ -166,8 +166,8 @@ function HandschuhKarte({
       className={[
         'rounded-xl border p-4 transition-all duration-200 card-lift sm:col-span-2',
         anySelected
-          ? 'bg-v3-primary-pale border-v3-primary border-2'
-          : 'bg-v3-surface border-v3-outline/30 hover:border-v3-primary/40 hover:bg-v3-primary-pale/20',
+          ? 'bg-v3-primary-pale border-v3-primary border-2 shadow-sm shadow-v3-primary/10'
+          : 'bg-white border-v3-outline/50 shadow-sm shadow-v3-outline/15 hover:border-v3-primary/50 hover:bg-v3-primary-pale/30',
       ].join(' ')}
     >
       <p className={['font-medium text-sm mb-1', anySelected ? 'text-v3-primary' : 'text-v3-on-surface'].join(' ')}>
@@ -278,7 +278,7 @@ export function Step1Produktauswahl({ produkte, onWeiter }: Step1Props) {
 
           {/* Mobile Budget-Ring */}
           <div
-            className="md:hidden mb-6 bg-v3-surface rounded-xl border border-v3-outline/25 p-4"
+            className="md:hidden mb-6 bg-v3-surface rounded-xl border border-v3-outline/50 shadow-sm shadow-v3-outline/15 p-4"
             role="region"
             aria-label="Pflegekasse-Budget"
           >
@@ -366,7 +366,7 @@ export function Step1Produktauswahl({ produkte, onWeiter }: Step1Props) {
           className="hidden md:flex md:flex-col md:w-64 md:shrink-0 sticky top-[132px] gap-4"
           aria-label="Budget und Ihre Auswahl"
         >
-          <div className="bg-v3-surface rounded-xl border border-v3-outline/25 p-5 flex flex-col items-center">
+          <div className="bg-v3-surface rounded-xl border border-v3-outline/50 shadow-sm shadow-v3-outline/15 p-5 flex flex-col items-center">
             <p className="text-xs font-medium uppercase tracking-wide text-v3-on-surface-v mb-4 self-start">
               Pflegekasse-Budget
             </p>
@@ -374,7 +374,7 @@ export function Step1Produktauswahl({ produkte, onWeiter }: Step1Props) {
           </div>
 
           {box.length > 0 && (
-            <div className="bg-v3-surface rounded-xl border border-v3-outline/25 p-4">
+            <div className="bg-v3-surface rounded-xl border border-v3-outline/50 shadow-sm shadow-v3-outline/15 p-4">
               <p className="text-xs font-medium uppercase tracking-wide text-v3-on-surface-v mb-3">
                 Ihre Auswahl{' '}
                 <span className="ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full bg-v3-primary text-white text-[10px] font-bold">
