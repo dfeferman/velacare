@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 import { headers } from 'next/headers'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { prisma } from '@/lib/prisma'
-import { registerSchema, type Step2Data } from '@/lib/schemas/register'
+import { registerSchema, emailSchema, type Step2Data } from '@/lib/schemas/register'
 import type { BoxProdukt } from '@/lib/types'
 import { sendEmail } from '@/lib/email/sender'
 import { BestellbestaetigungEmail } from '@/emails/bestellbestaetigung'
@@ -12,15 +12,20 @@ import { encryptKundenProfile } from '@/lib/crypto/field-encryption'
 import { writeAuditLog } from '@/lib/dal/audit'
 
 export async function registerKunde(
-  produkte: BoxProdukt[],
-  liefertag: number,
-  step2: Step2Data
+  produkte:     BoxProdukt[],
+  liefertag:    number,
+  step2:        Step2Data,
+  email:        string,
+  unterschrift: string,
 ): Promise<{ error?: string }> {
 
   // 0. Server-side validation — never trust client data
   const result = registerSchema.safeParse(step2)
   if (!result.success) return { error: 'Ungültige Eingabedaten.' }
   const d = result.data
+
+  const emailResult = emailSchema.safeParse(email)
+  if (!emailResult.success) return { error: 'Ungültige E-Mail-Adresse.' }
 
   // 1. Supabase Auth — generate magic link (no password)
   const admin = createAdminClient()
@@ -29,7 +34,7 @@ export async function registerKunde(
 
   const { data: linkData, error: linkError } = await admin.auth.admin.generateLink({
     type: 'magiclink',
-    email: d.email,
+    email: email,
     options: { redirectTo: `${appUrl}/auth/callback` },
   })
 
@@ -91,6 +96,7 @@ export async function registerKunde(
           beratung:             d.beratung,
           lieferadresse_json:   d.lieferadresse_abweichend ? d.lieferadresse ?? null : null,
           lieferstichtag:       liefertag,
+          unterschrift:         unterschrift,
         },
         update: {
           vorname:              encryptedFields.vorname,
@@ -109,6 +115,7 @@ export async function registerKunde(
           beratung:             d.beratung,
           lieferadresse_json:   d.lieferadresse_abweichend ? d.lieferadresse ?? null : null,
           lieferstichtag:       liefertag,
+          unterschrift:         unterschrift,
         },
       })
 
@@ -150,7 +157,7 @@ export async function registerKunde(
     if (actionLink) {
       try {
         await sendEmail({
-          to: d.email,
+          to: email,
           subject: 'Dein Antrag ist eingegangen – Velacare',
           template: BestellbestaetigungEmail({
             vorname: d.vorname,
@@ -163,7 +170,7 @@ export async function registerKunde(
         })
       } catch (emailError) {
         console.error('Bestellbestätigung/MagicLink konnte nicht gesendet werden:', {
-          email: d.email,
+          email: email,
           error: emailError,
         })
         // Registrierung trotzdem erfolgreich — kein Fehler zurückgeben
