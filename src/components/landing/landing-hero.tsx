@@ -6,7 +6,8 @@ const HERO_IMAGE =
 
 export function LandingHero() {
   return (
-    <section className="grid min-h-[calc(100vh-52px)] max-h-[900px] grid-cols-1 lg:grid-cols-2">
+    <div className="flex justify-center bg-v3-surface">
+    <section className="grid w-full max-w-7xl min-h-[calc(85vh-52px)] max-h-[760px] grid-cols-1 lg:grid-cols-2">
 
       {/* ── Left: Content ───────────────────────────────────────────── */}
       <div className="relative flex flex-col justify-center overflow-hidden bg-v3-surface px-8 py-16 md:px-16 lg:px-20 xl:px-24">
@@ -140,7 +141,7 @@ export function LandingHero() {
         />
 
         {/* Arch Photo */}
-        <div className="absolute left-1/2 top-1/2 aspect-[4/5] w-[68%] max-w-[340px] -translate-x-1/2 -translate-y-1/2">
+        <div className="absolute left-1/2 top-1/2 aspect-[4/5] w-[82%] max-w-[440px] -translate-x-1/2 -translate-y-1/2">
           <div
             className="photo-frame relative h-full w-full overflow-hidden"
             style={{
@@ -153,7 +154,7 @@ export function LandingHero() {
               alt="Angehörige in warmer häuslicher Pflegesituation"
               fill
               className="object-cover"
-              sizes="(max-width: 1024px) 68vw, 340px"
+              sizes="(max-width: 1024px) 82vw, 440px"
               priority
             />
           </div>
@@ -201,5 +202,6 @@ export function LandingHero() {
         </div>
       </div>
     </section>
+    </div>
   )
 }

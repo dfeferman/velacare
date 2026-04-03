@@ -2,7 +2,7 @@
 import { getAdminProdukte } from '@/lib/dal/admin'
 import { requireAdmin } from '@/lib/auth/require-admin'
 import { ProdukteClient } from './produkte-client'
-import type { ProduktAdminRow } from './produkt-panel'
+import type { ProduktAdminRow } from './types'
 
 export default async function ProdukteAdminPage() {
   await requireAdmin()

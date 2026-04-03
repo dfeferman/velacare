@@ -138,9 +138,9 @@ export default async function LandingPage() {
       </div>
 
       {/* ── So funktioniert's ─────────────────────────────────────── */}
-      <section className="bg-v3-section-warm px-6 py-20">
+      <section className="bg-v3-section-warm px-6 py-10">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-12 reveal">
+          <div className="mb-10 reveal">
             <span
               className="mb-3 inline-block rounded-full px-3 py-0.5 text-[9px] font-bold uppercase tracking-widest text-v3-primary"
               style={{ background: 'rgba(74,114,89,0.1)' }}
@@ -191,9 +191,9 @@ export default async function LandingPage() {
       </section>
 
       {/* ── Produkte Teaser ───────────────────────────────────────── */}
-      <section className="bg-v3-background px-6 py-20">
+      <section className="bg-v3-background px-6 py-10">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-12 reveal">
+          <div className="mb-10 reveal">
             <span
               className="mb-3 inline-block rounded-full px-3 py-0.5 text-[9px] font-bold uppercase tracking-widest text-v3-secondary"
               style={{ background: 'rgba(158,90,53,0.1)' }}
@@ -264,11 +264,11 @@ export default async function LandingPage() {
 
       {/* ── Testimonials ──────────────────────────────────────────── */}
       <section
-        className="px-6 py-20"
+        className="px-6 py-10"
         style={{ background: '#F5EDE5' }}
       >
         <div className="mx-auto max-w-7xl">
-          <div className="mb-12 text-center reveal">
+          <div className="mb-10 text-center reveal">
             <span
               className="mb-3 inline-block rounded-full px-3 py-0.5 text-[9px] font-bold uppercase tracking-widest"
               style={{ background: 'rgba(158,90,53,0.12)', color: '#9E5A35' }}
@@ -319,7 +319,7 @@ export default async function LandingPage() {
       </section>
 
       {/* ── FAQ ───────────────────────────────────────────────────── */}
-      <section className="bg-v3-surface px-6 py-20" style={{ borderTop: '1px solid rgba(213,202,185,0.15)' }}>
+      <section className="bg-v3-surface px-6 py-10" style={{ borderTop: '1px solid rgba(213,202,185,0.15)' }}>
         <div className="mx-auto max-w-2xl">
           <div className="mb-10 text-center reveal">
             <h2 className="font-newsreader text-3xl font-semibold text-v3-on-surface">
@@ -342,9 +342,9 @@ export default async function LandingPage() {
       </section>
 
       {/* ── CTA Banner ────────────────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
+      <section className="max-w-7xl mx-auto px-6 py-10">
         <div
-          className="rounded-3xl px-10 py-16 text-center relative overflow-hidden reveal md:px-20"
+          className="rounded-3xl px-10 py-12 text-center relative overflow-hidden reveal md:px-20"
           style={{
             background: '#EEF4F1',
             border: '1px solid rgba(74,114,89,0.2)',

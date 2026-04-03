@@ -70,10 +70,11 @@ export async function registerKunde(
 
       // 3a. KundenProfile upsert (idempotent: safe on retry or DB-trigger race)
       const encryptedFields = encryptKundenProfile({
-        vorname:      d.vorname,
-        nachname:     d.nachname,
-        geburtsdatum: d.geburtsdatum,
-        pflegegrad:   String(d.pflegegrad),
+        vorname:              d.vorname,
+        nachname:             d.nachname,
+        geburtsdatum:         d.geburtsdatum,
+        pflegegrad:           String(d.pflegegrad),
+        versicherungsnummer:  d.versicherungsnummer,
       })
 
       const profile = await tx.kundenProfile.upsert({
@@ -85,7 +86,7 @@ export async function registerKunde(
           geburtsdatum:         encryptedFields.geburtsdatum,
           pflegegrad:           encryptedFields.pflegegrad,
           krankenkasse:         d.krankenkasse,
-          versicherungsnummer:  d.versicherungsnummer,
+          versicherungsnummer:  encryptedFields.versicherungsnummer,
           strasse:              d.strasse,
           hausnummer:           d.hausnummer,
           adresszusatz:         d.adresszusatz,
@@ -104,7 +105,7 @@ export async function registerKunde(
           geburtsdatum:         encryptedFields.geburtsdatum,
           pflegegrad:           encryptedFields.pflegegrad,
           krankenkasse:         d.krankenkasse,
-          versicherungsnummer:  d.versicherungsnummer,
+          versicherungsnummer:  encryptedFields.versicherungsnummer,
           strasse:              d.strasse,
           hausnummer:           d.hausnummer,
           adresszusatz:         d.adresszusatz,

@@ -27,6 +27,10 @@ No test suite exists yet.
 
 **Windows**: LF→CRLF warnings on git operations are harmless — ignore.
 
+**.next Cache**: Bei `ENOENT: routes-manifest.json` oder `EPERM: .next\trace`-Fehlern: `taskkill /F /IM node.exe && rm -rf .next && npm run dev`. Ursache ist meist, dass mehrere Node-Prozesse die Datei sperren.
+
+**Dev-Server**: Nie `npm run dev` als Claude-Hintergrundprozess starten — das erzeugt Zombie-Server, die `.next` sperren. Der Dev-Server läuft immer in einem dedizierten Terminal des Nutzers.
+
 **Mock data**: `src/lib/mock-data.ts` and `src/lib/mock-store.tsx` are deleted. Products come from `getAktiveProdukte()` in `src/lib/dal/produkte.ts`.
 
 ## Architecture

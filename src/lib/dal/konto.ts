@@ -10,19 +10,22 @@ function decryptProfile<T extends {
   nachname: string
   geburtsdatum: string
   pflegegrad: string
+  versicherungsnummer?: string | null
 }>(raw: T): Omit<T, 'pflegegrad'> & { pflegegrad: number } {
   const dec = decryptKundenProfile({
-    vorname:      raw.vorname,
-    nachname:     raw.nachname,
-    geburtsdatum: raw.geburtsdatum,
-    pflegegrad:   raw.pflegegrad,
+    vorname:             raw.vorname,
+    nachname:            raw.nachname,
+    geburtsdatum:        raw.geburtsdatum,
+    pflegegrad:          raw.pflegegrad,
+    versicherungsnummer: raw.versicherungsnummer,
   })
   return {
     ...raw,
-    vorname:      dec.vorname,
-    nachname:     dec.nachname,
-    geburtsdatum: dec.geburtsdatum,
-    pflegegrad:   Number(dec.pflegegrad),
+    vorname:             dec.vorname,
+    nachname:            dec.nachname,
+    geburtsdatum:        dec.geburtsdatum,
+    pflegegrad:          Number(dec.pflegegrad),
+    versicherungsnummer: dec.versicherungsnummer ?? null,
   }
 }
 

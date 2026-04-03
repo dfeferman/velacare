@@ -39,6 +39,7 @@ interface SensitiveKundenFields {
   nachname: string
   geburtsdatum: string
   pflegegrad: string
+  versicherungsnummer?: string | null
 }
 
 export function encryptKundenProfile(fields: SensitiveKundenFields): SensitiveKundenFields {
@@ -47,6 +48,9 @@ export function encryptKundenProfile(fields: SensitiveKundenFields): SensitiveKu
     nachname: encrypt(fields.nachname),
     geburtsdatum: encrypt(fields.geburtsdatum),
     pflegegrad: encrypt(fields.pflegegrad),
+    versicherungsnummer: fields.versicherungsnummer != null
+      ? encrypt(fields.versicherungsnummer)
+      : fields.versicherungsnummer,
   }
 }
 
@@ -56,5 +60,8 @@ export function decryptKundenProfile(fields: SensitiveKundenFields): SensitiveKu
     nachname: decrypt(fields.nachname),
     geburtsdatum: decrypt(fields.geburtsdatum),
     pflegegrad: decrypt(fields.pflegegrad),
+    versicherungsnummer: fields.versicherungsnummer != null
+      ? decrypt(fields.versicherungsnummer)
+      : fields.versicherungsnummer,
   }
 }

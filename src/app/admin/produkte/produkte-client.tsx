@@ -4,7 +4,8 @@ import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
 import { toggleProduktAktiv, deleteProdukt } from '@/app/actions/admin'
-import { ProduktPanel, ProduktAdminRow } from './produkt-panel'
+import type { ProduktAdminRow } from './types'
+import { ProduktPanel } from './produkt-panel'
 
 export function ProdukteClient({ produkte }: { produkte: ProduktAdminRow[] }) {
   const router = useRouter()

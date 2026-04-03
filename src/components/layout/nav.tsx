@@ -13,28 +13,36 @@ export async function Nav() {
   const rolle = user?.app_metadata?.rolle as string | undefined
 
   return (
-    <nav className="fixed top-0 z-50 w-full border-b border-v3-outline/30 bg-v3-surface/90 shadow-sm backdrop-blur-xl">
-      <div className="mx-auto flex h-[52px] max-w-7xl items-center justify-between px-6">
-        <Link href="/" className="flex items-center gap-2">
-          <VelacareLogo className="h-6 w-6" />
-          <span className="font-newsreader text-xl font-bold tracking-tight text-v3-on-surface">Velacare</span>
+    <nav className="fixed top-0 z-50 w-full border-b border-v3-outline/20 bg-v3-surface/90 shadow-sm backdrop-blur-xl">
+      <div className="mx-auto flex h-[60px] max-w-7xl items-center px-6">
+        {/* Logo — etwas größer als v1, Newsreader bleibt */}
+        <Link href="/" className="flex shrink-0 items-center gap-2.5">
+          <VelacareLogo className="h-8 w-8" />
+          <span className="font-newsreader text-[22px] font-bold leading-none tracking-tight text-v3-on-surface">
+            Velacare
+          </span>
         </Link>
-        <div className="hidden items-center gap-6 text-sm font-medium text-v3-on-surface-v md:flex">
-          <Link href="/wie-es-funktioniert" className="transition-colors hover:text-v3-primary">
-            Wie es funktioniert
-          </Link>
-          <Link href="/produkte" className="transition-colors hover:text-v3-primary">
-            Produkte
-          </Link>
-          <Link href="/ueber-uns" className="transition-colors hover:text-v3-primary">
-            Über uns
-          </Link>
-          <Link href="/faq" className="transition-colors hover:text-v3-primary">
-            FAQ
-          </Link>
+
+        {/* Primärnavigation — direkt links neben dem Logo */}
+        <div className="ml-10 hidden items-center gap-1 md:flex">
+          {[
+            { href: '/wie-es-funktioniert', label: 'Wie es funktioniert' },
+            { href: '/produkte', label: 'Produkte' },
+            { href: '/ueber-uns', label: 'Über uns' },
+            { href: '/faq', label: 'FAQ' },
+          ].map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className="rounded-md px-3 py-1.5 text-sm font-medium text-v3-on-surface-v transition-colors hover:bg-v3-primary-pale hover:text-v3-primary"
+            >
+              {label}
+            </Link>
+          ))}
         </div>
 
-        <div className="flex items-center gap-3">
+        {/* CTA — ganz rechts */}
+        <div className="ml-auto flex items-center gap-3">
           {user ? (
             <>
               <Link

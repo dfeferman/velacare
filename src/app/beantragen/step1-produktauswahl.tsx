@@ -121,7 +121,7 @@ function ProduktKarteNeu({
           ? 'bg-v3-primary-pale border-v3-primary border-2 shadow-sm shadow-v3-primary/10'
           : incrementDisabled
           ? 'bg-v3-outline/10 border-v3-outline/20 opacity-50'
-          : 'bg-white border-v3-outline/50 shadow-sm shadow-v3-outline/15 hover:border-v3-primary/50 hover:bg-v3-primary-pale/30',
+          : 'bg-white border-v3-outline/60 shadow-sm shadow-black/[0.08] hover:border-v3-primary/50 hover:bg-v3-primary-pale/30',
       ].join(' ')}
     >
       <p className={['font-medium text-sm mb-1 pr-2', selected ? 'text-v3-primary' : 'text-v3-on-surface'].join(' ')}>
@@ -167,7 +167,7 @@ function HandschuhKarte({
         'rounded-xl border p-4 transition-all duration-200 card-lift sm:col-span-2',
         anySelected
           ? 'bg-v3-primary-pale border-v3-primary border-2 shadow-sm shadow-v3-primary/10'
-          : 'bg-white border-v3-outline/50 shadow-sm shadow-v3-outline/15 hover:border-v3-primary/50 hover:bg-v3-primary-pale/30',
+          : 'bg-white border-v3-outline/60 shadow-sm shadow-black/[0.08] hover:border-v3-primary/50 hover:bg-v3-primary-pale/30',
       ].join(' ')}
     >
       <p className={['font-medium text-sm mb-1', anySelected ? 'text-v3-primary' : 'text-v3-on-surface'].join(' ')}>
@@ -278,7 +278,7 @@ export function Step1Produktauswahl({ produkte, onWeiter }: Step1Props) {
 
           {/* Mobile Budget-Ring */}
           <div
-            className="md:hidden mb-6 bg-v3-surface rounded-xl border border-v3-outline/50 shadow-sm shadow-v3-outline/15 p-4"
+            className="md:hidden mb-6 bg-white rounded-xl border border-v3-outline/60 shadow-sm shadow-black/[0.08] p-4"
             role="region"
             aria-label="Pflegekasse-Budget"
           >
@@ -294,7 +294,7 @@ export function Step1Produktauswahl({ produkte, onWeiter }: Step1Props) {
             return (
               <section
                 key={kat}
-                className={`kategorie-sektion reveal rounded-2xl p-5 mb-5 ${stil.bg}`}
+                className={`kategorie-sektion reveal rounded-2xl p-5 mb-5 border border-black/[0.07] shadow-sm shadow-black/[0.06] ${stil.bg}`}
                 aria-label={kat}
               >
                 <div className="flex items-center gap-3 mb-4">
@@ -366,7 +366,7 @@ export function Step1Produktauswahl({ produkte, onWeiter }: Step1Props) {
           className="hidden md:flex md:flex-col md:w-64 md:shrink-0 sticky top-[132px] gap-4"
           aria-label="Budget und Ihre Auswahl"
         >
-          <div className="bg-v3-surface rounded-xl border border-v3-outline/50 shadow-sm shadow-v3-outline/15 p-5 flex flex-col items-center">
+          <div className="bg-white rounded-xl border border-v3-outline/60 shadow-sm shadow-black/[0.08] p-5 flex flex-col items-center">
             <p className="text-xs font-medium uppercase tracking-wide text-v3-on-surface-v mb-4 self-start">
               Pflegekasse-Budget
             </p>
@@ -374,7 +374,7 @@ export function Step1Produktauswahl({ produkte, onWeiter }: Step1Props) {
           </div>
 
           {box.length > 0 && (
-            <div className="bg-v3-surface rounded-xl border border-v3-outline/50 shadow-sm shadow-v3-outline/15 p-4">
+            <div className="bg-white rounded-xl border border-v3-outline/60 shadow-sm shadow-black/[0.08] p-4">
               <p className="text-xs font-medium uppercase tracking-wide text-v3-on-surface-v mb-3">
                 Ihre Auswahl{' '}
                 <span className="ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full bg-v3-primary text-white text-[10px] font-bold">
