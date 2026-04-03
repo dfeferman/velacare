@@ -26,7 +26,7 @@ const inputErr = [
 ].join(' ')
 
 const labelBase = 'block text-xs font-medium text-v3-on-surface-v uppercase tracking-wide mb-1.5'
-const sectionCard = 'bg-v3-surface rounded-xl p-6 mb-5 border border-v3-outline/50 shadow-sm shadow-v3-outline/20'
+const sectionCard = 'bg-white rounded-xl p-6 mb-5 border border-v3-outline/50 shadow-sm shadow-v3-outline/20'
 
 export function Step2Daten({ onWeiter, onZurueck }: Step2Props) {
   const [form, setForm] = useState<Partial<Step2Data>>({

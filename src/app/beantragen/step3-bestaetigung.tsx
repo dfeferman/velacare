@@ -49,7 +49,7 @@ export function Step3Bestaetigung({ step1, step2, onZurueck }: Step3Props) {
         </div>
 
         {/* Produkte */}
-        <section className="bg-v3-surface rounded-xl p-6 mb-4 border border-v3-outline/50 shadow-sm shadow-v3-outline/20" aria-label="Ihre Produktauswahl">
+        <section className="bg-white rounded-xl p-6 mb-4 border border-v3-outline/50 shadow-sm shadow-v3-outline/20" aria-label="Ihre Produktauswahl">
           <h2 className="font-newsreader text-lg text-v3-on-surface mb-3 flex items-center gap-2">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
@@ -82,7 +82,7 @@ export function Step3Bestaetigung({ step1, step2, onZurueck }: Step3Props) {
         </section>
 
         {/* Angaben */}
-        <section className="bg-v3-surface rounded-xl p-6 mb-4 border border-v3-outline/50 shadow-sm shadow-v3-outline/20" aria-label="Ihre persönlichen Angaben">
+        <section className="bg-white rounded-xl p-6 mb-4 border border-v3-outline/50 shadow-sm shadow-v3-outline/20" aria-label="Ihre persönlichen Angaben">
           <h2 className="font-newsreader text-lg text-v3-on-surface mb-3 flex items-center gap-2">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <circle cx="8" cy="5.5" r="2.5" stroke="currentColor" strokeWidth="1.4"/>
@@ -105,7 +105,7 @@ export function Step3Bestaetigung({ step1, step2, onZurueck }: Step3Props) {
         </section>
 
         {/* Liefertag */}
-        <section className="bg-v3-surface rounded-xl p-6 mb-4 border border-v3-outline/50 shadow-sm shadow-v3-outline/20" aria-label="Liefertag wählen">
+        <section className="bg-white rounded-xl p-6 mb-4 border border-v3-outline/50 shadow-sm shadow-v3-outline/20" aria-label="Liefertag wählen">
           <h2 className="font-newsreader text-lg text-v3-on-surface mb-1 flex items-center gap-2">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
