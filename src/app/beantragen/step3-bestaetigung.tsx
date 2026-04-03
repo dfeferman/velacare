@@ -62,9 +62,19 @@ export function Step3Bestaetigung({ step1, step2, onZurueck }: Step3Props) {
           ) : (
             <ul className="space-y-2">
               {step1.map(item => (
-                <li key={item.produkt.id} className="flex items-center text-sm gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-v3-primary shrink-0" aria-hidden="true" />
-                  <span className="text-v3-on-surface">{item.produkt.name}</span>
+                <li
+                  key={`${item.produkt.id}::${item.menge ?? ''}`}
+                  className="flex items-center justify-between text-sm gap-2"
+                >
+                  <span className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-v3-primary shrink-0" aria-hidden="true" />
+                    <span className="text-v3-on-surface">
+                      {item.produkt.name}{item.menge ? ` ${item.menge}` : ''}
+                    </span>
+                  </span>
+                  <span className="text-v3-on-surface-v tabular-nums shrink-0 text-xs">
+                    &times;&nbsp;{item.anzahl}
+                  </span>
                 </li>
               ))}
             </ul>
