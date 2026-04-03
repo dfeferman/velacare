@@ -74,7 +74,7 @@ function Stepper({
         type="button"
         onClick={onIncrement}
         disabled={incrementDisabled}
-        aria-label="Anzahl erh&ouml;hen"
+        aria-label="Anzahl erhöhen"
         className={[
           'ripple-btn w-[30px] h-[30px] rounded-full border-[1.5px] flex items-center justify-center',
           'transition-all duration-150 cursor-pointer',
@@ -110,7 +110,7 @@ function ProduktKarteNeu({
   const item     = box.find(b => boxKey(b.produkt, b.menge) === boxKey(produkt, null))
   const anzahl   = item?.anzahl ?? 0
   const selected = anzahl > 0
-  const incrementDisabled = !selected && gesamtProzent + produkt.maxBudgetProzent > 100
+  const incrementDisabled = gesamtProzent + produkt.maxBudgetProzent > 100
 
   return (
     <div
@@ -180,7 +180,7 @@ function HandschuhKarte({
         {groessen.map(groesse => {
           const item    = box.find(b => boxKey(b.produkt, b.menge) === boxKey(produkt, groesse))
           const anzahl  = item?.anzahl ?? 0
-          const incrementDisabled = anzahl === 0 && gesamtProzent + produkt.maxBudgetProzent > 100
+          const incrementDisabled = gesamtProzent + produkt.maxBudgetProzent > 100
           return (
             <div key={groesse} className="flex items-center justify-between gap-3">
               <span className={[
@@ -231,15 +231,16 @@ export function Step1Produktauswahl({ produkte, onWeiter }: Step1Props) {
   const setAnzahl = (produkt: Produkt, menge: string | null, delta: number) => {
     const key = boxKey(produkt, menge)
     setBox(prev => {
+      const aktuellesProzent = prev.reduce((s, b) => s + b.produkt.maxBudgetProzent * b.anzahl, 0)
       const existing = prev.find(b => boxKey(b.produkt, b.menge) === key)
       if (!existing) {
         if (delta <= 0) return prev
-        if (gesamtProzent + produkt.maxBudgetProzent > 100) return prev
+        if (aktuellesProzent + produkt.maxBudgetProzent > 100) return prev
         return [...prev, { produkt, menge, anzahl: 1 }]
       }
       const neueAnzahl = existing.anzahl + delta
       if (neueAnzahl <= 0) return prev.filter(b => boxKey(b.produkt, b.menge) !== key)
-      if (delta > 0 && gesamtProzent + produkt.maxBudgetProzent > 100) return prev
+      if (delta > 0 && aktuellesProzent + produkt.maxBudgetProzent > 100) return prev
       return prev.map(b => boxKey(b.produkt, b.menge) === key ? { ...b, anzahl: neueAnzahl } : b)
     })
   }
