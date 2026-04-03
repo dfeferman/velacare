@@ -2,30 +2,38 @@
 
 import { useState, useTransition } from 'react'
 import { registerKunde } from '@/app/actions/register'
-import type { Step2Data } from '@/lib/schemas/register'
+import { emailSchema, type Step2Data } from '@/lib/schemas/register'
 import type { BoxProdukt } from '@/lib/types'
 
 interface Step3Props {
-  step1:     BoxProdukt[]
-  step2:     Step2Data
-  onZurueck: () => void
+  step1:        BoxProdukt[]
+  step2:        Step2Data
+  unterschrift: string
+  onZurueck:    () => void
 }
 
-export function Step3Bestaetigung({ step1, step2, onZurueck }: Step3Props) {
+export function Step3Bestaetigung({ step1, step2, unterschrift, onZurueck }: Step3Props) {
   const [liefertag, setLiefertag] = useState<number>(1)
   const [agb, setAgb]             = useState(false)
   const [dsgvo, setDsgvo]         = useState(false)
   const [error, setError]         = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
+  const [email,    setEmail]    = useState('')
+  const [emailErr, setEmailErr] = useState<string | null>(null)
 
-  const canSubmit = agb && dsgvo && !isPending
+  const canSubmit = agb && dsgvo && email.trim().length > 0 && !isPending
 
   const handleSubmit = () => {
     setError(null)
+    const emailResult = emailSchema.safeParse(email)
+    if (!emailResult.success) {
+      setEmailErr(emailResult.error.errors[0].message)
+      return
+    }
+    setEmailErr(null)
     startTransition(async () => {
-      const result = await registerKunde(step1, liefertag, step2)
+      const result = await registerKunde(step1, liefertag, step2, email, unterschrift)
       if (result?.error) setError(result.error)
-      // On success: server action calls redirect() — no client code needed
     })
   }
 
@@ -49,7 +57,7 @@ export function Step3Bestaetigung({ step1, step2, onZurueck }: Step3Props) {
         </div>
 
         {/* Produkte */}
-        <section className="bg-white rounded-xl p-6 mb-4 border border-v3-outline/50 shadow-sm shadow-v3-outline/20" aria-label="Ihre Produktauswahl">
+        <section className="bg-white rounded-xl p-6 mb-4 border border-v3-outline/60 shadow-sm shadow-black/[0.08]" aria-label="Ihre Produktauswahl">
           <h2 className="font-newsreader text-lg text-v3-on-surface mb-3 flex items-center gap-2">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
@@ -82,7 +90,7 @@ export function Step3Bestaetigung({ step1, step2, onZurueck }: Step3Props) {
         </section>
 
         {/* Angaben */}
-        <section className="bg-white rounded-xl p-6 mb-4 border border-v3-outline/50 shadow-sm shadow-v3-outline/20" aria-label="Ihre persönlichen Angaben">
+        <section className="bg-white rounded-xl p-6 mb-4 border border-v3-outline/60 shadow-sm shadow-black/[0.08]" aria-label="Ihre persönlichen Angaben">
           <h2 className="font-newsreader text-lg text-v3-on-surface mb-3 flex items-center gap-2">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <circle cx="8" cy="5.5" r="2.5" stroke="currentColor" strokeWidth="1.4"/>
@@ -104,8 +112,27 @@ export function Step3Bestaetigung({ step1, step2, onZurueck }: Step3Props) {
           </dl>
         </section>
 
+        {/* Unterschrift */}
+        <section className="bg-white rounded-xl p-6 mb-4 border border-v3-outline/60 shadow-sm shadow-black/[0.08]" aria-label="Ihre Unterschrift">
+          <h2 className="font-newsreader text-lg text-v3-on-surface mb-3 flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 13c2-4 4-8 6-8s2 3 0 5-4 2-4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+              <path d="M11 4l1-1M13 8h1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+            </svg>
+            Unterschrift
+          </h2>
+          <div className="rounded-lg border border-v3-outline/40 bg-white overflow-hidden p-2">
+            <img
+              src={unterschrift}
+              alt="Ihre Unterschrift"
+              className="max-w-full h-auto"
+              style={{ maxHeight: 100 }}
+            />
+          </div>
+        </section>
+
         {/* Liefertag */}
-        <section className="bg-white rounded-xl p-6 mb-4 border border-v3-outline/50 shadow-sm shadow-v3-outline/20" aria-label="Liefertag wählen">
+        <section className="bg-white rounded-xl p-6 mb-4 border border-v3-outline/60 shadow-sm shadow-black/[0.08]" aria-label="Liefertag wählen">
           <h2 className="font-newsreader text-lg text-v3-on-surface mb-1 flex items-center gap-2">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
@@ -140,6 +167,45 @@ export function Step3Bestaetigung({ step1, step2, onZurueck }: Step3Props) {
             und den Status Ihrer Bestellungen verfolgen. Eine Konto-Löschung ist jederzeit möglich.
           </p>
         </div>
+
+        {/* Konto erstellen */}
+        <section className="bg-white rounded-xl p-6 mb-4 border border-v3-outline/60 shadow-sm shadow-black/[0.08]" aria-label="Konto erstellen">
+          <h2 className="font-newsreader text-lg text-v3-on-surface mb-1 flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <rect x="2" y="4" width="12" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
+              <path d="M5 4V3a3 3 0 016 0v1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+            </svg>
+            Konto erstellen
+          </h2>
+          <p className="text-v3-on-surface-v text-sm mb-4 leading-relaxed">
+            Sie erhalten per E-Mail einen Einmallink &mdash; kein Passwort n&ouml;tig.
+          </p>
+          <div>
+            <label htmlFor="email" className="block text-xs font-medium text-v3-on-surface-v uppercase tracking-wide mb-1.5">
+              E-Mail-Adresse
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              placeholder="ihre@email.de"
+              value={email}
+              onChange={e => { setEmail(e.target.value); setEmailErr(null) }}
+              className={[
+                'w-full bg-v3-surface border rounded-lg px-4 py-3',
+                'text-v3-on-surface placeholder:text-v3-on-surface-v/50 text-sm',
+                'focus:outline-none focus-visible:ring-2 focus-visible:ring-v3-primary/20 transition-colors duration-150',
+                emailErr ? 'border-[#E05A3A] focus:border-[#E05A3A]' : 'border-v3-outline/60 focus:border-v3-primary',
+              ].join(' ')}
+              aria-invalid={!!emailErr || undefined}
+              aria-describedby={emailErr ? 'err-email' : undefined}
+            />
+            {emailErr && (
+              <p id="err-email" role="alert" className="text-[#E05A3A] text-xs mt-1">{emailErr}</p>
+            )}
+          </div>
+        </section>
 
         {/* AGB + DSGVO */}
         <div className="space-y-3 mb-6">
