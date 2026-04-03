@@ -30,7 +30,7 @@ export function Konfigurator({ produkte, initialBox = [], onSave, saveLabel = 'B
         setBox(prev => prev.filter(b => b.produkt.id !== produkt.id))
       }
     } else {
-      setBox(prev => [...prev, { produkt, menge }])
+      setBox(prev => [...prev, { produkt, menge, anzahl: 1 }])
     }
   }
 

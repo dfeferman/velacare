@@ -22,7 +22,8 @@ export interface Produkt {
 
 export interface BoxProdukt {
   produkt: Produkt
-  menge: string | null
+  menge: string | null   // Größe (z.B. "M") bei Handschuhen, null sonst
+  anzahl: number         // Bestellmenge, immer ≥ 1
 }
 
 export interface MockKunde {

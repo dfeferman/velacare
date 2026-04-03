@@ -58,7 +58,7 @@ export async function registerKunde(
     const headersList = await headers()
     const ipAdresse = headersList.get('x-forwarded-for')?.split(',')[0].trim() ?? '0.0.0.0'
     const userAgent = headersList.get('user-agent') ?? 'funnel-v2'
-    const gesamtpreis = produkte.reduce((sum, item) => sum + Number(item.produkt.preis), 0)
+    const gesamtpreis = produkte.reduce((sum, item) => sum + Number(item.produkt.preis) * item.anzahl, 0)
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const kundenProfileId: string = await prisma.$transaction(async (tx: any) => {
