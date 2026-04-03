@@ -27,8 +27,9 @@ export const registerSchema = z.object({
   // Versorgung
   versorgungssituation: z.enum(['erstversorgung', 'wechsel']),
   beratung:             z.boolean(),
-  // Account
-  email:                z.string().email('Gültige E-Mail-Adresse erforderlich'),
 })
 
 export type Step2Data = z.infer<typeof registerSchema>
+
+// Email is collected separately in Step 3
+export const emailSchema = z.string().email('Gültige E-Mail-Adresse erforderlich')
