@@ -119,6 +119,7 @@ model KundenProfile {
   angehoeriger_name        String?             @db.VarChar(200)
   angehoeriger_verhaeltnis String?             @db.VarChar(100)
   lieferstichtag           Int
+  unterschrift             String?             // PNG DataURL der Unterschrift
   lieferung_status         KundeDeliveryStatus @default(aktiv)
   pausiert_bis             DateTime?           @db.Date
 
