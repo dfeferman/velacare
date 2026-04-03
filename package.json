@@ -10,6 +10,7 @@
     "stitch:wireframes": "node scripts/export-stitch-wireframes.mjs",
     "stitch:wireframes:v2": "node scripts/export-stitch-wireframes.mjs wireframes/v2/stitch-export.config.json",
     "seed:admin": "tsx --env-file=.env.local scripts/seed-admin.ts",
+    "verify:login": "tsx --env-file=.env.local scripts/verify-password-login.ts",
     "email:preview": "email dev --dir src/emails --port 3002"
   },
   "dependencies": {
@@ -25,6 +26,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-email": "^5.2.10",
+    "react-signature-canvas": "^1.1.0-alpha.2",
     "resend": "^6.10.0",
     "zod": "^4.3.6"
   },
@@ -33,6 +35,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-signature-canvas": "^1.0.7",
     "eslint": "^8",
     "eslint-config-next": "15.5.14",
     "postcss": "^8",
