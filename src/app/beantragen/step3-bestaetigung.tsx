@@ -107,8 +107,6 @@ export function Step3Bestaetigung({ step1, step2, unterschrift, onZurueck }: Ste
             <dd className="text-v3-on-surface">{step2.krankenkasse}</dd>
             <dt className="text-v3-on-surface-v">Adresse</dt>
             <dd className="text-v3-on-surface">{step2.strasse} {step2.hausnummer}, {step2.plz} {step2.ort}</dd>
-            <dt className="text-v3-on-surface-v">E-Mail</dt>
-            <dd className="text-v3-on-surface">{step2.email}</dd>
           </dl>
         </section>
 
